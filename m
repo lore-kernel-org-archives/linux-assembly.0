@@ -1,32 +1,36 @@
-From: Rudolf Marek <MAREKR2@cs.felk.cvut.cz>
-Subject: Re: interupts...
-Date: Mon, 23 Sep 2002 15:50:20 +0200
+From: lx <lx@lxhp.in-berlin.de>
+Subject: F4: x86 Linux fig-Forth
+Date: Sun, 29 Sep 2002 13:34:09 +0000
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <24690.9484304071$1032789031@news.gmane.org>
-References: <Pine.VMS.3.91-2(vms).1020923151918.31945B-100000@cs.felk.cvut.cz>
+Message-ID: <20020929133409.14f9d4c7.lx@lxhp.in-berlin.de>
+Reply-To: abuse@lxhp.in-berlin.de
 Mime-Version: 1.0
-Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <Pine.VMS.3.91-2(vms).1020923151918.31945B-100000@cs.felk.cvut.cz>
-List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: linux-assembly@vger.kernel.org
+Return-path: <linux-assembly-owner@vger.kernel.org>
+List-Id: <linux-assembly.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: linux-assembly <linux-assembly@vger.kernel.org>
 
+hi, all..
 
+i've been experimenting w. a fig-Forth type for assembly w. AS and GASP 
+(of "binutils", i586 pc Linux/ELF), and for several features like self 
+maintaining unlimited - within the Linux bounds - memory allocation, i.e. 
+no 'overflow' of dictionary or stacks space, (trivial) letter case 
+independent string handling, etc.
 
-You can look at arch/i386...
+most of which is implemented for ia-32 in att-syntax AS assembly, but also 
+supplied w. the hi-level aequivalents, for documentation.
 
-in assembly file how to reprogram 8259 (relocate HW interrupts to 
-diffrent number), which is a beast, you have to done it in that way...
+...which resulted to a small but complete forth system, 'fully featured' 
+binary of about 32K which, could serve as a reference not only on traditional 
+Forth but, for how to persuade the GCC + GASP + AS group of programs to 
+fairly comfortably producing something useable:
+	source re http://www.lxhp.in-berlin.de/lhpf4.html
 
-It is round 10 in/outs I think. You can look at ralf brown interrupt list 
-(ports.lst)  how to program that chip.
+best,
+	hp
 
-or at developer.intel.com
-
-
-Rudolf
-
-
-
-
+-- 
+   >>> pse, reply to : lx -at- lxhp -dot- in-berlin -dot- de <<<
+Linux,Assembly,Forth: http://www.lxhp.in-berlin.de/index-lx.shtml en/de
