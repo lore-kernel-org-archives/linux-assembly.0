@@ -1,41 +1,88 @@
-From: Fekete Gabor <feketga@delfin.unideb.hu>
+From: michael young <mhyoung@valdosta.edu>
 Subject: Re: DOS assembly questions?
-Date: Tue, 21 Oct 2003 08:05:43 +0200 (DFT)
+Date: Tue, 21 Oct 2003 14:05:22 -0400
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <Pine.A41.4.20.0310210801560.60518-100000@delfin.unideb.hu>
+Message-ID: <3F957562.7060302@valdosta.edu>
 References: <3F9473D9.8010304@valdosta.edu>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
 In-Reply-To: <3F9473D9.8010304@valdosta.edu>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: 
-Cc: linux-assembly@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: linux-assembly@vger.kernel.org
+
+Hello,
+     Thanks to everyone for responding.
+I'm sorry for not giving enough info.
+What I want to do is starting at 10 (or some number).
+1. print the number.
+2. dec the number.
+3. loop back to step 1.
+4. when number reaches 0 print "All done" (or something).
+5 end program
+
+my code for this is:
+
+BITS 16 
+ORG 0x0100
+ 
+ 
+SEGMENT .text
+ 
+START:
+  mov cx, 10
+  call myloop
+ 
+myloop:
+  mov dx, cx
+  mov ah, 9
+  int 21H
+  dec cx
+  jnz myloop
+  mov dx, donemsg
+  mov ah, 9
+  int 21H
+  mov ah, 4CH
+  int 21H
+ 
+SEGMENT .data
+ 
+donemsg db "All done!", 13, 10, "$"
 
 
+########### end of program ################
 
-On Mon, 20 Oct 2003, michael young wrote:
-
-> Hi,
->    First, is it OK to ask questions about assembly programming in DOS on 
-> this list?
-> If so, here is my problem.
-> I am a real newb at assembly and am still learning the very basics.
-> I have this bit of code. The way I understand it, this should print out 
-> "10".
-> It does not. It prints some strange ASCII chars.
-> 
-> mov cx, 10
-> mov dx, cx
-> mov ah, 9
-> int 21
-
-ds:dx should be a pointer to a string "10$" for this to work.
-is this what you're doing? because your code does not show.
-you can find DOS calls here:
-www.htl-steyr.ac.at/~morg/pcinfo/hardware/interrupts/inte1at0.htm
+the output should be:
+10
+9
+8
+7
+6
+5
+4
+3
+2
+1
+All done!
 
 
+Yall say I can't print the numbers that way.
+And sure enough that does not work.
+How would yall suggest I go about this?
+Also, I does loop the correct number of times but,
+ it prints "All done!" after every iteration.
+Can you tell me why that is?
+Mr. Burt, don't worry about offending me.
+Tell me what I need to hear.
+A sharp knife cuts the quickest and hurts the least.
+Mr. Hyde, wonderful site. What does IIRC mean?
+Again, thank you to all of you for your responses and links.
+
+Michael
+
+BTW: i'm using nasm16 and I'm reading "Assembly Language Step-by-Step 
+2ed." by Jeff Duntemann.
+            I'm in DOS now but hope to move to LINUX assembly some day.
 
 
