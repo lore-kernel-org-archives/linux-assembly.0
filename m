@@ -1,52 +1,33 @@
-From: Robin Miyagi <penguin-computing@c2c2c.ca>
-Subject: Re: Peter Abel's assembly book.
-Date: Mon, 16 Dec 2002 08:53:33 -0800
+From: Doug Smith <bdsmith@buncombe.main.nc.us>
+Subject: Re: gas "ljmp" instruction
+Date: Mon, 16 Dec 2002 23:09:32 -0500
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <200212160853.36619.penguin-computing@c2c2c.ca>
-References: <F15F8beVGRQaRbatlkZ00008cd1@hotmail.com>
-Reply-To: penguin-computing@c2c2c.ca
-Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Message-ID: <200212170409.XAA03249@linux.smith.corp>
+References: <3DFD1CAF.6010106@curvesoft.com>
+Reply-To: bdsmith@buncombe.main.nc.us
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <F15F8beVGRQaRbatlkZ00008cd1@hotmail.com>
+In-reply-to: <3DFD1CAF.6010106@curvesoft.com> (message from ram on Sun, 15 Dec
+	2002 16:22:07 -0800)
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
-To: linux-assembly@vger.kernel.org
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: ram@curvesoft.com
+Cc: linux-assembly@vger.kernel.org
 
-Dr. Paul Carter's assembly book.  You will find a link to it under
-resources at linuxassembly.org
 
-On Monday 16 December 2002 07:50, fabio miranda wrote:
-> Hi, I am interested in learning about Linux/FreeBSD assembly programm=
-ing
-> focused on vulnerability research.
-> It has been very difficult to find book about assembly in my country,
-> however, I found the Peter Abel's book about assembly on DOS.
-> Can I use it having in mind my goals?.
-> What others resources Do you suggest me ( !=3D linuxassembly.org) ?
->
-> regards,
->
-> PLCR.
->
->
-> _________________________________________________________________
-> MSN. M=E1s =DAtil Cada D=EDa http://www.msn.es/intmap/
->
-> -
-> To unsubscribe from this list: send the line "unsubscribe linux-assem=
-bly"
-> in the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Join the club. I hope to have a few things straightened out at the
+first of the year and I can more easily help you. It appears that this
+ljmp means, if it's like the instruction sets I worked with in the
+past, long jump. In those days, it meant that the processor was to
+jump over either a page or bank boundary. If I remember correctly, it
+meant over a page boundary. I will have to study a little more on this
+and I will be happy to tell you more. 
 
---=20
-Robin Miyagi<penguin-computing@c2c2c.ca>
-http://penguin.c2c2c.ca/
-Please do not send me MSWord, Excel or other proprietary format documen=
-ts
 
--
-To unsubscribe from this list: send the line "unsubscribe linux-assembl=
-y" in
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+
+Hope this helps. 
+
+-- 
+Doug Smith: C.S.F.C.
+Computer Scientist For CHRIST!
