@@ -1,75 +1,54 @@
 From: h-peter recktenwald <*@lxhp.in-berlin.de>
-Subject: Re: how can I have access to the memory as in flat mode?
-Date: Tue, 25 Jun 2002 23:17:38 +0000
+Subject: Re: sound
+Date: Tue, 25 Jun 2002 21:28:21 +0000
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <20020625231738.216814d7.*@lxhp.in-berlin.de>
-References: <3D15E5AF.5010706@eprocess.fr>
+Message-ID: <20020625212821.5080cb4f.*@lxhp.in-berlin.de>
+References: <3D17944F.E391DBF4@freesurf.fr>
 Reply-To: lx@lxhp.in-berlin.de
 Mime-Version: 1.0
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <3D15E5AF.5010706@eprocess.fr>
+In-Reply-To: <3D17944F.E391DBF4@freesurf.fr>
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="iso-8859-1"
-To: fmarmond@eprocess.fr
-Cc: linux-assembly@vger.kernel.org
+To: philippe <pvir@freesurf.fr>
+Cc: Linux-assembly@vger.kernel.org
 
-On Sun, 23 Jun 2002 17:13:51 +0200
-=46rederic Marmond <fmarmond@eprocess.fr> wrote:
+On Mon, 24 Jun 2002 23:51:11 +0200
+philippe <pvir@freesurf.fr> wrote:
 
+> hi
+> I am new on this list and my name is Philippe.
+> I used to make some programs on windows but wanted to trye on linux.
+> I have a problem with a small prog i had done for windows witch play
+> sounds on the fm chip of a sound card.
+
+direct port access requires 'root' rights and the concerning ports
+being enabled, with sys_ioctl or sys_ioperm. - e.g <man 2 ioctl>
+
+> But when i translate it on linux, it doesn't work any more.
+> It compile and link correctly(nasm), but on execution it writes:
+> segmentation fault!
+> I post you the sources at the end of this message.
 >=20
-> Hi,
->=20
-> few days ago, i posted mails to try to know better about linear memor=
-y=20
-> in linux.
-> perhapse you've already answer me, but I could'nt see mails from the =
-list...
-> So, I managed to make my prog work by using /dev/mem
-> it's very ugly, but it worked.
->=20
-> Is there any other way to access somewhere?
-> In fact the exact problem is:
->=20
-> on a embeded system, the mac-adress of  eth0 and eth1 are stored in a=
-=20
-> flash memory, mapped somewhere.
-> The 'standard' driver (natsemi) doesn't know this, and try to access =
-to=20
-> the 'normal' pci network card.
-> So, i have to read the mac adress by hand, and modify the value retur=
-ned=20
-> by the 'standard' driver.
->=20
-> I know the adress, but I've got seg-faults when trying to access it f=
-rom=20
-> the driver (readb, (unsigned char*)0xf8000, ...)
-				^^^^^^^^^^^^
+> I had an other question:
+> Where can I find bible of all the interruptions and what is the  name=
+ of
+> it?
 
-i'm most probably the least experieced on this access mode, thus only=20
-guessing, i.e. the way how i would start trying:
-
-is your code running in kernel mode (e.g. module)?
-otherwise that address would not be accessible, 1st GB owned by kernel.
-
-in kernel mode you might try sys_open on /dev/kmem and set the 'file po=
-inter'=20
-to the mentioned mmap-ed(?) address, then read w.=20
-	sys_read fd,memory-address,number-of-byte-to-read
-
-which might even work from user space (by a 'normal' program) when call=
-ed=20
-with 'root' access privileges.
-
->=20
-> any help?
-
-???? - I'd yet never try any of those...
+basically, there is one interrupt and several sub-codes, passed w. eax.
+'the' bible doesn't exist, linux is in a somewhat 'fluid' state and, ba=
+dly=20
+documented. Paricularly no aequivalent to 'RBIL' but, you might get som=
+e=20
+help from my syscall pages where i collect whatever i find fairly relia=
+bly=20
+documented/tested.
+	http://www.lxhp.in-berlin.de/lhpsyscal.html
 
 
 regards,
 	hp
-
 --=20
 Linux,Assembly,Forth: http://www.lxhp.in-berlin.de/index-lx.shtml en/de
 NO abusive=A0software=A0patents=A0http://petition.eurolinux.org/pr/pr17=
