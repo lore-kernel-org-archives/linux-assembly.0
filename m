@@ -1,51 +1,32 @@
-From: Rudolf Marek <MAREKR2@cs.felk.cvut.cz>
-Subject: Re: entering char from keyboard
-Date: Mon, 29 Apr 2002 12:04:28 +0200
+From: Allan Wooley <awooley@exeter.edu>
+Subject: chdir command
+Date: Fri, 03 May 2002 15:54:31 -0400
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <aaj62j$13o$2@main.gmane.org>
-References: <web-7206429@m1.plasa.com>
+Message-ID: <3CD2EAF6.5A27E998@exeter.edu>
 Mime-Version: 1.0
-Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <web-7206429@m1.plasa.com>
-List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: ssams <ssams@telkom.net>
-Cc: linux-assembly@vger.kernel.org
+Return-path: <linux-assembly-owner@vger.kernel.org>
+List-Id: <linux-assembly.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: Linux Assembly <linux-assembly@vger.kernel.org>
 
+I can not get system call #12 to work as advertised.  In Read Hat Linux
+7.2 under bash using nasm with elf I write:
 
-Hello,  (its more neutral I guess)
+section .text
+    global _start
 
-Any program in unix while running has open the file descriptor (handle) 
-for STDIN STDOUT and STDERR (0,1,2).
-If you want to read from keyboard you just read(stdin)
-via a syscall. But may happen that the syscall returns after
-pressing ENTER. If you want just read one ahar without (ENTER) confirming 
-it, you should change terminal IOCTL.
+path    db '/root',0
 
-look in sh.asm in asmutils
+_start:
 
+    mov ebx, path
+    mov eax,12
+    int 80h
 
-        mov     edx,termattrs
-        sys_ioctl STDIN,TCGETS
-        mov    eax,[termattrs.c_lflag]
-        push    eax
-        and     eax,~(ICANON|ECHO)  ; this turns OFF echo also
-        mov     [termattrs.c_lflag],eax
-        sys_ioctl STDIN, TCSETS
+    mov eax, 1
+    int 80h        ;; int 0x80
 
-this should work under linux, this under *NIX (maybe)
-
-        sys_fcntl STDIN,F_GETFL
-        and     eax,~(O_NONBLOCK)       
-        sys_fcntl STDIN,F_SETFL,eax
-
-and the rest is smth like read 1 byte from STDIN
-
-Regards
-
-		Rudolf
-
-
-
+Although I have gotten system calls 1, 3-6 & 11 to work fine in assembly
+programs, I can not get the change-working-directory call to work.
 
