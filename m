@@ -1,45 +1,69 @@
-From: John Rodriguez <jr534@columbia.edu>
-Subject: kernel newbie - RESTORE_ALL macro question
-Date: Sun, 4 Jan 2004 20:29:30 -0500 (EST)
+From: =?ISO-8859-9?Q?erg=FCn_koray?= <ergky@tnn.net>
+Subject: programming bug
+Date: Fri, 16 Jan 2004 15:21:15 +0200
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <Pine.GSO.4.58.0401042023130.22827@mango.cc.columbia.edu>
+Message-ID: <4007E54B.7080306@tnn.net>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
 To: linux-assembly@vger.kernel.org
 
+hi there,
+i am new to assembly and i have written just this tiny code that turns 
+lowercase characters to uppercase.
+but unfortunately after the first characters have been converted the 
+program exits, and i can't find why ?
+can anybody help me ? thanks
 
-Browsing kernel 2.4.20 at
-http://lxr.linux.no/source/arch/i386/kernel/entry.S
+.data
+        chr:    .byte
+.text
+        .global _start
+_start:
+read:
+        movl $3, %eax   /* read */
+        movl $1, %ebx   /* from stdin */
+        movl $chr, %ecx /* to chr */
+        movl $1, %edx   /* 1 char */
+        int $0x80       /* using int 0x80 */
 
-I stumbled across this section of assembly
-I browsed GNU assembly manuals and understand up to line 119.
-After that all I know is that lines 119-124 respond to a problem with line
-113.
+        xorl %eax, %eax /*eax = 0 */
+        xorl %ebx, %ebx /*eax = 0 */
+        xorl %edx, %edx
+        xorl %ecx, %ecx
+check:
+        movb chr, %al
+        cmpb $'a', %al
+        jl endprog
+        cmpb $'z', %al
+        jg endprog
 
-1) What exactly is that problem cause by iret?
-2) Why is the stack segment selector copied to ds/es in lines 119-122.
-3) What is the meaning of the value 11 pushed onto the stack?
-4) Does line 124 freeze the kernel up?  What is exiting?  The exception
-   handler?  If so, what does it exit to (i assume not the same as iret)?
-
-112         addl $4,%esp;   \
-113 3:      iret;           \
-114 .section .fixup,"ax";   \
-115 4:      movl $0,(%esp); \
-116         jmp 1b;         \
-117 5:      movl $0,(%esp); \
-118         jmp 2b;         \
-119 6:      pushl %ss;      \
-120         popl %ds;       \
-121         pushl %ss;      \
-122         popl %es;       \
-123         pushl $11;      \
-124         call do_exit;   \
-125 .previous;              \
+        xorl %eax,%eax
 
 
-Thanks in advance.
--John
+convert:
+        movb chr, %al   /* al <- chr */
+        subb $'a' , %al /* Convert small letter */
+        addb $'A', %al  /* to capital */
+        movb %al, chr   /* write converted char to memory */
+
+write:
+        movl $4, %eax   /* write */
+        movl $1, %ebx   /* to screen */
+        movl $chr, %ecx /* from chr */
+        movl $1, %edx   /* 1 char */
+        int $0x80       /* using int 0x80 */
+        xorl %eax, %eax
+        xorl %ebx, %ebx
+        xorl %ecx, %ecx
+        jmp read
+
+endprog:
+
+
+        movl $1, %eax   /* exit sys call */
+        movl $0, %ebx   /* exit value   */
+        int $0x80       /* call int */
+
