@@ -1,24 +1,33 @@
-From: Frederic Marmond <fmarmond@eprocess.fr>
-Subject: calling bios interrupt from kernel
-Date: Mon, 24 Nov 2003 16:35:21 +0100
+From: "sansanto santo" <sansanto4u@hotmail.com>
+Subject: sys call !
+Date: Mon, 24 Nov 2003 18:28:11 +0000
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <3FC22539.7060509@eprocess.fr>
-Reply-To: fmarmond@eprocess.fr
+Message-ID: <Law14-F649cvKluevz100001716@hotmail.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
+Content-Type: text/plain; format=flowed; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: linux-assembly@vger.kernel.org
 
-I'm working on a graphic card for which I have only a binary driver, 
-without sources.
+Hello ,
 
-I would want to get started by calling the int 0x10 in a vm86 environment.
-Does anybody tried something like this? Is there any way to succeed?
+Just to introduce my self  i just started to hack our own university lab in 
+unix but un fortunatealy i was cought
+for just using  a system call  " halt " .
 
-Any info would be welcome!
-Thanks in advance.
+is any wheare can i get the codes for system call for [ join,  open, create, 
+read, write, fork ] ? please
+let me know !
 
-Fred
+do replay to me as soon as possible !
+
+thanking you
+
+Regards
+Santo
+
+_________________________________________________________________
+Use MSN Messenger to send music and pics to your friends 
+http://www.msn.co.uk/messenger
 
