@@ -1,33 +1,53 @@
-From: Jani Monoses <jani@iv.ro>
-Subject: Re: info required on m4.
-Date: Fri, 26 Apr 2002 08:38:29 +0300 (EEST)
+From: <kieft_brian@si.com>
+Subject: non-constant in current section subtraction???
+Date: Fri, 26 Apr 2002 11:13:56 -0400
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.33L2.0204260837270.10956-100000@cow>
-References: <1BD922A62552D411B48A00D0B747237510812A11@kecmsg04.ad.infosys.com>
+Message-ID: <004920AF.C21188@si.com>
 Mime-Version: 1.0
-Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <1BD922A62552D411B48A00D0B747237510812A11@kecmsg04.ad.infosys.com>
-List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: prasanth_yedla <prasanth_yedla@infy.com>
-Cc: linux-assembly@vger.kernel.org
+Return-path: <linux-assembly-owner@vger.kernel.org>
+Content-Description: cc:Mail note part
+List-Id: <linux-assembly.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: linux-assembly@vger.kernel.org
 
-your subject has the answer
-unless you're using windows type "info m4" in your shell.
+I'm having some trouble with the GNU assembler and the special '.' symbol. The
+following code is an example:
 
-On Thu, 25 Apr 2002, prasanth_yedla wrote:
 
-> Hi ..
->
-> It wud be very helpful to me if ne one cud let me know the basics of using m4 for macros....
-> if possible send me a document ...
->
-> Thanks in advance
-> prasanth
-> -
-> To unsubscribe from this list: send the line "unsubscribe linux-assembly" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
+LABEL1:
+   some stuff
+   more stuff
 
+   VAR1 = . - LABEL1
+   .IF (VAR1)
+     do something
+
+   .ENDIF
+
+The dot symbol should give me the current location in memory, which is a
+non-constant. However, the difference between the . and label1 (assuming they're
+in the same section) is a constant. Why do I get a "non-constant expression in
+if statement" error when I try to do this. I've tried working the assembler
+source code a bit and making X_op = O_constant when you do the subtraction, but
+that seems to screw things up and give everything a value of 0. Without the
+hack, I get the right values, but they're just not constant. Has anyone ran into
+this before? I'd appreciate any help I can get. Thanks,
+
+Brian
+
+
+**********************************************************************
+This e-mail and any files transmitted with it are confidential and may
+be legally privileged or otherwise exempt from disclosure under
+applicable law. This e-mail and its files are intended solely for
+the individual or entity to whom they are addressed and their content
+is the property of Smiths Aerospace.  If you are not the intended
+recipient, please do not read, copy, use or disclose this communication.
+If you have received this e-mail in error please notify the e-mail 
+administrator at postmaster@si.com and then delete this e-mail, its
+files and any copies.
+
+This footnote also confirms that this e-mail message has been scanned
+for the presence of known computer viruses.
+***********************************************************************
