@@ -1,59 +1,24 @@
-From: Slack Traq <slacktraq@yahoo.com>
+From: Dragan Stancevic <visitor@xalien.org>
 Subject: Re: Newbie Question
-Date: Thu, 27 Feb 2003 16:27:09 -0800 (PST)
+Date: Thu, 27 Feb 2003 16:45:34 -0800
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <20030228002709.27101.qmail@web11404.mail.yahoo.com>
-References: <200302271757.42990.davidkedrosky@rogers.com>
+Message-ID: <200302271645.34454.visitor@xalien.org>
+References: <Pine.VMS.3.91-2(vms).1030228001923.25337A-100000@cs.felk.cvut.cz>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <200302271757.42990.davidkedrosky@rogers.com>
+In-Reply-To: <Pine.VMS.3.91-2(vms).1030228001923.25337A-100000@cs.felk.cvut.cz>
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: dAvId KeDrOsKy <davidkedrosky@rogers.com>
-Cc: Linux Assembly Mailing List <linux-assembly@vger.kernel.org>
+To: Rudolf Marek <MAREKR2@cs.felk.cvut.cz>, dAvId KeDrOsKy <davidkedrosky@rogers.com>
+Cc: Linux Assembly Programming List <linux-assembly@vger.kernel.org>
 
+On Thursday 27 February 2003 15:26, Rudolf Marek wrote:
+> Ah dragan you were faster....
+> Regards
 
---- dAvId KeDrOsKy <davidkedrosky@rogers.com> wrote:
-> The following program gives me a seg fault.  But I
-> don't understand why.
-> 
-> 1.	mov	ebx, dword 1234
-> 2.	mov	ax, [ebx]
-> 
-> To me the code would mean 1) move the integer 1234
-> into ebx and then 2) move 
-> the value of ebx into ax.  But of course my
-> reasoning is incorrect.
+:-))))))
 
-First of all, if you need to pass an integer to ebx
-(32 bit register) you may wanna to do
-1. mov     ebx, 1234
-Second, if you put the brackets between a register,
-its memory address is passed to ax, in this case.
-Third, you can't move a 32 bit register into a 16 bit
-one. Use eax, instead.
-2. mov     eax, ebx
-Advice: you can decompose a 32 bit register, ie eax,
-in ax. Then you can decompose ax in ah and al (8 bit
-registers).
-If hope it will help you.
-> 
-> Feedback would be great.
-> 
-> Dave
-> -
-> To unsubscribe from this list: send the line
-> "unsubscribe linux-assembly" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at 
-http://vger.kernel.org/majordomo-info.html
-
-Regards,
-
-                                            Slack
-
-__________________________________________________
-Do you Yahoo!?
-Yahoo! Tax Center - forms, calculators, tips, more
-http://taxes.yahoo.com/
+-- 
+Peace can only come as a natural consequence
+of universal enlightenment. -Dr. Nikola Tesla
