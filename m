@@ -1,32 +1,32 @@
-From: Robin Miyagi <penguin-computing@c2c2c.ca>
-Subject: Re: Newbie Question
-Date: Thu, 24 Oct 2002 20:07:04 -0700
+From: Konstantin Boldyshev <konst@linuxassembly.org>
+Subject: Re: a-linux:   Kernel panic:  No init found
+Date: Sat, 26 Oct 2002 14:36:17 +0400 (MSD)
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <200210242007.07876.penguin-computing@c2c2c.ca>
-References: <200210241742.35488.davidkedrosky@rogers.com> <15800.34237.222111.810279@eidolon.muppetlabs.com>
-Reply-To: penguin-computing@c2c2c.ca
+Message-ID: <Pine.LNX.4.43L.0210250615001.1152-100000@alpha.linuxassembly.org>
+References: <20021024182717.63201.qmail@web40207.mail.yahoo.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <15800.34237.222111.810279@eidolon.muppetlabs.com>
+In-Reply-To: <20021024182717.63201.qmail@web40207.mail.yahoo.com>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: linux-assembly@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Darius Stout <darstout@yahoo.com>
+Cc: linux-assembly@vger.kernel.org
 
-Here is a 32 bit i386 assembler course;
+On Thu, 24 Oct 2002, Darius Stout wrote:
 
-http://www.drpaulcarter.com/pcasm/
+> ../bootdisk.bash a-linux.img /home/download1/alinux/asmutils-0.17 /mnt
+> > new_boot.img
 
-It has good linux coverage.  This link can be found on Konstanin's
-linux assembly resources page.
+I guess that you are doing something very wrong here.
+First, you need kernel binary.
+Then, you need to compile asmutils.
+In the end, to generate bootdisk, something like:
 
-On Thursday 24 October 2002 16:43, Brian Raiter wrote:
->
-> Then perhaps you need a different book.
->
+./bootdisk.bash bzImage /home/download/alinux/asmutils-0.17/src /mnt >boot.img
 
 -- 
-Robin Miyagi<penguin-computing@c2c2c.ca>
-http://penguin.c2c2c.ca/
-The funny thing about brakes, is that when they break, they don't brake.
+Regards,
+Konstantin
+
 
