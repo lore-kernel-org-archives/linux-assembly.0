@@ -1,32 +1,30 @@
-From: Rudolf Marek <MAREKR2@cs.felk.cvut.cz>
-Subject: linux distribution based on asmutils
-Date: Wed, 16 Oct 2002 22:14:16 +0200
+From: elio.occhipinti@tiscali.it
+Subject: M68060 assembly debugger
+Date: Fri, 18 Oct 2002 16:52:10 +0200
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <49447.9875000708$1034799499@news.gmane.org>
-References: <Pine.LNX.4.44.0209231456470.21172-100000@zodiac.mimuw.edu.pl>
+Message-ID: <3DAE56BE00003456@mail-8.tiscalinet.it>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <Pine.LNX.4.44.0209231456470.21172-100000@zodiac.mimuw.edu.pl>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"
 To: linux-assembly@vger.kernel.org
 
+I am a student,I really need help!!!
+I need a debugger,able to debug an assembly code written for 
+M68060.Since I don't have phisically this kind of processor and I haven't
+find any M68060 simulator(only 68000 simulator),I want only to know whether
+the assembly code that I wrote (following the Motorola syntax)is correct.
+How can I do?
+Thank you.
 
-Hello,
 
-have you noticed that someone is using asmutils as a base for a 
-distribution called serverdisk at http://serverdisk.sourceforge.net
 
-Am I the last one who noticed that?
+__________________________________________________________________
+Nuova Tiscali ADSL da 12,95 euro al mese.
+Abbonati subito, entro il 31 ottobre l'attivazione e i consumi sono Gratis!
 
-btw one my friend is using asmutils shell in internal routers machines.
-
-I think the last thing big thing to do in asmutils is iptables than it is 
-usable for network routers based on linux.
-
-Regards
-	Rudolf
+http://point.tiscali.it/ADSL/
 
 
 
