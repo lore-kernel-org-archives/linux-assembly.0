@@ -1,26 +1,22 @@
-From: Konstantin Boldyshev <konst@linuxassembly.org>
-Subject: Re: Loading shared libraries in assembly
-Date: Fri, 19 Jul 2002 22:23:06 +0400 (MSD)
+From: xlp <xlp@emtel.net.co>
+Subject: shellcode, offset, opcode
+Date: Fri, 19 Jul 2002 17:52:03 -0500
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.43L.0207192221370.1149-100000@alpha.linuxassembly.org>
-References: <200207191055.05262.jborden@sorenson.com>
+Message-ID: <20020719175203.B421@nietzsche.metrotel.net.co>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <200207191055.05262.jborden@sorenson.com>
+Content-Disposition: inline
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"
 To: linux-assembly@vger.kernel.org
 
-On Fri, 19 Jul 2002, Jason Borden wrote:
+Hi assembly ppl. I want to understand What is the shellcode variable in a exploit code?, Why is it wrote in hexadecimal? What is it for?.
+What is "opcode" ?, What is the offset?, I am reading AoA for linux, What are the stage of a security hole developement? When should i use asm skills ?.
 
-> My question is: is there a way to load shared libraries
-> and their functions into an assembly program using kernel
-> system calls without having to go through libdl and friends?
+PLEASE, dont suggest me to read "smashing the stack for fun and profit".
+I have several bof how-to, but, I want to understand the whole proccess from a computer science point of view, not a intruder one.
 
-Yes, and this way is to implement your own loader.
+thanks.
 
--- 
-Regards,
-Konstantin
 
