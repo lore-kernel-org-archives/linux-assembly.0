@@ -1,31 +1,30 @@
-From: Brian Raiter <breadbox@muppetlabs.com>
+From: Vince Weaver <vince@deater.net>
 Subject: Re: bios interuppts
-Date: Tue, 4 Mar 2003 12:28:55 -0800
+Date: Tue, 4 Mar 2003 15:34:20 -0500 (EST)
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <15973.3207.212962.958382@eidolon.muppetlabs.com>
-References: <20030304120742.6160.qmail@webmail7.rediffmail.com>
-	<3E64EAB9.5070000@hampshire.edu>
+Message-ID: <Pine.LNX.4.44.0303041531310.10881-100000@pianoman.cluster.toy>
+References: <15973.3207.212962.958382@eidolon.muppetlabs.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <3E64EAB9.5070000@hampshire.edu>
+In-Reply-To: <15973.3207.212962.958382@eidolon.muppetlabs.com>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: linux-assembly@vger.kernel.org
 
-> The simplest way to do it is to use terminal escape codes.
 
-vt100 escape codes aren't guaranteed to work everywhere, though.
+> > The simplest way to do it is to use terminal escape codes.
+>
+> vt100 escape codes aren't guaranteed to work everywhere, though.
+>
+> If you don't care much about portability, then use the escape codes
+> that are shared between VT100, ANSI, and xterm. That will probably
+> work fine 99% of the time, on a Linux machine.
 
-If you don't care much about portability, then use the escape codes
-that are shared between VT100, ANSI, and xterm. That will probably
-work fine 99% of the time, on a Linux machine.
+also, if you only care about working on the text console you can
+read/write to the /dev/vcs* devices ( "man vcs" ) which give you
+more or less the equivelant of poking around in the DOS text-framebuffer.
 
-If you don't care at all about portability, then use whatever escape
-codes your own particular terminal uses.
+Vince
 
-If you do care about portability, then use ncurses. Or else don't even
-try to draw on the screen. After all, the "screen" might actually be a
-TTY (at least in theory).
 
-b
