@@ -1,72 +1,41 @@
-From: Learner <ruxyz@yahoo.com>
-Subject: OFF-TOPIC : Confusion about basic C program behaviour
-Date: Thu, 10 Mar 2005 02:00:18 -0800 (PST)
-Message-ID: <20050310100018.15303.qmail@web41113.mail.yahoo.com>
-Reply-To: ruxyz@yahoo.com
+From: Stephen Ray <steve@mrmighty.net>
+Subject: Re: OFF-TOPIC : Confusion about basic C program behaviour
+Date: Thu, 10 Mar 2005 07:07:51 -0400
+Message-ID: <42302A87.7020803@mrmighty.net>
+References: <20050310100018.15303.qmail@web41113.mail.yahoo.com>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
+In-Reply-To: <20050310100018.15303.qmail@web41113.mail.yahoo.com>
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Linux Kernel Newbie <kernelnewbies@nl.linux.org>, Assembly Linux <linux-assembly@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: ruxyz@yahoo.com
+Cc: Linux Kernel Newbie <kernelnewbies@nl.linux.org>, Assembly Linux <linux-assembly@vger.kernel.org>
 
-Hi,
+Just a thought, but not a particularly educated one.  Compiling with 
+-Wall gives me:
 
-  I know this is not the correct place to post this
-question, but I feel it would be pretty easy for the
-kernel gurus to explain this.  
+test.c:4: warning: return type defaults to `int'
+test.c: In function `main':
+test.c:15: warning: int format, double arg (arg 3)
+test.c:16: warning: int format, double arg (arg 2)
+test.c:18: warning: int format, double arg (arg 2)
+test.c:18: warning: int format, double arg (arg 3)
+test.c:20: warning: control reaches end of non-void function
 
-TEST CODE
-==========
+Looks like maybe the floats are automatically promoted to doubles before 
+they are passed to printf.  I don't know if that's standard behaviour, 
+but it seems reasonable.  So then in the first case, two 64-bit values 
+are put on the stack, and two 64-bit values are taken off the stack.
 
-#include <stdio.h>
+In the second case, two 64-bit values are put on the stack, one 64-bit 
+value is taken off the stack and presented correctly, and one 64-bit 
+value has only the first 32 bits read, and misinterpreted as a signed int.
 
-main()
-{
-   float a1=1.0;
-   float a2=2.0;
+In the third case, two 64-bit values are put on the stack, and the first 
+32 bits are interpreted as the first signed int, and the second next 64 
+are interpreted as a double.  So case 3 is different from case 2 in that 
+the double value in case 3 is made up of two halves of two different 
+doubles, while in case 2 the double is made from an actual double.
 
-   printf(" \n");
-   printf(" Size of Float > %d \n", sizeof(float) );
-   printf(" Size of Int   > %d \n", sizeof(int) );
-   printf(" \n");
-
-   printf(" CASE 1 : f-f > %f - %f \n\n", a1, a2);
-   printf(" CASE 2 : f-d > %f - %d \n\n", a1, a2);
-   printf(" CASE 3 : d-f > %d - %f \n\n", a1, a2);
-   printf(" CASE 4 : d-d > %d - %d \n\n", a1, a2);
-}
-
-OUTPUT :
-
- Size of Float > 4
- Size of Int   > 4
-
- CASE 1 : f-f > 1.000000 - 2.000000
-
- CASE 2 : f-d > 1.000000 - 0
-
- CASE 3 : d-f > 0 - 0.000000
-
- CASE 4 : d-d > 0 - 1072693248
-
-==================================
-
-The CASE1 & CASE2 & CASE4 outputs are expected.
-
-   Any explanation for CASE3 behaviour. 
-   I presume it should behave similar to CASE2 and
-print 0 - 2.000000 .
-
-   Could somebody please pin-point what is 
-lacking in my presumtion .
-
-Thanks !
-
-
-
-		
-__________________________________ 
-Do you Yahoo!? 
-Yahoo! Mail - Easier than ever with enhanced search. Learn more. 
-http://info.mail.yahoo.com/mail_250
+Or something like that.
