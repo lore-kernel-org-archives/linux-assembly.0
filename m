@@ -1,36 +1,29 @@
-From: Claes Nyberg <md0claes@mdstud.chalmers.se>
+From: Doug Smith <bdsmith@buncombe.main.nc.us>
 Subject: Re: man x86<instruction>
-Date: Mon, 9 Dec 2002 16:53:05 +0100 (MET)
+Date: Mon, 9 Dec 2002 19:43:01 -0500
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <Pine.SOL.4.30.0212091647200.8755-100000@beauregard.mdstud.chalmers.se>
-References: <F86e1WqkBpdFfQJE1G90001f6a5@hotmail.com>
-Mime-Version: 1.0
+Message-ID: <200212100043.TAA02887@linux.smith.corp>
+References: <Pine.SOL.4.30.0212091647200.8755-100000@beauregard.mdstud.chalmers.se>
+Reply-To: bdsmith@buncombe.main.nc.us
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <F86e1WqkBpdFfQJE1G90001f6a5@hotmail.com>
+In-reply-to: <Pine.SOL.4.30.0212091647200.8755-100000@beauregard.mdstud.chalmers.se>
+	(message from Claes Nyberg on Mon, 9 Dec 2002 16:53:05 +0100 (MET))
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: linux-assembly@vger.kernel.org
+To: md0claes@mdstud.chalmers.se
+Cc: linux-assembly@vger.kernel.org
 
 
-On Mon, 9 Dec 2002, Joshua Hudson wrote:
+Hi, all. I just heard of this. Where is it possible to get that
+instruction set reference file you mentioned in these postings? I
+would greatly appreciate having this. 
 
-> >From: Claes Nyberg <md0claes@mdstud.chalmers.se>
-> >scanning the instruction set reference file.
-> Did you think of using vi's search to scan the file for you?
-> e.g. /^lea
 
-Yup, that's what I am doing now.
-But it would be nicer with manuals.
-Just a thought..
 
-// Claes
+Thanks a lot. 
 
-------------------------------------------------------------------------------
-Home: http://www.mdstud.chalmers.se/~md0claes/
-------------------------------------------------------------------------------
-Citation :
-The number of UNIX installations has grown to 10, with more expected.
-_The UNIX Programmer's Manual_, Second Edition, June, 1972
-------------------------------------------------------------------------------
-
+-- 
+Doug Smith: C.S.F.C.
+Computer Scientist For CHRIST!
