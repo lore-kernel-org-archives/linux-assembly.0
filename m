@@ -1,42 +1,48 @@
-From: Rudolf Marek <MAREKR2@cs.felk.cvut.cz>
-Subject: Re: Write sector (int 13h) under Linux?
-Date: Wed, 29 Jan 2003 10:42:24 +0100
+From: Kirill Ratkine <rabbitos@nm.ru>
+Subject: ld trouble
+Date: Wed, 29 Jan 2003 13:08:09 +0300
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <38904.8303514302$1043833254@news.gmane.org>
-References: <20030129085713.57893.qmail@web11302.mail.yahoo.com>
+Message-ID: <3E37A809.7080407@nm.ru>
 Mime-Version: 1.0
-Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <20030129085713.57893.qmail@web11302.mail.yahoo.com>
-List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Guido Reina <guidore@yahoo.com>
-Cc: linux-assembly@vger.kernel.org
+Return-path: <linux-assembly-owner@vger.kernel.org>
+List-Id: <linux-assembly.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: linux-assembly@vger.kernel.org
 
 
-> Subject: Write sector (int 13h) under Linux?
-> 
-> Hi there, 
-> 
-> I am trying to delete a sector of my linux box from the kernel, for this 
-> I have included a small piece of code as inline assembly. With the 13h 
-> interruption I write the sector, I don't know why but it is not working. 
-> Do you know if the linux kernel avoids such accesses to the hard disk? 
+Hello.
 
-Yes its nasty and dirty. 
+Could somebody explain me where the problem is?
 
-If you want to delete - overwrite some sector simply open your device
-for read and write if it is first hardisk than open /dev/hda file
-with open system call. (man 2 open) 
-Then use lseek to get onto right sector (sector size is 512B) so if you 
-want to get to 2nd sector  (after zero and first) you should lseek to 
-1024. Then you can read/write via standard system calls read and write.
+my nasm file:
+; ===
+section .text
+     global _start
 
-You can get some inspiration at my fdisk program included in asmutils
-package. linuxassembly.org/asmutils.html
+msg     db      'Dyna Loading!',0xa
+len     equ     $ - msg
 
-If you really want to use BIOS you need to use VM86 callbacks. but this 
-is nasty and unfair to system. 
+_start:
+         mov     edx,len
+         mov     ecx,msg
+         mov     ebx,1
+         mov     eax,4
+         int     0x80
+         mov     eax,1
+         int     0x80
 
-Regards
-		Rudolf
+
+my Makefile:
+#
+cg:     cg.o
+         ld -s -o cg cg.o -ldl
+cg.o:   cg.asm
+         nasm -f elf cg.asm
+
+I added '-ldl' because I'm going to use dlopen and other functions for
+shared lib loading. Compilation is Ok but ... system says 'this is non 
+executable file' when I try to run it. Why??? (If I delete '-ldl' 
+everything is Ok).
+Do I need to make my myself loader for '.so', indeed?
+
