@@ -1,54 +1,47 @@
-From: Rudolf Marek <MAREKR2@cs.felk.cvut.cz>
+From: h-peter recktenwald <lxhp@china.com>
 Subject: Re: Keyboard Input
-Date: Wed, 8 May 2002 15:46:02 +0200
+Date: Wed, 8 May 2002 18:33:39 +0000
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <abba6o$dal$2@main.gmane.org>
+Message-ID: <20020508183339.6969b580.lxhp@china.com>
 References: <200205081329.GAA32743@gold.he.net>
+Reply-To: phpr@snafu.de
 Mime-Version: 1.0
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-assembly-owner@vger.kernel.org>
 In-Reply-To: <200205081329.GAA32743@gold.he.net>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="iso-8859-1"
 To: "J.S.Souza" <jssouza@pacbell.net>
 Cc: linux-assembly@vger.kernel.org
 
+On Wed, 8 May 2002 06:30:00 -0700
+"J.S.Souza" <jssouza@pacbell.net> wrote:
 
-hello,
-
-
-I wrote it here last week I think but I cant find it so once again.
-
-On Wed, 8 May 2002, J.S.Souza wrote:
-
-> Date: Wed, 8 May 2002 06:30:00 -0700
-> From: J.S.Souza <jssouza@pacbell.net>
-> To: linux-assembly@vger.kernel.org
-> Subject: Keyboard Input
-> 
-> I'm new to linux assembly although I have taken Assembly Programming in 
-> College (unfortunately DOS based).  How is it possible to read input from the 
-> keyboard until the user hits the 'enter' key?  Does using the read() syscall 
-> work?  
-
-yes via read syscall, file desc (handle) will be STDIN
-
-
-Also, how about reading only ONE character from user and returning 
-> control back to the program?  Although I know C fairly well, I would rather 
+> I'm new to linux assembly although I have taken Assembly Programming =
+in=20
+> College (unfortunately DOS based).  How is it possible to read input =
+from the=20
+> keyboard until the user hits the 'enter' key?  Does using the read() =
+syscall=20
+> work?  Also, how about reading only ONE character from user and retur=
+ning=20
+> control back to the program?  Although I know C fairly well, I would =
+rather=20
 > use Assembly _only_  (if this is possible).
+>=20
+> 			J.S.Souza
 
-It depends on terminal settings, you have to set it via ioctl syscall
-I think it is ICANON atribute.
+=3D> http://home.snafu.de/phpr/initty.gz
 
-see example in asmutils package (sh.asm - tty_init to be more specific)
+regards,
+	hp
 
-
-Regards
-		Rudolf
-
-To konstantin: 
-
-I should put Q&A about this in FAQ and about vm86 too.
-
-
+--=20
+Linux,Assembly,Forth: http://home.snafu.de/phpr/index-lx.shtml (en,de)
+no=A0abusive=A0software=A0patents=A0http://petition.eurolinux.org/pr/pr=
+17.html
+-
+To unsubscribe from this list: send the line "unsubscribe linux-assembl=
+y" in
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
