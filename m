@@ -1,91 +1,117 @@
-From: "Randall Hyde" <aoax86@earthlink.net>
-Subject: Re: Nasm v/s Gas
-Date: Tue, 3 Dec 2002 22:07:30 -0800
+From: Sameer.Seth@lntinfotech.com
+Subject: Re: stack allocation for array
+Date: Wed, 4 Dec 2002 12:04:54 +0530
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <001c01c29b5b$6dc2fe20$6801a8c0@rhyde>
-References: <A8FBDFE1-0748-11D7-91BF-003065A88832@sonoma.edu>
+Message-ID: <OF5AD35592.D01217A4-ON65256C85.002393F8@lntinfotech.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Robert Plantz <plantz@SONOMA.EDU>
-Cc: linux-assembly@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+To: h-peter recktenwald <hp@lxhp.in-berlin.de>, linux-assembly@vger.kernel.org
 
 
------ Original Message ----- 
-From: "Robert Plantz" <plantz@SONOMA.EDU>
-To: "Randall Hyde" <aoax86@earthlink.net>
-Sent: Tuesday, December 03, 2002 9:24 PM
-Subject: Re: Nasm v/s Gas
+but with this kind of setup one cannot predict stack overflow problems.
+please soneone verify this.
 
 
-> Randy,
-> 
-> Thank you for your very thoughtful comments. I have consulted your
-> online book often and appreciate your expertise in this area.
-> 
-> I really should take the time to learn NASM
-> so I can make a better informed decision. (We have a 12 unit
-> teaching load every semester (no TAs), so it's a struggle just
-> to keep up.)
-> 
-> One thing to note is my parenthetical comment:
-> 
-> >> (The whole point of our class is to teach
-> >>     what is going on at the asm level when programming in C/C++.)
-> 
-> which I should have placed at the beginning.
-> 
-> We decided many years ago that it was not important for our
-> students to learn assembly language programming. Our course
-> was renamed "Computer Organization: Software". We really do
-> try to show approximately what the compiler is generating.
-> We are trying to demystify the machine operations going on
-> behind C. Within this context, the course serves as sort of
-> an introduction to computer architecture.
-
-Well, that makes sense, then.  A machine organization course
-could easily get by with Gas since the purpose of teaching assembly
-in such a course is not to teach students how to write programs in
-assembly code, but to teaching them how to write HLL code that
-generates decent assembly.
-
-> 
-> It's also important to note that I am at a CSU campus, not
-> a UC. Our courses are probably not quite as ambitious.
-
-Actually, when I taught at CSU (Cal Poly Pomona), we actually
-got *farther* along in assembly than at UC.  The reason was simple:
-the students took a "digital electronics" course prior to the assembly
-course.  It wasn't really an electronics course (though they did wire
-up a few simple projects).  It really was a machine organization
-course where the students learned about numbering systems, digital
-logic, and a ton of other things that wind up consuming half the term
-in an assembly course without such a prerequisite.  It was great because
-I could get much farther in the assembly course.  At UCR, the
-"Machine Organization and Assembly Language Programming" course
-spent about 3-4 weeks covering all that prerequisite material prior to
-getting into the actual assembly programming.  With just six or seven
-weeks to teach assembly, you can't get very far, which is why I've always
-worked at figuring out how to make the process more efficient.
+                                                                                                                                               
+                      h-peter recktenwald                                                                                                      
+                      <hp@lxhp.in-berlin.de>           To:       Sameer.Seth@lntinfotech.com, linux-assembly@vger.kernel.org                   
+                      Sent by:                         cc:                                                                                     
+                      linux-assembly-owner@vger        Subject:  Re: stack allocation for array                                                
+                      .kernel.org                                                                                                              
+                                                                                                                                               
+                                                                                                                                               
+                      04/12/2002 12:35 AM                                                                                                      
+                                                                                                                                               
+                                                                                                                                               
 
 
-> I fully understand that many people (including some of my
-> best friends  :-) ) do not agree with this philosophy.
 
-Actually, if you'd just said that it was a Computer Organization course,
-I probably would have agreed with the approach right from the start.
-Indeed, I'm currently working on a new book that attempts to teach
-Machine Organization using HLLs as much as possible (and the last chapter,
-which I'm currently working on, covers HLL->machine code translation by
-a compiler).  Although it's obvious that a programmer who knows assembly
-language really well makes a good HLL programmer, I've never been convinced
-that you have to become an accomplished assembly programmer in order to
-write good HLL code.  I believe that by studying machine organization really
-well, it's quite possible to write the same quality HLL code that someone who
-know assembly would be capable of writing.  We'll see if this text I'm working
-on takes people a little bit closer to that goal.
-Randy Hyde
+
+On Tuesday 03 December 2002 03:41, Sameer.Seth@lntinfotech.com wrote:
+
+your question does not relate to assembly, it's a compiler issue.
+gcc 'optimization' w. "-O3" might result to less unreasonable code
+("-O2" won't). you can receive a synchronuos asm listing from the
+real, compiled code w. AS listing switches, passed by "-Wa,...." in
+the CFLAGS variable - re AS docs.
+
+best,
+             hp
+
+> hi,
+>     could somebody help me out with this confusion. i wrote a C program
+and
+> had an assembly output for that program by giving gcc -S option. the C
+> program is something like this:
+>
+> int main()
+> {
+>         int  fd[3];
+>         int pid = 0;
+>         return 0;
+> }
+>
+>
+>
++++++++++++++++=+++++++++++++++++++++++=++++++++++++++++++++++++++++++=++++
+>+++++++++++++++++++++++++=+++++++++++++++++++++++== the .s file created is
+> like this:
+>         .file   "test_1.c"
+>         .version        "01.01"
+> gcc2_compiled.:
+> .text
+>         .align 4
+> .globl main
+>         .type    main,@function
+> main:
+>         pushl   %ebp
+>         movl    %esp, %ebp
+>         subl    $40,
+> %esp-----------------------------------------------------> (why has the
+> compiler allocated this much space for the
+>                                           two local variables which would
+> combinely would have taken 12 bytes)
+>         movl    $0, -28(%ebp)
+>         movl    $0, %eax
+>         leave
+>         ret
+> .Lfe1:
+>         .size    main,.Lfe1-main
+>         .ident  "GCC: (GNU) 2.96 20000731 (Red Hat Linux 7.1 2.96-81)"
+>
+++++++++++++++++++=++++++++++++++++++++++++++++++++++++=+++++++++++++++++++
+>+++++++++++++++++++++++++++++++++=+++++++++++++++++++
+>
+> please somebody let me know why has it done so. is it to keep some debug
+> information and where can i get toread such protocols followed by
+compiler.
+>
+> regards
+> sameer
+>
+>
+>
+>
+>
+>
+>
+>
+> -
+> To unsubscribe from this list: send the line "unsubscribe linux-assembly"
+> in the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+
+--
+Linux,Assembly,Forth: http://www.lxhp.in-berlin.de/index-lx.shtml en/de
+-
+To unsubscribe from this list: send the line "unsubscribe linux-assembly"
+in
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
+
+
 
 
