@@ -1,92 +1,113 @@
-From: Johann Oskarsson <myrkraverk@users.sourceforge.net>
+From: hp <lx@lxhp.in-berlin.de>
 Subject: Re: Preprocessing Assembly
-Date: Wed, 30 Apr 2003 00:08:28 +0000
+Date: Wed, 30 Apr 2003 08:32:25 +0100
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <3EAF13FC.4050402@users.sourceforge.net>
-References: <3EAAA2CC.3000606@users.sourceforge.net> <200304262320.h3QNKcVN000848@hirsch.in-berlin.de> <3EAB45C0.7000706@users.sourceforge.net> <200304271030.h3RAUDPi013804@hirsch.in-berlin.de>
+Message-ID: <200304300633.h3U6XA9L031703@hirsch.in-berlin.de>
+References: <3EAAA2CC.3000606@users.sourceforge.net> <200304271030.h3RAUDPi013804@hirsch.in-berlin.de> <3EAF13FC.4050402@users.sourceforge.net>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-assembly-owner@vger.kernel.org>
+In-Reply-To: <3EAF13FC.4050402@users.sourceforge.net>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: hp <lx@lxhp.in-berlin.de>, linux-assembly@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: Johann Oskarsson <myrkraverk@users.sourceforge.net>
+Cc: linux-assembly@vger.kernel.org
+
+nachricht  vom Mittwoch, 30. April 2003 01:08:
 
 Hi,
 
-hp wrote:
+> hp wrote:
+> >note also, that there are incompatibilities between binutils' versions and
+> >cpp/cc. e.g, the quite annoying different treatment of blank spaces which
+> >leads to unmangeable false evaluation of parameter lists to a '.macro' by
+> >GASP after praeprocessing w. CPP; I had to catch those arbitrarily
+> > inserted blanks with some short SED code in the makefile to overcome that
+> > silly 'feature' (example: http://www.lxhp.in-berlin.de/lhpf4.html).
+>
+> I'll try to look at this later.  Can you be a little more specific?
 
->note also, that there are incompatibilities between binutils' versions and 
->cpp/cc. e.g, the quite annoying different treatment of blank spaces which 
->leads to unmangeable false evaluation of parameter lists to a '.macro' by 
->GASP after praeprocessing w. CPP; I had to catch those arbitrarily inserted 
->blanks with some short SED code in the makefile to overcome that silly 
->'feature' (example: http://www.lxhp.in-berlin.de/lhpf4.html). 
->
-I'll try to look at this later.  Can you be a little more specific?
+simple example:
 
->single objection: binutils is available in any(?) linux distribution, thus 
->gasp could at least be compiled by a rsp. user - while 'masp' won't -?-
->
-I'm using the autoconf tools and can build rpms, so I guess that won't 
-be a problem.  Just a matter of down loading the package.  Although I 
-may have damaged some of the portability.
+#define page_shift 12
+#define page_size 1<<page_shift
 
->[...]
->
->some partial  praeprocessing - GASP un-useability seems a common problem.
->  
->
-That's what masp is meant for :)
+some versions of CPP insert a blank after "<<".
+thus you can't use a '#define'd string which contains multiple text elements 
+as a macro argument w. GASP because of it's  (imho) very silly delimiting 
+convention which takes a comma as well as a blank space for the .macro 
+arguments delimiter but provides no means to pass a parameter which consists 
+of more than a single piece of text. NO way round! no bracees, brackets... 
 
->>P.S. I was basically thinking of changing gasp directives from
->>.something to /something, any comments on that?
->>    
->>
->
->why? the leading dot is so common to many tools for internal commands.
->
-My original need for something else than gasp is becouse it's directives 
-conflict with mips directives. For example .end is eof in gasp but is 
-used on mips systems to mark end of functions.  Cutting off the rest of 
-the file at the end of the first function (not to mention making the 
-object file undebuggable) is *not a nice thing*.
+or, 
+defined in the Makefile and passed with the CFLAGS-variable:
 
->particularly, "/" might conflict with the linux file-path names' delimiter.
->anyway, this should not impose any serious problems, with a proper keywords 
->interpreter. only conversion of other sources might be a bit annoying.
->
-I've opted for \ now, should make life a little easier for some ppl. 
- I'll be adding a parameter to specify this character.  I've just made 
-my first version and a release is on the way soon.
+ifneq ($(ILIBDIR),)
+CCFLGS          +=      -Dilibdir="$(ILIBDIR)"
+endif 
 
-I'm not entirely understanding the following, what do you mean by 'rsp' 
-and 'wrt' ??  (and I've got a headace and want to finish this email 
-before going to sleep or something).
+and used, for instance, as:
 
->imo, an assembly praeprocessor should leave as much as possible to the rsp. 
->programmer, it can not assume any 'common' convention wrt the asm text!
->reserved keywords and related required conventions may be un-avoidable but, 
->_any_ other imposed ones are just bad (inadequate) design.
->
->thus, a similar question which comes out of my Forth experiences: why not 
->leave the entire naming to the user, w.o. _any_ 'special' or 'forbidden' 
->characters (some more thaught required because of "C"-ish kewords decoding by 
->testing for the rsp. leading chars)?
->not easily implemented within the limitations of "C"-ish (etc) conventions 
->but more conevenient to use(?) - or not worth the effort?
->
->I gave up because I got my Forth systems which by definition of the language 
->know no 'special' characters. thaught of a praeprocessor in ANS-Forth - which 
->would be even more 'portable' than "C" and _very_ easy to handle. then, why 
->not be consequent and do the complete assembler in Forth? I'd experiment with 
->a Forth assembler but the source is not ANS, thus not a public project, yet.
->currently, I'm back to rf hardware design which is so different and time (& 
->interest) consuming that the asm projects won't be done, soon.
->
->
->regards,
->	hp
->  
->
+libdirc: .sdatac ilibdir
+        .byte 0                                                               
+
+blank space will be inserted immediately after the expanded variable, before 
+the <nul>-byte - probably by CC because CPP called via execution of the 
+c-compiler ?
 
 
+which can be 'fixed' with the additional the piece of text '%NWSP%' (or any 
+other which will not coincide with a defined keyword &c) and, in Makefile:
+
+---
+# the <sed> command eliminates blanks after #defined operations
+# without which # pre-2.12 binutils or gcc 2.95 or gasp won't 
+# orderly evaluate the AS macroes!                                        
+%.s:    %.S scdata $(wildcard a/*)
+	$(CC) $(CCFLGS) $(SRCDIR)/$< |sed -e 's| *%NWSP% *||g' >$(BINDIR)/$@
+---
+then the modified lines read:
+	#define page_size 1<<%NWSP%page_shift
+and:
+	libdirc: .sdatac ilibdir%NWSP%
+
+>
+> I'm not entirely understanding the following, what do you mean by 'rsp'
+> and 'wrt' ??  (and I've got a headace and want to finish this email
+> before going to sleep or something).
+	^^^^^^^^^^^^^^^^^^^^^^^^ ...good luck!
+
+sorry if I bothered you with my laziness:
+	rsp	respective(ly)
+	wrt	with respect to
+
+
+further, the temporary radix setting of GASP is un-useable. 
+	movl $H'12345,eax	(I tried any possible variant)
+either, it works with cpp and gasp but triggers an error with AS or, cpp 
+enamates the error message or gasp or... (stupid thing!)
+
+similar errors result if a single character is passed as a numeric value, e.g.
+	movb 'X,al
+
+also, the string functions won't do anything useful, because they work on 
+explicite arguments but not on variables, i.e. can't be processed afterwards.
+
+variables defined by the assembler within/outside of macroes are handled 
+inconsistently, often can't be used for calculations or arguments passing.
+
+imho, due to bad design:
+macro args can't be addressed by their numeric position in the arguments list.
+no means to analyzing the addressing mode of an argument.
+no cross-ref listing (something similar, which most often is quite useless).
+
+...(more in the list included in the F4 archive)...
+
+just mentioned. I'll leave that for later...
+
+
+best,
+	hp
+-- 
+Linux,Assembly,Forth: http://www.lxhp.in-berlin.de/index-lx.shtml en/de
+  pse, reply to << lxhp -at- lxhp -dot- in-berlin -dot- de >>
