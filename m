@@ -1,39 +1,36 @@
-From: Karsten Scheibler <asm@mluwis17.wiwi.uni-halle.de>
+From: Lawrence <lawrencio@hotpop.com>
 Subject: Re: Using framebuffer device under Linux
-Date: Tue, 18 Nov 2003 22:01:30 +0100
+Date: Wed, 19 Nov 2003 09:28:47 +0800
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <20031118210426.4B7FFD72E@mluwis17.wiwi.uni-halle.de>
-References: <3FBA137E.7000108@hotpop.com> <3FBA1A7E.6010405@eprocess.fr> <3FBA2609.8010703@hotpop.com>
+Message-ID: <3FBAC74F.9050709@hotpop.com>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <3FBA2609.8010703@hotpop.com>; from lawrencio@hotpop.com on Tue, Nov 18, 2003 at 10:00:41PM +0800
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
 To: linux-assembly@vger.kernel.org
-Cc: Lawrence <lawrencio@hotpop.com>
 
-Hello,
+Hi Karsten,
 
-> Thanks for your reply. I did some more research after my post, and 
-> finally I can initialise the framebuffer under Red Hat 9.
-> 
-> I must pass something like "vga=788" as the kernel parameter to grub so 
-> that it will use /dev/fb0, "vga=ask" will change the mode you gave after 
-> boot up, but will immedately shift back to text mode when initialization 
-> script start.
-> 
-> Hoever, the asm program 'fb' still doesn't work...
-> 
-> Anyway, I'll try to consult the kernel doc you've mentioned.
+Thanks for your suggestion. here is what I got from strace:
 
-maybe you could run
-
-strace ./fb 2>log
-
-and send what was written to log.
+execve("./fb", ["./fb"], [/* 18 vars */]) = 0
+ioctl(0, 0x4b3b, 0x80492e8)             = 0
+ioctl(0, 0x4b3a, 0x1)                   = 0
+open("/dev/fb0", O_RDWR)                = 3
+ioctl(3, 0x4600, 0x804931c)             = 0
+ioctl(3, 0x4604, 0x80492ec)             = 0
+ioctl(3, 0x4601, 0x80493bc)             = -1 EINVAL (Invalid argument)
+ioctl(3, 0x4601, 0x804931c)             = 0
+ioctl(3, 0x4605, 0x80492ec)             = 0
+ioctl(0, 0x4b3a, 0)                     = 0
+_exit(1)                                = ?
 
 
+The system call in question seems on setting screen parameters.  But I 
+don't know how to deal with this.  Could you please give me some hints?
 
-karsten
+Thanks and Regards,
+Lawrence
+
+
