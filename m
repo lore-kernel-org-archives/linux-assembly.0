@@ -1,45 +1,27 @@
-From: Brian Raiter <breadbox@muppetlabs.com>
-Subject: Re: extended asm+pointers
-Date: Wed, 11 Aug 2004 11:33:49 -0700
+From: Maciej Hrebien <m_hrebien@wp.pl>
+Subject: Re: SMC article
+Date: Thu, 12 Aug 2004 08:00:06 +0200
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <16666.26253.291076.329433@eidolon.muppetlabs.com>
-References: <20040811090012.14095.qmail@web52905.mail.yahoo.com>
+Message-ID: <411B0766.802AD459@wp.pl>
+References: <41134E89.6487ABC9@wp.pl> <20040810190412.G20945@codepoet.unixcoders.org>
+Reply-To: m_hrebien@wp.pl
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <20040811090012.14095.qmail@web52905.mail.yahoo.com>
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: linux-assembly <linux-assembly@vger.kernel.org>
+To: "Daniel R. Blair" <joecamel@realcoders.org>
+Cc: linux-assembly@vger.kernel.org
 
->      14   asm("movq (%1), %%mm0 \n"
->      15       "movq %%mm0, (%0) \n"
->      16       :"=r"(m1)
->      17       :"r"(m)
->      18       );
+"Daniel R. Blair" wrote:
+> 
+> Do you have the URL of the original article?  I would really like to read
+> it.. I am not sure exactly what SMC is.. but, if you could share, I'd be
+> much appreciative.
 
-I believe this code copies the contents of m to m1. (Actually, with
-movq, I guess it will copy an extra four bytes in the process.) After
-it runs, both m and m1 will point to b[].
+SMC stands for Self-Modifying Code and the article is at:
+http://linuxassembly.org/articles/smc.html
 
-I think part of your problem is that you're trying to treat an array
-as an lvalue. gcc is decomposing your array into a pointer to the
-first element, which is not a valid lvalue. So you're trying to do the
-same thing via pointers. But it's not the same thing at all.
+-- 
+Maciej Hrebien
 
-In other words, you're stumbling with how C treats arrays and
-pointers, not the assembler.
-
-Get rid of your m and m1 variables, and try doing this instead:
-
-  asm("movq (%1), %%mm0 \n"
-      "movq %%mm0, (%0) \n"
-      : : "r"(b), "r"(a)
-      );
-
-(Note the lack of output operands. That's because we're not modifying
-the "pointer" b. We're just modifying the array that b points to.)
-
-I think this will do what you want.
-
-b
