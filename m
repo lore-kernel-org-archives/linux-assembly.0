@@ -1,39 +1,36 @@
-From: Frederic Marmond <fmarmond@eprocess.fr>
+From: Brian Raiter <breadbox@muppetlabs.com>
 Subject: Re: ELF binarry
-Date: Wed, 15 Oct 2003 08:39:34 +0200
+Date: Wed, 15 Oct 2003 14:56:00 -0700
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <3F8CEBA6.3020706@eprocess.fr>
-References: <20031014152812.24625.qmail@linuxmail.org>
-Reply-To: fmarmond@eprocess.fr
+Message-ID: <16269.49776.37061.807592@eidolon.muppetlabs.com>
+References: <20031015160137.8874.qmail@linuxmail.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <20031014152812.24625.qmail@linuxmail.org>
+In-Reply-To: <20031015160137.8874.qmail@linuxmail.org>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: ssams sudin <sams@linuxmail.org>
-Cc: linux-assembly@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: linux-assembly@vger.kernel.org
 
-ssams sudin wrote:
+> So, how can we get memory info (start & finish) from argv, envp, and
+> programname..?
 
->with GDB or another debugger, can we look at highest memory address of ELF binarry.
->if yes what is the command ?
->where can i found some reference about it?
->
->forgive me if this subject out of topic or just repeating last post
->regard
->ssams
->  
->
+Just look at them in the debugger:
 
-You may find usefull to see all infos about your elf with the 'readelf' 
-tool.
-$ readelf -a /bin/dd
-will display a lot of interesting thing about where is what (but it is 
-oriented to shared libraries though...)
+$ gdb ./foo
+GNU gdb [... blah blah blah ...]
+(gdb) b main
+Breakpoint 1 at 0x8048433: file foo.c, line 6.
+(gdb) r
+Starting program: ./foo 
+Breakpoint 1, main (argc=1, argv=0xbffff584, envp=0xbffff58c) at foo.c:6
+(gdb) p argv[0]
+$1 = 0xbffff698 "./foo"
+(gdb) p envp[0]
+$2 = 0xbffff6ad "VISUAL=/usr/bin/emacs"
+(gdb) p envp[31]
+$3 = 0xbfffffd9 "HISTSIZE=1000"
 
-It is usefull to see the basic organisation of a program, before 
-starting debug it.
+et cetera, et cetera ...
 
-Fred
-
+b
