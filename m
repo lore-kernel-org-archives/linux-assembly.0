@@ -1,40 +1,34 @@
-From: Oleg Nesterov <oleg@tv-sign.ru>
-Subject: Q: -fpic and $_GLOBAL_OFFSET_TABLE_
-Date: Tue, 15 Jul 2003 17:19:05 +0400
+From: jeff <jko@save-net.com>
+Subject: Keyboard and Mouse library
+Date: Wed, 16 Jul 2003 03:03:15 -0700
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <E19cPhx-0000W5-00@mail.tv-sign.ru>
-Return-path: <linux-assembly-owner@vger.kernel.org>
-List-Id: <linux-assembly.vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Message-ID: <200307160303.16120.jko@save-net.com>
+References: <E19cPhx-0000W5-00@mail.tv-sign.ru>
+Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
+Return-path: <linux-assembly-owner@vger.kernel.org>
+In-Reply-To: <E19cPhx-0000W5-00@mail.tv-sign.ru>
+Content-Disposition: inline
+List-Id: <linux-assembly.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
 To: linux-assembly@vger.kernel.org
 
-Hello.
+Hello,
+I'm trying to create a linux library and running into
+trouble with the mouse.  The intent was to use kernel
+calls only and run from the user level.  Is this
+possible?
 
-I thought, that &GOT == $_GLOBAL_OFFSET_TABLE_ + .
+I've looked at Gpm which works with terminals
+but find the "c" code difficult.  Assembler for me
+is much easier to understand.
 
-$ cat test.c
+Also, it would be nice to get the raw keyboard scan
+codes.  I've found programs that claim to do this
+but they don't work on my 9.1 Mandrake version
+of Linux?
 
-void test(void)
-{
-	asm volatile (
-		"addl $_GLOBAL_OFFSET_TABLE_, %eax\n"
-		"addl $_GLOBAL_OFFSET_TABLE_, %ecx\n"
-	);
-}
+Any suggestions or ideas?
 
-$ cc -c -fpic -fomit-frame-pointer test.c && ld -shared -o test.so test.o && objdump -d test.so
+Jeff Owens
 
-test.so:     file format elf32-i386
-
-Disassembly of section .text:
-
-0000018c <test>:
- 18c:	05 0d 10 00 00       	addl   $0x100d,%eax	==> &GOT = 0x18c + 0x100d = 0x1199
- 191:	81 c1 07 10 00 00    	addl   $0x1007,%ecx	==> &GOT = 0x191 + 0x1007 = 0x1198
- 197:	c3                   	ret    
-
-How can it be?
-
-Oleg.
