@@ -1,33 +1,39 @@
-From: Maciej Hrebien <m_hrebien@wp.pl>
+From: "David S. Miller" <davem@redhat.com>
 Subject: Re: sparc assembly mnemonic
-Date: Mon, 21 Jun 2004 23:16:52 +0200
+Date: Mon, 21 Jun 2004 14:48:09 -0700
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <40D75044.99C7F390@wp.pl>
-References: <Pine.LNX.4.58.0406211231500.25030@ns.isi.ulatina.ac.cr> <20040621132143.2420ab01.davem@redhat.com>
-Reply-To: m_hrebien@wp.pl
+Message-ID: <20040621144809.7a6c63e2.davem@redhat.com>
+References: <Pine.LNX.4.58.0406211231500.25030@ns.isi.ulatina.ac.cr>
+	<20040621132143.2420ab01.davem@redhat.com>
+	<40D75044.99C7F390@wp.pl>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
+In-Reply-To: <40D75044.99C7F390@wp.pl>
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: linux-assembly@vger.kernel.org
+To: m_hrebien@wp.pl
+Cc: linux-assembly@vger.kernel.org
 
-"David S. Miller" wrote:
+On Mon, 21 Jun 2004 23:16:52 +0200
+Maciej Hrebien <m_hrebien@wp.pl> wrote:
+
+> "David S. Miller" wrote:
+> > 
+> > On Mon, 21 Jun 2004 12:34:25 -0600 (CST)
+> > Fabio Miranda Hamburger <fabmirha@ns.isi.ulatina.ac.cr> wrote:
+> > 
+> > > what are the sparc assembly  equivalent of the following instructions:
+> > >
+> > >     __asm__ __volatile__ ("fsave %0\n" : : "m"(fpubuf));
+> > >     __asm__ __volatile__ ("frstor %0\n" : : "m"(fpubuf));
+> > 
+> > You have to save each and every register by hand, unlike x86 there
+> > isn't a specific instruction which saves everything for you.
 > 
-> On Mon, 21 Jun 2004 12:34:25 -0600 (CST)
-> Fabio Miranda Hamburger <fabmirha@ns.isi.ulatina.ac.cr> wrote:
-> 
-> > what are the sparc assembly  equivalent of the following instructions:
-> >
-> >     __asm__ __volatile__ ("fsave %0\n" : : "m"(fpubuf));
-> >     __asm__ __volatile__ ("frstor %0\n" : : "m"(fpubuf));
-> 
-> You have to save each and every register by hand, unlike x86 there
-> isn't a specific instruction which saves everything for you.
+> What about save/restore mechanism (tmp purposes)? Does it work only for
+> alu registers (not fpu)? I'm just curious - never played with sparc :(
 
-What about save/restore mechanism (tmp purposes)? Does it work only for
-alu registers (not fpu)? I'm just curious - never played with sparc :(
-
--- 
-Maciej Hrebien
-
+That's correct, the 'save' and 'restore' instructions only store ALU register,
+and not even all of them, just the current window (this leaves out other windows
+and the global registers).
