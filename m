@@ -1,39 +1,48 @@
-From: Brian Raiter <breadbox@muppetlabs.com>
-Subject: Re: Access to Program Counter in C
-Date: Fri, 19 Nov 2004 03:30:54 -0800
-Message-ID: <16797.55662.422644.907944@eidolon.muppetlabs.com>
-References: <20041116163821.61564.qmail@web51902.mail.yahoo.com>
-	<419D9361.6070903@codito.com>
+From: joy merwin monteiro <joy.merwin@gmail.com>
+Subject: permission problem
+Date: Sat, 20 Nov 2004 19:56:55 +0530
+Message-ID: <4b0d6e0d0411200626361bd414@mail.gmail.com>
+Reply-To: joy_mm@ieee.org
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_1682_18031882.1100960815140"
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <419D9361.6070903@codito.com>
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
 To: linux-assembly@vger.kernel.org
 
-> A M wrote:
->> Does anybody know how to access the address of the
->> current executing instruction in C while the program
->> is executing?
-> doing exactly as your words say, won't be possible (as
-> far as my limited experience with ix86 architecture goes),
-> but something nearabout can be achieved with little inline
-> assembly fragment.
+------=_Part_1682_18031882.1100960815140
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
 
-Actually, there's a gcc-specific extension that can do this, namely
-the unary && operator, which will return the address of a goto label:
+Hi,
+ wantdd to write something to the parallel port
+"windows style"  but am getting a seg fault on the "out"
+instruction.
 
-int somefunction(void)
-{
-    /* ... */
-    void *pc = &&here;
-  here:
-    /* ... */
-}
+any pointers?
 
-Of course you shouldn't use this unless you completely don't care
-about portability.
+any easy stuff on this i/o port programming in assembly available on
+the net (tutorials, I mean)
+I'm using nasm for assembling.
 
-b
+thanks in advance,
+Joy.M.Monteiro
+
+-- 
+people always turn away,
+from the eyes of a stranger...
+Afraid to know
+what lies behind the stare.......
+    --QueensRyche
+
+------=_Part_1682_18031882.1100960815140
+Content-Type: application/octet-stream; name="parport.s"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="parport.s"
+
+c2VjdGlvbiAudGV4dAoKICAgIGdsb2JhbCBfc3RhcnQKCnBvcnQgZXF1IDB4Mzc4CnN0YXQgZXF1
+IHBvcnQrMQpjdHJsIGVxdSBwb3J0KzIKCl9zdGFydDoKCiAgICBtb3YgZHgscG9ydAogICAgbW92
+IGFsLDB4ZmYKICAgIG91dCBkeCxhbAogICAgbW92IGVheCwxCiAgICBpbnQgMHg4MAo=
+------=_Part_1682_18031882.1100960815140--
