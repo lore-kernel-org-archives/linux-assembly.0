@@ -1,28 +1,47 @@
-From: "Anant Aneja" <anantaneja@rediffmail.com>
-Subject: vt100 escape codes
-Date: 6 Mar 2003 13:27:05 -0000
+From: dAvId KeDrOsKy <davidkedrosky@rogers.com>
+Subject: Re: Mixing C and assembly
+Date: Thu, 6 Mar 2003 21:05:58 -0500
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <20030306132705.31400.qmail@webmail7.rediffmail.com>
-Reply-To: "Anant Aneja" <anantaneja@rediffmail.com>
+Message-ID: <200303062105.58355.davidkedrosky@rogers.com>
+References: <200303052350.00680.davidkedrosky@rogers.com> <15974.54476.436663.588809@eidolon.muppetlabs.com>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
+In-Reply-To: <15974.54476.436663.588809@eidolon.muppetlabs.com>
 Content-Disposition: inline
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain;
-	format=flowed; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: linux-assembly@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: Linux Assembly Programming List <linux-assembly@vger.kernel.org>
 
-i used the escape codes of vt100 to clear the screen and also 
-found on the net other such codes.
-now i want to do the folloeing :
-1.make the program wait until the user presses a key.
-when this is done the key pressed is not displayed but the program 
-no moves on
+I fixed up the assembly code by taking out the underscores before asm_func but 
+I still get a linking error "main.c: undefined reference to asm_func"
 
+Does anybody know why this could be occuring?
 
-Anant Aneja
+Thanks again, 
 
+Dave
 
-
+On March 5, 2003 11:55 pm, Brian Raiter wrote:
+> > The error I am getting when I try to run the program in KDevelop (which
+> > uses gcc) is:
+> > main.c: undefined reference to `asm_func'
+>
+> That's right. There is no asm_func symbol.
+>
+> > section         .text
+> >
+> > global _asm_func
+> >
+> > _asm_func:
+>
+> The practice of silently appending an underscore to exported C symbols
+> is not done in the Unix world, in general. Export the same symbol you
+> import.
+>
+> b
+> -
+> To unsubscribe from this list: send the line "unsubscribe linux-assembly"
+> in the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
 
