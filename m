@@ -1,48 +1,43 @@
-From: joy merwin monteiro <joy.merwin@gmail.com>
-Subject: permission problem
-Date: Sat, 20 Nov 2004 19:56:55 +0530
-Message-ID: <4b0d6e0d0411200626361bd414@mail.gmail.com>
-Reply-To: joy_mm@ieee.org
+From: Jan Wagemakers <janw@easynet.be>
+Subject: Re: permission problem
+Date: Sat, 20 Nov 2004 17:42:05 +0100
+Message-ID: <20041120164205.GA15847@qwerty.be>
+References: <4b0d6e0d0411200626361bd414@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; 
-	boundary="----=_Part_1682_18031882.1100960815140"
 Return-path: <linux-assembly-owner@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <4b0d6e0d0411200626361bd414@mail.gmail.com>
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: linux-assembly@vger.kernel.org
 
-------=_Part_1682_18031882.1100960815140
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
+joy merwin monteiro <joy.merwin@gmail.com> schreef:
 
-Hi,
- wantdd to write something to the parallel port
-"windows style"  but am getting a seg fault on the "out"
-instruction.
+>  wantdd to write something to the parallel port
+> "windows style"  but am getting a seg fault on the "out"
+> instruction.
 
-any pointers?
+Before you can write something to a port you need to get "ioperm". Type
+'man ioperm' for more information.
 
-any easy stuff on this i/o port programming in assembly available on
-the net (tutorials, I mean)
-I'm using nasm for assembling.
+You can find some example-programs that use "ioperm" at
+<http://www.janw.easynet.be/eng.html>.
 
-thanks in advance,
-Joy.M.Monteiro
+Also, at <http://www.janw.easynet.be/koffie.html>, I have an example-program
+that writes to port 0x310. This webpage is in the Dutch language and is
+using the at&t-syntax - so maybe a little difficult to read - but hopefully
+not to difficult to get the picture ;-)
+
+Also remember to run programs that use ioperm as 'suid-root' (chown root prg
+; chmod 4750 prg), or you will stil get a segmentation fault.
+
+Hope this helps you.
+
 
 -- 
-people always turn away,
-from the eyes of a stranger...
-Afraid to know
-what lies behind the stare.......
-    --QueensRyche
+Met vriendelijke groetjes         - Jan Wagemakers -
 
-------=_Part_1682_18031882.1100960815140
-Content-Type: application/octet-stream; name="parport.s"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="parport.s"
-
-c2VjdGlvbiAudGV4dAoKICAgIGdsb2JhbCBfc3RhcnQKCnBvcnQgZXF1IDB4Mzc4CnN0YXQgZXF1
-IHBvcnQrMQpjdHJsIGVxdSBwb3J0KzIKCl9zdGFydDoKCiAgICBtb3YgZHgscG9ydAogICAgbW92
-IGFsLDB4ZmYKICAgIG91dCBkeCxhbAogICAgbW92IGVheCwxCiAgICBpbnQgMHg4MAo=
-------=_Part_1682_18031882.1100960815140--
+... RFS: picprog: Microchip PIC serial programmer software (GPL)
+    Deb-package is available at <http://www.janw.easynet.be/picprog.html>
