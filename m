@@ -1,56 +1,90 @@
-From: Jean-Yves Lamoureux <jylam@lnxscene.org>
-Subject: Re: www.linuxassembly.org
-Date: Wed, 27 Nov 2002 12:11:53 +0100
+From: kiran kumar <kathireddy01@yahoo.com>
+Subject: c code and asm code linking
+Date: Wed, 27 Nov 2002 23:05:56 -0800 (PST)
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <3DE4A879.9000303@lnxscene.org>
-References: <Pine.VMS.3.91-2(vms).1021127115741.41699B-100000@cs.felk.cvut.cz>
+Message-ID: <20021128070556.40495.qmail@web20101.mail.yahoo.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <Pine.VMS.3.91-2(vms).1021127115741.41699B-100000@cs.felk.cvut.cz>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Rudolf Marek <MAREKR2@cs.felk.cvut.cz>
-Cc: linux-assembly@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: linux-assembly@vger.kernel.org
 
-Rudolf Marek wrote:
+Sir,
+ i am trying to call a asm routine in C model, for
+testing i have taken a small program. 
+ 
+ my main program is 
+====================================
+#include<stdio.h>
 
->Hello, what happen to linuxassembly org ?
->  
->
-it seems it can be accessed only by http://linuxassembly.org (without 
-the www).
-You can access it by one of its mirror, too :
+extern int BSWAP ( unsigned int a);
 
+void main()
+  {
 
-http://reguly.net/alvaro/cic/linux-asm/
-http://www.lnxscene.org/assembly/
-http://mars.wiwi.uni-halle.de/asm/
-http://linuxassembly.frapes.org/
-http://kernelkorea.org/la/
-http://nuieee.fe.up.pt/~ee97034/la/
-http://la.kmv.ru
-http://linuxasm.gerf.org/
+    unsigned int a ;
+    unsigned int b;
 
+     a=255;
 
-here it is :)
+    b= BSWAP(a);
 
+    printf(" a = %d b = %d",a,b);
+  return;
+  }
+=========================================
 
-Jean-Yves Lamoureux
-Workless software developper
-jylam at lnxscene dot org
+my bswap.asm code is 
+=========================================
+bits 32
 
+section .data
+align 16
 
-
->Ruik
->
->-
->To unsubscribe from this list: send the line "unsubscribe linux-assembly" in
->the body of a message to majordomo@vger.kernel.org
->More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
->
->  
->
+section .text
 
 
+;===========================================================================
+;
+; uint32_t bswap(uint32_t a);
+;
+;===========================================================================
+
+align 64
+
+global _BSWAP
+
+_BSWAP
+                mov     eax, [esp+4]
+                bswap eax
+                ret
+
+==================================
+
+i have complied the asm code using 
+$nasm -f elf bswap.asm 
+ i got bswap.o
+then i compiled main code using
+gcc -c main.c
+
+then i used ld to link
+
+$ ld -o test main.o bswap.o
+
+it is giving the error
+ld: warning: cannot find entry symbol _start;
+defaulting to 08048080
+main.o: In function `main':
+main.o(.text+0x14): undefined reference to `BSWAP'
+main.o(.text+0x2d): undefined reference to `printf'
+
+sir, help me in resolving this linking problem.
+
+ thanking you sir
+kiran kumar k
+
+__________________________________________________
+Do you Yahoo!?
+Yahoo! Mail Plus - Powerful. Affordable. Sign up now.
+http://mailplus.yahoo.com
