@@ -1,33 +1,32 @@
-From: jeff <jko@bsn1.net>
-Subject: Re: New Site for Desktop Assembly
-Date: Fri, 13 Aug 2004 10:55:09 -0700
+From: =?ISO-8859-9?Q?Mert_B=F6r=FC?= <mertboru@superonline.com>
+Subject: newbie - how to mix c and assembly linux i386
+Date: Sun, 15 Aug 2004 00:08:24 +0200
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <20040813105509.49431e9a.jko@bsn1.net>
-References: <20040812184139.15e4c369.jko@bsn1.net>
-	<20040813054252.GA9928@cybertron.cyth.net>
-	<20040813054408.GB9928@cybertron.cyth.net>
+Message-ID: <411E8D58.9040904@superonline.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <20040813054408.GB9928@cybertron.cyth.net>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
 To: linux-assembly@vger.kernel.org
 
-Ray <ray@cyth.net> wrote:
+Hello,
 
-> On Fri, Aug 13, 2004 at 01:42:52AM -0400, Ray wrote:
-> > On Thu, Aug 12, 2004 at 06:41:39PM -0700, jeff wrote:
-> > > New Site for Desktop Assembly
-> > > http://members/bsn1.net/jko@save-net.com/asm/
-> > 
-> > You mean: http://members.bsn1.net/jko@save-net.com/asm/
+I am currently programming in C via KDeveloper on linux i386. Due to 
+high execution speed requirements of my project, I am planning to port 
+some of my C code to Assembly, and would be happy to do that without 
+sacrifising KDeveloper. (Nice IDE, huh?)
 
-Thanks for the correction.
+My problem is:
 
-Also, today the AsmEdit project was updated at SourceForge.
-http://sourceforge.net/projects/asmedit
-The AsmEdit project has now been tested for about a year
-and should move out of beta soon.
+Although experienced in programming, I am a newbie in linux environment! 
+I would be happy to hear your recommendation for mixing C and Assembly. 
+Any recommendations, tutorials, source code examples, etc.? - (Yes, I 
+have searched the web and I am afraid, got very confused) :-(
 
- jeff
+Thank you.
+
+Kind Regards,
+Mert
+
+
