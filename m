@@ -1,31 +1,37 @@
-From: hp <lx@lxhp.in-berlin.de>
+From: Maciej Hrebien <m_hrebien@wp.pl>
 Subject: Re: switching to real mode?
-Date: Fri, 25 Jul 2003 17:55:36 +0100
+Date: Fri, 25 Jul 2003 19:20:24 +0200
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <200307251755.36873.lx@lxhp.in-berlin.de>
+Message-ID: <3F2166D8.65AE79D8@wp.pl>
 References: <Pine.LNX.4.33.0307251536460.25632-100000@technix.oeh.uni-linz.ac.at>
+Reply-To: m_hrebien@wp.pl
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <Pine.LNX.4.33.0307251536460.25632-100000@technix.oeh.uni-linz.ac.at>
-Content-Disposition: inline
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Wolfgang Huber <hwolf@technix.oeh.uni-linz.ac.at>, linux-assembly@vger.kernel.org
+To: linux-assembly@vger.kernel.org
 
-Wolfgang Huber am Freitag, 25. Juli 2003 14:38:
+Wolfgang Huber wrote:
+> 
 > Hi!
->
+> 
 > I know this question sounds a bit silly...
-
-indeed...
-
 > How would one switch to real mode in Linux, are there any caveats?
+> 
+> Wolfgang
 
-none - if you can.
+For what purpose you need it? From linux x86 users point of view: you
+just can't, or am i wrong? ;) Generally once you switch to protected
+mode you don't need real one and if you want to run some code written
+for real mode you just run it in vm86 mode rather than switching it back
+(as i remember dosemu does something like this). If you are interested
+in "hard" switch i suggest to read ie. intel's "software developers
+manual vol. 3, system programming", chapter 8 "processor management and
+initialization", point 8 "mode switching" (1999 version).
 
+Correct me linux-assemblers if i'm wrong!
 
-DA =>	FAQ(s) + DOCs at http://linuxassembly.org
-
-hp.
+-- 
+Maciej Hrebien
 
