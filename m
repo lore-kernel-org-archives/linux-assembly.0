@@ -1,18 +1,20 @@
-From: "Rick A. Hohensee" <rickh@capaccess.org>
-Subject: Re: what's colour referenc
-Date: Wed, 24 Apr 2002 08:38:36 -0400
+From: "prasanth_yedla" <prasanth_yedla@infy.com>
+Subject: info required on m4.
+Date: Thu, 25 Apr 2002 10:20:50 +0530
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <fc.00858412003e3a4c3b9aca0062350931.3e3a4d@capaccess.org>
-References: <Pine.LNX.4.33L2.0204241302170.24308-100000@cow>
+Message-ID: <1BD922A62552D411B48A00D0B747237510812A11@kecmsg04.ad.infosys.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7BIT
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <Pine.LNX.4.33L2.0204241302170.24308-100000@cow>
+content-class: urn:content-classes:message
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: jani@iv.ro
-Cc: ssams@telkom.net, linux-assembly@vger.kernel.org
+To: linux-assembly@vger.kernel.org
 
-man console_codes
-l
+Hi ..
 
+It wud be very helpful to me if ne one cud let me know the basics of using m4 for macros....
+if possible send me a document ...
+
+Thanks in advance 
+prasanth
