@@ -1,67 +1,68 @@
-From: hp <lx@lxhp.in-berlin.de>
+From: Maciej Hrebien <m_hrebien@wp.pl>
 Subject: Re: The Well-Factored 386
-Date: Tue, 29 Jul 2003 18:21:53 +0100
+Date: Tue, 29 Jul 2003 18:49:12 +0200
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <200307291821.53939.lx@lxhp.in-berlin.de>
-References: <fc.0010c7b2009ebbbf0010c7b2009ebbbf.9ebbc6@capaccess.org> <3F25AA78.6020808@sktc.net> <3F268569.80306@techsource.com>
+Message-ID: <3F26A588.EB8DA4D5@wp.pl>
+References: <fc.0010c7b2009ebbbf0010c7b2009ebbbf.9ebbc6@capaccess.org>
+							<20030728070658.343ed2b0.davem@redhat.com>
+							<fc.0010c7b2009ecdef0010c7b2009ebbbf.9ecdfd@capaccess.org>
+							<20030728133300.2ef96cf4.davem@redhat.com> <16165.48414.123242.660524@eidolon.muppetlabs.com>
+Reply-To: m_hrebien@wp.pl
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <3F268569.80306@techsource.com>
-Content-Disposition: inline
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Timothy Miller <miller@techsource.com>, "David D. Hagood" <wowbagger@sktc.net>
-Cc: "David S. Miller" <davem@redhat.com>, linux-kernel@vger.kernel.org, linux-assembly@vger.kernel.org
+To: linux-assembly@vger.kernel.org
 
-could you pse keep that 'discussion' to where it belongs?!
-it is definitely 'off topic' in the "linux-assembly" mailing list.
-
-and, it is ridiculous, since it already generated much (M U C H) more traffic 
-than the messages you're just complaining about. - so you should eliminate 
-yourself, consequently, from that 'clean' list of yours -???- 
-
-you complaint it is un-just - or did you, for instance, eliminate the owner of 
-<rms@gnu.org> from your lk-devel list, too? who already emanated so many 
-messages which have nothing to do with linux kernel devel that Rick would 
-never be able to make up for that much of nonsense.
-
-best, 
-	hp
-
-Timothy Miller am Dienstag, 29. Juli 2003 15:32:
-> David D. Hagood wrote:
-> > David S. Miller wrote:
-> >> And I don't care if you don't like my attitude, my job as
-> >> list manager is not to be liked by people or to have them
-> >> like my attitude.  My job is to keep the lists clean.
+Brian Raiter wrote:
+> 
+> > Rick, I wish you luck finding another machine with lists to
+> > infiltrate.
 > >
-> > I'd just like to say "BRAVO SIR!" I am glad to see you doing this, and I
-> > support your actions 100%.
-> >
-> > Anybody's right of freedom of speech ends when they force the unwilling
-> > to listen - this troll was -10, Offtopic. He was not talking about the
-> > kernel, any development of interest to the kernel, and I for one am glad
-> > he is getting bounced.
-> >
-> > Let him post his drivel-scribblings on Slashdot, along with goatse.cx,
-> > the porn trolls, and the *BSD is dead trolls.
->
-> I personally have made more than my fair share of off-topic posts.  Some
-> of them have been filtered, which really doesn't bother me, because,
-> well, they were off-topic.
->
-> Sometimes, I get carried away, but I do keep in mind that off-topic
-> posts can be very rude.  I remind myself of this out of respect for
-> others on the list.
->
-> -
-> To unsubscribe from this list: send the line "unsubscribe linux-assembly"
-> in the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> > Because you're not going to do it on vger.kernel.org any more.
+> > Bye bye.
+> 
+> I've no doubt that his posts seemed off-topic for linux-kernel, I
+> would argue that they are certainly on-topic for linux-assembly. (I
+> also imagine the latter sees much less traffic than the former, thus
+> hp's comment.) I rather doubt that the complaints were coming from
+> both lists, given that his stuff is far more interesting that the
+> usual linux-assembly posts ("how do I write a number to screen without
+> using BIOS?!") Assuming this is true, perhaps it would make more sense
+> to allow him to continue posting to linux-assembly?
+
+I agree with Brian & hp. I find quite interesting what Rick is writing
+rather than reading another question & another answer that you can find
+in mail archives or just by tring to "research" the answer by yourself.
+True, maybe it's not for linux-kernel but David! let him post on
+linux-assembly. Konst's linuxassembly.org/list.html has:
+
+[ ... ]
+
+Discuss it at the Linux Assembly Programming mailing list! 
+
+     This is an open discussion of assembly programming under Linux,
+*BSD, BeOS, or any other UNIX/POSIX like OS; also it is not limited to
+x86 assembly
+     (Alpha, Sparc, PPC and other hackers are welcome too!). 
+
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+     Before asking a question, please search list archives first; it is
+fairly possible that an answer is already there. 
+
+[ ... ]
+
+David, he speaks around the list main topic i think, it's quite
+interesting, maybe not all (for me!), but more useful then "please help
+me" postings. He doesn't commercials, non-censored or other stupid
+things. Let him talk about his bash-assembly & other projects with
+connection to the topic.
+
+BTW: how many people from linux-assembly complainted Rick? Could you
+give as this information? Or some proportions lx-as vs lx-ker?
 
 -- 
-Linux,Assembly,Forth: http://www.lxhp.in-berlin.de/index-lx.shtml en/de
-	FAQ(s) + DOCs at http://linuxassembly.org
-  pse, reply to << lx -at- lxhp -dot- in-berlin -dot- de >>
+Maciej Hrebien
 
