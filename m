@@ -1,24 +1,15 @@
 From: "ssams" <ssams@telkom.net>
-Subject: GNU assembly tools
-Date: Wed, 08 May 2002 14:18:10 +0700
+Subject: HOW I DRAW WITH GAS
+Date: Wed, 08 May 2002 14:38:51 +0700
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <web-10633760@m1.plasa.com>
+Message-ID: <web-10641572@m1.plasa.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-assembly-owner@vger.kernel.org>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
+Content-Type: text/plain; charset="us-ascii"
 To: linux-assembly@vger.kernel.org
 
-1.I=E1m really new for assembly programming. & i started learn
-with linux assembly especially GNU assembly. Hi every body
-point me please what tool must i get for learning, and
-where..?
-2. when, how and why we use library for coding...?
-
-help me pleaaasseeeee!!!!!:)
--
-To unsubscribe from this list: send the line "unsubscribe linux-assembl=
-y" in
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+hi everyone.....
+teach me about the mecanism of drawing with pixel base (with
+GNU ASSEMBLY i hope)?<:)
