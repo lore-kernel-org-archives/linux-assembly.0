@@ -1,52 +1,71 @@
-From: Maciej Hrebien <m_hrebien@wp.pl>
-Subject: Re: Using gcc to compiler assembly
-Date: Sun, 03 Nov 2002 19:26:30 +0100
+From: "Joseph D. Wagner" <wagnerjd@prodigy.net>
+Subject: RE: Using gcc to compiler assembly
+Date: Sun, 3 Nov 2002 14:19:07 -0600
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <3DC56A56.BCC83059@wp.pl>
-References: <F31en0bcaQUXPXF2aZc0000966c@hotmail.com>
-Reply-To: m_hrebien@wp.pl
+Message-ID: <000201c28376$49daf0a0$35181c43@joe>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-assembly-owner@vger.kernel.org>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: linux-assembly@vger.kernel.org
+Content-Type: text/plain; charset="iso-8859-1"
+To: Linux Assembly Programming List <linux-assembly@vger.kernel.org>
 
-Andrew Haydon wrote:
-> 
-> How to use GCC compiling assembly codes? I attached my example code and
-> tried gcc -c -o foo.o foo.S. This line "typedef foo_bar_t int;" choked.
+What you've got isn't pure Assembly; it's some strange jumble of C and
+Assembly.
 
-Yes, "typedef" isn't assembly directive nor asm instruction.
-
-> I
-> read the Makefiles for linux kernel and still could not understand how these
-> assebmly codes were compiled by GCC.
-
-Some of them are only preporcessed by gcc (-E flag) and then send to the
-assembler, linker... Maybe asm code is passed to gcc streight, i don't
-remember, but notice that the code isn't mixed in form Your example is.
-
-If You mix C & assembly code try C's asm keyword, ie:
-
-void foo()
-{
-   double a;
-
-   /* ... */
-
-   asm("fsin" : "=st" (a));
+To include Assembly in C, use
+asm {
+	;	// Assembly Code Here
 }
 
-For details on how to pass arguments to asm() see gcc's man page.
+or=20
 
-It's the first solution. The second one is to separate Your asm and C
-code in their own files. Assemble Your low level code to *.o and then
-pass it to the C compiler. I think it's better solution but of course
-it's Your code.
+__asm {
+	;	// Assembly Code Here
+}
 
-Regards,
+depending on the compiler.
 
--- 
-Maciej Hrebien
+To program in pure Assembly, ditch GCC.  Go with NASM.
+http://sourceforge.net/projects/nasm
 
+And based on your lack of distinction between C and Assembly, I also
+recommend:
+http://www.amazon.com/exec/obidos/tg/detail/-/0130910139/
+
+Joseph Wagner
+
+-----Original Message-----
+=46rom: linux-assembly-owner@vger.kernel.org
+[mailto:linux-assembly-owner@vger.kernel.org] On Behalf Of Andrew Haydo=
+n
+Sent: Saturday, November 02, 2002 5:09 PM
+To: linux-assembly@vger.kernel.org
+Subject: Using gcc to compiler assembly
+
+Gurus,
+
+How to use GCC compiling assembly codes? I attached my example code and=
+=20
+tried gcc -c -o foo.o foo.S. This line "typedef foo_bar_t int;" choked.
+I=20
+read the Makefiles for linux kernel and still could not understand how
+these=20
+assebmly codes were compiled by GCC.
+
+Thanks in advance,
+
+Andrew
+
+
+
+
+_________________________________________________________________
+Unlimited Internet access -- and 2 months free!=A0 Try MSN.=20
+http://resourcecenter.msn.com/access/plans/2monthsfree.asp
+
+-
+To unsubscribe from this list: send the line "unsubscribe linux-assembl=
+y" in
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
