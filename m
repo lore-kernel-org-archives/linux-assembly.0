@@ -1,36 +1,70 @@
-From: Ribamar Santarosa de Sousa <ribamar.sousa@ic.unicamp.br>
-Subject: Re: ring0 access
-Date: Fri, 10 Oct 2003 17:06:57 -0300
+From: Patrick Alken <cosine@newton.physics.drexel.edu>
+Subject: new release of assembly debugger
+Date: Sat, 11 Oct 2003 19:16:10 -0400 (EDT)
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <20031010200657.GB2642@ic.unicamp.br>
-References: <Law9-F94Tyj6iZkxUWZ0001a9fb@hotmail.com>
+Message-ID: <Pine.LNX.4.44.0310111902510.25095-100000@newton.physics.drexel.edu>
 Mime-Version: 1.0
 Return-path: <linux-assembly-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <Law9-F94Tyj6iZkxUWZ0001a9fb@hotmail.com>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: linux assembly list <linux-assembly@vger.kernel.org>
+To: linux-assembly@vger.kernel.org
 
-On Thu, Oct 09, 2003 at 12:05:28PM +0000, Jason Roberts wrote:
-> I have a desire: switch cpu context to real mode from pm
-> I have written really cool music that works through BIOS--
-> unfortunately, the only way I can get it to work is through
-> a bootsector,i.e.hook code before OS boots--
-> is there any way at all possible to use interrupts, set up my own
-> handlers, or do any real direct hardware access through
-> 32-bit mode,i.e. while in running KDE or Gnome???
-> Appreciate any advice...what would really be nice is
-> a cool set of functions like : enter_ring0() ... back_to_pm()
-> Thankyou,
-> Paul
-> 
-Paul,
+Hello all,
 
-    Have you got any answers to this question?... I am very curious too,
-but i really believe that is not possible; pm would be few meaningless if
-that was....
+  I have released a new version of ald (assembly language debugger) at:
 
-Ribamar.
+http://dunx1.irt.drexel.edu/~psa22/ald.html
+
+This release fixes some bugs and adds some minor features. Also, OpenBSD 
+is supported again. I broke OpenBSD a while back when I added 
+support for fpu registers, but now it compiles again. FPU support isn't 
+100% on OpenBSD yet but the debugger is definitely usable.
+
+Also, I have added the files TODO and BUGS which contain lists of bugs and 
+features I want to add. Since I have lots of time constraints currently I 
+am hoping to make it easy for others to get involved. Anyone who may be 
+interested in contributing code feel free to look through these files to 
+see if there is anything you'd want to work on.
+
+From the Changelog:
+
+  - "file secinfo" command can now output information on
+    a.out sections
+
+  - added TODO and BUGS files
+
+  - fixed problems relating to changing values of fpu
+    special purpose registers
+
+  - added some missing SSE instructions to libDASM 
+
+  - OpenBSD support is back: fixed compile programs relating to
+    fpu code, tested on 3.3 release 
+
+  - bug fixes in disassembling various MMX instructions
+    (thanks to Peter Boettcher for patch)
+
+  - changed library libDisasm to libDASM (Debugger's Assembler
+    Library) in anticipation of its new capability to assemble
+    instructions
+
+  - added OSABI information to elf header parsing in libOFF
+    (someone sent me a patch for this ages ago - sorry for
+    taking so long!)
+
+  - added -DNDEBUG to turn off assert() in out-of-the-box
+    compiles
+
+  - bug fix in a.out parser: now checks for QMAGIC binaries
+
+  - "file symbols" command has changed to "file syminfo" and you
+    can now use "file syminfo [symbol name]" to get information for
+    a specific symbol
+
+  - added libOFF to handle all the object file format stuff
+
+
+Sincerely,
+Patrick Alken
 
