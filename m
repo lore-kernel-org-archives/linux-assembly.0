@@ -1,29 +1,18 @@
-From: lx <lx@lxhp.in-berlin.de>
-Subject: F4: x86 Linux fig-Forth
-Date: Sun, 29 Sep 2002 15:51:55 +0000
+From: "Joshua Hudson" <joshudson@hotmail.com>
+Subject: (unknown)
+Date: Mon, 30 Sep 2002 08:00:48 -0700
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <20020929155155.3177f6c6.lx@lxhp.in-berlin.de>
-Reply-To: abuse@lxhp.in-berlin.de
+Message-ID: <F66WiGtXsL1c00goZol00000022@hotmail.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: linux-assembly <linux-assembly@vger.kernel.org>
+Content-Type: text/plain; format=flowed; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: linux-assembly@vger.kernel.org
 
+I cannot get ahold of konst. My mail was bounced by
+a spam blocker.
 
-this is too silly:
-i'm waiting for the day when i manage to release any software without 
-immeditely after finding something which go to be corrected...
+_________________________________________________________________
+Send and receive Hotmail on your mobile device: http://mobile.msn.com
 
-uploaded F4, again, w. the doc (for glossary) fixed. no other change.
-sorry for the inconvenience.
-
-	source re http://www.lxhp.in-berlin.de/lhpf4.html
-
-best,
-	hp
-
--- 
-   >>> pse, reply to : lx -at- lxhp -dot- in-berlin -dot- de <<<
-Linux,Assembly,Forth: http://www.lxhp.in-berlin.de/index-lx.shtml en/de
