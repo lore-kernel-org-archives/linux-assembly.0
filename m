@@ -1,9 +1,8 @@
 From: Frederic Marmond <fmarmond@eprocess.fr>
-Subject: Linear memory
-Date: Mon, 10 Jun 2002 12:35:23 +0200
+Subject: Linear memory access
+Date: Wed, 12 Jun 2002 08:42:55 +0200
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <3D0480EB.1050602@eprocess.fr>
-References: <200205161840.LAA18243@gold.he.net>
+Message-ID: <3D06ED6F.6090804@eprocess.fr>
 Reply-To: fmarmond@eprocess.fr
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
@@ -31,5 +30,4 @@ something...)?
 thanks for answers!
 
 Fred
-
 
