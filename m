@@ -1,45 +1,37 @@
-From: Darius Stout <darstout@yahoo.com>
-Subject: a-linux:   Kernel panic:  No init found
-Date: Thu, 24 Oct 2002 11:27:17 -0700 (PDT)
+From: dAvId KeDrOsKy <davidkedrosky@rogers.com>
+Subject: Newbie Question
+Date: Thu, 24 Oct 2002 17:42:35 -0400
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <20021024182717.63201.qmail@web40207.mail.yahoo.com>
+Message-ID: <200210241742.35488.davidkedrosky@rogers.com>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: linux-assembly@vger.kernel.org
-Cc: darstout@yahoo.com
+To: Linux Assembly Programming List <linux-assembly@vger.kernel.org>
 
-Hello,
+Hello, 
 
-I really like what you are doing and I am trying my best to use a-linux
-but I am having some problems.  I have downloaded the "a-linux" and
-the "asmutils".  I have been able to boot just fine from the 
-"a-linux.img" file but when I try to build my own I get an error at
-boot stating "Kernel panic: No init found".  This is the way that
-I build the boot image.....
+I have recently started learning x86 assembly and have been programming it in 
+Linux with NASM (Netwide Assembler). 
 
-a-linux:  Downloaded at /home/download1/alinux
-asmutils: Downloaded at /home/download1/alinux
+I am trying to write a program that takes a string as input, reverses it and 
+calculated its length.  I'm using the stack to do so.  
 
-cd /home/download1/alinux/a-linux-0.17
-./bootdisk.bash a-linux.img /home/download1/alinux/asmutils-0.17 /mnt >
-new_boot.img
+Here's my problem..  NASM only lets me move the string into a 32-bit register.
 
-Then I ftp the image to a windows machine and move it to a floppy disk
-with "rawwrite"
+e.g.  		mov	EBX, the_string		; move memory address of the_string into EBX
 
-Then I get a failure "Kernel panic: No init found"
+At this point I need to push the register on the stack.  I know I can do:
 
-I am trying to build a very small web server and I really need 
-your help.
+push EBX
+call string_length_procedure
 
+BUT I was wondering how it is possible to push BX instead.  Does BX also hold 
+the string in this case, considering the size of the string it isn't that 
+big?  If not, is there a way to put the contents of EBX (the string) into BX? 
+For the time being I would like to just deal with 16-bit registers because it 
+is easier to follow along with the book I am using.
 
-Thanks!
-Darius 
-
-__________________________________________________
-Do you Yahoo!?
-Y! Web Hosting - Let the expert host your web site
-http://webhosting.yahoo.com/
+P.s. I am using an already coded procedure that gets the string for me and 
+puts it into 'string' in this case.
