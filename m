@@ -1,90 +1,35 @@
-From: kiran kumar <kathireddy01@yahoo.com>
-Subject: c code and asm code linking
-Date: Wed, 27 Nov 2002 23:05:56 -0800 (PST)
+From: Christian Hildner <christian.hildner@hob.de>
+Subject: Re: C structures and gas
+Date: Thu, 28 Nov 2002 07:15:59 +0100
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <20021128070556.40495.qmail@web20101.mail.yahoo.com>
+Message-ID: <3DE5B49F.26B3285F@hob.de>
+References: <3DD04E99.5080704@ipeg.com>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: linux-assembly@vger.kernel.org
+To: Corey Holcomb-Hockin <crsntlvs@ipeg.com>
+Cc: linux-assembly@vger.kernel.org
 
-Sir,
- i am trying to call a asm routine in C model, for
-testing i have taken a small program. 
- 
- my main program is 
-====================================
-#include<stdio.h>
+Corey Holcomb-Hockin schrieb:
 
-extern int BSWAP ( unsigned int a);
+> What is the best way to access C structures with gas assembly?  I
+> haven't gotten any good ideas from looking at assembly generated from C
+> code.  It looks like it keeps track of offsets and the size of
+> structures on its own.  I would have a hard time keeping track of
+> offsets and changing them if the structure changed.
+>
+> Corey Holcomb-Hockin
+>
 
-void main()
-  {
+Have a look how linux does this in the ia64 tree. See
+/usr/src/linux/arch/ia64/tools/print_offset.c.
+There are three steps:
 
-    unsigned int a ;
-    unsigned int b;
+1. compile print_offsets
+2. run print_offsets (creates offsets.h)
+3. include offsets.h into *.S
 
-     a=255;
+Christian
 
-    b= BSWAP(a);
-
-    printf(" a = %d b = %d",a,b);
-  return;
-  }
-=========================================
-
-my bswap.asm code is 
-=========================================
-bits 32
-
-section .data
-align 16
-
-section .text
-
-
-;===========================================================================
-;
-; uint32_t bswap(uint32_t a);
-;
-;===========================================================================
-
-align 64
-
-global _BSWAP
-
-_BSWAP
-                mov     eax, [esp+4]
-                bswap eax
-                ret
-
-==================================
-
-i have complied the asm code using 
-$nasm -f elf bswap.asm 
- i got bswap.o
-then i compiled main code using
-gcc -c main.c
-
-then i used ld to link
-
-$ ld -o test main.o bswap.o
-
-it is giving the error
-ld: warning: cannot find entry symbol _start;
-defaulting to 08048080
-main.o: In function `main':
-main.o(.text+0x14): undefined reference to `BSWAP'
-main.o(.text+0x2d): undefined reference to `printf'
-
-sir, help me in resolving this linking problem.
-
- thanking you sir
-kiran kumar k
-
-__________________________________________________
-Do you Yahoo!?
-Yahoo! Mail Plus - Powerful. Affordable. Sign up now.
-http://mailplus.yahoo.com
