@@ -1,69 +1,46 @@
-From: Luciano Miguel Ferreira Rocha <luciano@lsd.di.uminho.pt>
-Subject: Re: Keyboard and Mouse library
-Date: Tue, 15 Jul 2003 20:54:22 +0100
+From: Fabio Miranda Hamburger <fabmirha@ns.isi.ulatina.ac.cr>
+Subject: Addessing by index
+Date: Tue, 15 Jul 2003 14:25:05 -0600 (CST)
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <20030715195422.GA17942@lsd.di.uminho.pt>
-References: <E19cPhx-0000W5-00@mail.tv-sign.ru> <200307160303.16120.jko@save-net.com>
+Message-ID: <Pine.LNX.4.44.0307151418320.25164-100000@ns.isi.ulatina.ac.cr>
 Mime-Version: 1.0
 Return-path: <linux-assembly-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <200307160303.16120.jko@save-net.com>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 To: linux-assembly@vger.kernel.org
 
+Hi, I would like to understand how addressing by index works focused on
+motorola hc6811.
 
-Yes. Don't use Linux.
+Instructions such as:
+addd X
+addd ,X
+addd 0,X
 
-Linux is an OS kernel. It's very purpose is to remove the requirement for
-people to directly program the keyboard controler and/or serial/psaux port and
-the attached mouse. All devices are presented as files.
+The document I have give example of addressing by index using "ADDD", that
+is "Add 16-bit D", What's that supposed to mean?
 
-The hardware abstraction in Linux allows programs to be used remotely and
-still assume a keyboard and a mouse.
+2. What is relatived addressing?
+The example is below:
 
-Anyway, you can access serial mice as a normal serial device via /dev/ttySx,
-and keycodes by setting the terminal to raw.
+there 	bra where
+where 	bhi there
+	bcc lbcc
+hang	beq	hang
+	beq	*
+lbcc	jmp	$1000
+	bsr 	hang
 
-PS/2 mice go to /dev/psaux and USB to /dev/input/mouse*
+How this works?
 
-Also, gpm can be used to convert from one protocol to another (bus mouse ->
-serial, etc.).
+In both case, How I am using CPU register to "address" data instead of the
+memory itself?.
 
-Regarding keyboard, you can read characters by reading from stdin (file
-descriptor 0), and control it with ioctl calls.
 
-Relevant man pages: console_codes console_ioctl mouse ttyS ...
+---
+Fabio Andres Miranda
+Ingenieria de sistemas informaticos
+Universidad Latina - Costa Rica
 
-I recomend you get a C programming book and another for Unix.
 
-You'll see C has its benefits over assembly.
-
-Regards,
-Luciano Rocha
-
-On Wed, Jul 16, 2003 at 03:03:15AM -0700, jeff wrote:
-> Hello,
-> I'm trying to create a linux library and running into
-> trouble with the mouse.  The intent was to use kernel
-> calls only and run from the user level.  Is this
-> possible?
-> 
-> I've looked at Gpm which works with terminals
-> but find the "c" code difficult.  Assembler for me
-> is much easier to understand.
-> 
-> Also, it would be nice to get the raw keyboard scan
-> codes.  I've found programs that claim to do this
-> but they don't work on my 9.1 Mandrake version
-> of Linux?
-> 
-> Any suggestions or ideas?
-> 
-> Jeff Owens
-> 
-> -
-> To unsubscribe from this list: send the line "unsubscribe linux-assembly" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
