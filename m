@@ -1,37 +1,29 @@
-From: peter w krause <wklux@yahoo.co.uk>
-Subject: Re: appending \n using registers
-Date: Mon, 3 Nov 2003 11:21:41 +0000
+From: "Jason Roberts" <v3ct0r99@hotmail.com>
+Subject: self modifying code
+Date: Mon, 03 Nov 2003 17:14:57 +0000
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <200311031121.41049.wklux@yahoo.co.uk>
-References: <Law9-F53io7W2bLeb1X0000f7f4@hotmail.com> <200311021915.37648.wklux@yahoo.co.uk>
+Message-ID: <Law9-F108sMoWOiTPyF00012d50@hotmail.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <200311021915.37648.wklux@yahoo.co.uk>
-Content-Disposition: inline
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: Jason Roberts <v3ct0r99@hotmail.com>, linux-assembly@vger.kernel.org
+Content-Type: text/plain; format=flowed; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: linux-assembly@vger.kernel.org
 
-peter w krause am Sunday 02 November 2003 19:15:
-	[...]
->
-> 	('as')							('nasm')
-> 	movw ax,dest					mov ax,[word dest]
-	^^^^^^^^^^^				^^^^^^^^^^^^^^^
+Hi all--
+I'd like to be able to implement this cool trick called smc.
+It's used mostly by crackers and virus coders, but has also
+been used in JIT compilers.
 
-	movw src,ax					mov ax,[word src]
+I know the *basic* steps:
+1) mov reg1, code-to-write
+2)  mov [addr-to-write-to], reg1
 
-	[...]
->
-> 	movzwl; movswl					movszw, movsw + destn size spec.
-									^^^^^^
- 	movzwl; movswl					movzw, movsw + destn size spec.
+how can I do this in nasm?
+Thanks
+pb
 
-
- hp
-
--- 
-Linux,Assembly,Forth: http://www.lxhp.in-berlin.de/index-lx.shtml
-  >> xxxx -at- lxhp -dot- in-berlin -dot- de <<
+_________________________________________________________________
+See when your friends are online with MSN Messenger 6.0. Download it now 
+FREE! http://msnmessenger-download.com
 
