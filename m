@@ -1,118 +1,81 @@
-From: "Paul Carter" <pacman128@hotmail.com>
-Subject: Re: c code and asm code linking
-Date: Fri, 29 Nov 2002 22:43:42 +0000
+From: Wintermute <wintrmute@retemail.es>
+Subject: sys_read/write called from kernel space in a process
+Date: Sat, 30 Nov 2002 18:42:16 +0100
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <BAY1-F2086rOJhKPc9900005034@hotmail.com>
+Message-ID: <3DE8F8783B0.CE65WINTRMUTE@smtp.iddeo.es>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; format=flowed; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: kathireddy01@yahoo.com, linux-assembly@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: linux-assembly@vger.kernel.org
+
+
+	I've been working on asm IA32 code to perform a series of things,
+until I reached a point where I don't really know how to continue, so I
+write here wishing someone can shed a bit light on this path - not code,
+the problem is the concept -... I'll try to explain it:
+
+	* I handled sys_exec function on int 080h, so every time (every
+process) this function is requested, int080h first goes to my code
+installed at kernel, then goes to the real exec function (my code is
+intalled via __get_free_pages kernel internal function and the OS
+continues working without any problem)
+
+	* When a file is executed via int 080h sys_exec, EBX points to
+the filename (ending with a @ which has to be changed to a "0" to
+perform a sys_open on it). 
+
+	* Now, the problem arises when trying to read or write to that
+file. Code like this doesn't work (it's just an example, not what I'm
+actually trying to do):
+
+	mov eax,03h	; read (ebx holds file descriptor)
+	lea ecx,[buffer+ebp]    ; base pointer as code must be
+realocatable
+	mov edx,100h	; read 256 bytes
+	int 080h
+	[...]
+	mov eax,04h	;sys_write
+	mov ecx,[buffer+ebp]
+	mov edx,100h
+	int 080h
+
+	* When executing this code, the buffer isn't written to file
+(even if it's modified or not there's no change, writing operation fails
+miserably). Anyway, if for example I do something like:
+
+	mov eax,04h
+	xor ecx,ecx ; ecx = 0
+	mov edx, 100h
+	int 080h
+
+	* Then, that part of memory gets written into the file (the
+write operation works). Also, reading at my buffer fails when reading.
+My hypothesis is that there's some problems with segments: as I call int
+080h to read or write, probably Linux thinks that it's called from the
+user part of the process and not from the kernel, so it tries to reach
+the [buffer+ebp] within the user-space and not kernel-space: so it
+fails, though it doesn't give any warning and everything seems to work 
+(except that nothing is read/written). That is, int080h is called from
+kernel-space in the process (when an exec function is requested) and
+probably it thinks my buffer at kernel is in user space using an
+user-segment (as I say, this is just an hypothesis, but I don't really
+know what's happening, that's why I wrote this email)... other syscalls
+are called from kernel space without any problem (such as sys_open, as
+EBX points to the file-name but, I think, at user-space, so it doesn't
+give any problems... other functions like sys_write also work perfectly)
+
+	* In any case, I'm somewhat lost on what to do... I thought on
+malloc'ing some space at the actual process and using it as a buffer, though
+I don't know which internal functions manage heap dynamic changing on
+asm and I'm still unsure on this... not asking for code, just if anyone
+knows what the problem can be, could you shed some light about this
+problem and what can be failing here x)
+
+	Thanks
 
 
 
-
->From: kiran kumar <kathireddy01@yahoo.com>
->To: linux-assembly@vger.kernel.org
->Subject: c code and asm code linking
->Date: Wed, 27 Nov 2002 23:05:56 -0800 (PST)
->
->Sir,
->  i am trying to call a asm routine in C model, for
->testing i have taken a small program.
->
->  my main program is
->====================================
->#include<stdio.h>
->
->extern int BSWAP ( unsigned int a);
->
->void main()
->   {
->
->     unsigned int a ;
->     unsigned int b;
->
->      a=255;
->
->     b= BSWAP(a);
->
->     printf(" a = %d b = %d",a,b);
->   return;
->   }
->=========================================
->
->my bswap.asm code is
->=========================================
->bits 32
->
->section .data
->align 16
->
->section .text
->
->
->;===========================================================================
->;
->; uint32_t bswap(uint32_t a);
->;
->;===========================================================================
->
->align 64
->
->global _BSWAP
->
->_BSWAP
->                 mov     eax, [esp+4]
->                 bswap eax
->                 ret
->
->==================================
->
->i have complied the asm code using
->$nasm -f elf bswap.asm
->  i got bswap.o
->then i compiled main code using
->gcc -c main.c
->
->then i used ld to link
->
->$ ld -o test main.o bswap.o
->
->it is giving the error
->ld: warning: cannot find entry symbol _start;
->defaulting to 08048080
->main.o: In function `main':
->main.o(.text+0x14): undefined reference to `BSWAP'
->main.o(.text+0x2d): undefined reference to `printf'
->
->sir, help me in resolving this linking problem.
->
->  thanking you sir
->kiran kumar k
-
-Linux ELF format doesn't put _ (underscores) in front of external symbols. 
-So don't use _BSWAP in your asm code, use BSWAP.
-
-You're also getting an error about printf. This is because you're
-not linking in the C library. It's much easier to use gcc to link
-instead of ld directly. Just type
-
-gcc -o test main.o bswap.o
-
-and the C lib will be linked in automatically. See my on-line book
-for more details:
-
-http://www.drpaulcarter.com/pcasm/
-
-Paul Carter
-
-
-
-
-
-_________________________________________________________________
-Add photos to your e-mail with MSN 8. Get 2 months FREE*. 
-http://join.msn.com/?page=features/featuredemail
-
+... just some flesh caught in this big broken machine
+* Origin: http://pagina.de/wintermute
