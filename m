@@ -1,31 +1,91 @@
-From: Konstantin Boldyshev <konst@linuxassembly.org>
-Subject: Re: GTK with asm
-Date: Thu, 4 Jul 2002 19:35:30 +0400 (MSD)
+From: alter Gonzalez <wgonzalez@persystems.com>
+Subject: I have a problem with inline ASM
+Date: Thu, 04 Jul 2002 16:18:20 -0500
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.43L.0207041205450.1269-100000@alpha.linuxassembly.org>
-References: <183380616.20020702215630@quasar.prv.pl>
+Message-ID: <3D24BB9C.E518173C@persystems.com>
 Mime-Version: 1.0
-Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <183380616.20020702215630@quasar.prv.pl>
-List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: QUASAR <quasar@quasar.prv.pl>
-Cc: "linux-assembly@vger.kernel.org" <linux-assembly@vger.kernel.org>
+Return-path: <linux-assembly-owner@vger.kernel.org>
+List-Id: <linux-assembly.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: linux-assembly@vger.kernel.org, wgonzalez@persystems.com
 
-On Tue, 2 Jul 2002, QUASAR wrote:
+Good morning first all.
 
->    I know how to create X program in asm but they are ugly. Can I use
->    GTK (maybe QT) in assembly programs? How to deal with them?
+I need to do a encrypt routines for linux asm.
 
-Of course you can, in the same way as with X program.
-I guess that http://www.alterburgs.com/programming/
-has an example of GNOME application in asm.
+tha call is as:
 
--- 
-Regards,
-Konstantin
+....
+
+unsigned int xorValue;
+
+xorValue = 0x2030;
+
+for (index = 0; index < 0x20; index ++) {
+ xor_word(*(unsignded int *)&fuffer[index],xorValue);
+
+}
 
 
 
+...
+
+The problem is that if I want to use WORD (i.e. unsigned int , or int)
+values , RHIDE show an error.
+I believe that all is fine.
+
+Can you helpme , please?
+
+
+The .H y .C files are ..
+
+//------------------------------------------------------
+
+//ENCRYPT.H
+
+#ifndef _ENCRYPT_H_
+#define _ENCRYPT_H_
+
+...
+
+BYTE  rol_byte(BYTE value  , BYTE bits);
+WORD  rol_word(WORD value  , BYTE bits);
+......
+
+#endif
+
+//------------------------------------------------------
+
+//ENCRYPT.C
+
+
+BYTE rol_byte(BYTE value, BYTE bits)
+{
+  __asm__ __volatile__("movb %1, %%al;
+                        movb %2, %%cl;
+                        rolb %%cl, %%al;
+                        movb %%al, %0;"
+                       :"=al"(value)              // output
+                       :"al"(value),"cl"(bits)    // input
+                       );
+
+  return value;
+}
+
+WORD rol_word(WORD value, BYTE bits)
+{
+  __asm__ __volatile__("movl %1, %%eax;
+                        movb %2, %%cl;
+                        roll %%cl, %%eax;
+                        movl %%eax, %0;"
+                       :"=eax"(value)              // output
+                       :"eax"(value),"cl"(bits)    // input
+                       );
+
+  return value;
+}
+
+
+ with inline ASM
 
