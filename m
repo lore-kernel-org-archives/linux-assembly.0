@@ -1,91 +1,42 @@
-From: alter Gonzalez <wgonzalez@persystems.com>
-Subject: I have a problem with inline ASM
-Date: Thu, 04 Jul 2002 16:18:20 -0500
+From: h-peter recktenwald <lx@lxhp.in-berlin.de>
+Subject: Re: I have a problem with inline ASM
+Date: Fri, 5 Jul 2002 01:16:05 +0000
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <3D24BB9C.E518173C@persystems.com>
+Message-ID: <20020705011605.28697afd.lx@lxhp.in-berlin.de>
+References: <3D24BB9C.E518173C@persystems.com>
+Reply-To: lx@lxhp.in-berlin.de
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-assembly-owner@vger.kernel.org>
+In-Reply-To: <3D24BB9C.E518173C@persystems.com>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: linux-assembly@vger.kernel.org, wgonzalez@persystems.com
+Content-Type: text/plain; charset="iso-8859-1"
+Cc: linux-assembly@vger.kernel.org, wgonzalez@persystems.com
 
-Good morning first all.
+On Thu, 04 Jul 2002 16:18:20 -0500
+alter Gonzalez <wgonzalez@persystems.com> wrote:
 
-I need to do a encrypt routines for linux asm.
+>=20
+> WORD rol_word(WORD value, BYTE bits)
+> {
+>   __asm__ __volatile__("movl %1, %%eax;
+>                         movb %2, %%cl;
+>                         roll %%cl, %%eax;
 
-tha call is as:
+	rolls through 32 bit
 
-....
-
-unsigned int xorValue;
-
-xorValue = 0x2030;
-
-for (index = 0; index < 0x20; index ++) {
- xor_word(*(unsignded int *)&fuffer[index],xorValue);
-
-}
-
-
-
-...
-
-The problem is that if I want to use WORD (i.e. unsigned int , or int)
-values , RHIDE show an error.
-I believe that all is fine.
-
-Can you helpme , please?
+>                         movl %%eax, %0;"
+>                        :"=3Deax"(value)              // output
+>                        :"eax"(value),"cl"(bits)    // input
+>                        );
 
 
-The .H y .C files are ..
-
-//------------------------------------------------------
-
-//ENCRYPT.H
-
-#ifndef _ENCRYPT_H_
-#define _ENCRYPT_H_
-
-...
-
-BYTE  rol_byte(BYTE value  , BYTE bits);
-WORD  rol_word(WORD value  , BYTE bits);
-......
-
-#endif
-
-//------------------------------------------------------
-
-//ENCRYPT.C
-
-
-BYTE rol_byte(BYTE value, BYTE bits)
-{
-  __asm__ __volatile__("movb %1, %%al;
-                        movb %2, %%cl;
-                        rolb %%cl, %%al;
-                        movb %%al, %0;"
-                       :"=al"(value)              // output
-                       :"al"(value),"cl"(bits)    // input
-                       );
-
-  return value;
-}
-
-WORD rol_word(WORD value, BYTE bits)
-{
-  __asm__ __volatile__("movl %1, %%eax;
-                        movb %2, %%cl;
-                        roll %%cl, %%eax;
-                        movl %%eax, %0;"
-                       :"=eax"(value)              // output
-                       :"eax"(value),"cl"(bits)    // input
-                       );
-
-  return value;
-}
-
-
- with inline ASM
-
+--=20
+Linux,Assembly,Forth: http://www.lxhp.in-berlin.de/index-lx.shtml en/de
+NO abusive=A0software=A0patents=A0http://petition.eurolinux.org/pr/pr17=
+=2Ehtml
+-
+To unsubscribe from this list: send the line "unsubscribe linux-assembl=
+y" in
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
