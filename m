@@ -1,26 +1,28 @@
-From: Matteo Cortonesi <m_cortonesi@ticino.com>
-Subject: Re: jmp instruction
-Date: Sun, 2 Feb 2003 18:09:28 +0100
+From: dAvId KeDrOsKy <davidkedrosky@rogers.com>
+Subject: system_read() question
+Date: Mon, 3 Feb 2003 17:00:40 -0500
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <1657CF99-36D1-11D7-BF4B-000A27B17C58@ticino.com>
-References: <2A024D8C-36D0-11D7-BF5A-003065A88832@sonoma.edu>
-Mime-Version: 1.0 (Apple Message framework v551)
-Content-Transfer-Encoding: 7bit
+Message-ID: <200302031700.40580.davidkedrosky@rogers.com>
+Mime-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <2A024D8C-36D0-11D7-BF5A-003065A88832@sonoma.edu>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
+Content-Type: text/plain; charset="us-ascii"
 To: linux-assembly@vger.kernel.org
 
-Yeah! thank you Robert. It works fine!
+Say I do something like this:
 
-On Domenica, feb 2, 2003, at 18:02 Europe/Zurich, Robert Plantz wrote:
->
-> I guess you have a good reason for not simply removing
-> the instruction or using a label?
+        mov     eax, 3          ;setup for system read()
+        mov     ebx, 0          ;receive input from stdin (keyboard)
+	mov     ecx, foo_input     ;input will act as a storage place for data
+        int     0x80			;syscall interrupt
 
-yes... don't worry :)
+Does anything get added to the storage array (foo_input) after my input. Like 
+the null or CR character?
 
-bye
+Thanks, 
+
+dave
+
 
 
