@@ -1,28 +1,41 @@
-From: Brian Raiter <breadbox@muppetlabs.com>
-Subject: Re: Test MMX code (Using inline Assembly)
-Date: Thu, 23 Jan 2003 14:17:17 -0800 (PST)
+From: dAvId KeDrOsKy <davidkedrosky@rogers.com>
+Subject: Seg Fault
+Date: Sat, 25 Jan 2003 19:39:05 -0500
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <15920.27117.870637.394512@eidolon.muppetlabs.com>
-References: <20030123201712.40527.qmail@web21209.mail.yahoo.com>
+Message-ID: <200301251939.05251.davidkedrosky@rogers.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <20030123201712.40527.qmail@web21209.mail.yahoo.com>
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 To: linux-assembly@vger.kernel.org
-Cc: Zeeshan Ali <zeelists@yahoo.com>
 
->   A test code of mine doesnt work. I dont understand at what is
-> wrong with it.
+Can somebody help me out with why I'm getting a segmentation fault  All I'm 
+trying to do is send some text to stdout.  The output I get is:.
 
-You're calling a BIOS interrupt. Assuming you're running this program
-under Linux, that's not permitted. The only interrupt available to you
-under Linux is int 0x80.
+Some message
+Segmentation Fault
 
-> Plz i want answers that why on earth it doesnt work and not advices
-> to use other alternatives.
+--------------------------------------------------------------------------------
+section         .model small
+section         .stack 100h
 
-Okay.... "You're calling a BIOS interrupt."
+section         .data
+mesg            db      'Some message',0ah, 0
 
-b
+section         .text
+
+global  _start
+_start:
+
+        mov     eax, 4
+        mov     ebx, 1
+        mov     ecx, mesg
+        mov     edx, 13
+        int        0x80
+        ret
+
+        mov     eax, 1
+        xor     ebx, ebx
+        int     0x80
+
