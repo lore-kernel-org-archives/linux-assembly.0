@@ -1,46 +1,45 @@
-From: Frank Kotler <fbkotler@comcast.net>
+From: Brian Raiter <breadbox@muppetlabs.com>
 Subject: Re: Problem with nasm
-Date: Sat, 26 Mar 2005 17:15:08 -0500
-Message-ID: <4245DEEC.4DB6AD93@comcast.net>
-References: <Pine.LNX.4.21.0503261209420.570-100000@hestia> <4245D101.2050206@nation.pl>
+Date: Sat, 26 Mar 2005 15:50:31 -0800
+Message-ID: <16965.62791.870164.701108@eidolon.muppetlabs.com>
+References: <Pine.LNX.4.21.0503261209420.570-100000@hestia>
+	<4245D101.2050206@nation.pl>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-Return-path: <linux-assembly-owner@vger.kernel.org>
+In-Reply-To: <4245D101.2050206@nation.pl>
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 To: shm@nation.pl
 Cc: linux-assembly@vger.kernel.org
 
-Mateusz Kocielski wrote:
-> 
-> Hello.
-
-Hi Mateusz,
-
+> bash-2.05b# cat exit.s
 > global _start:
+> 
+> _start:
+>          xor ebx, ebx
+>          mov eax, 1
+>          int 80h
+> 
+> 
+> $ uname -srp
+> Linux 2.6.11-gentoo-r3 AMD Duron(tm) Processor
 
-Strictly speaking, this shouldn't have the colon on the end
-of it, but that seems to make no difference...
+I tried your file (both with and without the erroneous colon) and it
+worked fine. This was on a 2.4 Linux, however, using Nasm 0.98.38.
 
-... [Nasm code]
-> 080480a0 <_start>:
+> bash-2.05b# nasm -f elf -o exit.o exit.s
+> bash-2.05b# ld -o exit exit.o
 
-... [Gas code]
-> 08048094 <_start>:
+Try compiling with "gcc -nostartfiles -o exit exit.o" instead, and see
+if you get different results. If so, then gcc probably knows of some
+extra arguments that ld needs to produce a proper executable. Whenever
+feasible, you should let gcc do the linking for you instead of
+invoking ld directly. ld can take a lot of cmdline arguments.
 
-> Any ideas why the same code doesn't work under asm?
+The "-nostartfiles" option will tell gcc not to supply a _start
+routine, and not to link in the usual C libraries. You will probably
+still get a slightly bigger executable than if you invoked ld
+directly, but not by much.
 
-Something to do with that start address, I'm guessing. When
-I try to duplicate your experiment, I get the same results,
-but with a start address of 08048080, which is the
-"expected" thing, I think(?). I'm inclined to suspect a
-problem with ld, not with Nasm (...but I always think that).
-You might try "global _start" without the colon, and maybe
-specify "section .text", just to see if it makes any
-difference - maybe try specifying "--entry _start" to ld...
-That start address is the only thing that looks "funny" to
-me...
-
-Best,
-Frank
+b
