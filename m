@@ -1,9 +1,9 @@
 From: "Randall Hyde" <randyhyde@earthlink.net>
-Subject: HLA v1.69 is now available
-Date: Wed, 18 Aug 2004 11:35:09 -0700
+Subject: HLA v1.70 is now available
+Date: Mon, 13 Sep 2004 18:07:27 -0700
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <002001c48552$17593030$6501a8c0@pentiv>
-References: <411E8D58.9040904@superonline.com> <002301c48264$9ddc0880$0301010a@lenin>
+Message-ID: <006f01c499f7$338f2ed0$6501a8c0@pentiv>
+References: <20040812184139.15e4c369.jko@bsn1.net> <20040813054252.GA9928@cybertron.cyth.net> <20040813054408.GB9928@cybertron.cyth.net>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
@@ -11,48 +11,46 @@ List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 To: linux-assembly@vger.kernel.org
 
-HLA v1.69 is now available on the HLA download page at
+HLA v1.70 is now available on Webster at:
+
 http://webster.cs.ucr.edu/AsmTools/HLA/dnld.html
 
-HLA, the High-Level Assembler is an assembly language
-development system that makes learning and using assembly
-language as easy as working with high-level languages.
+This new release is a maintenance release that fixes a few
+minor bugs in the HLA shell program, in the hlaparse compiler,
+and in the HLA Standard Library.  HLA v1.69 users will
+definitely want to upgrade as there are some critical changes.
 
-HLA runs under both Windows and Linux and
-well-written programs are portable between the
-two OSes with nothing more than a recompilation
-of the source code - a unique feature among assembly
-languages.
+HLA, the High-Level Assembler, is a powerful macro
+assembly language development system that runs under
+Windows and Linux operating systems. Carefully-written
+applications are portable between both operating systems
+with nothing more than a recompile of the source file.
 
-HLA provides the full capabilities of assembly language
-on the 80x86 processor, while introducing some high-level
-features to help you learn assembly faster, write assembly
-code easier than ever before, and write readable and
-maintainable assembly code.
+From a features point of view, HLA is one of the most
+powerful assemblers ever written. It's macro and
+"compile-time language" facilities far exceed those found
+in other assemblers.
 
-HLA also provides the "HLA Standard Library", a set of
-hundreds of different useful utility subroutines that you can
-call from your assembly language programs. Naturally,
-full source code for the HLA stdlib is available.
+HLA was specifically designed to make learning and writing
+assembly language as easy as possible. HLA is fully supported
+by tons of documentation, example code, and other things
+that beginning and advanced programmers will find useful.
+The 32-bit edition of "The Art of Assembly Language"
+(No Starch Press) teaches introductory assembly language
+programming using HLA and is one of the most often-cited
+textbooks on the subject.  You can read "The Art of Assembly"
+on-line at http://webster.cs.ucr.edu/AoA/index.html.
 
-HLA is fully support with thousands of pages of documentation
-including "The Art of Assembly Language" (published by
-No Starch Press, http://www.nostarch.com) and hundreds
-of example programs. See the following URL for the
-electronic version of AoA and the example code:
-http://webster.cs.ucr.edu/AoA/index.html
-Other documentation and examples:
-http://webster.cs.ucr.edu/AsmTools/HLA/index.html
+The HLA system also includes the HLA Standard Library,
+a collection of hundreds of ready to use library routines that
+simplify assembly language programming and provide (among
+other things) a usable interface to the underlying operating system.
+Full source code to the Standard Library is available.
 
-HLA is open-source and 100% free, public domain, code.
-There are absolutely no restrictions on the use of HLA
-and the HLA Standard Library.
+The HLA compiler and standard library are public domain and
+can be used anyway you see fit.
 
-HLA v1.69 corrects a couple of defects that would crash
-the compiler under certain circumstances. This version
-also includes a completely rewritten set of memory
-management routines in the HLA Standard Library
-(higher performance, more portable across OSes,
-and corrections to various defects).
 Cheers,
 Randy Hyde
+http://webster.cs.ucr.edu
+
