@@ -1,41 +1,39 @@
-From: "Jim Watters" <macemu@emuunlim.com>
-Subject: RE: M68060 assembly debugger
-Date: Fri, 18 Oct 2002 11:50:52 -0400
+From: "Joseph D. Wagner" <wagnerjd@prodigy.net>
+Subject: ANNOUNCEMENT: BiosDiskIO Library
+Date: Thu, 24 Oct 2002 10:04:05 -0500
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <001b01c276be$27fd4a10$7fea2041@quantumsor6fwz>
-References: <3DAE56BE00003456@mail-8.tiscalinet.it>
+Message-ID: <000201c27b6e$a056fe70$d92f3a41@joe>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <3DAE56BE00003456@mail-8.tiscalinet.it>
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: elio.occhipinti@tiscali.it, linux-assembly@vger.kernel.org
+To: Linux Assembly Programming List <linux-assembly@vger.kernel.org>
 
+BiosDiskIO is a library of Int 13h PC BIOS Disk Operations.  While DMA
+(Direct Memory Access) produces faster I/O, the diskette and hard disk
+services offered by the BIOS provide a backward compatibility for older
+systems.  Additionally, BIOS Disk Operations also provide a
+quick-and-dirty way to access low-level disk services without the hassle
+of a fully-featured DMA system when speed isn't a consideration (such as
+early stages of file system development).  Hence, the purpose of the
+BiosDiskIO Library is two-fold: first, to provide backward compatibility
+for older systems, and second, to provide quick-and-dirty access to
+low-level disk services, especially for file system developers and
+forensic analysts.
 
-I am in no way an expert on the M68060 and this may be of no use to you,
-but there are emulators available for the M68040, M68020 and M68000 (no
-68060 emulators exist to my knowledge)that run on various OS platforms.
-You would need to find a debugger for either the Amiga or Macintosh
-platform. And MMU support is lacking (UAE) or non-existant (Basilisk
-II).
+Check it out at: http://sourceforge.net/projects/biosdiskiolib
 
-UAE: http://www.freiburg.linux.de/~uae/
-Basilisk II: http://www.uni-mainz.de/~bauec002/B2Main.html
+-----------------------------------
 
-Jim Watters
+Current Release: Version 0.12
 
+THIS RELEASE HAS NOT AT ALL BEEN TESTED.  USE AT YOUR OWN RISK!  It
+should work in theory, but then again, so should Communism.
 
------Original Message-----
-From: elio.occhipinti@tiscali.it
+Be particularly careful of anything that I've explicitly labeled as
+dangerous and anything that has to do with the Segment Offset.
 
-
-
-I am a student,I really need help!!!
-I need a debugger,able to debug an assembly code written for 
-M68060.Since I don't have phisically this kind of processor and I
-haven't find any M68060 simulator(only 68000 simulator),I want only to
-know whether the assembly code that I wrote (following the Motorola
-syntax)is correct. How can I do? Thank you.
-
+Above all, let me know what works and doesn't work.  Software and
+development testers would be most helpful at this point in the project.
 
