@@ -1,47 +1,53 @@
-From: peter w krause <wklux@yahoo.co.uk> (by way of peter w krause
-	<wklux@yahoo.co.uk>)
-Subject: Re: gas jump
-Date: Sun, 31 Aug 2003 12:06:37 +0100
+From: notifyagent@kfupm.edu.sa
+Subject: Default Notification (Anti-Spam)
+Date: Sun, 31 Aug 2003 14:17:34 +0300
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <200308311206.37056.wklux@yahoo.co.uk>
+Message-ID: <200308311118.OAA75364@itc6h1.kfupm.edu.sa>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/mixed;
+	boundary="----=_NextPart_000_1062328654_B78506032.R82506026"
 Return-path: <linux-assembly-owner@vger.kernel.org>
-Content-Disposition: inline
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: linux-assembly@vger.kernel.org
-Cc: Linux-assembly@mlists.in-berlin.de
+To: "linux-assembly@vger.kernel.org"@itc6h1.kfupm.edu.sa
 
-Fekete Gabor am Samstag, 30. August 2003 23:46:
-> hi
->
-> i want to make a relative jump.
-> i tried it with "jmp 0x09" and expected it to
+This is a multi-part message in MIME format.
 
-the actual displacement is not an argument to <jmp>
+------=_NextPart_000_1062328654_B78506032.R82506026
+Content-Type: text/plain;
+	charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
 
-> jump to the address that comes 9 bytes after
-> this "jmp".
-> is it correct?
+************* eManager Notification **************
 
-no.
+Source mailbox: "linux-assembly@vger.kernel.org"
+Destination mailbox(es): arghaleb@kfupm.edu.sa
+Policy: Anti-Spam
+Rule: pif attachment block
+Action: Delete
 
-> i'm asking because when I examined (x/bx) the code with
-> gdb it didn't really show any bytes with value 0x09 when
-> looking at this jump instruction.
+******************* End of message *******************
 
-should copile a branch to address stored at location 0x09
+------=_NextPart_000_1062328654_B78506032.R82506026
+Content-Type: text/plain;
+	charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
 
-correct code would be:
-		jmp 1f
-	...
-1f:
+Received: from 196.15.32.179 by vw.kfupm.edu.sa (InterScan E-Mail VirusWall NT); Sun, 31 Aug 2003 14:17:34 +0300
+Received: from KORUN ([167.205.24.134])
+	by mx1.kfupm.edu.sa (8.12.8/8.12.8) with SMTP id h7VBGvee004051
+	for <arghaleb@kfupm.edu.sa>; Sun, 31 Aug 2003 14:17:26 +0300
+Message-Id: <200308311117.h7VBGvee004051@mx1.kfupm.edu.sa>
+From: <linux-assembly@vger.kernel.org>
+To: <arghaleb@kfupm.edu.sa>
+Subject: Your details
+Date: Sun, 31 Aug 2003 18:17:20 +0700
+X-MailScanner: Found to be clean
+Importance: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2600.0000
+X-MSMail-Priority: Normal
+X-Priority: 3 (Normal)
+MIME-Version: 1.0
+Content-Type: multipart/mixed;
+	boundary="_NextPart_000_011CACC5"
 
-
-best,
-	hp
-
---
-Linux,Assembly,Forth: http://www.lxhp.in-berlin.de/index-lx.shtml
-
+------=_NextPart_000_1062328654_B78506032.R82506026--
