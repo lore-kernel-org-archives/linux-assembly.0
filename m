@@ -1,30 +1,116 @@
-From: hp <lx@lxhp.in-berlin.de>
-Subject: Re: Make a Calculator! Help-me
-Date: Thu, 17 Apr 2003 17:47:16 +0100
+From: "Guilherme Romao" <gui_slack@linuxmail.org>
+Subject: RE: Make a Calculator! Help-me
+Date: Fri, 18 Apr 2003 10:47:21 +0800
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <200304171548.h3HFmEL3032554@hirsch.in-berlin.de>
-References: <20030417061144.6358.qmail@linuxmail.org>
+Message-ID: <20030418024721.11219.qmail@linuxmail.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <20030417061144.6358.qmail@linuxmail.org>
+Content-Disposition: inline
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Guilherme Romao <gui_slack@linuxmail.org>, linux-assembly@vger.kernel.org
+To: linux-assembly@vger.kernel.org
 
-Guilherme Romao am Donnerstag, 17. April 2003 07:11:
-> I am new in the language assembly and I would like to understand better on
-> the recorders, I am trying to make a calculator that reads two numbers of
-> the keyboard and later addition the two numbers.  Somebody could make this
-> calculator and pass me the source.  So that I can to study.  Thank you!
+Hi, this is my source of my calculator:
+ How I can to make the addition?  Thank You!
 
-a 'calculator' is a most simple application of the Forth language. 
-examples (Forth compiler/interpreter sources in assembly):
-	http://www.lxhp.in-berlin.de/lhpf8.html ('lib4th' ANS-type Forth w. 'nasm')
-	http://www.lxhp.in-berlin.de/lhpf4.html ('f4' fig-type Forth w. (G)AS)
+ .file "calculator.s"
+.version "01"
+gcc2_compiled.:
+.section	.data
+.msg:
+	.string "\t\tCalculator in Assembly\n"
+	tam: .long .- .msg
+.pede1:
+	.string "1 number: "
+	tpede1: .long .- .pede1
+.pede2:
+	.string "2 number: "
+	tpede2: .long .- .pede2
+.result:
+	.string "The result is"
+	tresult: .long .- .result
+.text
+	.align 4
+.globl main
+	.type main,@function
+main:
 
-best,
-	hp
---
-Linux,Assembly,Forth: http://www.lxhp.in-berlin.de/index-lx.shtml en/de
-  pse, reply to << lx -at- lxhp -dot- in-berlin -dot- de >>
+pushl %ebp		
+movl %esp,%ebp		
+movl $0x4,%eax		
+movl $0x1,%ebx		
+movl $.msg,%ecx		
+movl tam, %edx		
+int $0x80		
+
+movl $0x4,%eax		
+movl $0x1,%ebx
+movl $.pede1,%ecx
+movl tpede1,%edx
+int $0x80
+
+movl %esp,%ecx
+subl $0xb,%esp
+
+movl $0x3,%eax
+movl $0xa,%edx
+int $0x80
+
+movl %eax,%edx
+pushl %edx
+movl %esp,%ebp
+movl $0x4,%eax
+movl $0x1,%ebx
+int $0x80
+
+movl $0x4,%eax
+movl $0x1,%ebx
+movl $.pede2, %ecx
+movl tpede2, %edx
+int $0x80
+
+
+movl %esp,%ecx
+subl $0xb,%esp
+
+movl $0x3,%eax
+movl $0xa,%edx
+int $0x80
+
+movl %eax, %edx
+pushl %edx
+movl $0x4,%eax
+movl $0x1,%ebx
+int $0x80
+
+movl $0x4,%eax
+movl $0x1,%ebx
+movl $.result,%ecx
+movl tresult,%edx
+int $0x80
+
+subl %ebp,%edx
+movl $0x4,%eax
+movl $0x1,%ebx
+
+int $0x80
+
+movl $0x1,%eax
+movl $0x0,%ebx
+int $0x80
+
+.L1:
+	leave
+	ret
+.Lfe1:
+	.size main,.Lef1-main
+	.ident "my"
+	
+
+-- 
+______________________________________________
+http://www.linuxmail.org/
+Now with e-mail forwarding for only US$5.95/yr
+
+Powered by Outblaze
