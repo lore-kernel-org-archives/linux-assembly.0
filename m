@@ -1,37 +1,34 @@
-From: peter <p.willis@telus.net>
-Subject: asm statement in C
-Date: Sun, 16 Feb 2003 20:04:25 -0800
+From: hp <lx@lxhp.in-berlin.de>
+Subject: Re: Inline gcc assembly
+Date: Mon, 17 Feb 2003 12:17:10 +0000
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <200302162004.25528.p.willis@telus.net>
+Message-ID: <200302171224.h1HCODDu013805@hirsch.in-berlin.de>
+References: <20030217024655.31547.qmail@web11107.mail.yahoo.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 8BIT
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-assembly-owner@vger.kernel.org>
+In-Reply-To: <20030217024655.31547.qmail@web11107.mail.yahoo.com>
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: linux-assembly@vger.kernel.org
+To: rodrigobaroni@yahoo.com.br, linux-assembly@vger.kernel.org
 
-Hello,
+Rodrigo F. Baroni am Montag, 17. Februar 2003 02:46:
+>    Hello all,
+	[ ... ]
+>
+>      Please, could someone, explain how does work the
 
-I would like to pass a string pointer from a C string
-to an asm(); block.
+	http://linuxassembly.org
 
-ie:
+answers almost every question which for the past year (or so) appeared in 
+this list list and, might  quite certanly provide many answers for you, too.
 
-function()
-{
-	static char buff[]={"this is some text\n"};
-	asm(
-		"pushl mytext
-		//morecode...
-		"
-		:
-		:
-		);
-}
 
-Anyone know what format the parameter section by the second colon
-should be in porder to pass 'buff'.
+best,
+	hp
 
-Thanks for any help.
-
-Peter
+-- 
+pse, RTFM -!!!- and the FAQ, etc: http://linuxassembly.org
+--
+Linux,Assembly,Forth: http://www.lxhp.in-berlin.de/index-lx.shtml en/de
+  pse, reply to << lx -at- lxhp -dot- in-berlin -dot- de >>
