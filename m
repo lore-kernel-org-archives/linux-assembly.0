@@ -1,28 +1,38 @@
-From: "Richard Cooper" <syloriza@xersedefixion.com>
+From: Jan Wagemakers <janw@easynet.be>
 Subject: Re: Segfault on ioperm
-Date: Thu, 20 Jan 2005 09:58:25 -0500
-Message-ID: <opskwo7nfo5khrlj@sucks.airplane.fire>
+Date: Thu, 20 Jan 2005 16:26:00 +0100
+Message-ID: <20050120152600.GA17338@qwerty.be>
 References: <4b0d6e0d0501200552126d8cbb@mail.gmail.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
 Return-path: <linux-assembly-owner@vger.kernel.org>
+Content-Disposition: inline
 In-Reply-To: <4b0d6e0d0501200552126d8cbb@mail.gmail.com>
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed	delsp=yes"
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: linux-assembly@vger.kernel.org
 
+joy merwin monteiro <joy.merwin@gmail.com> schreef:
 
-> Hi,
->
-> I had been here before, I can't figure out why the code isnt working.
+>     mov dx,port
+>     mov al,0xff
+>     out 378h,al  <----- segfault here
 
->     mov eax,101
->     mov ebx,port
->     mov ecx,3
->     mov edx,port
->     int 80h
+I think that this should be :
 
-You really should check the return value here.  I imagine the call is failing.  In particular, you need to have root access, and I believe that edx should actually be 1.
+	out dx, al
+	
+>     mov eax,1
+>     int 0x80
+> Any help/ pointers?
 
-If you're just hoping to control a device you've connected to your parallel port, you might try designing it so that it can work just from the output byte bits, on pins 2 through 9, if that's possible with what you are doing.  You'll have to connect pin 11 to 23 and 12 to 24 so that the busy and out of paper signals go away, otherwise the lp driver will block your process on writes thinking the printer is busy or out of paper.  Then whatever byte you write to the lp driver will stay on those pins until you write another.
+I hope this helps you. Good luck!
+
+
+-- 
+Met vriendelijke groetjes         - Jan Wagemakers -
+
+... RFS: picprog: Microchip PIC serial programmer software (GPL)
+    Deb-package is available at <http://www.janw.easynet.be/picprog.html>
+    
