@@ -1,58 +1,48 @@
 From: Rudolf Marek <MAREKR2@cs.felk.cvut.cz>
-Subject: Re: sys call !
-Date: Mon, 24 Nov 2003 23:15:01 +0100
+Subject: Re: calling bios interrupt from kernel
+Date: Mon, 24 Nov 2003 23:15:51 +0100
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <36260.74844874$1069712535@news.gmane.org>
-References: <Law14-F649cvKluevz100001716@hotmail.com>
+Message-ID: <17342.7809648731$1069712535@news.gmane.org>
+References: <3FC22539.7060509@eprocess.fr>
 Mime-Version: 1.0
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <Law14-F649cvKluevz100001716@hotmail.com>
+In-Reply-To: <3FC22539.7060509@eprocess.fr>
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: sansanto santo <sansanto4u@hotmail.com>
+To: Frederic Marmond <fmarmond@eprocess.fr>
 Cc: linux-assembly@vger.kernel.org
 
 
+Yes its possible but "unclean"
 
-Sure,
+Look for lrmi library.
 
-look at 2nd section of the manual pages. Or to 
-/usr/src/linux/include/asm/unistd.h if you have linux there.
-(and kernel sources of course :)
+Or read the FAQ section on http://linuxassembly.org
+
 
 Regards
 
+
 Rudolf
+ 
+On Mon, 24 Nov 2003, Frederic Marmond wrote:
 
-
-On Mon, 24 Nov 2003, sansanto santo wrote:
-
-> Date: Mon, 24 Nov 2003 18:28:11 +0000
-> From: sansanto santo <sansanto4u@hotmail.com>
+> Date: Mon, 24 Nov 2003 16:35:21 +0100
+> From: Frederic Marmond <fmarmond@eprocess.fr>
 > To: linux-assembly@vger.kernel.org
-> Subject: sys call !
+> Subject: calling bios interrupt from kernel
 > 
-> Hello ,
+> I'm working on a graphic card for which I have only a binary driver, 
+> without sources.
 > 
-> Just to introduce my self  i just started to hack our own university lab in 
-> unix but un fortunatealy i was cought
-> for just using  a system call  " halt " .
+> I would want to get started by calling the int 0x10 in a vm86 environment.
+> Does anybody tried something like this? Is there any way to succeed?
 > 
-> is any wheare can i get the codes for system call for [ join,  open, create, 
-> read, write, fork ] ? please
-> let me know !
+> Any info would be welcome!
+> Thanks in advance.
 > 
-> do replay to me as soon as possible !
-> 
-> thanking you
-> 
-> Regards
-> Santo
-> 
-> _________________________________________________________________
-> Use MSN Messenger to send music and pics to your friends 
-> http://www.msn.co.uk/messenger
+> Fred
 > 
 > -
 > To unsubscribe from this list: send the line "unsubscribe linux-assembly" in
