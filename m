@@ -1,71 +1,40 @@
-From: "Ryn" <mattyml@daemons.net>
-Subject: SPARC Stack frame organization
-Date: Sun, 5 May 2002 22:56:57 -0400
+From: Konstantin Boldyshev <konst@linuxassembly.org>
+Subject: Re: chdir command
+Date: Mon, 6 May 2002 10:32:36 +0400 (MSD)
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <001901c1f4a9$afbc7b20$0201a8c0@pooh>
+Message-ID: <Pine.LNX.4.43L.0205061030420.1494-100000@alpha.linuxassembly.org>
+References: <3CD2EAF6.5A27E998@exeter.edu>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
+In-Reply-To: <3CD2EAF6.5A27E998@exeter.edu>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: linux-assembly@vger.kernel.org
 
-I am trying to figure out main()s stack frame organization for the code in
-[Exhibit 1].  I get the
-following when I hit a breakpoint set at main():
+On Fri, 3 May 2002, Allan Wooley wrote:
 
-Breakpoint 1, 0x10544 in main ()
-1: x/i $pc  0x10544 <main+12>:  mov  0x31, %o0
+> section .text
+>     global _start
+>
+> path    db '/root',0
+>
+> _start:
+>
+>     mov ebx, path
+>     mov eax,12
+>     int 80h
+>
+>     mov eax, 1
+>     int 80h        ;; int 0x80
+>
+> Although I have gotten system calls 1, 3-6 & 11 to work fine in
+> assembly
+> programs, I can not get the change-working-directory call to work.
 
-(gdb) x $sp
-0xffffffffffbefb30:     0x0000000c
+Make sure you have needed permissions. Which error do you get?
 
-(gdb) x $fp
-0xffffffffffbefbc0:     0x00000001
-
-If I subtract the sp from the fp I get:
-
-0xffffffffffbefbc0 (%fp) - 0xffffffffffbefb30 (%sp) = 144 bytes
-
-Which comes out to 144 bytes. When I calculate the stack frame I get:
-
-  64 bytes for register window saving (%l0 - %l7 & %i0 - %i7)
-+  4 bytes ptr to struct
-+ 24 bytes for 6 arguments
-+ 28 7 integers @ 4 bytes each
-  --
-  120 bytes
-
-I cannot seem to figure out why the stack frame is 144 bytes as opposed
-to the 120 bytes calculated above. If you have any thoughts or insight I would
-appreciate it.
-
-Thanks a ton,
-Ryan
-
-[Exhibit 1]
-#include <stdio.h>
-
-int main(int argc, char **argv)
-{
-        int buf1[6] = { '1' , '2' , '3' , '4' , '5',' '};
-        int i = 1;
-
-        myfunc1(i);
-}
-
-int myfunc1(int param)
-{
-        char buf1[6] = "CCCCC";
-        int i = 1;
-
-        myfunc2(i);
-}
-
-int myfunc2(int param)
-{
-        char buf1[5] = "EEEEE";
-        int i = 1;
-}
-
+-- 
+Regards,
+Konstantin
 
