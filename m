@@ -1,24 +1,26 @@
-From: Maciej Hrebien <m_hrebien@wp.pl>
-Subject: 0x2e & 0x3e prefixes
-Date: Sat, 23 Aug 2003 10:37:51 +0200
+From: Fekete Gabor <feketga@delfin.unideb.hu>
+Subject: gas jump
+Date: Sun, 31 Aug 2003 00:46:35 +0200 (DFT)
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <3F4727DF.AE1E2EDB@wp.pl>
-Reply-To: m_hrebien@wp.pl
+Message-ID: <Pine.A41.4.20.0308310041440.93300-100000@delfin.unideb.hu>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: linux-assembly@vger.kernel.org
 
-Hi there,
+hi
 
-p4 & xeon cpus (as part of the sse2 extension) have branch hints
-prefixes (0x2e, 0x3e). My question is: are there any mnemonics for it?
-How gas/nasm handles this issue? Hard coding only?
+i want to make a relative jump.
+i tried it with "jmp 0x09" and expected it to
+jump to the address that comes 9 bytes after
+this "jmp".
+is it correct?
+i'm asking because when I examined (x/bx) the code with
+gdb it didn't really show any bytes with value 0x09 when
+looking at this jump instruction.
 
-Regards,
+thanks
 
--- 
-Maciej Hrebien
 
