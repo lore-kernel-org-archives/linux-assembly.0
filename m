@@ -1,146 +1,109 @@
-From: Timo Lindfors <timo.lindfors@kolumbus.fi>
-Subject: asmutils' init.asm and uml
-Date: Tue, 4 Nov 2003 20:00:19 +0200
+From: peter w krause <wklux@yahoo.co.uk>
+Subject: Re: smc-help
+Date: Tue, 4 Nov 2003 21:40:10 +0000
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <20031104180019.GA16891@sauna.l.org>
+Message-ID: <200311042108.34154.wklux@yahoo.co.uk>
+References: <Law9-F88milcMPyp4cS0001780b@hotmail.com>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
+In-Reply-To: <Law9-F88milcMPyp4cS0001780b@hotmail.com>
 Content-Disposition: inline
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: linux-assembly@vger.kernel.org
-Cc: m.van.der.honing@supermail.nl
+To: Jason Roberts <v3ct0r99@hotmail.com>, linux-assembly@vger.kernel.org
 
-Hi,
+the fault in your particular example might be due to read-only '.text'  
+section standard permissions which is handled incorrectly by the  debugger, 
+permitting code modification while debugging, but not while running the 
+program, independently.
 
-I recently had a struggle getting asmutils' init.asm run under
-user-mode-linux. After googling around I noticed a post describing more
-or less the same problem on linux-assembly at
-http://marc.theaimsgroup.com/?l=linux-assembly&m=104217914416500&w=2
-Is this still a mystery?
+best,
+	hp
+================
+Jason Roberts am Tuesday 04 November 2003 14:12:
+> I've read enough about smc that I figured it'd be a cool thing to
+> learn...The basic concept is simple; implementation,however , is not!
+> Here's my code(using nasm) and following a session with gdb.
+> Thankyou for any insight
+>
+>        BTW-- I decided to include only the output from objdump rather than
+> bloat this
+>        already bloated post with nasm src. I'll assume most can read gas
+> syntax--
+>         I'm new to asm and had no prob differentiating the two styles.
+>
+>
+> <self modifying code>
+>
+>
+> ./smc:     file format elf32-i386
+>
+> Disassembly of section .text:
+>
+> 08048080 <.text>:
+> 8048080:	e9 1b 00 00 00       	jmp    0x80480a0
+> 8048085:	ba 11 00 00 00       	mov    $0x11,%edx
+> 804808a:	b8 04 00 00 00       	mov    $0x4,%eax
+> 804808f:	bb 01 00 00 00       	mov    $0x1,%ebx
+> 8048094:	b9 eb 90 04 08       	mov    $0x80490eb,%ecx
+> 8048099:	cd 80                	int    $0x80
+> 804809b:	e9 2e 00 00 00       	jmp    0x80480ce
+> 80480a0:	e8 18 00 00 00       	call   0x80480bd
+> 80480a5:	31 c0                	xor    %eax,%eax
+> 80480a7:	ba 13 00 00 00       	mov    $0x13,%edx
+> 80480ac:	b8 04 00 00 00       	mov    $0x4,%eax
+> 80480b1:	bb 01 00 00 00       	mov    $0x1,%ebx
+> 80480b6:	b9 d8 90 04 08       	mov    $0x80490d8,%ecx <------ buffer
+> 80480bb:	cd 80                	int    $0x80
+> 80480bd:	bf c9 80 04 08       	mov    $0x80480c9,%edi <------- our jmp
+> 80480c2:	89 3d a7 80 04 08    	mov    %edi,0x80480a7   <--- modify!
+> 80480c8:	c3                   	ret
+> 80480c9:	e9 b7 ff ff ff       	jmp    0x8048085
+> 80480ce:	89 c3                	mov    %eax,%ebx
+> 80480d0:	b8 01 00 00 00       	mov    $0x1,%eax
+> 80480d5:	cd 80                	int    $0x80
+> Disassembly of section .data:
+>
+> 080490d8 <.data>:
+> 80490d8:	6e                   	outsb  %ds:(%esi),(%dx)
+> 80490d9:	6f                   	outsl  %ds:(%esi),(%dx)
+> 80490da:	72 6d                	jb     0x8049149
+> 80490dc:	61                   	popa
+> 80490dd:	6c                   	insb   (%dx),%es:(%edi)
+> 80490de:	20 65 78             	and    %ah,0x78(%ebp)
+> 80490e1:	65 63 75 74          	arpl   %si,%gs:0x74(%ebp)
+> 80490e5:	69 6f 6e 0a 0d 00 49 	imul   $0x49000d0a,0x6e(%edi),%ebp
+> 80490ec:	20 61 6d             	and    %ah,0x6d(%ecx)
+> 80490ef:	20 6d 6f             	and    %ch,0x6f(%ebp)
+> 80490f2:	64 69 66 69 65 64 21 	imul   $0xa216465,%fs:0x69(%esi),%esp
+> 80490f9:	0a
+> 80490fa:	0d                   	.byte 0xd
+>
+> [L4@weirdo L4]$ gdb ./smc
+> (gdb) r
+> Starting program: /home/L4/./smc
+> warning: shared library handler failed to enable breakpoint
+>
+> Program received signal SIGSEGV, Segmentation fault.
+> 0x080480c2 in ?? ()
+> ok...now test trampoline...
+> (gdb) j *0x80480c9
+> Continuing at 0x80480c9.
+> I am modified!
+> Program exited with code 021.
+> ok...good...
+> lets check that edi holds jmp addy...
+> Breakpoint 1, 0x080480c2 in ?? ()
+> edi   =   0x80480c9    yep,good
+> ok now lets see if addy was modified(thats at 0x80480a7)
+> (gdb) x/i *0x80480a7
+> 0x80480c9:      jmp    0x8048085  <-------- and there it is!
+> sweet!!! well, not quite...why does it segfault???
+>
+> _________________________________________________________________
 
-[I cc this to m.van.der.honing@supermail.nl just in case he is not
-subscribed anymore and is still interested.]
+-- 
+Linux,Assembly,Forth: http://www.lxhp.in-berlin.de/index-lx.shtml
+  >> xxxx -at- lxhp -dot- in-berlin -dot- de <<
 
-Here's what I got while using
-
-root filesystem
- http://prdownloads.sourceforge.net/user-mode-linux/Debian-3.0r0.ext2.bz2
-
-asmutils
- http://protu.it.helsinki.fi/~lindi/init.asm
- or http://linuxassembly.org/asmutils/asmutils-0.17.tar.gz
-
-kernel 2.4.18-17um
- http://protu.it.helsinki.fi/~lindi/linux-debug.config
-
-GNU gdb 2002-04-01-cvs
-
-(gdb) x/4i $eip
-0x804809c:      test   %eax,%eax
-0x804809e:      js     0x804808e
-0x80480a0:      xor    %ebp,%ebp
-0x80480a2:      inc    %ebp
-(gdb) x/4i $eip-30
-0x804807e:      xor    %ebp,%ebp
-0x8048080:      inc    %ebp
-0x8048081:      call   0x80480bb
-0x8048086:      cmp    $0x4,%ebp
-(gdb) break *0x804807e
-Breakpoint 1 at 0x804807e
-(gdb) jump *0x804807e
-Continuing at 0x804807e.
-
-Breakpoint 1, 0x0804807e in ?? ()
-(gdb) x/4i $eip
-0x804807e:      xor    %ebp,%ebp
-0x8048080:      inc    %ebp
-0x8048081:      call   0x80480bb
-0x8048086:      cmp    $0x4,%ebp
-(gdb) si
-0x08048080 in ?? ()
-(gdb) 
-0x08048081 in ?? ()
-(gdb) 
-0x080480bb in ?? ()
-(gdb) x/4i $eip
-0x80480bb:      mov    %ebp,%eax
-0x80480bd:      cmp    $0x9,%al
-0x80480bf:      jbe    0x80480c3
-0x80480c1:      mov    $0x9,%al
-(gdb) si
-0x080480bd in ?? ()
-(gdb) 
-0x080480bf in ?? ()
-(gdb) 
-0x080480c3 in ?? ()
-(gdb) x/4i $eip
-0x80480c3:      add    $0x30,%al
-0x80480c5:      mov    %al,0x8048210
-0x80480ca:      push   $0x2
-0x80480cc:      pop    %ecx
-(gdb) si
-0x080480c5 in ?? ()
-(gdb) 
-0x080480ca in ?? ()
-(gdb) 
-0x080480cc in ?? ()
-(gdb) x/4i $eip
-0x80480cc:      pop    %ecx
-0x80480cd:      mov    $0x8048208,%ebx
-0x80480d2:      push   $0x5
-0x80480d4:      pop    %eax
-(gdb) x/20i $eip
-0x80480cc:      pop    %ecx
-0x80480cd:      mov    $0x8048208,%ebx
-0x80480d2:      push   $0x5
-0x80480d4:      pop    %eax
-0x80480d5:      int    $0x80
-0x80480d7:      test   %eax,%eax
-0x80480d9:      js     0x80481c0
-0x80480df:      mov    %eax,0x8048224
-0x80480e4:      mov    %eax,%ebx
-0x80480e6:      xor    %ecx,%ecx
-0x80480e8:      push   $0x3f
-0x80480ea:      pop    %eax
-0x80480eb:      int    $0x80
-0x80480ed:      push   $0x1
-0x80480ef:      pop    %ecx
-0x80480f0:      mov    0x8048224,%ebx
-0x80480f6:      push   $0x3f
-0x80480f8:      pop    %eax
-0x80480f9:      int    $0x80
-0x80480fb:      push   $0x2
-(gdb) si
-0x080480cd in ?? ()
-(gdb) 
-0x080480d2 in ?? ()
-(gdb) 
-0x080480d4 in ?? ()
-(gdb) 
-0x080480d5 in ?? ()
-(gdb) printf "%d %s %d %d %d", $eax, $ebx, $ecx, $edx, $ebp
-5 /dev/tty1 2 0 1(gdb) x/1i $eip         <-- open("/dev/tty1", O_RD
-0x80480d5:      int    $0x80
-(gdb) si
-0x080480d9 in ?? ()
-(gdb) printf "%d %s %d %d %d", $eax, $ebx, $ecx, $edx, $ebp
--13 /dev/tty1 2 0 1(gdb)
-
-
-/usr/include/asm/errno.h has
-
-#define EACCES          13      /* Permission denied */
-
-So it seems to me that init.asm is getting permission denied while
-trying to open /dev/tty1. However, permissions seem to be ok:
-
-crw-------    1 root     tty        4,   1 Jul 23  2002 mnt/dev/tty1
-
-What could cause EACCESS here?
-Also, any ideas on how to debug this further?
-
-
-best regards,
-Timo Lindfors
