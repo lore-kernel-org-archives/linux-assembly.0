@@ -1,72 +1,109 @@
-From: "Daniel R. Blair" <joecamel@realcoders.org>
-Subject: Re: atoll
-Date: Thu, 19 Feb 2004 10:16:33 -0500 (EST)
+From: glburt@comcast.net
+Subject: gdb help
+Date: Sat, 21 Feb 2004 17:36:33 +0000
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <20040219100944.H54477@codepoet.unixcoders.org>
-References: <200402181648.33694.drenal@fhi.pl>
+Message-ID: <022120041736.4481.4a77@comcast.net>
 Mime-Version: 1.0
+Content-Type: multipart/mixed; boundary="NextPart_Webmail_9m3u9jl4l_4481_1077384993"
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <200402181648.33694.drenal@fhi.pl>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
+To: linux-assembly@vger.kernel.org
+
+
+--NextPart_Webmail_9m3u9jl4l_4481_1077384993
+Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
+
+I am getting different results when I use gdb at home and at school. It is
+the same version of gdb at both places, however the version of nasm
+is different:  
+
+school is 0.98.19
+home   is 0.98.38
+
+I don't know what that would make a difference, though.
+
+I have searched for a config file, but don't know what file to look for,
+saw nothing interesting based on file name.
+
+I want to have the program step through one instruction at a time and
+display the next line of code to be executed.
+
+I save the two versions and included them in the attachment.
+
+Any help would be greatly appreciated.
+
+Thanks.
+
+
+Gary
+
+
+
+--NextPart_Webmail_9m3u9jl4l_4481_1077384993
+Content-Type: application/octet-stream; name="gdb_results"
 Content-Transfer-Encoding: 7bit
-To: drenal <drenal@fhi.pl>
-Cc: linux-assembly@vger.kernel.org
 
-On Wed, 18 Feb 2004, drenal wrote:
-
-> Hello, I'm a newbie in kernel-level programming, I'm trying to create module
-> that compares indone value('d_ino') from 'struct dirent64' with my own data
-> put to module thru some modified syscall as char* string.
->
-> My question is: How can I convert char* string data to type '__off64_t' which
-> is 8 bytes long on my system just like type 'long long'. I tried to use 'long
-> long atoll(char*)' function from stdlib.h  but when I include this header in
-> my kernel-based source code I have a lot of errors while compiling.
->
-> I just want to convert char* data to 'long long' type in kernel-based program.
-> How can I do this?
-
-Unfortunately, I am unable to help you with your problem.. but, since I
-use Pine, a unix based console MUA, I wanted to give you some advice as a
-"newbie" posting on the list.. this would at least have helped me, and
-most likely others at least understand your "subject line" a little more,
-and possibly avoid deleting it.. I actually marked it for deletion and
-accidentally read it I think, and then un-deleted it when I noticed it was
-a list post..
-
-When referecing a system call or function in the libraries.. reference it
-proceeded with parens and the man page volume.... so, IMHO, I would have
-re-done the subject line as follows:
+Linux server at UMBC
 
 
-old:  atoll
-new:  atoll(3)
+test1[102]: cat Makefile
+test1a : test1a.o
+        gcc  -o test1a test1a.o
+test1a.o : test1a.asm
+        nasm -l test1a.lst -g -f elf test1a.asm
+clean :
+        rm test1a test1a.o test1a.lst test1a.asm~
+test1[103]: make
+nasm -l test1a.lst -g -f elf test1a.asm
+gcc  -o test1a test1a.o
+test1[104]: gdb test1a
+GNU gdb Red Hat Linux (5.3post-0.20021129.18rh)
+Copyright 2003 Free Software Foundation, Inc.
+GDB is free software, covered by the GNU General Public License, and you are
+welcome to change it and/or distribute copies of it under certain conditions.
+Type "show copying" to see the conditions.
+There is absolutely no warranty for GDB.  Type "show warranty" for details.
+This GDB was configured as "i386-redhat-linux-gnu"...
+(gdb) break *main
+Breakpoint 1 at 0x8048420
+(gdb) run
+Starting program: /tmp_mnt/ftp/pub/WWW/courses/undergraduate/CMSC313/spring04/burt_katz/test1/test1a
 
-In realtiy, *I* would have made a longer, more descriptive subject line
-like "using atoll with assembly and kernel space" or something, but, in
-leiu of that, at least state it as atoll(3) so it's recognized as a
-function call and not some way for a spammer to get away from the spam
-eliminators by spelling words differently so they are not recognized as
-standard subject lines..
+Breakpoint 1, 0x08048420 in main ()
+(gdb) s
+Single stepping until exit from function main,
+which has no line number information.
 
-Again, this is just me... I would imagine most would prefer my suggestion
-rather than the original way you posted it (i.e. "atoll(3)" is
-preffered over just "atoll"), but, I could be wrong..
+Program exited normally.
 
-And I am not getting mad at you in any way, shape or form.. I'm glad you
-came to the list for help, and I am glad you are taking an active role in
-coding in assembly.. but, again, using standards like referencing the sys
-call properly could help others assess you matter.. some people on the
-list may have just skimmed over your message because they were unaware it
-was referencing the function call atoll();
 
-Thanks for listening bud,
+==================================================================
 
-Danny
+Linux at home
 
-                           = Daniel Blair =
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-- dblair@realcoders.org -                   [http://www.realcoders.org]
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+
+[~/courses/umbc/CMSC313/spring04/test1]$ make
+nasm -l test1a.lst -g -f elf test1a.asm
+gcc  -o test1a test1a.o
+[~/courses/umbc/CMSC313/spring04/test1]$ gdb test1a
+GNU gdb Red Hat Linux (5.3post-0.20021129.18rh)
+Copyright 2003 Free Software Foundation, Inc.
+GDB is free software, covered by the GNU General Public License, and you are
+welcome to change it and/or distribute copies of it under certain conditions.
+Type "show copying" to see the conditions.
+There is absolutely no warranty for GDB.  Type "show warranty" for details.
+This GDB was configured as "i386-redhat-linux-gnu"...
+(gdb) break *main
+Breakpoint 1 at 0x8048300: file test1a.asm, line 40.
+(gdb) run
+Starting program: /home/burt/courses/umbc/CMSC313/spring04/test1/test1a
+
+Breakpoint 1, main () at test1a.asm:40
+40              mov     eax, [ A ]              ; eax ____________________________
+(gdb) s
+42              add     eax, 32                 ; eax ____________________________
+(gdb)
+
+--NextPart_Webmail_9m3u9jl4l_4481_1077384993--
