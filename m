@@ -1,65 +1,51 @@
-From: Matthew Harrison <matth@3d-computers.co.uk>
-Subject: Re: Assembler jobs and Strange software
-Date: Fri, 19 Sep 2003 12:22:13 +0100
+From: =?iso-8859-1?q?marcello=20miorelli?= <jjradha@yahoo.it>
+Subject: assembly retired
+Date: Fri, 19 Sep 2003 16:15:52 +0200 (CEST)
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <20030919112213.GG4564@3d-computers.co.uk>
-References: <20030917185527.18215.qmail@web80603.mail.yahoo.com> <200309180905.18670.jko@bctonline.com> <Pine.LNX.4.58.0309191033070.264@axebeast.txempire.org>
+Message-ID: <20030919141552.7322.qmail@web80602.mail.yahoo.com>
+Reply-To: jjradha@yahoo.it
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="OFj+1YLvsEfSXdCH"
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-assembly-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.58.0309191033070.264@axebeast.txempire.org>
 List-Id: <linux-assembly.vger.kernel.org>
-To: ted <webmaster@bnnnstwn.freeserve.co.uk>
-Cc: jeff <jko@save-net.com>, linux-assembly@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: linux-assembly@vger.kernel.org
 
+Hello folks,
+Hello Jeff,
+Thanks for the advices.
+I would like to know why you have retired from work if
+you still develop your own projects.
+In the company where you worked it was not allowed to
+have your own projects, or you did not have time, or
+what could it be?
 
---OFj+1YLvsEfSXdCH
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Do you still work with programming nowadays?
 
-On Fri, Sep 19, 2003 at 10:47:30AM +0100, ted wrote:
-> Hi,
->=20
-> On Sep 18, 09:10, jeff wrote:
->=20
-> <snip>
->=20
-> >.With our small community, It is probably not worth putting
-> >.this up on a web page so I've been mailing it out.  If you
-> >.want a copy let me know and I'll send it.
-> >.
-> >. All the best, jeff
-> >.
->=20
+Hope you are well,
+and if you please could send me your project at
+mmiorell@ucs.br
+I would be very glad.
 
-i'm trying to learn assembly although it's probably beyond me
-at this stag. anyhow I wouldn't mind a copy of all that.
+I am very eager to know this art of assembly
+programming because it is like a hobby for me at the
+present.
 
-cheers
+I would like to develop a projet with assembly and
+some database like postgres or interbase in the near
+future.
 
---=20
+I have been developing some small projects, and
+viewing the examples which come along with masm32v8,
+and they are quite interesting.
+It is not simple assembly though, it is a language 
+called high level assembly, and they talk very nicely
+about it, somebody has tested it or know something to
+share us here?
 
-Mat Harrison			| email: matth@3d-computers.co.uk
-3d Computer Systems Ltd.	| tel: ++441249 460 766
-11 New Road			| fax: ++441249 460 583=20
-Chippenham			| gpgid: 0x9FE38627
-Wiltshire
-SN13 9RW
-England
+All the best,
+marcello miorelli
 
---OFj+1YLvsEfSXdCH
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.2.2 (OpenBSD)
-
-iD8DBQE/aubjmbMTrp/jhicRAlGwAJ9spuMm+7/UBZOGF6ER14wCypwh0ACfVEwl
-jWDOAZtqauqDWK2oyiKjwKA=
-=LwYP
------END PGP SIGNATURE-----
-
---OFj+1YLvsEfSXdCH--
+______________________________________________________________________
+Yahoo! Mail: 6MB di spazio gratuito, 30MB per i tuoi allegati, l'antivirus, il filtro Anti-spam
+http://it.yahoo.com/mail_it/foot/?http://it.mail.yahoo.com/
