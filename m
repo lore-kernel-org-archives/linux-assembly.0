@@ -1,36 +1,25 @@
-From: "Randall Hyde" <randyhyde@earthlink.net>
-Subject: HLA v1.65 is Now Available on Webster
-Date: Sat, 5 Jun 2004 19:09:23 -0700
+From: Fabio Miranda Hamburger <fabmirha@ns.isi.ulatina.ac.cr>
+Subject: sparc assembly mnemonic
+Date: Mon, 21 Jun 2004 12:34:25 -0600 (CST)
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <001601c44b6b$492b39d0$6701a8c0@pentiv>
+Message-ID: <Pine.LNX.4.58.0406211231500.25030@ns.isi.ulatina.ac.cr>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: linux-assembly@vger.kernel.org
 
-HLA v1.65 is now available from the HLA Downloads page
-(http://webster.cs.ucr.edu/AsmTools/HLA/dnld.html). There have
-been several bug fixes to the assembler, standard library routines,
-and to the w.hhf header file.
+what are the sparc assembly  equivalent of the following instructions:
 
-Also note that the Linux edition was brought up to date with
-HLA v1.65 and several problems in the HLA code and
-standard library were corrected.
+    __asm__ __volatile__ ("fsave %0\n" : : "m"(fpubuf));
+    __asm__ __volatile__ ("frstor %0\n" : : "m"(fpubuf));
 
-This version was created to serve as the CD-ROM master
-for the second printing of "The Art of Assembly Language".
 
-HLA is the "High Level Assembler that lets programmers
-write portable assembly applications that run on either Linux
-or Windows with nothing more than a recompile. HLA is
-completely free software (public domain). Thousands of
-pages of documentation are available for HLA and
-hundreds of thousands of lines of HLA example code
-are available for HLA. See http://webster.cs.ucr.edu
-for details.
+thanks,
 
-Enjoy!
-Randy Hyde
+---
+Fabio Andres Miranda
+Ingenieria de sistemas informaticos
+Universidad Latina - Costa Rica
 
