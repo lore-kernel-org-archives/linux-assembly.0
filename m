@@ -1,36 +1,31 @@
-From: QUASAR <quasar2@o2.pl>
-Subject: GTK with asm
-Date: Tue, 2 Jul 2002 21:56:30 +0200
+From: Vince Weaver <vince@deater.net>
+Subject: ll 0.8 is out, now with SPARC
+Date: Tue, 2 Jul 2002 16:23:30 -0400 (EDT)
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <aft15k$e6j$2@main.gmane.org>
-Reply-To: QUASAR <quasar@quasar.prv.pl>
+Message-ID: <Pine.LNX.4.31.0207021620080.20449-100000@hal.deaternet.vmw>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: "linux-assembly@vger.kernel.org" <linux-assembly@vger.kernel.org>
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: linux-assembly@vger.kernel.org
 
-Hello!
+Hello,
 
-   I'm new to linux assembly programming so forgive me my lame
-   question.
-   I know how to create X program in asm but they are ugly. Can I use
-   GTK (maybe QT) in assembly programs? How to deal with them?
+I have released version 0.8 of "ll"  (Linux assembly language port of
+linux_logo).
 
+The main change is the addition of a SPARC port.  This joins the ix86,
+ia64, PPC, and Alpha versions.
 
+Coming soon... probably MIPS
 
+get it here:  http://www.deater.net/weave/vmwprod/asm/ll.html
 
+Vince
 
-
-   PS to h-peter recktenwald:
-   I can't reply to your message because server return any mail I sent
-   you. Answer for your question is www.woytec.pl (Don't expect it to
-   operate in small village, but it seems that it's only one in that
-   area)
 -- 
-Best regards,
-QUASAR
-quasar@quasar.prv.pl
-http://www.quasar.prv.pl
+____________
+\  /\  /\  /  Vince Weaver        Linux 2.4.9 on a K6-2+, Up 26 days
+ \/__\/__\/   vince@deater.net    http://www.deater.net/weave
 
