@@ -1,50 +1,53 @@
-From: Maciej Hrebien <m_hrebien@wp.pl>
-Subject: Re: looping_code
-Date: Mon, 26 Aug 2002 16:59:20 +0200
+From: Robin Miyagi <penguin@dccnet.com>
+Subject: Re: How to open a KDE window in Assembler ?
+Date: Mon, 26 Aug 2002 08:48:57 -0700
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <3D6A4248.680E5EDE@wp.pl>
-References: <web-43200817@m1.plasa.com>
-Reply-To: m_hrebien@wp.pl
+Message-ID: <B0310885543@yoda.dccnet.com>
+References: <200208261516.11559.torelli@alpha.szn.it>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-assembly-owner@vger.kernel.org>
+In-Reply-To: <200208261516.11559.torelli@alpha.szn.it>
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 To: linux-assembly@vger.kernel.org
 
-ssams wrote:
-> 
-> i really new in linux assembly. i want to know how i loop
-> some code..?
-> i feel it is different with tasm, i have try tasm way for
-> looping but
-> it was not run cleanly in gnu assembly. are there any body
-> want to help me....?
+Are your GUI routines speed critical?  I would save assembler for the speed 
+critical components of your program, e.g. those parts that are 
+computationally intensive.  user interfaces (including graphical ones) spend 
+most of their time idle awaiting input from the user.
 
-I think it's NTG but lets see...
+I do not know anything about graphical user interfaces apart from using them. 
+ Unless there is some major advantage to using a GUI (e.g. display of 
+graphical data), I tend to code command line utilities.
 
-> by this code:
-> 
-> .data
-> msg: .byte 65,10
-> 
-> .text
->    .globl mulai
-> mulai:
->     mov $10,%edx
+There are places for C++, and their are places for assembler (which should be 
+left as a last resort) -- use the correct language for the job (sed/awk/perl 
+for text processing, shell scripts scripts for programmes that mainly execute 
+other programs, and C/C++/assembler for system programming or speed critical 
+applications such as scientific mathematical simulations :)  Ones (dis)like 
+for a computer language should have no bearing on the choice of language(s) 
+used.
 
-Why $10 if Your msg is two bytes long?
+Perhaps your needs might be already met with the GNUplot package.  Most Linux 
+distributors include this package with their distributions.  I am sure you 
+can download this package from authoritive free software sources (e.g. GNU, 
+sourceforge.net).  The package called octave works on top of GNUplot, and 
+serves as a computer algebra system.
 
-> ulang:
->   mov $4,%eax
->   mov $1,%ebx
->   mov $msg,%ecx
->   int $0x80
->   loop ulang
-> 
->   mov $1,%eax
->   int $0x80
+P.S.  Have you cloned any humans yet?
+
+On Monday 26 August 2002 06:16, Giuseppe Torelli wrote:
+> Hi,
+>
+> Do you know how to open a KDE window in assembler ?
+> I don't like C++, I would like to create a GUI with buttons and menu
+> in assembler, could you help me ?
+>
+> Thanks
 
 -- 
-Maciej Hrebien
+Robin Miyagi<penguin@dccnet.com>
+http://www.geocities.com/SiliconValley/Ridge/2544/asm/assembler.html
+Beware of penguins :-)
 
