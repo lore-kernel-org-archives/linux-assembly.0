@@ -1,45 +1,14 @@
-From: "J." <mailing-lists@xs4all.nl>
-Subject: Unable to access memory address.
-Date: Fri, 25 Mar 2005 00:08:51 +0100 (CET)
-Message-ID: <Pine.LNX.4.21.0503242354490.1652-100000@hestia>
-Reply-To: linux-assembly@vger.kernel.org
-Mime-Version: 1.0
+From: TheReader06@comcast.net
+Subject: Re: Unable to access memory address.
+Date: Fri, 25 Mar 2005 01:44:30 +0000
+Message-ID: <032520050144.26058.42436CFE000CF710000065CA2205884484C0CF9D0A0B0E0AAD0A08AB@comcast.net>
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 To: linux-assembly@vger.kernel.org
 
-Thursday, March 24 23:54:49
+Try _start instead of main?
 
-Hello,
-
-I am totally new to asm and have a question. I trying the following
-nasm program from the document http://www.leto.net/writing/nasm.txt . 
-
-section .text
- global main
-
-main:
- pop     ebx
- dec     ebx
- pop     ebp
- pop     ebp
-
-When I try to execute it this is what happends.
-~: ./program 12 7
-Illegal instruction
-
-Some searches on the Internet the only clou's turned up are type of `howto
-bufferoverflow' ... Hmmzz.. :( So I decided to use GDB. 
-
-The debugger says:
-Cannot access memory at address 0x6d6f682f
-
-What am I doing wrong and how do I make sure that I use the right memory
-addresses ?
-
-Thanks a lot..
-
-J.
-
+Joshua Roys
