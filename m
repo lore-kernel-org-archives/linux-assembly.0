@@ -1,116 +1,112 @@
-From: "Jason Roberts" <v3ct0r99@hotmail.com>
-Subject: Re: self modifying code---nemesis strikes!
-Date: Mon, 03 Nov 2003 17:57:21 +0000
+From: wklux@yahoo.co.uk
+Subject: Re: appending \n using registers
+Date: Mon, 3 Nov 2003 19:55:51 +0000
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <Law9-F6057qu9gWGE5N00021482@hotmail.com>
+Message-ID: <200311031955.51859.wklux@yahoo.co.uk>
+References: <Law9-F57R88vo2O66rD0001ae77@hotmail.com>
 Mime-Version: 1.0
-Return-path: <linux-assembly-owner@vger.kernel.org>
-List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; format=flowed; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: v3ct0r99@hotmail.com, linux-assembly@vger.kernel.org
+Return-path: <linux-assembly-owner@vger.kernel.org>
+In-Reply-To: <Law9-F57R88vo2O66rD0001ae77@hotmail.com>
+Content-Disposition: inline
+List-Id: <linux-assembly.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: Jason Roberts <v3ct0r99@hotmail.com>, bdavids1@gmu.edu, linux-assembly@vger.kernel.org
 
-I spoke too soon-- I forgot the jmp to test
-so it segfaults :(
-What do I do???
+Jason Roberts am Monday 03 November 2003 14:31:
+> hehe,
+> I gathered what you meant there...but I guess if youre an at&t geek it
+
+I don't like the hybrid att 'syntax', at all, but I prefer AS, because of 
+compiling speed, reliability, availability...
+
+> would not be trivial!
+> now look here again and tell me I'm whacked: I just want to display a 2
+> byte string with a \n!
+> *note* I do not want to 'embed' a newline.
+> Thanks for help
+> pb
 
 
->From: "Jason Roberts" <v3ct0r99@hotmail.com>
->To: v3ct0r99@hotmail.com, linux-assembly@vger.kernel.org
->Subject: Re: self modifying code---I got it!!!! Yeah baby,haha
->Date: Mon, 03 Nov 2003 17:49:03 +0000
+> section .data
 >
->I figured it out, here's my code:
+> str         db "96"
 >
+> section .text
 >
->section .data
+> global _start
 >
->string     db "normal execution",10,13,0
->hstring    db "I am modified!",10,13,0
+> jmp _start
 >
->
->section .text
->
->global _start
->
->_start:
+> _start:
+> pusha
+> call  _test
+> popa
+> jmp exit
 >
 >
 >
->hacked:
+> _test: could this line be culprit?  str is 2 bytes but I'm trying to mov 4
+> using edx,no?
 >
->
->
->mov  edx,17     ;length of buffer
->mov  eax,4       ;sys_write
->mov  ebx,1       ;file descriptor
->mov  ecx,hstring  ;buffer
->
->int  0x80
->jmp exit
->
->
->
->_test:
->
->    call modify
->    xor eax,eax     ;this will be performed but ignored
->hack_me:
->
->
->                   mov  edx,19     ;length of buffer
->                   mov  eax,4       ;sys_write
->                   mov  ebx,1       ;file descriptor
->                   mov  ecx,string  ;buffer
->                   int  0x80
->
->          modify:
->           mov edi, to_write      ;load address of code-to-write in EDI
->           mov  [hack_me], edi    ;write code to location 'hack_me:'
->           ret                           ;return from call
->to_write:
->           jmp hacked
->
->
->
->exit:
->
->mov ebx,eax
->mov eax,1
->int 0x80
->
->
->
-> >From: "Jason Roberts" <v3ct0r99@hotmail.com>
-> >To: linux-assembly@vger.kernel.org
-> >Subject: self modifying code
-> >Date: Mon, 03 Nov 2003 17:14:57 +0000
-> >
-> >Hi all--
-> >I'd like to be able to implement this cool trick called smc.
-> >It's used mostly by crackers and virus coders, but has also
-> >been used in JIT compilers.
-> >
-> >I know the *basic* steps:
-> >1) mov reg1, code-to-write
-> >2)  mov [addr-to-write-to], reg1
-> >
-> >how can I do this in nasm?
-> >Thanks
-> >pb
-> >
-> >_________________________________________________________________
-> >See when your friends are online with MSN Messenger 6.0. Download it now 
->FREE! http://msnmessenger-download.com
-> >
-> >-
-> >To unsubscribe from this list: send the line "unsubscribe linux-assembly" 
->in
-> >the body of a message to majordomo@vger.kernel.org
-> >More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
+>          mov  edx,[str]     <-------		==> eax := dword at 'str'
 
-_________________________________________________________________
-Cheer a special someone with a fun Halloween eCard from American Greetings! 
-Go to  http://www.msn.americangreetings.com/index_msn.pd?source=msne134
+this copies the _content_ at 'str' to edx,
+i.e. l.s.bytes in memory copied to l.s.ytes in register, thus whether 2 or 4 
+bytes buffer size won't matter while just reading; exactly matching access 
+required only to preventing a 'segfault' (linux) when accessing memory just 
+'below' top bound of reserved space.
+
+I should think that you missed the meaning of the used operation - which seems  
+a common error when migrating from 'masm'-like assemblers to the linux progs.
+
+nasm expects either,
+		lea edx,[str]
+or,
+		mov edx,str
+to loading an effective address (hence 'LEA').
+
+>          mov  ecx,edx				; ecx := edx = @str
+not necessary. just copies the regs' content.
+
+try 'mov edx,str' or 'lea edx,[str]' instead (I prefer LEA for clarity).
+
+> ----------------------------------------------- <
+            lea ecx,[str]	; buffer, i.e. string source
+> ;;; mov  edx,[str]
+> ;;; mov  ecx,edx
+>          mov  edx,2
+>          mov  eax,4
+>          mov  ebx,1
+>          int  0x80
+> ------------------------------------------------ <
+
+verify:
+where is your buffer :)
+how is the buffer related to your data?
+what about EDI ?
+
+> ------------------------------------------------ <
+		push dword 0x0a0d	; push immediate data, lsb at addr ESP
+		mov ecx,esp			; buffer is top dword of r-stack
+> ;;; mov  edi,0x0a0d00
+> ;;; mov  ecx,edx
+>          mov  edx,2
+>          mov  eax,4
+>          mov  ebx,1
+>          int  0x80
+		lea esp,[esp+4]		; discard temp. buffer
+>          ret
+>
+> exit:
+>
+>          mov ebx,eax
+>          mov eax,1
+>          int 0x80
+> ------------------------------------------------ <
+
+best,
+	hp
+-- 
+Linux,Assembly,Forth: http://www.lxhp.in-berlin.de/index-lx.shtml en/de
 
