@@ -1,21 +1,24 @@
-From: Patrick Alken <cosine@hippogriff.homeunix.org>
+From: DieJaenickes@t-online.de (Alexander =?iso-8859-1?q?J=E4nicke?=)
 Subject: Re: debugger
-Date: Sun, 7 Sep 2003 09:56:35 -0400 (EDT)
+Date: Sun, 7 Sep 2003 18:06:35 +0200
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.56.0309070955300.26311@hippogriff.homeunix.org>
-References: <200309070647.39539.rafael.diniz@ic.unicamp.br>
-Reply-To: pa59@cornell.edu
+Message-ID: <200309071806.35861.DieJaenickes@t-online.de>
+References: <20030907115058.19795.qmail@linuxmail.org>
 Mime-Version: 1.0
-Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <200309070647.39539.rafael.diniz@ic.unicamp.br>
-List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Rafael Diniz <rafael.diniz@ic.unicamp.br>
-Cc: linux-assembly@vger.kernel.org
+Return-path: <linux-assembly-owner@vger.kernel.org>
+In-Reply-To: <20030907115058.19795.qmail@linuxmail.org>
+Content-Disposition: inline
+List-Id: <linux-assembly.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: linux-assembly@vger.kernel.org
 
-> I'm starting code in assembly language for Linux (i386 with nasm) and I'm
-> using gdb to debug my programs, but I would like to know if there is any
-> other debugger for i386 that uses the Intel syntax.
+Am Sonntag, 7. September 2003 13:50 schrieb Maik Beckmann:
+> gdb is also capable of printing in intel style. I do not know the correct
+> command for this, But its possible to change the syntax by a simple
+> command.
+(...)
 
-Check out: http://dunx1.irt.drexel.edu/~psa22/ald.html
+The command is 'set  disassembly-flavor intel'
+
+Alex
