@@ -1,43 +1,51 @@
-From: Leonardo Di Lella <dilella@gmx.net>
+From: Rudolf Marek <MAREKR2@cs.felk.cvut.cz>
 Subject: Re: entering char from keyboard
-Date: Mon, 29 Apr 2002 07:35:36 +0200
+Date: Mon, 29 Apr 2002 12:04:28 +0200
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <20020429053536.GC650@cube.free-bsd.org>
+Message-ID: <aaj62j$13o$2@main.gmane.org>
 References: <web-7206429@m1.plasa.com>
 Mime-Version: 1.0
 Return-path: <linux-assembly-owner@vger.kernel.org>
-Content-Disposition: inline
 In-Reply-To: <web-7206429@m1.plasa.com>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 To: ssams <ssams@telkom.net>
 Cc: linux-assembly@vger.kernel.org
 
-Re!
 
-* On 29 April, 2002 11:28:55 AM
-* "ssams" (ssams@telkom.net) wrote:
-> Assalamu 'alaikum..... everybody
-Assalamu,
+Hello,  (its more neutral I guess)
 
-> I want to build code to enter some char from keyboard
-> what syscall i need...?
-#define __NR_read      3,
+Any program in unix while running has open the file descriptor (handle) 
+for STDIN STDOUT and STDERR (0,1,2).
+If you want to read from keyboard you just read(stdin)
+via a syscall. But may happen that the syscall returns after
+pressing ENTER. If you want just read one ahar without (ENTER) confirming 
+it, you should change terminal IOCTL.
 
-for reading, and maybe also __NR_write for writing it at stdout ...
+look in sh.asm in asmutils
 
-look also at
-$ man 2 read
 
-Your file d. should be stdin
-myst@xor:/dev$ ls -al stdin
-lrwxrwxrwx    1 root     root            4 24. Nov 17:38 stdin -> fd/0
+        mov     edx,termattrs
+        sys_ioctl STDIN,TCGETS
+        mov    eax,[termattrs.c_lflag]
+        push    eax
+        and     eax,~(ICANON|ECHO)  ; this turns OFF echo also
+        mov     [termattrs.c_lflag],eax
+        sys_ioctl STDIN, TCSETS
 
-bye
+this should work under linux, this under *NIX (maybe)
 
---
-Leonardo Di Lella
+        sys_fcntl STDIN,F_GETFL
+        and     eax,~(O_NONBLOCK)       
+        sys_fcntl STDIN,F_SETFL,eax
 
-[0x01] http://www.comfire.de
-[0x02] http://www.netline-is.de
+and the rest is smth like read 1 byte from STDIN
+
+Regards
+
+		Rudolf
+
+
+
+
