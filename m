@@ -1,31 +1,31 @@
-From: Tomasz Grysztar <fasm@metro-nt.pl>
-Subject: flat assembler 1.43 finally with ELF support
-Date: Mon, 30 Dec 2002 20:53:20 +0100
+From: etienne <eyem@lalila.net>
+Subject: gdb and mmx registers (newbie)
+Date: Mon, 06 Jan 2003 13:44:29 +1100
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <1312366752.20021230205320@metro-nt.pl>
-Reply-To: Tomasz Grysztar <fasm@metro-nt.pl>
+Message-ID: <3E18ED8D.9070705@lalila.net>
+Reply-To: eyem@lalila.net
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
 To: linux-assembly@vger.kernel.org
 
+Hello list,
 
-I have just released fasm version 1.43, and it finally has built-in
-support for the ELF output format, and therefore is much more useful
-for Linux assembly programming. It still lacks a good example programs,
-only small demonstrations how to use the ELF formatting directives,
-it will change if there is some interest and feedback. Please try it!
+I am just starting to learn assembly with a view to doing some mmx.
 
-You can download it from the official website, currently it has two mirrors:
-http://fasm.sourceforge.net/
-http://fasm.metro-nt.pl/
+I am using GVD (on top of gdb) to debug GAS assembled code .....
 
-For the most up-to-date information, answers for many questions, etc.
-look at this forum:
-http://board.win32asmcommunity.net/forumdisplay.php?s=&forumid=27
+..... no idea how to access the MMX registers ........
+google isn't helping me either.
 
--- 
-Tomasz
+so I know that x86 use the floating point registers for mmx ..... and 
+I've seen lots of discussions (by the gdb developpers) on how to 
+possibly get gdb to properly display the MMX contents (mapping st(i) to 
+mmj ..etc. etc.) , but I still cant find how to view the mmx registers.
+
+how can I view the mmx registers?
+
+etienne
 
