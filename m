@@ -1,33 +1,37 @@
-From: Konstantin Boldyshev <konst@linuxassembly.org>
-Subject: Re: asmutils
-Date: Fri, 31 Jan 2003 20:45:03 +0300 (MSK)
+From: Matteo Cortonesi <m_cortonesi@ticino.com>
+Subject: jmp instruction
+Date: Sun, 2 Feb 2003 14:06:26 +0100
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.43L.0301310504210.1459-100000@alpha.linuxassembly.org>
-References: <3E3A4136.8080203@vzljot.ru>
-Mime-Version: 1.0
-Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <3E3A4136.8080203@vzljot.ru>
-List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
+Message-ID: <2338DB4A-36AF-11D7-92D5-000A27B17C58@ticino.com>
+Mime-Version: 1.0 (Apple Message framework v551)
 Content-Transfer-Encoding: 7bit
-To: Alexandr Gorlov <alexandr@vzljot.ru>
-Cc: linux-assembly@vger.kernel.org
+Return-path: <linux-assembly-owner@vger.kernel.org>
+List-Id: <linux-assembly.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: linux-assembly@vger.kernel.org
 
-On Fri, 31 Jan 2003, Alexandr Gorlov wrote:
+Hi, I'm new here. I'm a newbie...
 
-> Can anybody tell me about what is going on with asmutils project,
-> why there is'not any changes in ChangeLog?
+Well, I need to skip the instruction mov $0x4,%eax with the jmp 
+command, here's the code:
 
-Hmm, there should be changes in Changelog since 0.17 :-)
+(gdb) disas main
+Dump of assembler code for function main:
+0x8048430 <main>:       push   %ebp
+0x8048431 <main+1>:     mov    %esp,%ebp
+0x8048433 <main+3>:     mov    $0x1,%eax
+0x8048438 <main+8>:     jmp    0xa
+0x804843d <main+13>:    mov    $0x4,%eax
+0x8048442 <main+18>:    mov    $0x0,%ebx
+0x8048447 <main+23>:    int    $0x80
+0x8048449 <main+25>:    pop    %ebp
+0x804844a <main+26>:    ret
 
-> Are there any examples or articles of writing kernel modules in asm
-> (nasm)?
+I need to go 10 bytes forward from main+8 (because 18-8=10) to skip mov 
+$0x4,%eax, so i wrote jmp 0xa. Unfortunately the program causes a 
+segmentation fault (core dumped), and I don't understand why.
+Where did I make the mistake? I know that it's banal question, sorry
 
-See Assembly-HOWTO, FAQ section.
-
--- 
-Regards,
-Konstantin
-
+Thanks
 
 
