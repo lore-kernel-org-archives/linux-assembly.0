@@ -1,39 +1,53 @@
-From: A M <alim1993@yahoo.com>
-Subject: Access to Program Counter in C
-Date: Tue, 16 Nov 2004 08:38:21 -0800 (PST)
-Message-ID: <20041116163821.61564.qmail@web51902.mail.yahoo.com>
+From: Lawrence <law@cbf.chinese2000.net>
+Subject: how to use linux system call in cross compiling environment
+Date: Wed, 17 Nov 2004 16:39:06 +0800
+Message-ID: <419B0E2A.4090003@cbf.chinese2000.net>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: linux-c-programming@vger.kernel.org, linux-assembly@vger.kernel.org
+To: linux-assembly@vger.kernel.org
 
-Hello, 
+Hi all,
 
-Does anybody know how to access the address of the
-current executing instruction in C while the program
-is executing? 
+I'm figuring out the linux-arm assembly right now. I use the GNU ARM
+toolchain 3.4.1 provided by www.gnuarm.com on my x86 Linux hosts.
 
-Also, is there a method to load a program image from
-memory not a file (an exec that works with a memory
-address)? Mainly I am looking for a method that brings
-a program image into memory modify parts of it and
-start the in-memory modified version. 
+I've successfully assembled and linked the following code:
 
-Can anybody think of a method to replace a thread
-image without replacing the whole process image? 
+@filename: hello.s
 
-Thanks, 
+.text
+        .align  2
+        .global _start
+_start:
+        adr     r1, msg         @ address
+        mov     r0, #1          @ stdout
+        mov     r2, #13         @ length
+        swi     #0x900004       @ sys_write
 
-Ali
+        mov     r0, #0
+        swi     #0x900001       @ sys_exit
 
+        .align  2
+msg:
+        .asciz  "hello, world\n"
 
-		
-__________________________________ 
-Do you Yahoo!? 
-The all-new My Yahoo! - Get yours free! 
-http://my.yahoo.com 
- 
+the commands I used are as follows:
+
+arm-elf-as -gdwarf2 -o hello.o hello.s
+arm-elf-ld -o hello hello.o
+
+When I run the program as "arm-elf-run hello", I got the reply sim:
+unknown SWI encountered - 900004 - ignoring. I got the same result when
+debugging the program with insight and gdb.
+
+I would like to know if there is a way to use the arm linux system call
+under such simulation environment. Thanks.
+
+Regards,
+Lawrence
+
 
