@@ -1,8 +1,8 @@
 From: Maciej Hrebien <m_hrebien@wp.pl>
 Subject: Re: Prblem with AT&T
-Date: Sat, 10 Aug 2002 13:47:35 +0200
+Date: Sat, 10 Aug 2002 21:35:45 +0200
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <3D54FD57.9E453151@wp.pl>
+Message-ID: <3D556B11.71533027@wp.pl>
 References: <20020810044121.24633.qmail@web14510.mail.yahoo.com>
 Reply-To: m_hrebien@wp.pl
 Mime-Version: 1.0
