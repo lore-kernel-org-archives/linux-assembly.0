@@ -1,51 +1,48 @@
-From: Frederic Marmond <fmarmond@eprocess.fr>
-Subject: Re: writing to the videoram
-Date: Mon, 16 Jun 2003 08:43:38 +0200
+From: "Mark Lobo" <ntdeveloper2002@hotmail.com>
+Subject: atomic_add_and_test
+Date: Mon, 16 Jun 2003 15:40:37 -0400
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <3EED671A.9000007@eprocess.fr>
-References: <00cf01c3336a$92240550$0145a8c0@icepic>
-Reply-To: fmarmond@eprocess.fr
+Message-ID: <Law11-F123JwM21tVHd000a4bf1@hotmail.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <00cf01c3336a$92240550$0145a8c0@icepic>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: icepic <icepic1984@gmx.de>
-Cc: linux-assembly@vger.kernel.org
+Content-Type: text/plain; format=flowed; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: linux-assembly@vger.kernel.org
 
-icepic wrote:
+Guys
+Im trying to implement this function which I absolutely need. The function 
+is as follows:
+int atomic_add_and_test(atomic_t *value, int addval)
+This adds "addval" to "value" and returns the old value of "value" back.
+Im not an expert at assembly syntax, Im not even sure how to write this 
+function. I had done some 886 assembly and some microcontroller assembly 
+stuff, but that was ages back. I would really really appreciate if someone 
+can correct the source I have below. I did try to read up and I will 
+definitely learn it back:) But I need this right now, so I would really 
+appreciate it if  someone can correct this for me:) This might be assembly 
+101:) but Im unfortunately its been ages since I did it.
 
->Hi!
->
->I have a problem.
->I want to write directly to the videoram under linux.
->Because of the realmode i have some problems..
->can someone explain how it works?
->
->
->-
->To unsubscribe from this list: send the line "unsubscribe linux-assembly" in
->the body of a message to majordomo@vger.kernel.org
->More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
->  
->
-realmode ?!?
-Hey, on which cpu are you??? ;-)
-I guess you are on x86 architecture, so, some explainations:
-- x86 have 3 main modes of use: real, virtual and protected (plus a 
-usefull hybrid: flat)
-- Linux is on protected mode
-- the bootloader (lilo, grub) make the switch from real mode (when you 
-switch on your PC, it is in real-mode, for 8086 compatibility!) to the 
-protected mode.
+static __inline__ int32_t atomic_add_and_test(atomic_t * p_plValue, int32_t 
+p_lAdd)
+{
+    int32_t l_lResult;
+    __asm__ __volatile__ (
+	    "push %%EBX;"
+	    "movl %1, %%EBX;"
+	    "movl %2, %%EAX;"
+	    "lock; xadd %%EAX, (%%EBX);"
+	    "inc %%EAX;"
+	    "mov %%EAX, %0;"
+	    "pop %%EBX"
+	    : "=g"(l_lResult) : "g"(p_plValue), "g"(p_lAdd):"%eax", "ebx" );
+    return l_lResult;
+}
 
-If you want to write to the video memory, one basic thing would be to 
-write it from the kernel (who have the right to read/write everywhere). 
- From the user-space, you'll have to ask the write access to the kernel.
+Thanks!
+Mark
 
-Could you please ask a more precise question?!?
-
-Fred
+_________________________________________________________________
+Protect your PC - get McAfee.com VirusScan Online  
+http://clinic.mcafee.com/clinic/ibuy/campaign.asp?cid=3963
 
