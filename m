@@ -1,82 +1,24 @@
-From: "ssams" <ssams@telkom.net>
-Subject: jump_code
-Date: Sat, 07 Sep 2002 00:14:27 +0700
+From: RCS <cryptik@ig.com.br>
+Subject: Assembly putchar()
+Date: Fri, 6 Sep 2002 15:43:30 -0300
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <web-46559356@m1.plasa.com>
+Message-ID: <20020906183901Z319316-686+7405@vger.kernel.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
 Return-path: <linux-assembly-owner@vger.kernel.org>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 To: linux-assembly@vger.kernel.org
 
-I build this code , iget output but i little bug ithink.
-i hope some body be correct it..
+I started learning how interrupts work.=20
 
-.data
- msg1: .ascii "Mencetak Saya\n"
-msg2: .ascii "\nKok saya dilompati sih\n"
-msg2_len: .long .-msg2
-msg3: .ascii "Hai ini pesen ketiga "
-msg3_len: .long .-msg3
+Can anyone send me a simple assembly code that prints a character on the=20
+screen (similar to what "putchar" does) ?=20
 
-.text
-	.globl _start
-_start:
-	mov $4,%eax
-	mov $1,%ebx
-	mov $msg1,%ecx
-	mov $14,%edx
-	int $0x80
+I do not want to create a c code with putchar() and compile with gcc -S,=20
+because I want a code even more simple than that.=20
 
-	jmp pesan3
-pesan2:
-	mov $4,%eax
-	mov $1,%ebx
-	mov $msg2,%ecx
-	sub $24,%edx
-	int $0x80
-
-	mov $1,%eax
-	xor %edx,%edx
-	xor %ecx,%ecx
-	int $0x80
-pesan3:
-	mov $3,%ecx
-   ulang:
-	  push %ecx
-
-	mov $4,%eax
-	mov $1,%ebx
-	mov $msg3,%ecx
-	sub $21,%edx
-	int $0x80
-	pop %ecx
-	dec %ecx
-	jnz ulang
-	jmp pesan2
-
-Output
-	Mencetak Saya
-	Hai ini pesen ketiga
-	Hai ini pesen ketiga
-	Hai ini pesen ketiga
-	Kok saya dilompati sih
-	Hai ini pesen ketiga
-
-my questio is ..
-why the third message is printing for one again in the end
-of output
-althought no instruction point it..?
----------------------  Yang Mudah dan Menghibur ----------------------------
-
- 
-
-Hosting menjadi mudah dan murah hanya di PlasaCom. Klik http://idc.plasa.com
-
-F1 Mania!! Ikuti F1 Game di Obelix Game Corner di http://www.plasa.com/infotel/f1.html
-
- 
-
----------------------------------------------------------------------------------------
+_________________________________________________________
+Oi! Voc=EA quer um iG-mail gratuito?
+Ent=E3o clique aqui: http://registro.ig.com.br/
 
