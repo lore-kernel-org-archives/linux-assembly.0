@@ -1,44 +1,40 @@
-From: hp <hp@lxhp.in-berlin.de>
-Subject: Re: system_read() question
-Date: Wed, 5 Feb 2003 06:37:49 +0000
+From: Mitchell N Charity <mcharity@vendian.org>
+Subject: detailed runtime control of dynamic linking?
+Date: Wed, 5 Feb 2003 16:30:39 -0500
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <200302050647.h156lW67020667@hirsch.in-berlin.de>
-References: <200302031700.40580.davidkedrosky@rogers.com> <200302040855.h148tgqs003077@hirsch.in-berlin.de> <200302041009.03943.jborden@sorenson.com>
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
+Message-ID: <200302052130.h15LUdR07160@vendian.org>
+Reply-To: mcharity@vendian.org
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <200302041009.03943.jborden@sorenson.com>
 List-Id: <linux-assembly.vger.kernel.org>
+MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
-To: Jason Borden <jborden@sorenson.com>, linux-assembly@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+To: linux-assembly@vger.kernel.org
 
-Jason Borden am Dienstag, 4. Februar 2003 17:09:
-> On Tuesday 04 February 2003 01:48 am, hpr wrote:
-> > Jason Borden am Montag, 3. Februar 2003 22:46:
-> > > Supposing that you're using buffered input (default), it will add a
-> > > line feed character (0x0A) to the end of the string.
-> >
-> > 	certainly not!
-> >
-> > > Jason
+I am playing with fine-grained runtime control of dynamic linking,
+and am looking for code.
 
->
-> I can't tell if you're agreeing 
+Glibc provides the runtime linker ld.so (aka ld-linux.so), which can
+be partially controlled by the portable dlopen library (<dlfcn.h>,
+dlsym, dladdr, dlinfo, etc).  I would like to trade portability for
+total control, so a running process can knit together its dynamic
+objects in any way it sees fit.  Including the ability to hard unlink
+("dlclose" an object even if it is still in use, like DLD's
+dld_unlink_by_file hard option), unresolve lazy symbols (resetting
+the PLT trampoline so the linker tries again the next time the symbol
+is called), explicitly resolve symbols (setting PLT and GOT entries),
+change search paths, and so on.  But I would, of course, rather not
+write it myself.  My current objective is mostly to illustrate a
+software engineering argument, so flakey is fine.
 
-again, certainly not.
 
-> with me or not, but here's proof of concept in nasm format:
+Do you know of anything which does at least some of this?
 
-conveniently adjusted blindness or, selective recognition is not a matter of 
-'agreement'. plain statement is no 'proof'. unverified nonsense, how often 
-repeated, remains nonsense and provides no help at all.
 
-I'd suggest verifying yourself before insisting on 'teaching'.
+(I'd prefer code, ideally for linux, ELF, the glibc runtime linker, and x86,
+ but I am interested in pointers to anything.)
 
-best,
-	hp
+Thank you for your help,
+Mitchell Charity
 
--- 
-Linux,Assembly,Forth: http://www.lxhp.in-berlin.de/index-lx.shtml en/de
-  pse, reply to << lx -at- lxhp -dot- in-berlin -dot- de >>
-
+"It's amazing what gets accomplished during intensive jobsearch avoidance..."
