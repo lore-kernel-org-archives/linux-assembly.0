@@ -1,57 +1,32 @@
-From: Rudolf Marek <MAREKR2@cs.felk.cvut.cz>
-Subject: Re: BIOS interrupts
-Date: Thu, 18 Apr 2002 13:49:18 +0200
+From: "ssams" <ssams@telkom.net>
+Subject: problem with printchar
+Date: Wed, 24 Apr 2002 14:18:57 +0700
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <a9mbt7$7kc$2@main.gmane.org>
-References: <3CBE785D.6040408@zeta.org.au>
+Message-ID: <web-5620564@m1.plasa.com>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <3CBE785D.6040408@zeta.org.au>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Wilson Fletcher <mgpl1@zeta.org.au>
-Cc: linux-assembly@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: linux-assembly@vger.kernel.org.
 
-Hello,
+i have this code
+.globl mulai
+mulai:
+   movl $4,%eax
+   movl $1,%ebx
+   movl $'a',%ecx
+   movl $1,%edx
+   int   $0x80
+   xorl  %eax,%eax
+   movl  $1,%eax
+   xorl  %ebx,%ebx
+   int   $0x80
+then i compile with
+as program1.s -o program1.o
+ld program1.o -o program1
 
-As I already wrote here. In  SVGAlib is a subdir called lrmi - Linux Real 
-Mode Interface.
+by this code i want print one char but there is no output.
+can anybody help me why..?
 
-it has servicess to call ints. & map ROM.
-
-Regards
-		Rudolf
-
-
-
-
-On Thu, 18 Apr 2002, Wilson Fletcher wrote:
-
-> Date: Thu, 18 Apr 2002 07:40:13 +0000
-> From: Wilson Fletcher <mgpl1@zeta.org.au>
-> To: linux-assembly@vger.kernel.org
-> Subject: BIOS interrupts
-> 
-> 
-> Can someone point me to some references re: how to call BIOS interrupts 
-> in Linux ?
-> 
-> I don't want 1000 messages telling me it can't be done. I know that 
-> Linux doesn't support the bios interrupts as it stands.
-> 
-> Specifically 15h on a Toshiba laptop ( if your interested :-) )
-> 
-> Thanks,
-> 
-> Wilson Fletcher
-> 
-> -
-> To unsubscribe from this list: send the line "unsubscribe linux-assembly" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> 
-> 
-> 
-
-
+ 
