@@ -1,30 +1,21 @@
-From: lx <lx@lxhp.in-berlin.de>
-Subject: Re: code-need-to-correct
-Date: Thu, 19 Sep 2002 20:14:19 +0000
+From: "ssams" <ssams@telkom.net>
+Subject: is_more_resource
+Date: Fri, 20 Sep 2002 08:24:13 +0700
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <20020919201419.6986b27a.lx@lxhp.in-berlin.de>
-References: <web-50448669@m1.plasa.com>
-	<20020919200315.7c1ccaa3.hp@lxhp.in-berlin.de>
-Reply-To: lx@lxhp.in-berlin.de
+Message-ID: <web-50553455@m1.plasa.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <20020919200315.7c1ccaa3.hp@lxhp.in-berlin.de>
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: lx@lxhp.in-berlin.de
-Cc: ssams@telkom.net, linux-assembly@vger.kernel.org
+To: linux-assembly@vger.kernel.org
 
-On Thu, 19 Sep 2002 20:03:15 +0000
-h-peter recktenwald <hp@lxhp.in-berlin.de> wrote:
-
-> On Thu, 19 Sep 2002 21:40:09 +0700
-> "ssams" <ssams@telkom.net> wrote:
-> 
-> re just below your '_start:' label:
-
-...error, didn't see that i/o already in .bss.
-so, i won't be able to help, further, too.
-
--- 
-Linux,Assembly,Forth: http://www.lxhp.in-berlin.de/index-lx.shtml en/de
+i think assembly programming in linux need more resource.
+it come when 
+we compare it with for ex, tasm.
+the case is: we need register, eax,ebx,ecx,edx,to do just
+write input
+is my think wrong, or there is something behind this..? 
+=========================================================================
+Khusus Pelanggan Telepon DIVRE 2, Tekan 166 untuk mendengarkan pesan Anda.
+=========================================================================
