@@ -1,31 +1,25 @@
-From: Martin <asmfreshmeat@gmx.de>
-Subject: Re: GAS/GCC Assembler Code Modification
-Date: Sat, 15 May 2004 23:01:57 +0200
+From: Fred Leboucher <fred.leboucher@free.fr>
+Subject: PPC unknown Special Purpose Register ?
+Date: Sun, 16 May 2004 00:46:11 +0200
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <20040515230157.27d08fea@deepblack>
-References: <20040515112807.579e4d89@deepblack>
-	<200405151432.01409.wklux@yahoo.co.uk>
-	<20040515220819.3ffa6298@deepblack>
-	<200405152247.16380.wklux@yahoo.co.uk>
-Mime-Version: 1.0
+Message-ID: <AA0FBBE2-A6C1-11D8-BEFE-003065BACE6A@free.fr>
+Mime-Version: 1.0 (Apple Message framework v613)
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <200405152247.16380.wklux@yahoo.co.uk>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: peter willy krause <wklux@yaho.co.uk>, linux-assembly@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: linux-assembly@vger.kernel.org
 
-peter willy krause <wklux@yahoo.co.uk> wrote:
+I have a problem here with a weird instruction taken from a program 
+that is supposed to run on a PPC 750CXe :
+	mfspr r3, 920
+(I already swapped the bites 0-4 and 5-9 for convenience, so 920 is the 
+real spr number that is used by the instruction)
+Problem is, there is no special purpose register with the number 920, 
+according to all documentations I have on the ppc 750...
 
-> Am Samstag, 15. Mai 2004 21:08 schrieb Martin:
-> >
-> > But I still have one question. Wouldn't be the code from AlephOne
-> 										^^^^^^^^^^ 
-> I've no idea of what that is. got a link?
+Anyone could help with this ?
+Thanks !
 
-..my fault. sry.
-http://www.phrack.org/show.php?p=49&a=14 
-(etwa in der Mitte des Textes befindet sich der Code)
-
-
+Fred Leboucher
 
