@@ -1,36 +1,43 @@
-From: hp <lx@lxhp.in-berlin.de>
-Subject: Re: Retrieving compilation flags from Executables / Object files
-Date: Tue, 29 Jul 2003 12:36:30 +0100
-Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <200307291236.30708.lx@lxhp.in-berlin.de>
-References: <20030729074351.66043.qmail@web41105.mail.yahoo.com>
+From: Timothy Miller <miller@techsource.com>
+Subject: Re: The Well-Factored 386
+Date: Tue, 29 Jul 2003 10:32:09 -0400
+Sender: linux-kernel-owner@vger.kernel.org
+Message-ID: <3F268569.80306@techsource.com>
+References: <fc.0010c7b2009ebbbf0010c7b2009ebbbf.9ebbc6@capaccess.org>	<20030728070658.343ed2b0.davem@redhat.com>	<fc.0010c7b2009ecdef0010c7b2009ebbbf.9ecdfd@capaccess.org>	<20030728133300.2ef96cf4.davem@redhat.com>	<20030729002737.111bc3ad.skraw@ithnet.com> <20030728153055.006aa3f0.davem@redhat.com> <3F25AA78.6020808@sktc.net>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <20030729074351.66043.qmail@web41105.mail.yahoo.com>
-Content-Disposition: inline
+Return-path: <linux-kernel-owner+linux-kernel=40quimby.gnus.org@vger.kernel.org>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: ruxyz@yahoo.com, Assembly Linux <linux-assembly@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: "David D. Hagood" <wowbagger@sktc.net>
+Cc: "David S. Miller" <davem@redhat.com>, linux-kernel@vger.kernel.org, linux-assembly@vger.kernel.org
 
-Anticipating a Reply am Dienstag, 29. Juli 2003 08:43:
-> Hi ,
->
->   I wanted to know how to find out,
-> the compilation flags used ,
-> from a given executable/object file ?
->
->   Is it possible ? Are the compilation
-> flags stored in the executable/object file ?
 
-not really/completely, i.e. depends on what 'flags' you mean.
-the 'objdump' and 'readelf' programs show what a binary was compiled for and 
-some other information, i.e. whether it is 'stripped', symbols, &c.
 
-hp
+David D. Hagood wrote:
+> David S. Miller wrote:
+> 
+>> And I don't care if you don't like my attitude, my job as
+>> list manager is not to be liked by people or to have them
+>> like my attitude.  My job is to keep the lists clean.
+> 
+> 
+> I'd just like to say "BRAVO SIR!" I am glad to see you doing this, and I 
+> support your actions 100%.
+> 
+> Anybody's right of freedom of speech ends when they force the unwilling 
+> to listen - this troll was -10, Offtopic. He was not talking about the 
+> kernel, any development of interest to the kernel, and I for one am glad 
+> he is getting bounced.
+> 
+> Let him post his drivel-scribblings on Slashdot, along with goatse.cx, 
+> the porn trolls, and the *BSD is dead trolls.
 
--- 
-Linux,Assembly,Forth: http://www.lxhp.in-berlin.de/index-lx.shtml en/de
-	FAQ(s) + DOCs at http://linuxassembly.org
-  pse, reply to << lx -at- lxhp -dot- in-berlin -dot- de >>
 
+I personally have made more than my fair share of off-topic posts.  Some 
+of them have been filtered, which really doesn't bother me, because, 
+well, they were off-topic.
+
+Sometimes, I get carried away, but I do keep in mind that off-topic 
+posts can be very rude.  I remind myself of this out of respect for 
+others on the list.
