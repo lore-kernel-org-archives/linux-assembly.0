@@ -1,38 +1,21 @@
-From: A M <alim1993@yahoo.com>
-Subject: Accessing a process structure in the processes link list
-Date: Sun, 28 Nov 2004 14:57:20 -0800 (PST)
-Message-ID: <20041128225720.99389.qmail@web51909.mail.yahoo.com>
+From: Brian Raiter <breadbox@muppetlabs.com>
+Subject: Re: Directory contents
+Date: Sun, 28 Nov 2004 20:13:10 -0800
+Message-ID: <16810.41430.860123.279387@eidolon.muppetlabs.com>
+References: <200411271900.48627.hitoc_mail@yahoo.it>
+	<41A901F4.60808@optonline.net>
 Mime-Version: 1.0
-Return-path: <linux-assembly-owner@vger.kernel.org>
-Sender: linux-assembly-owner@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+Return-path: <linux-c-programming-owner@vger.kernel.org>
+In-Reply-To: <41A901F4.60808@optonline.net>
+Sender: linux-c-programming-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: linux-kernel@vger.kernel.org, linux-assembly@vger.kernel.org, linux-c-programming@vger.kernel.org
+To: Linux C programming <linux-c-programming@vger.kernel.org>, Linux Assembly <linux-assembly@vger.kernel.org>
 
-Would it be possible for a program running as root
-that wasn't compiled with the kernel to access a
-process structure in the processes link list? 
+> opendir, readdir, closedir are C standard library calls.
 
-I've read an article about hiding processes and the
-article made sound so easy to access the link list and
-hide a process, how easy is it? 
+Actually they are POSIX standard library calls. The C standard does
+not cover anything involving directories.
 
-Is it possible to a process to access its own entry in
-the processes link list?
-
-
-Thanks, 
-
-Ali 
-
-
-
-
-		
-__________________________________ 
-Do you Yahoo!? 
-Meet the all-new My Yahoo! - Try it today! 
-http://my.yahoo.com 
- 
-
+b
