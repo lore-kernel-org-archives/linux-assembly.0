@@ -1,156 +1,40 @@
-From: Lawrence <lawrencio@hotpop.com>
-Subject: Re: Using asm to develop GUI under framebuffer environment
-Date: Sun, 29 Feb 2004 09:45:19 +0800
+From: Vadiraj C S <vadiraj@mail.cyberneme.com>
+Subject: stack contents at function call
+Date: Mon, 1 Mar 2004 13:18:24 +0530
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <4041442F.1010604@hotpop.com>
-References: <403C0176.6080300@hotpop.com> <403DA923.3000908@eprocess.fr> <403FF536.1080807@hotpop.com> <1077981999.4040b32fb1541@intranet.eprocess.fr>
+Message-ID: <20040301131824.02c597f0.vadiraj@mail.cyberneme.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <1077981999.4040b32fb1541@intranet.eprocess.fr>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: fmarmond@eprocess.fr
-Cc: linux-assembly@vger.kernel.org
-
-Hi Frederic,
-
-Thank you very much for your comment and time. This way I can start to 
-experiment with the linux framebuffer!
-
-Best Regards,
-Lawrence
+Content-Type: text/plain; charset="us-ascii"
+To: linux-assembly@vger.kernel.org
 
 
-fmarmond@eprocess.fr ??:
+  Hello Assembly Gurus
 
->Hi Lawrence, 
->telnet is a 'unsecure' 'old' way of connecting to a remote host. 
->I guess you are at home, so security is not the priority, and you are using 
->windows in your second host, so, the 'old' side of telnet is not a problem. 
->(plus, if you use windows, security seems not to be your priority too...) ;) 
->I must admit that I don't use ald. 
-> 
->See following comments... 
-> 
->Selon Lawrence <lawrencio@hotpop.com>: 
-> 
->  
->
->>Hi Frederic, 
->> 
->>Thanks for your kindly reply.  I keep thinking about your inspiration  
->>these days (and that's the reason for my late reply).  Since I am not  
->>quite familiar with SSH, I tried to telnet into my linux box under MS  
->>Windows, and debug the attached framebuffer example asm file I found on 
->> 
->>http://www.nk.rim.or.jp/~jun/lxasm/exasm.tar.gz 
->> 
->>using ald.  the screen do appear rightly on the linux console, while the  
->>debugging process is shown on my telnet window. 
->> 
->>I don't know if this operation is right, as I only step over a few  
->>command, then I pass the 'continue' command to ald and let it run.  
->>    
->>
->It seems to do what you want, so it seems to be right, no? ;) 
->That's the way I suggested, with SSH. 
->  
->
->> Moreover, the example open /dev/fb0 directly, I am not sure if it is  
->>because this act that make the output rightly go into the linux console  
->>but not on my telnet screen. 
->>    
->>
->In Unixes (and so, Linux), "all is file" (the primary rule of Unix). 
->In fact, /dev/fb0 is a file that has no physical reality on disk. It is just 
->an entry in the filesystem that point to a kernel API. If you write something 
->to this 'file', in fact, it send the data to the associated driver. The driver 
->(in the kernel) can be accessed that way, very easily! There is nothing magic, 
->you can read what drivers do in the kernel sources.  
->In general, you send command to the driver with ioctl (Input/Ouput ConTroL, 
->see the related man page), and large data with regular read/writes. 
->For FrameBufer, for exemple, you send change modes request thru IOCTL, and 
->graphic data thru writes. 
-> 
->The FrameBuffer acts directly on your graphic card, so, on the host that is 
->running the prog hardware. The telnet is just a terminal emulation. It a very 
->simple protocole that works in lot of TEXT termials (VT100 for exemple). 
-> 
->  
->
->> 
->>Would you please be so kind as to tell me if I am wrong? 
->>    
->>
->Is what you do not what you wanted to do? If it is, you are right! ;) 
-> 
->Fred 
->  
->
->> 
->>Thanks and Regards, 
->>Lawence 
->> 
->>    
->>
->>>hum, what about working with SSH ? 
->>>I think it may be the best choice! 
->>>You may also use a deported X screen (no X serveur on the computer on  
->>>which you are working for your GUI, but on an other machine on which  
->>>you can deport your screen, to debug, play with tetris and send  
->>>mails... ;) ) 
->>>If you come from windows and are not aware of the power of unix, ask  
->>>me precisions... 
->>>
->>>Fred 
->>>
->>>Lawrence wrote: 
->>>
->>>      
->>>
->>>>Hi Linux Assembly Gurus, 
->>>>
->>>>I have some experience in developing a desktop environment using 
->>>>PharLap's asm toolkit.  I am very interested in doing the same thing 
->>>>under Linux. 
->>>>
->>>>Because of the GUI nature, I usually redirect the output of the debugger 
->>>>into another computer's terminal, so that the UI being debugged can  
->>>>be seen. 
->>>>
->>>>I would like to know if there is a nasm specialized debugger that can do 
->>>>such remote debugging under Linux, or are there any workaround for this 
->>>>issue. 
->>>>
->>>>Thanks and Regards, 
->>>>Lawrence 
->>>>
->>>>- 
->>>>To unsubscribe from this list: send the line "unsubscribe  
->>>>linux-assembly" in 
->>>>the body of a message to majordomo@vger.kernel.org 
->>>>More majordomo info at  http://vger.kernel.org/majordomo-info.html 
->>>>
->>>>  
->>>>
->>>>        
->>>>
->>>
->>>      
->>>
->> 
->> 
->>    
->>
-> 
-> 
-> 
->
->-------------------------------------------------
->This mail sent through IMP: http://horde.org/imp/
->
->  
->
+   I'm working on Assembly programming under linux from few days, here are some issues
 
+ 1.When a function call is made the parameters are pushed on to the stack and a a call
+to the function is made. 
+
+ Now the top of the stack is the return address, Please correct me if I'm wrong here,
+and the parameters above it is the first parameter sent and so on..
+
+ 1. Is this OS dependent, or compiler dependent? 
+ 2. Does this sequence change when call from C language and call from assembly.
+
+Cos I noticed difference with gcc(GNU compiler) and icc (Intell compiler)
+
+
+ Help is needed urgent, 
+
+Thanks in advance...
+
+
+
+-- 
+
+With Best Regards
+ Vadiraj C S    
 
