@@ -1,37 +1,28 @@
-From: Emmet Ford <emmet@optonline.net>
-Subject: Re: gdb help
-Date: Mon, 23 Feb 2004 20:18:28 -0500
+From: Lawrence <lawrencio@hotpop.com>
+Subject: Using asm to develop GUI under framebuffer environment
+Date: Wed, 25 Feb 2004 09:59:18 +0800
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <403AA664.1070501@optonline.net>
+Message-ID: <403C0176.6080300@hotpop.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
+Content-Type: text/plain; charset="us-ascii"
 To: linux-assembly@vger.kernel.org
 
-I use gas rather than nasm, but I also find that I am unable to break on 
-the first instruction in a program. Generally, what I do is use the gdb 
-'list' command to list out the program and then set a break point on the 
-line number of the second instruction in the program.
+Hi Linux Assembly Gurus,
 
-This issue is documented in various places, one of them being 
-http://www.csee.umbc.edu/~chang/cs313.f03/gdb_help.shtml, where it says:
+I have some experience in developing a desktop environment using
+PharLap's asm toolkit.  I am very interested in doing the same thing
+under Linux.
 
--->
-Due to a bug in gdb,
+Because of the GUI nature, I usually redirect the output of the debugger
+into another computer's terminal, so that the UI being debugged can be seen.
 
-<br> break *_start<br> does not stop the program before the execution of 
-the first instruction. A workaround is to add a no operation instruction 
-(mnemonic "nop") to the beginning of your program and use: <br> break 
-*_start+1
+I would like to know if there is a nasm specialized debugger that can do
+such remote debugging under Linux, or are there any workaround for this
+issue.
 
-<--
-
-This may not be the problem that you are experiencing, however, since 
-programs normally start at _start, not main. In any case, you might try 
-break *main+1
-
---Emmet Ford
-
+Thanks and Regards,
+Lawrence
 
