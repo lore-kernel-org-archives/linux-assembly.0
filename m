@@ -1,27 +1,30 @@
-From: Maciej Hrebien <m_hrebien@wp.pl>
-Subject: Re: SMC article
-Date: Thu, 12 Aug 2004 08:00:06 +0200
+From: jeff <jko@bsn1.net>
+Subject: New Site for Desktop Assembly
+Date: Thu, 12 Aug 2004 18:41:39 -0700
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <411B0766.802AD459@wp.pl>
-References: <41134E89.6487ABC9@wp.pl> <20040810190412.G20945@codepoet.unixcoders.org>
-Reply-To: m_hrebien@wp.pl
+Message-ID: <20040812184139.15e4c369.jko@bsn1.net>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: "Daniel R. Blair" <joecamel@realcoders.org>
-Cc: linux-assembly@vger.kernel.org
+To: linux-assembly@vger.kernel.org
 
-"Daniel R. Blair" wrote:
-> 
-> Do you have the URL of the original article?  I would really like to read
-> it.. I am not sure exactly what SMC is.. but, if you could share, I'd be
-> much appreciative.
 
-SMC stands for Self-Modifying Code and the article is at:
-http://linuxassembly.org/articles/smc.html
+New Site for Desktop Assembly
+http://members/bsn1.net/jko@save-net.com/asm/
 
--- 
-Maciej Hrebien
+The DesktopLinuxAssembly site is being created and
+presently has two projects, some code snippets
+and information about desktop programming.
+
+One project is registered at Sourceforge
+http://sourceforge.net/projects/asmedit
+
+Work on a library is scheduled for the future
+along with code filter to transport source between
+nasm and gas formats.  Participation or comments
+are welcome.
+
+
 
