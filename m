@@ -1,18 +1,32 @@
-From: bkbll <bkbll@cnhonker.net>
-Subject: Could anyone can give  me a checksum tcp/ip header code by asm under linux
-Date: Mon, 13 May 2002 11:6:42 +0800
+From: Jani Monoses <jani@iv.ro>
+Subject: Re: Could anyone can give  me a checksum tcp/ip header code by asm
+ under linux
+Date: Mon, 13 May 2002 10:24:52 +0300 (EEST)
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <20020513025947Z315493-22651+31517@vger.kernel.org>
+Message-ID: <Pine.LNX.4.33L2.0205131024130.1628-100000@cow>
+References: <20020513025947Z315493-22651+31517@vger.kernel.org>
+Mime-Version: 1.0
 Return-path: <linux-assembly-owner@vger.kernel.org>
+In-Reply-To: <20020513025947Z315493-22651+31517@vger.kernel.org>
 List-Id: <linux-assembly.vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: linux-assembly@vger.kernel.org, linux-assembly@vger.kernel.org
+To: bkbll <bkbll@cnhonker.net>
+Cc: "linux-assembly@vger.kernel.org" <linux-assembly@vger.kernel.org>
 
-hi, could anyone can give  me a checksum tcp/ip header codes coded by asm under linux?
-and I think GAS is more better..
+Look in the linux kernel sources in include/asm-i386/checksum.h
 
-                                                                     dumplogin
+On Mon, 13 May 2002, bkbll wrote:
 
+> hi, could anyone can give  me a checksum tcp/ip header codes coded by asm under linux?
+> and I think GAS is more better..
+>
+>                                                                      dumplogin
+>
+>
+> -
+> To unsubscribe from this list: send the line "unsubscribe linux-assembly" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>
 
