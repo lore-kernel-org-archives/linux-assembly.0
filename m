@@ -1,37 +1,26 @@
-From: hp <lx@lxhp.in-berlin.de>
-Subject: Re: Technical question
-Date: Thu, 24 Apr 2003 12:51:20 +0200
+From: Johann Oskarsson <myrkraverk@users.sourceforge.net>
+Subject: Preprocessing Assembly
+Date: Sat, 26 Apr 2003 15:16:28 +0000
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <20030424105120.GA2512@tface.games>
-References: <4E555E7EDF5E334092B4B387B20F450D02C047@cernxchg10.cern.ch>
+Message-ID: <3EAAA2CC.3000606@users.sourceforge.net>
 Mime-Version: 1.0
-Return-path: <linux-assembly-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <4E555E7EDF5E334092B4B387B20F450D02C047@cernxchg10.cern.ch>
-List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Jimmy Dubuisson <Jimmy.Dubuisson@cern.ch>, linux-assembly@vger.kernel.org
+Return-path: <linux-assembly-owner@vger.kernel.org>
+List-Id: <linux-assembly.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: linux-assembly@vger.kernel.org
 
-Jimmy Dubuisson am Mittwoch, 23. April 2003 18:04:
-> Hi everybody,
->
-> I made a LKM running on a rehat 7.3 because I need to intercept a chdir
-> system call. The problem is that inside my chdir intercepting function I
-> would like to use the 'do_execve' function. For this, as you know, I
+Hi,
 
-for what -doubtful- purpose???
+I've been doing a little assembly on my playstation2 running linux 
+(actually writing a little tutorial as I go along) and was wandering 
+what you ppl use to preprocess the source (if you do)?  I've tried a 
+little gasp, but that's depricated.  Do you generally use cpp, or is 
+there a better tool out there?
 
-> environment variables) by using if possible the C language and the
-> functions available in the kernel ?
-
-as you might probably have deduced from the mailing address:
-	this is "linuxASSEMBLY" 
+For more info on ps2 and linux see, http://playstation2-linux.com/
+My little howto is at http://cosmos.raunvis.hi.is/~johannos/
 
 
-best...
-	hp
--
-To unsubscribe from this list: send the line "unsubscribe linux-assembly" in
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Johann
+
