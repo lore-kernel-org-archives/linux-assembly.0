@@ -1,47 +1,68 @@
-From: Maciej Hrebien <m_hrebien@wp.pl>
-Subject: Re: looping_code
-Date: Sun, 01 Sep 2002 11:21:36 +0200
+From: Frederic Marmond <fmarmond@eprocess.fr>
+Subject: booting a new kernel from an already running kernel
+Date: Tue, 03 Sep 2002 16:37:42 +0200
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <3D71DC20.A89B7F13@wp.pl>
-References: <7D0EEAE2-BD04-11D6-B059-003065A88832@sonoma.edu>
-Reply-To: m_hrebien@wp.pl
+Message-ID: <3D74C936.5070907@eprocess.fr>
+Reply-To: fmarmond@eprocess.fr
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
 To: linux-assembly@vger.kernel.org
 
-Robert Plantz wrote:
-> 
-> > "mov $msg,%ecx" and "lea msg,%ecx" does the same thing in this example -
-> > moves ptr to 'msg' to the ecx register. The only difference is that the
-> > first one is coded one byte shorter.
-> >
-> 
-> which can be seen if you do:
-> mov $msg,%ecx
-> leal msg,%edx
-> 
-> and look in the debugger ---
-> (gdb) i r
-> eax            0x4      4
-> ecx            0x80494c8        134517960
-> edx            0x80494c8        134517960
-> ebx            0x1      1
-> 
-> Furthermore, if you look at the listing --
->    12 000f B9000000      mov $msg,%ecx
->    12      00
->    13 0014 8D150000      leal msg,%edx
->    13      0000
+hi dear all...
 
-Yes, that's right. Sorry for the mess - (don't know why) i received Your
-"proof reply" just after i send my. In final we got two messages saying
-the same :)
+I try to boot a kernel from an already running kernel.
+I use 'monte' 
+(http://www.scyld.com/products/beowulf/software/monte.html), which was 
+designed for 2.2 kernels.
+After adapting it to 2.4 (...), it do something...
+of course, it is not what i wanted.
+Some questions for ATT syntax guru:
 
-Regards,
+a bit of C source code
+  __asm__ __volatile__
+      (/* Grab the args for our memcpy off the stack now while we still
+    * have page tables. */
+       "    movl %0, %%ebx           \n" /* Arg storage: memlist -> EBX */
+       "    movl %1, %%edx           \n" /* Arg storage: entry   -> EDX */
+       "    movl %2, %%ebp           \n" /* Arg storage: flags   -> EBP */
 
--- 
-Maciej Hrebien
+       /* Turn off paging, leave protected mode turned on. */
+       "    movl %%cr0, %%eax        \n" /* Turn off paging (bit 31 in 
+CR0) */
+       "    andl $0x7FFFFFFF, %%eax  \n"
+       "    movl %%eax, %%cr0        \n"
+       "    xorl %%eax, %%eax        \n" /* Flush the TLB (write 0 to 
+CR3) */
+       "    movl %%eax, %%cr3        \n"
+
+what I have in dessasemble (ldasm) for this function:
+
+:00000763 8b5d08                 mov  ebx, ptr [ebp+8]
+:00000766 8b550c                 mov  edx, ptr [ebp]
+:00000769 8b6d10                 mov  ebp, ptr [ebp+10]
+:0000076c 0f20c0                 mov  eax, cr0
+:0000076f 25ffffff7f             and  eax, 7fffffff
+:00000774 0f22c0                 mov  cr0, eax
+:00000777 31c0                   xor  eax, eax
+:00000779 0f22d8                 mov  cr3, eax
+
+My main question is:
+what "movl %0,%%ebx" is supposed to do?
+reading at ebp+8 ('local variables' + 8)?
+Why %0, %1 and %2 are not compiled in the good order (like ebp+0x8, 
+ebp+0xc, and ebp+0x10 ?)
+
+
+if any idea/known about the general problem (booting a kernel from a 
+running system, like $re-run bzImage-foo.bar).
+
+thanks for futur answers.
+
+Fred
+
+
+
 
