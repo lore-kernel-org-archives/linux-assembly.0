@@ -1,31 +1,31 @@
-From: "David D. Hagood" <wowbagger@sktc.net>
+From: viro@parcelfarce.linux.theplanet.co.uk
 Subject: Re: The Well-Factored 386
-Date: Mon, 28 Jul 2003 17:58:00 -0500
+Date: Tue, 29 Jul 2003 00:11:27 +0100
 Sender: linux-kernel-owner@vger.kernel.org
-Message-ID: <3F25AA78.6020808@sktc.net>
-References: <fc.0010c7b2009ebbbf0010c7b2009ebbbf.9ebbc6@capaccess.org>	<20030728070658.343ed2b0.davem@redhat.com>	<fc.0010c7b2009ecdef0010c7b2009ebbbf.9ecdfd@capaccess.org>	<20030728133300.2ef96cf4.davem@redhat.com>	<20030729002737.111bc3ad.skraw@ithnet.com> <20030728153055.006aa3f0.davem@redhat.com>
+Message-ID: <20030728231127.GD12757@parcelfarce.linux.theplanet.co.uk>
+References: <fc.0010c7b2009ebbbf0010c7b2009ebbbf.9ebbc6@capaccess.org> <20030728070658.343ed2b0.davem@redhat.com> <fc.0010c7b2009ecdef0010c7b2009ebbbf.9ecdfd@capaccess.org> <20030728133300.2ef96cf4.davem@redhat.com> <20030729002737.111bc3ad.skraw@ithnet.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-kernel-owner+linux-kernel=40quimby.gnus.org@vger.kernel.org>
-In-Reply-To: <20030728153055.006aa3f0.davem@redhat.com>
+Content-Disposition: inline
+In-Reply-To: <20030729002737.111bc3ad.skraw@ithnet.com>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: "David S. Miller" <davem@redhat.com>
-Cc: linux-kernel@vger.kernel.org, linux-assembly@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Stephan von Krawczynski <skraw@ithnet.com>
+Cc: "David S. Miller" <davem@redhat.com>, rickh@capaccess.org, linux-kernel@vger.kernel.org, linux-assembly@vger.kernel.org
 
-David S. Miller wrote:
-> And I don't care if you don't like my attitude, my job as
-> list manager is not to be liked by people or to have them
-> like my attitude.  My job is to keep the lists clean.
+On Tue, Jul 29, 2003 at 12:27:37AM +0200, Stephan von Krawczynski wrote:
+ 
+> Dave, I have to tell you I don't like your attitude shown in this case.
 
-I'd just like to say "BRAVO SIR!" I am glad to see you doing this, and I 
-support your actions 100%.
+Tough.
 
-Anybody's right of freedom of speech ends when they force the unwilling 
-to listen - this troll was -10, Offtopic. He was not talking about the 
-kernel, any development of interest to the kernel, and I for one am glad 
-he is getting bounced.
+> is really talking about his favourite topics. But I honour his right to speak
+> up just like anybody else, even if it looks more like a "brainstorming" than
+> constructive talking.
 
-Let him post his drivel-scribblings on Slashdot, along with goatse.cx, 
-the porn trolls, and the *BSD is dead trolls.
-
+There is no right to speak using particular host.  Dave _is_ admin of
+vger and he is not, AFAIK, bound by any contract regarding l-k.  If you
+are unhappy with that - create and maintain a list of your own with
+whatever policies you happen to like; if somebody else will want to
+use it - more power to you.
