@@ -1,40 +1,72 @@
-From: Ewald Wasscher <ewald.wasscher@pobox.com>
-Subject: Re: gunzip
-Date: Thu, 05 Sep 2002 00:29:31 +0200
+From: "ssams" <ssams@telkom.net>
+Subject: code_for_integer_printing
+Date: Sat, 07 Sep 2002 00:06:03 +0700
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <1031178572.25876.5.camel@freyr.localnet>
-References: <1030783657.5588.8.camel@freyr.localnet>
- <20020831170843.549e30f9.stephan.walter@gmx.ch>
+Message-ID: <web-46557921@m1.plasa.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <20020831170843.549e30f9.stephan.walter@gmx.ch>
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Stephan Walter <stephan.walter@gmx.ch>
-Cc: linux-assembly@vger.kernel.org
+To: linux-assembly@vger.kernel.org
 
-On Sat, 2002-08-31 at 17:08, Stephan Walter wrote:
-> On Sat, 31 Aug 2002 10:47:37 +0200, Ewald Wasscher
-> <ewald.wasscher@pobox.com> wrote:
-> > Hello all,
-> > 
-> > Does anyone know if a mini implementation of g(un)zip in assembly
-> > exists?
-> 
-> I do not know of any. Gzip's algorithm is quite complicated. But it
-> shouldn't be impossible to write one yourself ;-)
+i want to ask about a little code bellow...
+i build this code for print some integer value..
+i think is easy for doing but after i do some fungtion
+below
+i did not find ionteger output.
+so how is function to do it..?
 
-Well, that depends on who you are... It would take a loooooong time for
-me.
+this is my code, i hope you help me..?
+thank's before..
 
-> 
-> There is an LZSS compression algorithm implemented (see asmutils). I can
-> send you a LZP-compression program if you are interested (but it is not
-> mature yet)
+.macro cetak		# macro for printing
+	xor %eax,%eax
+	mov $1,%ebx
+	mov $4,%eax
+	int $0x80
+.endm
+.data
+promt1:
+	.byte 65
+.text
+.globl _start
+_start:
+	mov $promt1,%eax 	#eax will divided
+	mov $10,%ebx		#ebx is divident
+	xor %ecx,%ecx
+ulangi:
+	xor %edx,%edx
+	div %ebx		#eax : ebx
+	push %edx		# save remainder
+	inc %ecx
+	cmp $0 ,%eax
+	jne ulangi
 
-Yes please. If the compression ratio is good enough i will see if I can
-use it in a floppy based linux distribution.
+	mov $3,%ecx
+ulang_cetak:
+	push %ecx
+	pop %edx		#take point
+	add $0 ,%dl		#convert to ascii
+	mov %edx,%ecx		#for printing
+	mov $1,%edx
+	cetak			#print
+	pop %ecx
+	dec %ecx
+	jnz ulang_cetak
 
-Ewald Wasscher
+	movl $1,%eax	#exit
+	movl $0,%ebx
+	int  $0x80
+---------------------  Yang Mudah dan Menghibur ----------------------------
+
+ 
+
+Hosting menjadi mudah dan murah hanya di PlasaCom. Klik http://idc.plasa.com
+
+F1 Mania!! Ikuti F1 Game di Obelix Game Corner di http://www.plasa.com/infotel/f1.html
+
+ 
+
+---------------------------------------------------------------------------------------
 
