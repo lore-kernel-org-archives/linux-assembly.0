@@ -1,43 +1,52 @@
-From: Jan Wagemakers <janw@easynet.be>
-Subject: Re: permission problem
-Date: Sat, 20 Nov 2004 17:42:05 +0100
-Message-ID: <20041120164205.GA15847@qwerty.be>
-References: <4b0d6e0d0411200626361bd414@mail.gmail.com>
+From: Ankit Jain <ankitjain1580@yahoo.com>
+Subject: Assmebler Error
+Date: Sun, 21 Nov 2004 06:51:30 +0000 (GMT)
+Message-ID: <20041121065130.87428.qmail@web52907.mail.yahoo.com>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-assembly-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <4b0d6e0d0411200626361bd414@mail.gmail.com>
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: linux-assembly@vger.kernel.org
+To: assembly <linux-assembly@vger.kernel.org>
 
-joy merwin monteiro <joy.merwin@gmail.com> schreef:
+ uint64_t csae = 0; /* accummulators for difference */
+     58   uint64_t c1 = 0,*c;
+     59   uint8_t *ip, *rp; /* pointers to appropriate
+rows */
 
->  wantdd to write something to the parallel port
-> "windows style"  but am getting a seg fault on the "out"
-> instruction.
+    asm("movq   (%1), %%mm1 \n\t"
+     70           "psadbw (%2), %%mm1 \n\t"
+     71           "movq   8(%1), %%mm0 \n\t"
+     72           "psadbw 8(%2), %%mm0 \n\t"
+     73           "paddd  %%mm0, %%mm1 \n\t" /* might
+use paddd for 32-bit adding */
+     74           "movq   16(%1), %%mm0 \n\t"
+     75           "psadbw 16(%2), %%mm0 \n\t"
+     76           "paddd  %%mm0, %%mm1 \n\t"
+     77           "movq   24(%1), %%mm0 \n\t"
+     78           "psadbw 24(%2), %%mm0 \n\t"
+     79           "paddd  %%mm0, %%mm1 \n\t"
+     80           "movq   %%mm1,%0 \n\t"
+     82           "emms \n\t"                
+     83           : "=g" (c1)
+     84           : "r" (rp), "r" (ip)
+     85           );
+Well due to this module i am getting the following
+error
+{standard input}: Assembler messages:
+{standard input}:4126: Error: suffix or operands
+invalid for `movq'
+{standard input}:4494: Error: suffix or operands
+invalid for `movq'
 
-Before you can write something to a port you need to get "ioperm". Type
-'man ioperm' for more information.
+if somebody can help
 
-You can find some example-programs that use "ioperm" at
-<http://www.janw.easynet.be/eng.html>.
+thanks 
 
-Also, at <http://www.janw.easynet.be/koffie.html>, I have an example-program
-that writes to port 0x310. This webpage is in the Dutch language and is
-using the at&t-syntax - so maybe a little difficult to read - but hopefully
-not to difficult to get the picture ;-)
+ankit jain
 
-Also remember to run programs that use ioperm as 'suid-root' (chown root prg
-; chmod 4750 prg), or you will stil get a segmentation fault.
-
-Hope this helps you.
-
-
--- 
-Met vriendelijke groetjes         - Jan Wagemakers -
-
-... RFS: picprog: Microchip PIC serial programmer software (GPL)
-    Deb-package is available at <http://www.janw.easynet.be/picprog.html>
+________________________________________________________________________
+Yahoo! Messenger - Communicate instantly..."Ping" 
+your friends today! Download Messenger Now 
+http://uk.messenger.yahoo.com/download/index.html
