@@ -1,26 +1,29 @@
-From: hp <hp@lxhp.in-berlin.de>
-Subject: Re: detailed runtime control of dynamic linking?
-Date: Fri, 7 Feb 2003 20:57:38 +0000
+From: Slack Traq <slacktraq@yahoo.com>
+Subject: Protected2Real
+Date: Thu, 13 Feb 2003 17:02:06 -0800 (PST)
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <200302072104.h17L4w7O007542@hirsch.in-berlin.de>
-References: <200302052130.h15LUdR07160@vendian.org>
+Message-ID: <20030214010206.4210.qmail@web11402.mail.yahoo.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <200302052130.h15LUdR07160@vendian.org>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: mcharity@vendian.org, linux-assembly@vger.kernel.org
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+To: linux-assembly@vger.kernel.org
 
-Mitchell N Charity am Mittwoch, 5. Februar 2003 21:30:
-> I am playing with fine-grained runtime control of dynamic linking,
-> and am looking for code.
-	[...]
->
-> Do you know of anything which does at least some of this?
+Hello everybody:
+I have a question. When Linux loads it first load
+itself in real-mode (obviously) and then switch to
+protected or virtual mode. How can I do to reset the
+micro and switch from protected mode to real?
+I'd read that it can be done through a Triple-SegFault
+of the micro. If that is the solution, how can I do to
+SegFault the processor?
+Any suggestion is welcome.
+Regards,
 
-	gforth, pfe
+                                             Mart=EDn
 
--- 
-Linux,Assembly,Forth: http://www.lxhp.in-berlin.de/index-lx.shtml en/de
-  pse, reply to << lx -at- lxhp -dot- in-berlin -dot- de >>
+__________________________________________________
+Do you Yahoo!?
+Yahoo! Shopping - Send Flowers for Valentine's Day
+http://shopping.yahoo.com
