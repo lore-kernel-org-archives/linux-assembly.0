@@ -1,33 +1,31 @@
-From: Doug Smith <bdsmith@buncombe.main.nc.us>
-Subject: Re: gas "ljmp" instruction
-Date: Mon, 16 Dec 2002 23:09:32 -0500
+From: Tomasz Grysztar <fasm@metro-nt.pl>
+Subject: flat assembler 1.43 finally with ELF support
+Date: Mon, 30 Dec 2002 20:53:20 +0100
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <200212170409.XAA03249@linux.smith.corp>
-References: <3DFD1CAF.6010106@curvesoft.com>
-Reply-To: bdsmith@buncombe.main.nc.us
-Return-path: <linux-assembly-owner@vger.kernel.org>
-In-reply-to: <3DFD1CAF.6010106@curvesoft.com> (message from ram on Sun, 15 Dec
-	2002 16:22:07 -0800)
-List-Id: <linux-assembly.vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Message-ID: <1312366752.20021230205320@metro-nt.pl>
+Reply-To: Tomasz Grysztar <fasm@metro-nt.pl>
+Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-To: ram@curvesoft.com
-Cc: linux-assembly@vger.kernel.org
+Return-path: <linux-assembly-owner@vger.kernel.org>
+List-Id: <linux-assembly.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: linux-assembly@vger.kernel.org
 
 
-Join the club. I hope to have a few things straightened out at the
-first of the year and I can more easily help you. It appears that this
-ljmp means, if it's like the instruction sets I worked with in the
-past, long jump. In those days, it meant that the processor was to
-jump over either a page or bank boundary. If I remember correctly, it
-meant over a page boundary. I will have to study a little more on this
-and I will be happy to tell you more. 
+I have just released fasm version 1.43, and it finally has built-in
+support for the ELF output format, and therefore is much more useful
+for Linux assembly programming. It still lacks a good example programs,
+only small demonstrations how to use the ELF formatting directives,
+it will change if there is some interest and feedback. Please try it!
 
+You can download it from the official website, currently it has two mirrors:
+http://fasm.sourceforge.net/
+http://fasm.metro-nt.pl/
 
-
-Hope this helps. 
+For the most up-to-date information, answers for many questions, etc.
+look at this forum:
+http://board.win32asmcommunity.net/forumdisplay.php?s=&forumid=27
 
 -- 
-Doug Smith: C.S.F.C.
-Computer Scientist For CHRIST!
+Tomasz
+
