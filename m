@@ -1,22 +1,32 @@
-From: Brian Raiter <breadbox@muppetlabs.com>
-Subject: Re: I've got a stupid question...
-Date: Fri, 16 Jan 2004 15:21:07 -0800
+From: "jeff winston" <jeff_winston@hotmail.com>
+Subject: Jr. Programmer in needs of direction
+Date: Sat, 17 Jan 2004 13:00:28 -0800
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <16392.29155.265909.823070@eidolon.muppetlabs.com>
-References: <S265333AbUAPPiW/20040116153822Z+31565@vger.kernel.org>
+Message-ID: <Law10-F71LAUtMumY2M00002971@hotmail.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <S265333AbUAPPiW/20040116153822Z+31565@vger.kernel.org>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; format=flowed; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: linux-assembly@vger.kernel.org
 
-> So I've written many progs in nasm , but I wonder how to write 
-> a program that returns the current UID. I know the sys call and so on
-> but it doesn't return the value in EAX and I don't have an idea where it
-> returns it.
+Hello,
+I am a Jr. programmer in that I have taken classes in C and read books on 
+C++.
+I want to program embedded microcontrollers so I am currently studying 
+assembly tailerd for the Scenix SX Microcontroller.  However I don't have 
+much information about the real world and what the industry requires of 
+embedded programmers. So my question is how does one become an embedded 
+progammer. Should I be studying assembly? I guess I'm asking what steps do I 
+need to take to become an embedded programmer. I am a Junior programmer in 
+that I have never held a programming job.
 
-It does in fact return the value in eax.
+Thank you,
+Jeff Winston
+Carson, CA.
+310.834.5171
 
-b
+_________________________________________________________________
+Rethink your business approach for the new year with the helpful tips here. 
+http://special.msn.com/bcentral/prep04.armx
+
