@@ -1,23 +1,30 @@
-From: Marian Krivos <nezmar@internet.alcatel.sk>
-Subject: OT: PCI block transfer qustions
-Date: Mon, 08 Apr 2002 09:23:32 +0200
+From: Rudolf Marek <MAREKR2@cs.felk.cvut.cz>
+Subject: ALD - patch update
+Date: Mon, 8 Apr 2002 12:26:12 +0200
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <3CB14574.4090607@internet.alcatel.sk>
-Reply-To: nezmar@atlas.sk
+Message-ID: <a8rrcc$60j$2@main.gmane.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: linux-assembly@vger.kernel.org
 
-hi,
 
-I have some (stupid?) question:
+Hello,
+	I fixed some things around attach/detach (breakpoints cleanups etc)
+plus I added flags register decoding (Yeah now you can stop extracting 
+flags bits by hand :))
 
-Is there any way to initiate PCI bus block transfer from IO to MEM via 
-chipset programming? How?
+It can be downloaded from http://ruik.sh.cvut.cz/ald.html
+where you can find original source and a link to patch.
 
-sincerely,
+I have added L2 cache (thanks to H-Peter) to this mashine so I hope it 
+will be OK. (got several hangups during boot, but adjusteted timigs and 
+it is still running :)
 
-Marian K.
+Regards
+		Rudolf
+
+
+
 
