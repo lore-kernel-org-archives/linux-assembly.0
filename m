@@ -1,17 +1,32 @@
-From: Konstantin Boldyshev <konst@linuxassembly.org>
-Subject: Re: ----  COMPREHENSIVE DOCUMENTATION FOR A NEWBIE  ----
-Date: Tue, 2 Jul 2002 03:08:07 +0400 (MSD)
+From: =?iso-8859-1?Q?Staffan_H=F6stman?= <staffan.hostman@AGROLINK.FI>
+Subject: RE: ----  COMPREHENSIVE DOCUMENTATION FOR A NEWBIE  ----
+Date: Tue, 2 Jul 2002 15:37:27 +0300
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.43L.0207020300080.934-100000@alpha.linuxassembly.org>
-References: <Pine.LNX.4.44.0207011950310.18407-100000@zodiac.mimuw.edu.pl>
+Message-ID: <E18972FDE634D611A4670030847664620E25F9@AGROSERVER>
 Mime-Version: 1.0
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <Pine.LNX.4.44.0207011950310.18407-100000@zodiac.mimuw.edu.pl>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Stanislaw Findeisen <sf181257@zodiac.mimuw.edu.pl>
+Content-Type: text/plain; charset="iso-8859-1"
+To: "'linux-assembly@vger.kernel.org '" <linux-assembly@vger.kernel.org>
+
+=20
+Yes, I agree with Konstantin. If you want some real documentation, do a
+search for Art of Assembly by Randal Hyde as mentioned earlier.
+
+It includes most of what you need to know, although it's not linux spec=
+ific
+so some facts you'll need to look up.
+
+Staffan H=F6stman v1.1-preBETA
+
+
+-----Original Message-----
+=46rom: Konstantin Boldyshev
+To: Stanislaw Findeisen
 Cc: linux-assembly@vger.kernel.org
+Sent: 7/2/02 2:08 AM
+Subject: Re: ----  COMPREHENSIVE DOCUMENTATION FOR A NEWBIE  ----
 
 On Mon, 1 Jul 2002, Stanislaw Findeisen wrote:
 
@@ -36,7 +51,17 @@ perhaps in your native language. Among online resources,
 Should you be more accurate, you'll notice references to several books
 and CPU manuals -- this is what you need.
 
--- 
+--=20
 Regards,
 Konstantin
 
+-
+To unsubscribe from this list: send the line "unsubscribe
+linux-assembly" in
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
+-
+To unsubscribe from this list: send the line "unsubscribe linux-assembl=
+y" in
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
