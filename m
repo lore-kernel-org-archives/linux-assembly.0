@@ -1,42 +1,32 @@
-From: Fabian Franz <FabianFranz@gmx.de>
-Subject: Tiny pivot root for asmutils-collection ...
-Date: Mon, 9 Dec 2002 01:23:19 +0100
+From: Claes Nyberg <md0claes@mdstud.chalmers.se>
+Subject: man x86<instruction>
+Date: Mon, 9 Dec 2002 16:11:25 +0100 (MET)
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <200212090123.19389.FabianFranz@gmx.de>
-Reply-To: FabianFranz@gmx.de
+Message-ID: <Pine.SOL.4.30.0212091607250.7650-100000@beauregard.mdstud.chalmers.se>
+References: <200212090123.19389.FabianFranz@gmx.de>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 8BIT
 Return-path: <linux-assembly-owner@vger.kernel.org>
+In-Reply-To: <200212090123.19389.FabianFranz@gmx.de>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: linux-assembly@vger.kernel.org
 
-I needed it for an initrd-project:
 
-section .text           ; declaring our .text segment
-        global  _start  ; telling where program execution should start
-
-        _start:                 ; this is where code starts getting exec'ed
-        pop     ebx             ; argc
-        pop     ebx             ; argv[0]
-        pop     ebx             ; the first real arg, new_root
-        pop     ecx             ; the first real arg, put_old
+Hi list,
+Is there UNIX man pages available for x86/avr/mips/sparc instructions
+somwhere?
+It would be nice to be able to write for example 'man x86lea' instead of
+scanning the instruction set reference file.
 
 
-        mov     eax,217         ; the syscall number for pivot_root
-                                ; we already have the new_root in ebx and 
-put_old in ecx
+// Claes
 
-        int     80h             ; call the kernel
+------------------------------------------------------------------------------
+Home: http://www.mdstud.chalmers.se/~md0claes/
+------------------------------------------------------------------------------
+Citation :
+The number of UNIX installations has grown to 10, with more expected.
+_The UNIX Programmer's Manual_, Second Edition, June, 1972
+------------------------------------------------------------------------------
 
-        mov     ebx,eax         ; save the errno in ebx
-        mov     eax,1           ; put the exit syscall number in eax
-        int     80h             ; bail out
-
-It was pretty easy to program; thx to the great tutorials on 
-linuxassembly.org. Perhaps you have a use for it ? Its GPL, so feel free to 
-add it ...
-
-cu
-
-Fabian
