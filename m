@@ -1,38 +1,30 @@
-From: hp <lx@lxhp.in-berlin.de>
+From: Brian Raiter <breadbox@muppetlabs.com>
 Subject: Re: bios interuppts
-Date: Wed, 5 Mar 2003 06:55:41 +0000
+Date: Wed, 5 Mar 2003 11:42:26 -0800
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <200303050705.h2575frL010363@hirsch.in-berlin.de>
-References: <20030304120742.6160.qmail@webmail7.rediffmail.com> <3E64EAB9.5070000@hampshire.edu> <15973.3207.212962.958382@eidolon.muppetlabs.com>
+Message-ID: <15974.21282.393278.25969@eidolon.muppetlabs.com>
+References: <20030304120742.6160.qmail@webmail7.rediffmail.com>
+	<3E64EAB9.5070000@hampshire.edu>
+	<15973.3207.212962.958382@eidolon.muppetlabs.com>
+	<200303050705.h2575frL010363@hirsch.in-berlin.de>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <15973.3207.212962.958382@eidolon.muppetlabs.com>
+In-Reply-To: <200303050705.h2575frL010363@hirsch.in-berlin.de>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
-To: Brian Raiter <breadbox@muppetlabs.com>, linux-assembly@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: hp <lx@lxhp.in-berlin.de>
+Cc: linux-assembly@vger.kernel.org
 
-Brian Raiter am Dienstag, 4. M=E4rz 2003 20:28:
-> > The simplest way to do it is to use terminal escape codes.
->
-> vt100 escape codes aren't guaranteed to work everywhere, though.
-	[...]
+> simplest 'clearscreen', standard even in those times where the 'tty'
+> was a real tty writer is by VT control <ff>, i.e. char 12. def'd in
+> ANSI, VT52, etc.  it should be handled by a displaying program such
+> that it clears the screen or, sends a form feed if output is not a
+> video display.
 
-simplest 'clearscreen', standard even in those times where the 'tty' wa=
-s a=20
-real tty writer is by VT control <ff>, i.e. char 12. def'd in ANSI, VT5=
-2, etc.
-it should be handled by a displaying program such that it clears the sc=
-reen=20
-or, sends a form feed if output is not a video display.
+I agree that it *should*. However, FF does not clear the screen in the
+Linux console, or in any of the xterm programs that I tested it with.
+That makes it pretty unportable in my book, at least in the context of
+a linux-based mailing list.
 
-hp
-
---
-Linux,Assembly,Forth: http://www.lxhp.in-berlin.de/index-lx.shtml en/de
-  pse, reply to << lx -at- lxhp -dot- in-berlin -dot- de >>
--
-To unsubscribe from this list: send the line "unsubscribe linux-assembl=
-y" in
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+b
