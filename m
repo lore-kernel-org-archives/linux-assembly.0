@@ -1,49 +1,74 @@
 From: h-peter recktenwald <*@lxhp.in-berlin.de>
-Subject: Re: Re[2]: ald 0.1.2
-Date: Tue, 25 Jun 2002 21:03:18 +0000
+Subject: Re: how can I have access to the memory as in flat mode?
+Date: Tue, 25 Jun 2002 23:17:38 +0000
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <20020625210318.27d15eac.*@lxhp.in-berlin.de>
-References: <Pine.BSF.4.30.0206142208470.30769-100000@ellipse.mcs.drexel.edu>
-	<20020615194422.228e614b.*@lxhp.in-berlin.de>
-	<495184185.20020723103849@quasar.prv.pl>
+Message-ID: <20020625231738.216814d7.*@lxhp.in-berlin.de>
+References: <3D15E5AF.5010706@eprocess.fr>
 Reply-To: lx@lxhp.in-berlin.de
 Mime-Version: 1.0
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <495184185.20020723103849@quasar.prv.pl>
+In-Reply-To: <3D15E5AF.5010706@eprocess.fr>
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="iso-8859-1"
-To: QUASAR <quasar@quasar.prv.pl>
-Cc: quasar2@o2.pl, linux-assembly@vger.kernel.org
+To: fmarmond@eprocess.fr
+Cc: linux-assembly@vger.kernel.org
 
-On Tue, 23 Jul 2002 10:38:49 +0200
-QUASAR <quasar2@o2.pl> wrote:
+On Sun, 23 Jun 2002 17:13:51 +0200
+=46rederic Marmond <fmarmond@eprocess.fr> wrote:
 
-> Witam h-peter recktenwald!
 >=20
-> hpr> On Fri, 14 Jun 2002 22:12:49 -0400 (EDT)
-> hpr> Patrick Alken <cosine@ellipse.mcs.drexel.edu> wrote:
+> Hi,
 >=20
-> >>=20
-> >> As always, comments and bug reports are welcome.
-> hpr>                 ^^
+> few days ago, i posted mails to try to know better about linear memor=
+y=20
+> in linux.
+> perhapse you've already answer me, but I could'nt see mails from the =
+list...
+> So, I managed to make my prog work by using /dev/mem
+> it's very ugly, but it worked.
 >=20
-> hpr> could you add symbols' display. listing which ones exist and,=20
-> hpr> at display a breakpt, if that is also a symbol address ?
+> Is there any other way to access somewhere?
+> In fact the exact problem is:
 >=20
-> hpr> thx, so far, i won't be able to succed without ald, already:)
+> on a embeded system, the mac-adress of  eth0 and eth1 are stored in a=
+=20
+> flash memory, mapped somewhere.
+> The 'standard' driver (natsemi) doesn't know this, and try to access =
+to=20
+> the 'normal' pci network card.
+> So, i have to read the mac adress by hand, and modify the value retur=
+ned=20
+> by the 'standard' driver.
 >=20
-> hpr> best,
-> hpr>         hp
-> Hmm, but I think Linice is the best for linux assembly programming!
-		^^^^^^^^^^^^^
-who? what? where (from)?
+> I know the adress, but I've got seg-faults when trying to access it f=
+rom=20
+> the driver (readb, (unsigned char*)0xf8000, ...)
+				^^^^^^^^^^^^
 
-:)
+i'm most probably the least experieced on this access mode, thus only=20
+guessing, i.e. the way how i would start trying:
 
-redards,
+is your code running in kernel mode (e.g. module)?
+otherwise that address would not be accessible, 1st GB owned by kernel.
+
+in kernel mode you might try sys_open on /dev/kmem and set the 'file po=
+inter'=20
+to the mentioned mmap-ed(?) address, then read w.=20
+	sys_read fd,memory-address,number-of-byte-to-read
+
+which might even work from user space (by a 'normal' program) when call=
+ed=20
+with 'root' access privileges.
+
+>=20
+> any help?
+
+???? - I'd yet never try any of those...
+
+
+regards,
 	hp
-
 
 --=20
 Linux,Assembly,Forth: http://www.lxhp.in-berlin.de/index-lx.shtml en/de
