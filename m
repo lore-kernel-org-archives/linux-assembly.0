@@ -1,60 +1,85 @@
-From: h-peter recktenwald <lx@lxhp.in-berlin.de>
-Subject: Re: GAS - \@ in macros and labels
-Date: Thu, 30 May 2002 22:44:35 +0000
+From: Stephan Walter <stephan.walter@gmx.ch>
+Subject: Mandelbrot generator...175 bytes
+Date: Sun, 2 Jun 2002 19:46:47 +0200
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <20020530224435.2d748db8.lx@lxhp.in-berlin.de>
-References: <004C6F8A.C21188@si.com>
-	<Pine.SGI.4.40.0205301306560.4473325-100000@shell01.TheWorld.com>
+Message-ID: <20020602194647.135827f9.stephan.walter@gmx.ch>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: multipart/mixed;
+ boundary="Multipart_Sun__2_Jun_2002_19:46:47_+0200_0839ab80"
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <Pine.SGI.4.40.0205301306560.4473325-100000@shell01.TheWorld.com>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
-To: Scott Lanning <slanning@theworld.com>
-Cc: kieft_brian@si.com, linux-assembly@vger.kernel.org
+To: linux-assembly@vger.kernel.org
 
-On Thu, 30 May 2002 13:13:25 -0400
-Scott Lanning <slanning@theworld.com> wrote:
+This is a multi-part message in MIME format.
 
-> On Wed, 29 May 2002 kieft_brian@si.com wrote:
-> > .MACRO  tableHdr    someArgs
-> > .SET    CMD_NUM,\@
-> > A_CMD_NUM:
-> >      .DC.W  (B_CMD_NUM - A_CMD_NUM)
-> >     stuff....
-> >
-> >  .ENDM
-> >
-> >  .MACRO tableEnd    someArgs
-> > B_CMD_NUM:
-> >  .ENDM
-> >
-> >
-> > Unfortunately GAS sees this as literal text and throws a bunch of "=
-symbol
-> > already defined" errors. Any ideas on how to make the CMD_NUM appea=
-r as its
-> > value in a label? Thanks,
+--Multipart_Sun__2_Jun_2002_19:46:47_+0200_0839ab80
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-if you want to generate linked/chained lists, you could use 'local' (nu=
-meric)=20
-labels, the range of which is far beyond the documented max. of 9. exam=
-ples=20
-can be found in the linux kernel (arch/i386/lib/checksum.S, macroes SRC=
-, DST)=20
-or, as aplied in "eForth" (http://www.lxhp.in-berlin.de/index-lx.shtml#=
-e4)
+Hello list,
 
-regards,
-	hp
+this is my first post, so I'll introduce myself: My name is Stephan, I'm
+18 years old and I live in Switzerland.
 
---=20
-Linux,Assembly,Forth: http://www.lxhp.in-berlin.de/index-lx.shtml en/de
-NO abusive=A0software=A0patents=A0http://petition.eurolinux.org/pr/pr17=
-=2Ehtml
--
-To unsubscribe from this list: send the line "unsubscribe linux-assembl=
-y" in
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Attached you'll find mandelbrot.asm. Just copy it into asmutils/src, add
+it to the Makefile, run make and have fun... :-)
+
+Regards,
+Stephan
+--Multipart_Sun__2_Jun_2002_19:46:47_+0200_0839ab80
+Content-Type: application/octet-stream;
+ name="mandelbrot.asm"
+Content-Disposition: attachment;
+ filename="mandelbrot.asm"
+Content-Transfer-Encoding: base64
+
+OyBNQU5ERUxCUk9UIEdFTkVSQVRPUiANCjsNCjsgT3JpZ2luYWwgY29kZSBieSBUZW5pZSBSZW1t
+ZWwgJiBKb2huIEVja2VyZGFsDQo7IHBvcnRlZCB0byBMaW51eC9mcmFtZWJ1ZmZlciBieSBTdGVw
+aGFuIFdhbHRlciA8c3RlcGhhbi53YWx0ZXJAZ214LmNoPg0KOw0KOyAoYykgMjAwMiBieSBTdGVw
+aGFuIFdhbHRlciAtIGxpY2Vuc2VkIHVuZGVyIHRoZSBHTlUgR1BMDQo7DQo7IHYxLjAgMjAwMi0w
+Ni0wMiAtLS0gRmlyc3QgcmVsZWFzZSAoMTc1IGJ5dGVzKQ0KOw0KOw0KOyBXZWxsLCBpdCdzIG5v
+dGhpbmcgbmV3LCBqdXN0IGFub3RoZXIgTWFuZGVsYnJvdCBwcm9nZ2llLiBJdCB1c2VzDQo7IDY0
+MHg0ODB4OCBmYiBtb2RlIChsaWtlIGFsbCB0aGUgb3RoZXIgYXNtdXRpbHMgZ2Z4IHByb2dyYW1z
+KS4NCjsgVXNlIEN0cmwtQyB0byBleGl0Lg0KOw0KOyBDb2xvciBwYWxldHRlIGlzIG5vdCBzZXQu
+IElmIHlvdSBydW4gZmlyZTI1NiBvciBYMTEgYmVmb3JlIHJ1bm5pbmcNCjsgdGhpcyBwcm9ncmFt
+LCB5b3UnbGwgZ2V0IGRpZmZlcmVudCBjb2xvcnMuDQo7DQo7IFRoZSBzaXplIG9mIHRoZSBET1Mv
+SU5UMTBoIHByb2dyYW0gd2FzIDYxIGJ5dGVzLCBteSB2ZXJzaW9uIGhhcyAxNzUgOi0oDQo7DQo7
+DQo7IE9yaWdpbmFsIGZpbGUgY29tbWVudDoNCjs9PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQ0KO1RoaXMgaXMg
+YSBzbWFsbCBpbXBsZW1lbnRhdGlvbiBvZiBhIG1hbmRlbGJyb3QgZ2VuZXJhdG9yLiBJJ3ZlIGZv
+dW5kIHRoaXMNCjtnZW0gYSBzb21lIHRpbWUgYWdvIGluIGEgc3dlZGlzaCBmaWRvLW5ldCBtZWV0
+aW5nIGFzIGEgVVVlbmNvZGVkIGZpbGUuIEFsbA0KO2NvbW1lbnRzIGhhdmUgYmVlbiBpbnNlcnRl
+ZCBieSBtZSAoSm9obiBFY2tlcmRhbCkuIEkgaGF2ZSB0cmllZCB0byBnaXZlDQo7c29tZSBpbmZv
+cm1hdGlvbiBhYm91dCB3aGF0IHRoZSBwcm9ncmFtIGFjdXRhbGx5IGNhbGN1bGF0ZXMuIFRoaXMN
+CjtpbmZvcm1hdGlvbiBtaWdodCBob3dldmVyIGJlIGluY29ycmVjdC4NCjtUaGUgc291cmNlIGFu
+ZCBhIGNvbXBpbGVkIHZlcnNpb24gaXMgYXZhaWxhYmxlIGZvciBkb3dubG9hZCAoMTA5MiBieXRl
+cykuDQo7DQo7IG1hbmRlbGJyb3QgcGxvdHRlciwgNjEgYnl0ZXMgLSBUZW5pZSBSZW1tZWwNCjs9
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PQ0KOw0KDQolaW5jbHVkZSAic3lzdGVtLmluYyINCg0KJWFzc2lnbiBT
+SVpFX1gJNjQwDQolYXNzaWduCVNJWkVfWQk0ODANCiVhc3NpZ24gVk1FTV9TSVpFCVNJWkVfWCpT
+SVpFX1kNCg0KQ09ERVNFRw0KDQpTVEFSVDoNCglzeXNfb3BlbiBmYiwgT19SRFdSDQoJc3lzX21t
+YXAgRU1QVFksIFZNRU1fU0laRSwgUFJPVF9SRUFEfFBST1RfV1JJVEUsIE1BUF9TSEFSRUQsIGVh
+eCwgRU1QVFkNCgltb3YgZWRpLCBlYXgJCTsgd2UnbGwgdXNlIHN0b3NiDQoNCglfbW92IGVjeCwg
+U0laRV9ZCTsgInhvciBlY3gsIGVjeCIsICJpbmMgY2giIGlzIG9uZSBieXRlIHNtYWxsZXINCm91
+dGVyX2xvb3A6DQoJX21vdiBlc2ksIFNJWkVfWA0KaW5uZXJfbG9vcDoNCglfbW92IGVicCwgMTI3
+IAkJOyBudW1iZXIgb2YgaXRlcmF0aW9ucy4gQ2FuIGJlID4xMjcgYnV0IHRoZW4NCgkJCQk7IGl0
+IHVzZXMgMiBtb3JlIGJ5dGVzLiA+MjU1IG1ha2VzIG5vIHNlbnNlDQoJCQkJOyBiZWNhdXNlIHRo
+aXMgaXMgdXNlZCBmb3IgdGhlIHBpeGVsIGNvbG9yLg0KDQoJeG9yIGVieCwgZWJ4CQk7ICByZSA6
+PSAwDQoJeG9yIGVkeCwgZWR4CQk7ICBpbSA6PSAwDQoNCmNvbXBsZXhfbG9vcDoNCglwdXNoIGVk
+eA0KCW1vdiBlYXgsIGVieA0KCXN1YiBlYXgsIGVkeAkJOyAgZWF4IDo9IHJlIC0gaW0NCglhZGQg
+ZWR4LCBlYngJCTsgIGVkeCA6PSByZSArIGltDQoJaW11bCBlZHgJCTsgIHUgOj0gKHJlLWltKSAq
+IChpbStyZSkgPSByZV4yIC0gaW1eMg0KCXNhciBlYXgsIDgJCTsgIHUgOj0gdSAvIDJeOA0KCXBv
+cCBlZHgNCg0KCXhjaGcgZWJ4LCBlYXgNCg0KCXN1YiBlYngsIGVzaQkJOyAgbmV3X3JlIDo9IHUg
+LSB3aWR0aA0KICAgICAgICANCglpbXVsIGVkeA0KCXNobGQgZWR4LCBlYXgsIDI1CTsgIGVkeCA6
+PSAyKHJlICogaW0pIC8gMl44DQoNCglzdWIgZWR4LCBlY3gJCTsgIG5ld19pbSA6PSAyKHJtICog
+aW0pIC8gMl44IC0gaGVpZ2h0DQoNCgl0ZXN0IGRoLGRoCQk7IGlmIGo+PTI1NiBwbG90IHBpeGVs
+DQoJamcgc2hvcnQgcGxvdF9jb2xvcg0KDQoJZGVjIGVicAkJCTsgbmV4dCBpdGVyYXRpb24NCglq
+bnogc2hvcnQgY29tcGxleF9sb29wDQoNCnBsb3RfY29sb3I6DQoJeGNoZyBlYnAsZWF4DQoJc3Rv
+c2IJCQk7IHBsb3QgcGl4ZWwNCg0KCWRlYyBlc2kNCglqbnogc2hvcnQgaW5uZXJfbG9vcA0KDQoJ
+bG9vcCBvdXRlcl9sb29wDQoNCnNjaGx1c3M6CQkJOyBvZiBjb3Vyc2Ugd2Ugc2hvdWxkIHVzZSBz
+eXNfZXhpdCwNCglqbXBzIHNjaGx1c3MJCTsgYnV0IHRoaXMgbG9vcCBpcyBzbWFsbGVyIGFuZCB0
+aGUNCgkJCQk7IHBpY3R1cmUgd29uJ3QgZ2V0IG92ZXJyaWRkZW4gYnkgdGhlDQoJCQkJOyBzaGVs
+bCBwcm9tcHQuIFVzZSBDdHJsLUMgdG8gZXhpdC4NCg0KZmIJZGIJIi9kZXYvZmIwIg0KRU5EDQoN
+Cg==
+
+--Multipart_Sun__2_Jun_2002_19:46:47_+0200_0839ab80--
