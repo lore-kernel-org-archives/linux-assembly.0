@@ -1,53 +1,40 @@
-From: notifyagent@kfupm.edu.sa
-Subject: Default Notification (Anti-Spam)
-Date: Sun, 31 Aug 2003 14:17:34 +0300
+From: Rick Hohensee <humbubba@smarty.smart.net>
+Subject: Re: gas jump
+Date: Sun, 31 Aug 2003 23:42:17 -0400 (EDT)
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <200308311118.OAA75364@itc6h1.kfupm.edu.sa>
+Message-ID: <200309010342.XAA08677@smarty.smart.net>
+References: <3F51C230.D94AF7EC@wp.pl>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
-	boundary="----=_NextPart_000_1062328654_B78506032.R82506026"
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
+In-Reply-To: <3F51C230.D94AF7EC@wp.pl> from "Maciej Hrebien" at Aug 31, 2003 11:38:56 AM
 List-Id: <linux-assembly.vger.kernel.org>
-To: "linux-assembly@vger.kernel.org"@itc6h1.kfupm.edu.sa
+Content-Type: text/plain; charset="us-ascii"
+To: m_hrebien@wp.pl
+Cc: linux-assembly@vger.kernel.org
 
-This is a multi-part message in MIME format.
+BOO!
 
-------=_NextPart_000_1062328654_B78506032.R82506026
-Content-Type: text/plain;
-	charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
+Please do tell davem to ban this email addy from linux-kernel. And this
+list if he's so inclined. I just paid a fat old bill to get my old ISP
+back because they are a Slackware shop, and not likely to be
+Transmicrosofties like Torvalds and The Worms From Red Hat such as davem.
 
-************* eManager Notification **************
+Meanwhile, the language that obsoletes C has produced some new stuff in 
 
-Source mailbox: "linux-assembly@vger.kernel.org"
-Destination mailbox(es): arghaleb@kfupm.edu.sa
-Policy: Anti-Spam
-Rule: pif attachment block
-Action: Delete
+ftp://ftp.gwdg.de/linux/clienux/interim/forSomos.tgz
 
-******************* End of message *******************
+and Forreal.tgz.
 
-------=_NextPart_000_1062328654_B78506032.R82506026
-Content-Type: text/plain;
-	charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
+Rick Hohensee
 
-Received: from 196.15.32.179 by vw.kfupm.edu.sa (InterScan E-Mail VirusWall NT); Sun, 31 Aug 2003 14:17:34 +0300
-Received: from KORUN ([167.205.24.134])
-	by mx1.kfupm.edu.sa (8.12.8/8.12.8) with SMTP id h7VBGvee004051
-	for <arghaleb@kfupm.edu.sa>; Sun, 31 Aug 2003 14:17:26 +0300
-Message-Id: <200308311117.h7VBGvee004051@mx1.kfupm.edu.sa>
-From: <linux-assembly@vger.kernel.org>
-To: <arghaleb@kfupm.edu.sa>
-Subject: Your details
-Date: Sun, 31 Aug 2003 18:17:20 +0700
-X-MailScanner: Found to be clean
-Importance: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2600.0000
-X-MSMail-Priority: Normal
-X-Priority: 3 (Normal)
-MIME-Version: 1.0
-Content-Type: multipart/mixed;
-	boundary="_NextPart_000_011CACC5"
+:; cLIeNUX /dev/tty8  21:29:26   /
+:;d -d */
+Ha3sm/       configure/   floppy/      mount/       suite/
+blas/        dev/         guest/       owner/       temp/
+boot/        device/      help/        source/      vche-1.6.3/
+command/     enth04/      log/         subroutine/
+:; cLIeNUX /dev/tty8  22:54:29   /
+:;
 
-------=_NextPart_000_1062328654_B78506032.R82506026--
+
