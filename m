@@ -1,34 +1,37 @@
-From: h-peter recktenwald <lx@lxhp.in-berlin.de>
+From: Konstantin Boldyshev <konst@linuxassembly.org>
 Subject: Re: asmutils 0.17
-Date: Sun, 18 Aug 2002 14:01:04 +0000
+Date: Sun, 18 Aug 2002 18:53:23 +0400 (MSD)
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <20020818140104.47feb4ca.lx@lxhp.in-berlin.de>
-References: <Pine.LNX.4.43L.0208171734360.1025-100000@alpha.linuxassembly.org>
-	<20020817181020.28d3a051.stephan.walter@gmx.ch>
-Reply-To: lx@lxhp.in-berlin.de
+Message-ID: <Pine.LNX.4.43L.0208181456380.1622-100000@alpha.linuxassembly.org>
+References: <Pine.SGI.4.40.0208180217240.73044568-100000@shell01.TheWorld.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <20020817181020.28d3a051.stephan.walter@gmx.ch>
+In-Reply-To: <Pine.SGI.4.40.0208180217240.73044568-100000@shell01.TheWorld.com>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: linux-assembly@vger.kernel.org
 
-On Sat, 17 Aug 2002 18:10:20 +0200
-Stephan Walter <stephan.walter@gmx.ch> wrote:
+On Sun, 18 Aug 2002, Scott Lanning wrote:
 
-> Hi Konstantin
-> 
-> truss.asm should be updated. As a label of a "dd" statement it uses
-> "pause", which is a reserved word in NASM 0.98.33 (and possibly in all
-> the 0.98.xx versions).
+> > Also, now there's a pure assembly Linux distribution, called a-Linux,
+> > based on Linux kernel and asmutils (it has derived from the asmutils
+> > bootdisk).
+>
+> Looks cool. I put the floppy in my old 486 and accessed
+> the httpd from my laptop. Amusing. :)
 
-why not asking nasm 'developers' to sticking to more reasonable nameing?
+Great! Does ftpd work too? :)
 
-> The file MCONFIG or the Makefile respectively should be changed to allow
-> compiling with NASM 0.98.33 (and higher) as well.
+> > It will evetually become a completely separate project.
+>
+> Why will it be separate?
 
-'optimizing' nasm is un-safe!
+Development of the _distribution_ itself can be done in parallel
+with asmutils, and involves various kernel and root fs updates
+that simply do not depend on asmutils.
 
 -- 
-Linux,Assembly,Forth: http://www.lxhp.in-berlin.de/index-lx.shtml en/de
+Regards,
+Konstantin
+
