@@ -1,30 +1,40 @@
-From: Maciej Hrebien <m_hrebien@wp.pl>
-Subject: Re: Info for System Call Implementation.
-Date: Mon, 08 Sep 2003 12:19:25 +0200
+From: Rafael Diniz <rafael.diniz@ic.unicamp.br>
+Subject: I/O
+Date: Thu, 11 Sep 2003 08:01:37 -0300
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <3F5C57AC.2C7907F1@wp.pl>
-References: <8EA11405E59BD611BA7100104B93C2600208D99A@exdel01.del.mgsl.com>
-Reply-To: m_hrebien@wp.pl
+Message-ID: <200309110801.37516.rafael.diniz@ic.unicamp.br>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-assembly-owner@vger.kernel.org>
+Content-Disposition: inline
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset="iso-8859-1"
 To: linux-assembly@vger.kernel.org
 
-Harmeet Uppal wrote:
-> 
-> Hi All,
-> 
-> I am interested in writing my own system call  for Linux. I had read
-> somewhere this is possible. can this be implemented via a module program or
-> I would need to recompile the complete kernel for this ( this would be
-> certainly be possible). What is the -syscall3 thing?
+Hello all,
+I'm using the sys_read to read chars from keyboard but I would like to =
+read=20
+the key as the user type the key, and not wait for the enter command to=
+ read=20
+the char.
+What's the best solution to this problem?
 
-There is a short description in khg how to add your own syscall, it's in
-syscall86.html file. _syscall3 is a macro for doing int $0x80 with 3
-args, see asm/unistd.h.
+Thanks,
+Rafael Diniz
 
--- 
-Maciej Hrebien
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+=
+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+Engenharia da Computa=E7=E3o  --  Unicamp
+http://www.gnu.org/philosophy/why-free.pt.html
+Usu=E1rio do sistema operacional GNU/Linux
+Chave PGP: http://www.dcc.unicamp.br/~ra017126/pubkey.asc
+"Acreditar num conhecimento que pode ser vendido e
+comprado =E9 uma forma sutil (e cruel) de perpetuar a ignor=E2ncia."
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+=
+-+-+-+-+-+-+-+-+-+-+-+-+-+-
 
+-
+To unsubscribe from this list: send the line "unsubscribe linux-assembl=
+y" in
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
