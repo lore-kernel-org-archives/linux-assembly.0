@@ -1,51 +1,62 @@
-From: "Randall Hyde" <randyhyde@earthlink.net>
-Subject: HLA v1.68 is now available
-Date: Sat, 24 Jul 2004 13:17:24 -0700
+From: fmarmond@eprocess.fr
+Subject: Re: compiler error
+Date: Sun, 25 Jul 2004 13:54:31 +0200
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <002d01c471bb$3be0ae60$6901a8c0@pentiv>
+Message-ID: <1090756471.41039f7726d97@intranet.eprocess.fr>
 References: <opsbnrjub8jku7fn@smtp.wp.pl>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-assembly-owner@vger.kernel.org>
+In-Reply-To: <opsbnrjub8jku7fn@smtp.wp.pl>
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: linux-assembly@vger.kernel.org
+To: Pawel Pustelnik <pawelpus@wp.pl>
+Cc: linux-assembly@vger.kernel.org
 
-HLA v1.68 is now available on Webster at
-http://webster.cs.ucr.edu/AsmTools/HLA/dnld.html
+Hi, 
+ 
+It would be easier to help you if you send the code... 
+What is in the "..." ? => __asm__ __volatile__(...) 
+ 
+If you don't want, try to investigate in those ways: 
+- if you have gcc 3.x, add the '-save-temps' option. 
+It will save the temporary files, and you can have a look at them (how the 
+assembly is generated) 
+- if you have gcc 2.x, there are similar options, but I don't remrember which 
+- have a look at compiler options. 'movq' is for 8 bytes long, and I don't 
+know if your compiler can understand it (for 'standard' 32 bits cpu, movl (4 
+bytes) is the maximum). Try to enable specific cpu architecture if needed 
+(-march=athlon or something like that) 
+ 
+Fred 
+ 
+ 
+ 
+Selon Pawel Pustelnik <pawelpus@wp.pl>: 
+ 
+> Hi, 
+>  
+> I used assembler code in my cpp code 
+> ( __asm__ __volatile__(...) ) 
+> This assembler's syntax is ok but i can not compile my application 
+> because after "g++ my_apps.cpp" I get: 
+>  
+> /tmp/ccADrA0k.s: Assembler messages: 
+> /tmp/ccADrA0k.s:3637: Error: too many memory references for `movq' 
+>  
+> Maybe I do not know something about inline assembler? 
+>  
+> --  
+> Using M2, Opera's revolutionary e-mail client: http://www.opera.com/m2/ 
+> - 
+> To unsubscribe from this list: send the line "unsubscribe linux-assembly" in 
+> the body of a message to majordomo@vger.kernel.org 
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html 
+>  
+>  
+ 
+ 
+ 
 
-This is a maintenance release containing several bug fixes to 
-both the compiler and the HLA Standard Library. Also
- included are a couple of new routines in the args library 
-module.
-
-HLA, the High-Level Assembler is an 80x86 assembly language
-that provides high-level programming facilities in addition to all
-the low-level capabilities of a traditional x86 assembler. This
-assembler is fully supported by thousands of pages of documentation
-and tutorials, including "The Art of Assembly Language" published
-by No Starch Press (www.nostarch.com) and the electronic
-version available at http://webster.cs.ucr.edu/.
-
-HLA is one of the most powerful assembly languages available
-(for any processor) and its macro facilities are far more powerful
-than existing x86 assemblers (e.g., MASM and TASM). HLA
-fully supports classes and object-oriented programming, modular
-(structured) programming, and low-level "grunt" assembly
-programming.
-
-HLA is available for both Linux and Windows and well-written
-HLA programs will compile and run on both systems unchanged.
-
-HLA includes the "HLA Standard Library", a ready-made set
-of hundreds of different useful routines that you can call to simplify
-writing assembly language applications. Full source code to all
-the library code is available.
-
-HLA is totally free and public domain (no restrictive licenses at
-all, you may use HLA any way you like) and full source code is
-available at the above URL.  This includes both the compiler
-and the library.
-
-Enjoy!
-Randy Hyde
+-------------------------------------------------
+This mail sent through IMP: http://horde.org/imp/
