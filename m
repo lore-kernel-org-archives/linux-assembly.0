@@ -1,97 +1,53 @@
-From: Learner <ruxyz@yahoo.com>
-Subject: Re: OFF-TOPIC : Confusion about basic C program behaviour
-Date: Mon, 14 Mar 2005 01:05:38 -0800 (PST)
-Message-ID: <20050314090538.86802.qmail@web41127.mail.yahoo.com>
-Reply-To: ruxyz@yahoo.com
+From: jeff <jko@bsn1.net>
+Subject: AsmIDE development snapshot
+Date: Wed, 16 Mar 2005 14:46:31 -0800
+Message-ID: <20050316144631.66aa9050.jko@bsn1.net>
 Mime-Version: 1.0
-In-Reply-To: 6667
+Content-Transfer-Encoding: 7bit
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-To: Gerardo =?ISO-8859-1?Q?=20=22Garc=EDa=22?= =?ISO-8859-1?Q?=20=22Pe=F1a=22?= <gerardo@kung-foo.dhs.org>
-Cc: Linux Kernel Newbie <kernelnewbies@nl.linux.org>, Assembly Linux <linux-assembly@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: linux-assembly@vger.kernel.org
 
-Thank you for the useful link .
+The AsmIDE project has reached another milestone and
+may be of interest.  It is far from complete, but usable
+and much improved from earlier versions.  The usabable
+components are:
 
---- Gerardo Garc=EDa Pe=F1a <gerardo@kung-foo.dhs.org>
-wrote:
-> Learner wrote:
->=20
-> >Hi,
-> >
-> >  I know this is not the correct place to post this
-> >question, but I feel it would be pretty easy for
-> the
-> >kernel gurus to explain this. =20
-> >
-> >TEST CODE
-> >=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> >
-> >#include <stdio.h>
-> >
-> >main()
-> >{
-> >   float a1=3D1.0;
-> >   float a2=3D2.0;
-> >
-> >   printf(" \n");
-> >   printf(" Size of Float > %d \n", sizeof(float)
-> );
-> >   printf(" Size of Int   > %d \n", sizeof(int) );
-> >   printf(" \n");
-> >
-> >   printf(" CASE 1 : f-f > %f - %f \n\n", a1, a2);
-> >   printf(" CASE 2 : f-d > %f - %d \n\n", a1, a2);
-> >   printf(" CASE 3 : d-f > %d - %f \n\n", a1, a2);
-> >   printf(" CASE 4 : d-d > %d - %d \n\n", a1, a2);
-> >}
-> >
-> >OUTPUT :
-> >
-> > Size of Float > 4
-> > Size of Int   > 4
-> >
-> > CASE 1 : f-f > 1.000000 - 2.000000
-> >
-> > CASE 2 : f-d > 1.000000 - 0
-> >
-> > CASE 3 : d-f > 0 - 0.000000
-> >
-> > CASE 4 : d-d > 0 - 1072693248
-> >
-> >=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> >
-> >The CASE1 & CASE2 & CASE4 outputs are expected.
-> >
-> >   Any explanation for CASE3 behaviour.=20
-> >   I presume it should behave similar to CASE2 and
-> >print 0 - 2.000000 .
-> >
-> >   Could somebody please pin-point what is=20
-> >lacking in my presumtion .
-> >
-> >Thanks !
-> >
-> > =20
-> >
-> I believe this happens because float is promoted to
-> double when it is=20
-> passed as an arg... so you should think that double
-> =3D 8 and int =3D 4.
->=20
-> I have been googling and I have found this:
->=20
->   =20
->
-http://www-ccs.ucsd.edu/c/function.html#argument%20promotion
->   =20
->=20
+  AsmRef - extensive menu driven help system.
+           This is a much improved version with
+           about 30 files of interest to assembly
+           programmers.
+ 
 
+  AsmMgr - a "mc" style file manager which has been
+           configured for smIDE.  It will do normal
+           file minipulation and kick off compilers,
+           etc.  This is the front end for the AsmIDE
+           family of programs.
+    
 
-	=09
-__________________________________=20
-Do you Yahoo!?=20
-Yahoo! Small Business - Try our new resources site!
-http://smallbusiness.yahoo.com/resources/=20
+  AsmLib - Library of about 160 functions for Linux
+           x86 programming (console or terminal).
+           (the library had 3 bugs and is now approaching
+            200 functions)
+
+  AsmEdit - A general purpose editor with hooks for
+           assembly programmers.  This version has a
+           few bug fixes, and some reorginization.
+
+  AsmFunc - General functions to enhance AsmEdit and
+           AsmMgr.  Also, a few general programs that
+           did not fit anywhere else.
+
+  AsmPlan - This an alpha program that will be redesigned
+           soon.  It is mostly a place holder for now,
+           but it does provide a somewhat useful todo
+           program.
+
+All of these programs are on the web page at:
+  http://members.save-net.com/jko%40save-net.com/asm/
+
+Any feedback is appreciated.  
+
+ all the best, jeff  
