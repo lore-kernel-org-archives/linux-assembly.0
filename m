@@ -1,35 +1,32 @@
-From: lx <lx@lxhp.in-berlin.de>
-Subject: Re: Is this list dead?
-Date: Fri, 13 Sep 2002 09:55:23 +0000
+From: Hernan <beri@ciudad.com.ar>
+Subject: debugging in linux
+Date: Sat, 14 Sep 2002 11:31:05 -0300
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <20020913095523.04064ed1.lx@lxhp.in-berlin.de>
-References: <20020530175111.324ae5e8.lx@lxhp.in-berlin.de>
-	<Pine.LNX.4.33.0209131109001.2011-100000@cannabis.daphnes.ro>
-Reply-To: lx@lxhp.in-berlin.de
+Message-ID: <4.3.2.7.2.20020914112556.00bdb340@mail.ciudad.com.ar>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <Pine.LNX.4.33.0209131109001.2011-100000@cannabis.daphnes.ro>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: halfdead <halfdead@cannabis.daphnes.ro>
-Cc: linux-assembly@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+Content-Transfer-Encoding: 7bit
+To: linux-assembly@vger.kernel.org
 
-On Fri, 13 Sep 2002 11:09:54 +0300 (EEST)
-halfdead <halfdead@cannabis.daphnes.ro> wrote:
+Hello,
 
-> Hi guys,
-> 
-> I have been out for too long and now i see that there is no activity on
-> this list. Is it like dead or something?
-> 
-> - halfdead
+I'm trying to debug a program (without debug information) with gdb but I 
+can't do some things:
 
-nice to know that you still seem just half of what this list is not.
-all questions answered, nothing new in the kernel which none understands.
+1) How can I run step by step,
+2) see the registers values (including eip),
+3) make a dump of memory
 
-best,
-	hp
+I'm running code that starts in 0x80003c0 and when I try disas 0x80003c0 I 
+get "No function contains specified address".
 
--- 
-Linux,Assembly,Forth: http://www.lxhp.in-berlin.de/index-lx.shtml en/de
+The executable is a test that I'm doing I change the elf entry point and 
+put some code there.
+
+Is there a softice like debugger for linux? where can I get it?
+Thanks in advance!
+
+Hernan
+
