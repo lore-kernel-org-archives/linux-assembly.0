@@ -1,56 +1,49 @@
-From: dante@virtualblueness.net
-Subject: How to set up struct pt_regs in assembly?
-Date: Thu, 21 Aug 2003 20:24:56 -0400 (EDT)
+From: linuxassembly@evobsyniva.com
+Subject: Re: How to set up struct pt_regs in assembly?
+Date: Fri, 22 Aug 2003 00:20:32 -0400
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.44.0308212010480.6588-100000@reddevil.virtualblueness.net>
+Message-ID: <opruag0iqelmcbdf@smtp-server.woh.rr.com>
+References: <Pine.LNX.4.44.0308212010480.6588-100000@reddevil.virtualblueness.net>
+Reply-To: linuxassembly@evobsyniva.com
 Mime-Version: 1.0
 Return-path: <linux-assembly-owner@vger.kernel.org>
+In-Reply-To: <Pine.LNX.4.44.0308212010480.6588-100000@reddevil.virtualblueness.net>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
 Content-Transfer-Encoding: 7bit
-To: linux-assembly@vger.kernel.org
+To: dante@virtualblueness.net
+Cc: linux-assembly@vger.kernel.org
 
+> section .data
+> shell   db "/bin/sh",0
+> nothing db 0
+>
+> section .text
+> _start: execve shell, nothing, nothing
 
-Hi everyone,
+Remember that the argv and envp parameters are pointers to arrays of 
+pointers, not pointers to strings.  If you want empty arrays, your 
+'nothing' variable needs to be 'dd 0', not 'db 0'.
 
-I'm having some problems writing the assembly code to set up the eax, 
-ebx, ecx and edx registers for a int 0x80 call to sys_execve on 2.4 
-kernels.  In C, the function is defined as int sys_execve(struct pt_regs 
-regs) where struct pt_regs is defined in <asm/ptrace.h>.  I don't know 
-what to put into eax-edx to get (struct pt_regs regs) right.
+For a longer example, if you wanted some environment variables and a proper 
+argv, the code would look like this:
 
-In 2.2 it was easy, you just did (in nasm):
+mov eax, 11  ; ( I'm assuming that's the correct call number )
+mov ebx, pathname
+mov ecx, argv
+mov edx, envp
+int 0x80
 
+...and then later...
 
-; int sys_execve(const char *filename, char const argv[], char const envp[]
-%macro execve 3     
-        mov ebx,%1  ; ptr to null terminated string containing program
-        mov ecx,%2  ; ptr to null terminated string of arguments
-        mov edx,%3  ; ptr to null terminated string of environment
-        mov eax,11
-        int 0x80
-%endmacro
+pathname db "/bin/cat", 0
+argv dd arg0, arg1, 0
+envp dd var1, var2, 0
 
-global _start
-section .data
-        shell   db "/bin/sh",0
-        nothing db 0
+arg0 db "cat", 0
+arg1 db "/dev/urandom", 0
 
-section .text
-_start: execve shell, nothing, nothing
-
-
-
-What is the equivalent for 2.4 kernels?
-
--------------------------------------------------------------------
-
-Anthony G. Basile, Ph.D.
-Director of Information Technology,
-D'Youville College,
-320 Porter Ave.
-Buffalo NY, 14201
-
-Work: (716) 881-8197 (voicemail)
+var1 db "THIS=that", 0
+var2 db "THESE=those", 0
 
 
