@@ -1,37 +1,40 @@
-From: Tomasz Grysztar <fasm@metro-nt.pl>
-Subject: fasm for linux
-Date: Mon, 15 Jul 2002 10:56:41 +0200
+From: Emanuele Altieri <ealtieri@hampshire.edu>
+Subject: i386: far jumps
+Date: 15 Jul 2002 22:21:26 -0400
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <15112961257.20020715105641@metro-nt.pl>
-Reply-To: Tomasz Grysztar <fasm@metro-nt.pl>
+Message-ID: <1026786087.2055.99.camel@italia>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: linux-assembly@vger.kernel.org
+To: Linux Assembly List <linux-assembly@vger.kernel.org>
+
+Greetings,
+
+I'm doing some experiments with far jumps to different code segments.
+For example:
+
+   ljmp $16, $hello
+
+where $16 is the segment selector, and "hello" is a label that I set up
+for testing. The code above works fine.
+
+However, when I change the code as following:
+
+   movw $16, %dx
+   movw %dx, %fs
+   ljmp *%fs:hello
+
+I get a general protection error. I don't understand why. I believe it's
+a notation error. Can anybody see it?
+
+I'm interested in this because I need the segment argument of ljmp to be
+variable.
 
 
-I'd like to let you know that my flat assembler (that got quite
-popular for DOS and Win32 programming) is now also released for Linux.
+Thanks!
 
-The Linux package contains three examples: one of manually-built ELF
-file (doesn't need a linking), a two of COFF-format object files,
-also with calling libc functions. It's available to download at
-two mirrors:
 
-http://fasm.metro-nt.pl/
-http://fasm.sourceforge.net/
-
-The Linux version has the same functionality as DOS/Win32 versions,
-so you can also assemble DOS/Win32 programs using it. Examples
-of binary/MZ/PE programs you can find in the DOS/Win32 package.
-
-The current release is 1.39 - it's stable, but it's only
-the pre-release. Final version 1.40 I will release after
-gathering enough comments about 1.39 (and fixing the bugs, if
-there are any). It will also have a much better documentation.
-
--- 
-Tomasz
+ -Emanuele
 
