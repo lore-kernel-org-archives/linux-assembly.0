@@ -1,88 +1,31 @@
-From: Emanuele Altieri <ealtieri@hampshire.edu>
+From: Brian Raiter <breadbox@muppetlabs.com>
 Subject: Re: bios interuppts
-Date: Tue, 04 Mar 2003 13:04:41 -0500
+Date: Tue, 4 Mar 2003 12:28:55 -0800
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <3E64EAB9.5070000@hampshire.edu>
+Message-ID: <15973.3207.212962.958382@eidolon.muppetlabs.com>
 References: <20030304120742.6160.qmail@webmail7.rediffmail.com>
+	<3E64EAB9.5070000@hampshire.edu>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <20030304120742.6160.qmail@webmail7.rediffmail.com>
+In-Reply-To: <3E64EAB9.5070000@hampshire.edu>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Anant Aneja <anantaneja@rediffmail.com>
-Cc: linux-assembly@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: linux-assembly@vger.kernel.org
 
-The simplest way to do it is to use terminal escape codes. That is, you 
-put these codes in a string and print the string with a simple write() 
-or printf() call. The terminal will recognize the codes in the string 
-and execute some special intructions such as clear the screen.
+> The simplest way to do it is to use terminal escape codes.
 
-For example:
+vt100 escape codes aren't guaranteed to work everywhere, though.
 
-   #include <stdio.h>
+If you don't care much about portability, then use the escape codes
+that are shared between VT100, ANSI, and xterm. That will probably
+work fine 99% of the time, on a Linux machine.
 
-   #define ESC 0x1B   /* escape code */
+If you don't care at all about portability, then use whatever escape
+codes your own particular terminal uses.
 
-   int main()
-   {
-           /* Escape codes */
-           char clr[5] = {ESC, '[', '2', 'J', 0};       /* clear screen */
-           char cur[6] = {ESC, '[', '0', '0', 'H', 0};  /* goto 0,0 */
+If you do care about portability, then use ncurses. Or else don't even
+try to draw on the screen. After all, the "screen" might actually be a
+TTY (at least in theory).
 
-           printf(clr);
-           printf(cur);
-
-           return(0);
-   }
-
-More escape codes can be found at:
-http://ilkerf.tripod.com/cdoc/vt100ref.html
-
-and many other similar links.
-
-Hope this helps,
-
---Emanuele
-
-
-
-Anant Aneja wrote:
-
-> My problem is i was using turbo c++ compiler before and
-> frequently
-> used ROM-BIOS interupts for
-> certain functions ( like handling the screen, calling the mouse
-> etc all in dos based programs
-> using 386 based registers like ah al etc).
->
-> Now I've started using gcc and find that even a basic screen
-> clearing function requires me to use the
-> "ncurses" library. this i did but it handles the screen only
-> using
-> windows and does not treat the console as an
-> unlimited buffer.
->
-> I dont wanna use the library therefore. plus it was a lot easier
-> calling interupts for most simple tasks.
-> I've read somewhere that Linux does not allow BIOS interupts
-> since
-> it runs in 'protected' mode.
-> therefore, I cant do simple stuff like clearing a screen myself.
->
-> Is there some way to do the above task easily (with or without
-> assembly ?)
->
-> Please help.
-> Anant
->
->
->
->
-> -
-> To unsubscribe from this list: send the line "unsubscribe 
-> linux-assembly" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
-
+b
