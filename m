@@ -1,105 +1,118 @@
-From: h-peter recktenwald <lx@lxhp.in-berlin.de>
-Subject: Re: asmutils libc fun and games
-Date: Sat, 18 May 2002 23:58:57 +0000
+From: G Anna <drguruolai@eth.net>
+Subject: ld error
+Date: 27 May 2002 12:49:44 +0530
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <20020518235857.64d7047c.lx@lxhp.in-berlin.de>
-References: <3CE5049F.5000405@gam.co.za>
+Message-ID: <m3r8jygir3.fsf@wobble.eth.net>
+Reply-To: linux-assembly@vger.kernel.org
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <3CE5049F.5000405@gam.co.za>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
-To: Paul Furber <paulf@gam.co.za>
-Cc: linux-assembly@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: linux-assembly@vger.kernel.org
 
-On Fri, 17 May 2002 15:24:47 +0200
-Paul Furber <paulf@gam.co.za> wrote:
+Dear All,
 
-> bootdisk. Am Imissing the point of this libc? Even the shared librari=
-es=20
-> that build correctly are dynamically linked to libNoVersion and GNU l=
-ibc=20
-> when you ldd them. What's up with that?
+I am working through 'Linux Assembly "Hello World" Tutorial, CS 200'
+by Bjorn Chambless.  But I am unable to compile the program given in
+that.  Kindly help me. 
 
-I made a similar experience, -nostdlib &c just useless. found a workaro=
-und=20
-having "libc.a" first in the search path, which apparently keeps the GN=
-U-ish=20
-stuff happy but, doesn't forcedly include such nonsense.
+For your convenience I have included the assembly program at the end
+of this mail.
 
-regards,
-	hp
+average.s is the relevant assembly program file.
 
-=3D=3D=3D=3D=3D
-compiled, tests passed:
+$ as -a --gstabs -o average.o average.s
 
-> /usr/src/asm/nasm-98-3e-21/nasm 0.98.21 may miscompile asmutils, plea=
-se=20
->	use only clean /usr/src/asm/nasm-98-3e-21/nasm 0.98!
-patched version 98.03 (with %xdefine and un-deleted listing output)
+$ ld -m elf_i386 -static /usr/lib/crt1.o /usr/lib/crti.o -lc average.o
+                              /usr/lib/crtn.o
 
-> /usr/src/asm/nasm-98-3e-21/nasm -Llibc.lis -w+orphan-labels \
->	-w+macro-params -i/usr/src/asm/asmutils/inc/ -g -f elf \
->	-D__LINUX__ -D__KERNEL__=3D22 -D__SYSCALL__=3D__S_KERNEL__ \
->	-D__OPTIMIZE__=3D__O_SIZE__ -D__ELF__ -DDEBUG libc.asm||:
-> libc.asm:154: message:
->	section attributes ignored on redeclaration of section `.text'
-(always, as usual...)
+/usr/lib/libc.a(strtoll.o): In function `__strtoll_internal':
+/usr/src/bs/BUILD/glibc-2.2.2/stdlib/../sysdeps/generic/strtol.c:386: undefined reference to `__udivdi3'
+/usr/src/bs/BUILD/glibc-2.2.2/stdlib/../sysdeps/generic/strtol.c:387: undefined reference to `__umoddi3'
+/usr/lib/libc.a(strtoull.o): In function `__strtoull_internal':
+/usr/src/bs/BUILD/glibc-2.2.2/stdlib/../sysdeps/generic/strtol.c:386: undefined reference to `__udivdi3'
+/usr/src/bs/BUILD/glibc-2.2.2/stdlib/../sysdeps/generic/strtol.c:387: undefined reference to `__umoddi3'
 
-> /usr/src/asm/nasm-98-3e-21/nasm -Llibc_stub.lis -w+orphan-labels \
->	-w+macro-params -i/usr/src/asm/asmutils/inc/ -g -f elf -D__LINUX__ \
->	-D__KERNEL__=3D22 -D__SYSCALL__=3D__S_KERNEL__ -D__OPTIMIZE__=3D__O_S=
-IZE__ \
->	-D__ELF__ -DDEBUG libc_stub.asm||:
-> ar rcv libc.a libc.o
-> a - libc.o
-> gcc -mcpu=3Dk6 -march=3Dk6 -Wall -O1 -g -D__NO_STRING_INLINES -fno-bu=
-iltin \
->	-nostartfiles -nostdlib  -static -o test1-static test1.c \
-both! 	^^^^^^^^^^^^^^^^^^^^^^^^
->	libc_stub.o libc.a
+$ cat average.s
+.data   
 
-> gcc -mcpu=3Dk6 -march=3Dk6 -Wall -O1 -g -D__NO_STRING_INLINES -fno-bu=
-iltin \
->	-nostartfiles -nostdlib  -static -mregparm=3D3 -D__FASTCALL__\
-> 	-o test1-static-fastcall test1.c libc_stub.o libc.a
-> gcc -mcpu=3Dk6 -march=3Dk6 -Wall -O1 -g -D__NO_STRING_INLINES -fno-bu=
-iltin \
->	-nostartfiles -nostdlib  -static -o test2-static test2.c \
->	libc_stub.o libc.a
-> gcc -mcpu=3Dk6 -march=3Dk6 -Wall -O1 -g -D__NO_STRING_INLINES -fno-bu=
-iltin \
->	-nostartfiles -nostdlib  -static -mregparm=3D3 -D__FASTCALL__\
-> 	-o test2-static-fastcall test2.c libc_stub.o libc.a
-> /usr/src/asm/nasm-98-3e-21/nasm -Lmd5.lis -w+orphan-labels -w+macro-p=
-arams \
->	-i/usr/src/asm/asmutils/inc/ -g -f elf -D__LINUX__ -D__KERNEL__=3D22 =
-\
->	-D__SYSCALL__=3D__S_KERNEL__ -D__OPTIMIZE__=3D__O_SIZE__ -D__ELF__ \
->	-DDEBUG md5.asm||:
-> /usr/src/asm/nasm-98-3e-21/nasm -Lrc6.lis -w+orphan-labels -w+macro-p=
-arams \
->	-i/usr/src/asm/asmutils/inc/ -g -f elf -D__LINUX__ -D__KERNEL__=3D22 =
-\
->	-D__SYSCALL__=3D__S_KERNEL__ -D__OPTIMIZE__=3D__O_SIZE__ -D__ELF__ \
->	-DDEBUG rc6.asm||:
-> /usr/src/asm/nasm-98-3e-21/nasm --Lrmd.lis --w+orphan-labels \
->	--w+macro-params -i/usr/src/asm/asmutils/inc/ -g -f elf -D__LINUX__ \
->	-D__KERNEL__=3D22 -D__SYSCALL__=3D__S_KERNEL__ -D__OPTIMIZE__=3D__O_S=
-IZE__\
->	-D__ELF__ -DDEBUG rmd.asm||:
-> ar rcv libcrypto.a md5.o rc6.o rmd.o
-> a - md5.o
-> a - rc6.o
-> a - rmd.o
+	.type hi_temp,@object  
+        .size hi_temp,1       
+hi_temp:
+        .byte 0x92      
 
---=20
-Linux,Assembly,Forth: http://www.lxhp.in-berlin.de/index-lx.shtml en/de
-NO abusive=A0software=A0patents=A0http://petition.eurolinux.org/pr/pr17=
-=2Ehtml
--
-To unsubscribe from this list: send the line "unsubscribe linux-assembl=
-y" in
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+        .type lo_temp,@object
+        .size lo_temp,1
+lo_temp:
+        .byte 0x52
+
+        .type av_temp,@object
+        .size av_temp,1
+av_temp:
+        .byte 0
+
+.text
+        .align 4        
+.globl main            
+        .type main,@function    
+
+main:
+        pushl %ebp      
+        movl %esp,%ebp 
+        movb hi_temp,%al
+        addb lo_temp,%al
+        movb $0,%ah
+        adcb $0,%ah
+        movb $2,%bl
+        idivb %bl
+        movb %al,av_temp
+        leave           
+        ret            
+
+$ as --version
+GNU assembler 2.10.91
+Copyright 2001 Free Software Foundation, Inc.
+This program is free software; you may redistribute it under the terms of
+the GNU General Public License.  This program has absolutely no warranty.
+This assembler was configured for a target of `i386-redhat-linux'.
+
+$ ld --version
+GNU ld 2.10.91
+Copyright 2001 Free Software Foundation, Inc.
+This program is free software; you may redistribute it under the terms of
+the GNU General Public License.  This program has absolutely no warranty.
+  Supported emulations:
+   elf_i386
+   i386linux
+   elf_i386_glibc21
+
+$ gcc --version
+2.96
+
+$ uname -a
+Linux wobble 2.4.16 #8 Tue May 14 14:15:58 IST 2002 i686 unknown
+
+$ cat /etc/issue
+
+Red Hat Linux release 7.1 (Seawolf)
+Kernel 2.4.16 on an i686
+
+Hope somebody will help me with this.
+
+Thank you.
+
+Cheers,
+anna
+
+-- 
+
+(15) I will never employ any device with a digital countdown. If I find
+     that  such  a  device  is absolutely unavoidable, I will set it to
+     activate when the counter reaches 117 and the hero is just putting
+     his plan into operation. - Peter Anspach in "The Top 100 Things 
+     I'd Do If I Ever Became An Evil Overlord"
+
+                                            http://www.eviloverlord.com
+
+
