@@ -1,73 +1,58 @@
-From: "Carlos Eduardo Pinheiro" <clists@bol.com.br>
-Subject: Re: newbie - how to mix c and assembly linux i386
-Date: Sat, 14 Aug 2004 22:10:11 -0300
+From: "Randall Hyde" <randyhyde@earthlink.net>
+Subject: HLA v1.69 is now available
+Date: Wed, 18 Aug 2004 11:35:09 -0700
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <002301c48264$9ddc0880$0301010a@lenin>
-References: <411E8D58.9040904@superonline.com>
+Message-ID: <002001c48552$17593030$6501a8c0@pentiv>
+References: <411E8D58.9040904@superonline.com> <002301c48264$9ddc0880$0301010a@lenin>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"; format="flowed	reply-type=response"
-To: =?iso-8859-1?B?TWVydCBC9nL8?= <mertboru@superonline.com>, linux-assembly@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: linux-assembly@vger.kernel.org
 
-Hi Mert,
+HLA v1.69 is now available on the HLA download page at
+http://webster.cs.ucr.edu/AsmTools/HLA/dnld.html
 
-Sincerely i never used KDeveloper, btw i think it doesn=B4t matter here=
-=2E. You=20
-can mix C and Assembly code using gcc inline assembly, you can find a H=
-OWTO=20
-explaining how everything works at=20
-http://ibiblio.org/gferg/ldp/GCC-Inline-Assembly-HOWTO.html
-Also if you need help in assembly language under linux i386=20
-http://www.linuxassembly.org/ is always a nice start point... Hope it h=
-elps.
+HLA, the High-Level Assembler is an assembly language
+development system that makes learning and using assembly
+language as easy as working with high-level languages.
 
-Regards
-Carlos Eduardo Pinheiro - cabeca@gmx.net
+HLA runs under both Windows and Linux and
+well-written programs are portable between the
+two OSes with nothing more than a recompilation
+of the source code - a unique feature among assembly
+languages.
 
------ Original Message -----=20
-=46rom: "Mert B=F6r=FC" <mertboru@superonline.com>
-To: <linux-assembly@vger.kernel.org>
-Sent: Saturday, August 14, 2004 7:08 PM
-Subject: newbie - how to mix c and assembly linux i386
+HLA provides the full capabilities of assembly language
+on the 80x86 processor, while introducing some high-level
+features to help you learn assembly faster, write assembly
+code easier than ever before, and write readable and
+maintainable assembly code.
 
+HLA also provides the "HLA Standard Library", a set of
+hundreds of different useful utility subroutines that you can
+call from your assembly language programs. Naturally,
+full source code for the HLA stdlib is available.
 
-> Hello,
->
-> I am currently programming in C via KDeveloper on linux i386. Due to =
-high=20
-> execution speed requirements of my project, I am planning to port som=
-e of=20
-> my C code to Assembly, and would be happy to do that without sacrifis=
-ing=20
-> KDeveloper. (Nice IDE, huh?)
->
-> My problem is:
->
-> Although experienced in programming, I am a newbie in linux environme=
-nt! I=20
-> would be happy to hear your recommendation for mixing C and Assembly.=
- Any=20
-> recommendations, tutorials, source code examples, etc.? - (Yes, I hav=
-e=20
-> searched the web and I am afraid, got very confused) :-(
->
-> Thank you.
->
-> Kind Regards,
-> Mert
->
->
-> -
-> To unsubscribe from this list: send the line "unsubscribe linux-assem=
-bly"=20
-> in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html=20
+HLA is fully support with thousands of pages of documentation
+including "The Art of Assembly Language" (published by
+No Starch Press, http://www.nostarch.com) and hundreds
+of example programs. See the following URL for the
+electronic version of AoA and the example code:
+http://webster.cs.ucr.edu/AoA/index.html
+Other documentation and examples:
+http://webster.cs.ucr.edu/AsmTools/HLA/index.html
 
--
-To unsubscribe from this list: send the line "unsubscribe linux-assembl=
-y" in
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+HLA is open-source and 100% free, public domain, code.
+There are absolutely no restrictions on the use of HLA
+and the HLA Standard Library.
+
+HLA v1.69 corrects a couple of defects that would crash
+the compiler under certain circumstances. This version
+also includes a completely rewritten set of memory
+management routines in the HLA Standard Library
+(higher performance, more portable across OSes,
+and corrections to various defects).
+Cheers,
+Randy Hyde
