@@ -1,8 +1,8 @@
 From: =?iso-8859-1?q?marcello=20miorelli?= <jjradha@yahoo.it>
 Subject: reply to jeff message
-Date: Wed, 17 Sep 2003 20:55:26 +0200 (CEST)
+Date: Wed, 17 Sep 2003 20:55:27 +0200 (CEST)
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <20030917185526.3786.qmail@web80602.mail.yahoo.com>
+Message-ID: <20030917185527.18215.qmail@web80603.mail.yahoo.com>
 Reply-To: jjradha@yahoo.it
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7BIT
