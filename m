@@ -1,32 +1,19 @@
-From: Jani Monoses <jani@iv.ro>
-Subject: Re: Could anyone can give  me a checksum tcp/ip header code by asm
- under linux
-Date: Mon, 13 May 2002 10:24:52 +0300 (EEST)
+From: h-peter recktenwald <lx@lxhp.in-berlin.de>
+Subject: site moved: "lib4th", lx/asm syscalls doc, asm links
+Date: Mon, 13 May 2002 23:05:23 +0000
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.33L2.0205131024130.1628-100000@cow>
-References: <20020513025947Z315493-22651+31517@vger.kernel.org>
+Message-ID: <20020513230523.7cc9df48.lx@lxhp.in-berlin.de>
 Mime-Version: 1.0
-Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <20020513025947Z315493-22651+31517@vger.kernel.org>
-List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: bkbll <bkbll@cnhonker.net>
-Cc: "linux-assembly@vger.kernel.org" <linux-assembly@vger.kernel.org>
+Return-path: <linux-assembly-owner@vger.kernel.org>
+List-Id: <linux-assembly.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: linux-assembly <linux-assembly@vger.kernel.org>
 
-Look in the linux kernel sources in include/asm-i386/checksum.h
 
-On Mon, 13 May 2002, bkbll wrote:
+new address of "lib4th", syscalls docs etc:
+	http://www.lxhp.in-berlin.de
+	mailto:lx@lxhp.in-berlin.de
 
-> hi, could anyone can give  me a checksum tcp/ip header codes coded by asm under linux?
-> and I think GAS is more better..
->
->                                                                      dumplogin
->
->
-> -
-> To unsubscribe from this list: send the line "unsubscribe linux-assembly" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
-
+regards,
+	hp
