@@ -1,58 +1,75 @@
-From: Frederic Marmond <fmarmond@eprocess.fr>
+From: peter willy krause <wklux@yahoo.co.uk>
 Subject: Re: newbie :adding larger value
-Date: Thu, 27 Nov 2003 09:07:33 +0100
+Date: Thu, 27 Nov 2003 12:41:56 +0000
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <3FC5B0C5.9040009@eprocess.fr>
+Message-ID: <200311271241.56060.wklux@yahoo.co.uk>
 References: <20031127124723.6b3aeb07.vadiraj@mail.cyberneme.com>
-Reply-To: fmarmond@eprocess.fr
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
 In-Reply-To: <20031127124723.6b3aeb07.vadiraj@mail.cyberneme.com>
+Content-Disposition: inline
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Vadiraj C S <vadiraj@mail.cyberneme.com>
-Cc: linux-assembly@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: Vadiraj C S <vadiraj@mail.cyberneme.com>, linux-assembly@vger.kernel.org, linux-assembly@mlists.in-berlin.de
 
-hum, as a float ar as an integer?
-
-i don't have much time to take care of all cases, here is the basic:
-
-64bits integer not signed:
-you must add the lower 32 bits, take care of the carry, add this to the 
-upper 32 bits and add then the upper 32 bits. (but you may loose the 
-upper carry...)
-something like this:
-
-;add 64 bits eax(upper 32bits)ebx(lower 32bits)
-;to 64 bits ecx(upper) edx(lower)
-add edx,ebx      ;add the lower 32 bits
-jnc no_lowcarry      : if no carry, just add the upper 32bits
-    inc ecx            ;if carry, increments the upper 32bits
-no_lowcarry:
-add ecx,eax   ;add the upper 32bits
-
-jnc no_upcarry
-    ;error: this would result to a 65 bits number (too big to stands in 
-a 64 bits number)
-    ;handle it here
-no_upcarry:
-
-Fred
-
-
-Vadiraj C S wrote:
-
->  Hello Everyone..
+On Thursday 27 November 2003 07:17, Vadiraj C S wrote:
+>   Hello Everyone..
 >
->   I'm a newbie. Has any one worked on adding a large value in assembly. I mean
-> a value which is larger than 32 bit. How is this mathematics taken care...
->
->
->
->
->
->  
->
+>    I'm a newbie. Has any one worked on adding a large value in
+> assembly. I mean a value which is larger than 32 bit. How is this
+> mathematics taken care...
 
+example from 'lib4th', adding two counted (by l.s. cell value) unlimited 
+size integers (re http://www.lxhp.in-berlin.de/lhpf8.html ).
+
+hp
+
+--------------
+counted integer representation:
+	l.s.cell [ count ][ cell-1 ] ... [ celll-n ]
+	  EDI--^  EAX [ .. memory             ]
+	  tos --^    n     (n) cells           ^-- m.s. cell
+
+'cell' is a 32-bit item in memory.
+2-s complement representation for -ve values.
+
+memory arrangement as w. the (lib4th) Forth data stack, pointed to by reg 
+EDI, 'push' towards _higher_ addresses; 'top' item also in EAX.
+'tos' for 'top of stack', strikt 'little endian' byte order storage.
+
+addition: (nasm syntax):
+
+nadd:
+	call nnorm        ; assure equal cells' count
+                               ; by signed extending the 'shorter' item
+        mov ecx,eax     ; counter, n cells (count of 32bit items)
+        neg eax            ; disp to 2nd oprd
+        push ecx           ; save count
+        push esi            ;      & reg
+        lea esi,[edi+eax*4] ; m.s. cell 1st oprnd
+        lea edi,[esi+eax*4-4] :    ... 2nd
+        push esi            ; save ptr to result 'tos'
+        or eax,eax         ; clr initial carry
+.l:
+        mov eax,[edi]	; 2nd
+        adc eax,[esi]	; 1st
+        mov [edi],eax	; sum
+        lea edi,[edi+4]	; 'lea' and 'dec' 
+        lea esi,[esi+4]     ;     preserve the carry flag
+        dec ecx		; count cells size of int's
+        jg .l
+        pop edi            ; new 'tos' ptr
+        pop esi            ; saved reg
+        pop eax           ; count item of sum integer
+        lea edi,[edi+4]   ; drop count item of 1st operand
+        ret
+
+above code requires items of equal size. the original 'nnorm' routine  is 
+too complicated for an introductory example - it runs some other tests 
+and modifies the int's for the shortest pair without loss of praecision.
+
+-----------------
+mail to 'hp': - lx  at lxhp : in-berlin : de -
+-----------------
 
