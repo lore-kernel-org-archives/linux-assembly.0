@@ -1,40 +1,49 @@
-From: Rick Hohensee <humbubba@smarty.smart.net>
+From: Maciej Hrebien <m_hrebien@wp.pl>
 Subject: Re: gas jump
-Date: Sun, 31 Aug 2003 23:42:17 -0400 (EDT)
+Date: Mon, 01 Sep 2003 10:10:17 +0200
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <200309010342.XAA08677@smarty.smart.net>
-References: <3F51C230.D94AF7EC@wp.pl>
+Message-ID: <3F52FEE9.220376C1@wp.pl>
+References: <200308311206.37056.wklux@yahoo.co.uk>
+Reply-To: m_hrebien@wp.pl
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <3F51C230.D94AF7EC@wp.pl> from "Maciej Hrebien" at Aug 31, 2003 11:38:56 AM
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: m_hrebien@wp.pl
-Cc: linux-assembly@vger.kernel.org
+To: linux-assembly@vger.kernel.org
 
-BOO!
+"peter w krause (by way of peter w krause )" wrote:
+> 
+> Fekete Gabor am Samstag, 30. August 2003 23:46:
+> > hi
+> >
+> > i want to make a relative jump.
+> > i tried it with "jmp 0x09" and expected it to
+> 
+> the actual displacement is not an argument to <jmp>
+> 
+> > jump to the address that comes 9 bytes after
+> > this "jmp".
+> > is it correct?
+> 
+> no.
+> 
+> > i'm asking because when I examined (x/bx) the code with
+> > gdb it didn't really show any bytes with value 0x09 when
+> > looking at this jump instruction.
+> 
+> should copile a branch to address stored at location 0x09
+> 
+> correct code would be:
+>                 jmp 1f
+>         ...
+> 1f:
+^^^^^^
 
-Please do tell davem to ban this email addy from linux-kernel. And this
-list if he's so inclined. I just paid a fat old bill to get my old ISP
-back because they are a Slackware shop, and not likely to be
-Transmicrosofties like Torvalds and The Worms From Red Hat such as davem.
+It's "one forward", so the label should be named just "1" without the
+"f". Don't you think? The semantics for such local symbols is N: where N
+is any digit.
 
-Meanwhile, the language that obsoletes C has produced some new stuff in 
-
-ftp://ftp.gwdg.de/linux/clienux/interim/forSomos.tgz
-
-and Forreal.tgz.
-
-Rick Hohensee
-
-:; cLIeNUX /dev/tty8  21:29:26   /
-:;d -d */
-Ha3sm/       configure/   floppy/      mount/       suite/
-blas/        dev/         guest/       owner/       temp/
-boot/        device/      help/        source/      vche-1.6.3/
-command/     enth04/      log/         subroutine/
-:; cLIeNUX /dev/tty8  22:54:29   /
-:;
-
+-- 
+Maciej Hrebien
 
