@@ -2,7 +2,7 @@ From: QUASAR <quasar2@o2.pl>
 Subject: GTK with asm
 Date: Tue, 2 Jul 2002 21:56:30 +0200
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <183380616.20020702215630@quasar.prv.pl>
+Message-ID: <aft15k$e6j$2@main.gmane.org>
 Reply-To: QUASAR <quasar@quasar.prv.pl>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
