@@ -1,43 +1,24 @@
 From: "ssams" <ssams@telkom.net>
-Subject: print_int
-Date: Wed, 08 May 2002 14:10:32 +0700
+Subject: GNU assembly tools
+Date: Wed, 08 May 2002 14:18:10 +0700
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <web-10630639@m1.plasa.com>
+Message-ID: <web-10633760@m1.plasa.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-assembly-owner@vger.kernel.org>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset="iso-8859-1"
 To: linux-assembly@vger.kernel.org
 
-i have code for printing integer, but no output i get.
-can anybody help me..?
+1.I=E1m really new for assembly programming. & i started learn
+with linux assembly especially GNU assembly. Hi every body
+point me please what tool must i get for learning, and
+where..?
+2. when, how and why we use library for coding...?
 
-.data
-angka:
-	.byte 0x32
-.text
-.globl  mulai
-mulai:
-	movl $angka,%eax
-	movb $10,%dh
-ulang:
-	xorl %ecx,%ecx
-	div  %dh
-	pushl %ecx
-	inc   %edx
-	cmp   $0,%eax
-	jne   ulang
-
-cetak:
-	popl %ecx
-	movl  %eax,%ecx
-	addl $0x30,%ecx
-	movl  $4,%eax
-	movl  $1,%ebx
-	movl  $3,%edx
-	int   $0x80
-	
-	movl  $1,%eax
-	int  $0x80 
-
+help me pleaaasseeeee!!!!!:)
+-
+To unsubscribe from this list: send the line "unsubscribe linux-assembl=
+y" in
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
