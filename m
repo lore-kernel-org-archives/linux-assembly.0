@@ -1,29 +1,45 @@
-From: "Johann 'Myrkraverk' Oskarsson" <myrkraverk@users.sourceforget.net>
-Subject: Re: how can i compile C code for m68000 with gcc
-Date: Thu, 24 Mar 2005 19:41:51 +0000
-Message-ID: <m33bukn85c.fsf@jin.myrkraverk.com>
-References: <cb3a16fe05032411094a21d73e@mail.gmail.com>
+From: "J." <mailing-lists@xs4all.nl>
+Subject: Unable to access memory address.
+Date: Fri, 25 Mar 2005 00:08:51 +0100 (CET)
+Message-ID: <Pine.LNX.4.21.0503242354490.1652-100000@hestia>
+Reply-To: linux-assembly@vger.kernel.org
 Mime-Version: 1.0
-In-Reply-To: <cb3a16fe05032411094a21d73e@mail.gmail.com> (ahmet fazil say's
- message of "Thu, 24 Mar 2005 21:09:17 +0200")
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: ahmet fazil say <ahmetfazil@gmail.com>
-Cc: linux-assembly@vger.kernel.org
+To: linux-assembly@vger.kernel.org
 
-ahmet fazil say <ahmetfazil@gmail.com> writes:
+Thursday, March 24 23:54:49
 
-> Hi,
-> I am trying to compile C code for m680x0, but i can't.
-> i am using my P4 1.6ghz processor, gcc version 3.3.5 and using Debian Linux 3.
+Hello,
 
-You need a cross compiler, try to google for m68k cross compiler or
-something.
+I am totally new to asm and have a question. I trying the following
+nasm program from the document http://www.leto.net/writing/nasm.txt . 
 
-Johann
+section .text
+ global main
 
--- 
-This line is left blank intentionally
+main:
+ pop     ebx
+ dec     ebx
+ pop     ebp
+ pop     ebp
+
+When I try to execute it this is what happends.
+~: ./program 12 7
+Illegal instruction
+
+Some searches on the Internet the only clou's turned up are type of `howto
+bufferoverflow' ... Hmmzz.. :( So I decided to use GDB. 
+
+The debugger says:
+Cannot access memory at address 0x6d6f682f
+
+What am I doing wrong and how do I make sure that I use the right memory
+addresses ?
+
+Thanks a lot..
+
+J.
 
