@@ -1,82 +1,86 @@
-From: ram <ram@curvesoft.com>
-Subject: Re: GRUB sample kernel question
-Date: Sat, 01 Nov 2003 14:36:01 -0800
+From: "Jason Roberts" <v3ct0r99@hotmail.com>
+Subject: appending \n using registers
+Date: Sun, 02 Nov 2003 02:12:39 +0000
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <3FA43551.1020806@curvesoft.com>
-References: <Law9-F40TZiqpJjmH4P000039ed@hotmail.com> <oprxh599q8b2epmx@localhost> <3FA3E836.4070709@curvesoft.com> <200311012224.25240.DieJaenickes@t-online.de>
+Message-ID: <Law9-F53io7W2bLeb1X0000f7f4@hotmail.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <200311012224.25240.DieJaenickes@t-online.de>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"; format="flowed"
-To: =?ISO-8859-1?Q?Alexander_J=E4nicke?= <DieJaenickes@t-online.de>
-Cc: linux-assembly@vger.kernel.org
+Content-Type: text/plain; format=flowed; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: linux-assembly@vger.kernel.org
 
-Alexander J=E4nicke wrote:
+Hi all---
+I have this problem where I want to append a newline to  a string.
+I implemented a stack version and it works fine-- just push the \n 
+sequence,push the string
+and pass off to kernel write function. Now I want to do the same thing but 
+through regs--
+not working.
+Also a concern of mine is the need to specify a 16 bit reg destination 
+operand for a 2 byte move.
+Obviously, using mov eax,src implies a 4 byte move -- is there any way to 
+'force' a 1 or 2 byte move
+into a 32-bit reg. I just want my code to look cleaner and avoid mixing 
+32-bit and 16-bit regs.
+Thanks for any help.
+later ,
+Paul
 
->Am Samstag, 1. November 2003 18:07 schrieb ram:
-> =20
->
->>Hi,
->>
->>I was looking at the toy kernel in the grub distribution (multiboot.h=
-,
->>kernel.c, boot.S
->>in the 'docs' subdirectory) and noticed boot.S starts out like this:
->>
->>    .globl    start, _start
->>start:
->>_start:
->>    jmp    multiboot_entry
->>    ....
->>multiboot_entry:
->>
->>I'm wondering why this jump is needed; couldn't the start/_start labe=
-ls
->>simply have
->>been placed adjacent to the multiboot_entry label thereby avoiding th=
-e
->>jump ?
->>
->>Thanks.
->>
->>Ram
->>   =20
->>
->
->
->No, this jump is necessary for making sure that the cs register is ini=
-tialised=20
->correctly. Every BIOS loads the bootloader to physical address 0x07c00=
-=2E=20
->Normally cs=3D0 and ip=3D0x7c00, but to be on the safe side, you shoul=
-d make a=20
->far-jump. That's why code in most bootloaders begins with a=20
->jmp 0x0000:StartAddr or jmp 0x07c0:StartAddr, dependent on whether the=
-=20
->location counter started at 0x0000 or 0x07c0.
->If you are interested in os development, have a look at=20
->http://www.nondot.org/sabre/os/articles
->
->Alex
->-
->To unsubscribe from this list: send the line "unsubscribe linux-assemb=
-ly" in
->the body of a message to majordomo@vger.kernel.org
->More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> =20
->
-Thanks for the response but I'm still a little confused: my impression=20
-is that this
-code is not a bootloader but a sample 32-bit OS loaded by GRUB, so GRUB=
- has
-already switched to protected mode when this code starts to execute ?
 
-Ram
 
--
-To unsubscribe from this list: send the line "unsubscribe linux-assembl=
-y" in
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+
+
+
+section .data
+
+tr         db "96"
+
+section .text
+
+global _start
+
+_start:
+         ;output '69' with a \n
+
+         ;stack method  -- works
+         mov dx,[tr]
+         xchg dh,dl      ; swap
+         mov edi,0x0a0d00
+         push edi            ;
+         push dx
+         mov  ecx,esp     ;buffer
+         mov  edx,5       ;length of buffer
+         mov  eax,4        ;sys_write
+         mov  ebx,1        ;file descriptor
+         int  0x80
+
+
+
+  ;register method -- fails
+         mov  dx,[tr]
+         xchg dh,dl      ; swap
+         mov  ecx,edx      ;buffer
+         mov  edx,2        ;length of buffer
+    mov  eax,4        ;sys_write
+         mov  ebx,1        ;file descriptor
+         int  0x80
+
+         mov  edi,0x0a0d00
+         mov  ecx,edx      ;buffer
+         mov  edx,2        ;length of buffer
+    mov  eax,4        ;sys_write
+         mov  ebx,1        ;file descriptor
+         int  0x80
+
+exit:
+
+  mov ebx,eax
+  mov eax,1
+  int 0x80
+
+_________________________________________________________________
+Concerned that messages may bounce because your Hotmail account has exceeded 
+its 2MB storage limit? Get Hotmail Extra Storage!         
+http://join.msn.com/?PAGE=features/es
+
