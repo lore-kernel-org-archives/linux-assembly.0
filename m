@@ -1,41 +1,70 @@
-From: hp <lx@lxhp.in-berlin.de>
-Subject: Re: bios interuppts
-Date: Wed, 5 Mar 2003 20:54:35 +0000
+From: dAvId KeDrOsKy <davidkedrosky@rogers.com>
+Subject: Mixing C and assembly
+Date: Wed, 5 Mar 2003 23:50:00 -0500
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <200303052103.h25L3Ffl006713@hirsch.in-berlin.de>
-References: <20030304120742.6160.qmail@webmail7.rediffmail.com> <200303050705.h2575frL010363@hirsch.in-berlin.de> <15974.21282.393278.25969@eidolon.muppetlabs.com>
+Message-ID: <200303052350.00680.davidkedrosky@rogers.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <15974.21282.393278.25969@eidolon.muppetlabs.com>
+Content-Disposition: inline
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
-To: Brian Raiter <breadbox@muppetlabs.com>, hp <lx@lxhp.in-berlin.de>
-Cc: linux-assembly@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: Linux Assembly Programming List <linux-assembly@vger.kernel.org>
 
-indeed. I'm very disappointed...
-<ff> doesn't work. nowhere, tried lx console, eterm, rxvt, konsole(kde)=
-, xterm
+Hello, 
 
-Brian Raiter am Mittwoch, 5. M=E4rz 2003 19:42:
-> > that it clears the screen or, sends a form feed if output is not a
-> > video display.
->
-> I agree that it *should*. However, FF does not clear the screen in th=
-e
-> Linux console, or in any of the xterm programs that I tested it with.
-> That makes it pretty unportable in my book, at least in the context o=
-f
-> a linux-based mailing list.
->
-> b
+Here's what most likely will turn out to be an easy answer to this newbie 
+question.
 
---
-Linux,Assembly,Forth: http://www.lxhp.in-berlin.de/index-lx.shtml en/de
-  pse, reply to << lx -at- lxhp -dot- in-berlin -dot- de >>
+I am trying to get some code running where I am using C and assembly.  The 
+just of it is the C program asks the user for an integer, I then pass the 
+integer to the assembly function and try to get it to print the integer to 
+stdout.
 
--
-To unsubscribe from this list: send the line "unsubscribe linux-assembl=
-y" in
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+The error I am getting when I try to run the program in KDevelop (which uses 
+gcc) is:
+main.c: undefined reference to `asm_func' 
+
+----- C function (main.c) --------
+#include <stdio.h>
+
+// prototypes
+extern void asm_func (int) __attribute__ ((cdecl));
+
+int main(void)
+{
+    int n;
+    
+    printf ("Enter an integer 'n': ");
+    scanf ("%d", &n);
+
+    asm_func (n);
+
+  return (0);
+}
+
+------ Assembly function (asm_func.asm) -------
+;; Macro file
+%include        "Io.mac"   	;; where the PutInt function comes from
+
+section         .stack  0x100
+section         .model  small
+
+section         .text
+
+global _asm_func
+
+_asm_func:
+
+enter   4, 0			;; 4 so that the stack can accomadate the integer 'n'
+
+mov     ax, [esp-4]	;; this is where the integer should reside on the stack
+PutInt  ax			;; prints the value of ax to stdout
+
+leave
+ret
+
+
+Any suggestions/comments would be great.
+
+Dave
