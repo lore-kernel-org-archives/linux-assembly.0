@@ -1,38 +1,53 @@
-From: h-peter recktenwald <hp@lxhp.in-berlin.de>
+From: Jack Dennon <jdennon@seasurf.net>
 Subject: Re: Nasm v/s Gas
-Date: Tue, 3 Dec 2002 18:57:32 +0000
+Date: Tue, 03 Dec 2002 12:21:59 -0800
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <200212031913.gB3JD3QF028563@hirsch.in-berlin.de>
+Message-ID: <3DED1267.D7854F73@seasurf.net>
 References: <20021203120622.54680.qmail@web41113.mail.yahoo.com>
+Reply-To: jdennon@seasurf.net
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <20021203120622.54680.qmail@web41113.mail.yahoo.com>
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: ruxyz@yahoo.com, Assembly Linux <linux-assembly@vger.kernel.org>
+To: ruxyz@yahoo.com
+Cc: Assembly Linux <linux-assembly@vger.kernel.org>
 
-On Tuesday 03 December 2002 12:06, Anticipating a Reply wrote:
+I like gas, but I will listen, rather than
+answer. Are you trying to start a fight?
+
+
+Anticipating a Reply wrote:
+
+> Hi All ,
+>
+>    I'am a Assembly learner , working
+> on Linux Platform .
+>
+>    I was not able to decide whether I should
+> learn assembly programming using NASM or
+> GNU-As  .
+>
+>    As Linux Inline assembly accepts 'gas'
+> syntax , I would like to know which of
+> the two to use .
 >
 >    So I would like to know what are the
 > advantages and disadvantages involved in
 > using NASM v/s GNU-As ?
-
-AS, despite it's funny 'syntax`, is reliable(!) and fast and present in 
-(almost) any Linux system.
-
-
+>
+>    Thanks in Advance .
+>
+> Bye,
+> Sarvesh
+>
 > ________________________________________________________________________
 > Missed your favourite TV serial last night? Try the new, Yahoo! TV.
 >        visit http://in.tv.yahoo.com
+> -
+> To unsubscribe from this list: send the line "unsubscribe linux-assembly" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
 
-(you might get filtered w. that sort of 'footers'...)
 
-
-
-best
-	hp
-
--- 
-Linux,Assembly,Forth: http://www.lxhp.in-berlin.de/index-lx.shtml en/de
 
