@@ -1,45 +1,34 @@
-From: "John Rodriguez" <jr534@columbia.edu>
-Subject: RE: sparc assembly mnemonic
-Date: Mon, 21 Jun 2004 18:00:48 -0400
+From: kt <kt1023@comcast.net>
+Subject: Where to find register content after exception ?
+Date: Sat, 10 Jul 2004 14:45:15 -0400
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <000801c457db$36172f80$310d3b80@mrl.cs.columbia.edu>
-References: <Pine.LNX.4.58.0406211231500.25030@ns.isi.ulatina.ac.cr>
+Message-ID: <40F0393B.104@comcast.net>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <Pine.LNX.4.58.0406211231500.25030@ns.isi.ulatina.ac.cr>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: 'Fabio Miranda Hamburger' <fabmirha@ns.isi.ulatina.ac.cr>, linux-assembly@vger.kernel.org
-
-Funny, this looks like the same code used to exploit a linux kernel bug.
-See http://linuxreviews.org/news/2004-06-11_kernel_crash/index.html for
-details.  Hopefully, no malice is intended by this posting.
-
------Original Message-----
-From: linux-assembly-owner@vger.kernel.org
-[mailto:linux-assembly-owner@vger.kernel.org] On Behalf Of Fabio Miranda
-Hamburger
-Sent: Monday, June 21, 2004 2:34 PM
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
 To: linux-assembly@vger.kernel.org
-Subject: sparc assembly mnemonic
-
-what are the sparc assembly  equivalent of the following instructions:
-
-    __asm__ __volatile__ ("fsave %0\n" : : "m"(fpubuf));
-    __asm__ __volatile__ ("frstor %0\n" : : "m"(fpubuf));
 
 
-thanks,
+Hi,
 
----
-Fabio Andres Miranda
-Ingenieria de sistemas informaticos
-Universidad Latina - Costa Rica
+I would like to get hold of the machine state after my user space 
+exception handler has been invoked by the kernel.
+I wonder whether this information is passed by the  third argument if 
+this type of handler :
 
--
-To unsubscribe from this list: send the line "unsubscribe
-linux-assembly" in
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+void (*sa_sigaction)(int, siginfo_t *, void *);
 
+has been installed by sigaction (man sigaction doesn't tell me this). 
+The other possibility could be that the kernel deposits this information 
+somewhere on the user stack before invoking the handler. I wonder 
+whether this is indeed the case and whether someone has already come up 
+with a nice solution to access this data if it is available in this 
+form. Since this is possibly system dependent, let me mention that I'm 
+using linux-ppc32 version 2.6.6 running on a PowerMacG5.
+
+
+Regards,
+
+K. Timmler
