@@ -1,8 +1,9 @@
 From: m_hrebien@wp.pl
-Subject: gas' nop(s)
-Date: Sun, 04 Aug 2002 22:28:47 +0200
+Subject: Re: gas' nop(s)
+Date: Mon, 05 Aug 2002 11:23:40 +0200
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <3D4D8E7F.8A393F62@wp.pl>
+Message-ID: <3D4E441C.DD954A05@wp.pl>
+References: <3D4D8E7F.8A393F62@wp.pl> <20020805091651.245c7d4b.jani@iv.ro>
 Reply-To: m_hrebien@wp.pl
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
@@ -11,20 +12,21 @@ List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 To: linux-assembly@vger.kernel.org
 
-Hi there,
+Jani Monoses wrote:
+> 
+> Hi
+> look at the .align directive in info gas
 
-did You noticed that GNU as adds some padding nop(s) like:
+.align, oh, of course!! :) Thank You!!
 
-lea (%esi),%esi
-mov %esi,%esi
-nop
+> there is no requirement for text to be packed at 4
 
-at the end of .text section? Is this really necessary? The .text section
-mustn't be padded to 4 like it seems to be or am i wrong? How can i
-avoid this? Is there any gas option to switch this off?
+I thought so. Thanks for Your confirmation!
 
-Sorry if this topic is doubled by me but i couldn't find something
-similar in the archive :(
+> but it is the default (or maybe even 16)
+
+16? Possibly it depends on system/compilation, don't You think so? On my
+gas it seems to be 4 as i wrote.
 
 -- 
 Maciej Hrebien
