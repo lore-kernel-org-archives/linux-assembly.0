@@ -1,28 +1,24 @@
-From: Patrick Alken <cosine@ellipse.mcs.drexel.edu>
-Subject: new version of ald
-Date: Sat, 29 Jun 2002 11:16:24 -0400 (EDT)
+From: h-peter recktenwald <*@lxhp.in-berlin.de>
+Subject: lib4th 1-1-2
+Date: Sun, 30 Jun 2002 22:07:14 +0000
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <Pine.BSF.4.30.0206291109430.94769-100000@ellipse.mcs.drexel.edu>
+Message-ID: <20020630220714.40c93a2c.*@lxhp.in-berlin.de>
+Reply-To: news@lxhp.in-berlin.de
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: linux-assembly@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: phpr@snafu.de
+Cc: linux-assembly <linux-assembly@vger.kernel.org>, bj <bj@isv-gmbh.de>
 
-There is a new version of ald up at :
-http://ellipse.mcs.drexel.edu/ald.html
+L4 release:
 
-Release 0.1.3 contains support for mmx registers. You can use the
-"set step-display-mmxregs on" command to display mmx regs after single
-stepping. Or use "register -a" to list all registers, including mmx.
+	http://www.lxhp.in-berlin.de/lhpf8.html		(en)
+	http://www.lxhp.in-berlin.de/lhpf8d.html	(de)
+new:
+	http://www.lxhp.in-berlin.de/lib4th-changes.txt.gz
 
-One caveat: currently ald does not have the ability to modify the mmx
-regs. There is no portable way to store 64 bit integers in C as far as I
-know, so I'll need to spend more time thinking about how to do this. I
-hope this does not create any inconveniences.
-
-Enjoy and let me know of any bugs - cosine@ellipse.mcs.drexel.edu
-
-Patrick Alken
+regards,
+	hp
 
