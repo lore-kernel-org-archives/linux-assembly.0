@@ -1,183 +1,119 @@
 From: michael young <mhyoung@valdosta.edu>
 Subject: Re: DOS assembly questions?
-Date: Tue, 28 Oct 2003 17:11:58 -0500
+Date: Tue, 28 Oct 2003 17:19:20 -0500
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <3F9EE9AE.6090308@valdosta.edu>
-References: <OFC97235CC.44120BC0-ON48256DC9.00123CF7-48256DC9.001D21FD@LocalDomain>
+Message-ID: <3F9EEB68.9040309@valdosta.edu>
+References: <3F9473D9.8010304@valdosta.edu> <3F957562.7060302@valdosta.edu> <3F961EB4.BE9DB472@yahoo.co.uk> <3F980930.6080207@valdosta.edu> <3F995D8C.5BF018AE@yahoo.co.uk>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <OFC97235CC.44120BC0-ON48256DC9.00123CF7-48256DC9.001D21FD@LocalDomain>
+In-Reply-To: <3F995D8C.5BF018AE@yahoo.co.uk>
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: FernanBolando@astec-power.com
-Cc: linux-assembly@vger.kernel.org, linux-assembly-owner@vger.kernel.org
+To: willy meier <wklux@yahoo.co.uk>
+Cc: linux-assembly@vger.kernel.org, linux-assembly@mlists.in-berlin.de
 
-Thank you.
-I think I'm finally getting it.
-I really appreciate everyone's help.
+Hi willy,
+    I think, with help from you and everyone else
+on this list, I'm understanding where I'm going
+wrong. Many thanks for your help.
 
 Michael
 
-FernanBolando@astec-power.com wrote:
 
+
+willy meier wrote:
+
+>michael young wrote:
+>  
 >
+>>Hi willy,
+>>thank you for your response.
+>>a question below.
+>>
+>>willy meier wrote:
+>>
+>>    
+>>
+>>>michael young wrote:
+>>>
+>>>apparently, a common 'problem':
+>>>if ah:=9 and int 21 is supposed to send text,
+>>>the binary counter data can't appear visibly.
+>>>
+>>>
+>>>      [...]
+>>>
+>>>
+>>>      
+>>>
+>>>>START:
+>>>>
+>>>>
+>>>>        
+>>>>
+>>>  mov cx, 10  =>      mov cx,"9"
+>>>
+>>>
+>>>      
+>>>
+>>>> call myloop
+>>>>
+>>>>myloop:
+>>>> mov dx, cx
+>>>> mov ah, 9
+>>>> int 21H
+>>>> dec cx
+>>>>
+>>>>
+>>>>        
+>>>>
+>>>                      cmp cx,"0"
+>>>  jnz myloop  =>      jc myloop	(<----- false, use 'jnc')
+>>>
+>>>      
+>>>
+>>Here, wouldn't the 'dec' instruction set the 'ZF' if cx hit 0?
+>>    
+>>
 >
->Hi
+>right but, binary value 0 would (if the rsp. terminal permits) just be
+>the control code of <nul>. apparently (I know nothing about pc-dos
+>specifica), the int-routine requires a character code in <dx> thus you
+>either count and compare by chars codes or, add the byte value
+>48(decimal) to the counter value to sending the rsp char.
+>much simplified, useable only for single digits (characters).
 >
->excuse me for the formatting of this mail I have to using windows when at
->the office.
+>  
 >
->As stated before ds:dx should point to the message you are trying to
->display
->You should realize that the string "10" is composed of two ASCII characters
->which is 0x31 and 0x30.
+>>where am I going wrong on this?
+>>    
+>>
 >
->This code
+>correction: the added opr should read 'jnc myloop'.
+>loop terminates after cx was counted down to code("0")-1
+>(assuming that int 21 won't modify cx value)
 >
->mov dx, 10
->mov ah,9
->int 21h
+>did you forget the <ret> code after <call myloop>?
+>if no other code follows after <call myloop> you could either, use <jmp>
+>or, delete the call instr, otherwise, in your example, 'myloop' would be
+>run once more, before termination.
 >
->will display all characters at address ds:10 until it reaches '$'.
->when you decrement dx to 9 for the next loop it will display all the
->characters at
->address ds:09 until it reaches '$'. What you need is to convert the
->contents of cx to a string '10'.
->in the form
+>  
 >
->string db '10',10,13
+>>>      
+>>>
+>>>> mov dx, donemsg
+>>>>
+>>>>
+>>>>        
+>>>>
+>>>      [...]
+>>>      
+>>>
 >
->you can use something like this
->
->lea dx, string
->mov ah,9
->int 21h
->mov ah,4ch
->int 21h
->
->string      db 00
->dummy  db 10,13,'$'
->
->and simply put the ASCII into the memory address of string.
->
->Another problem that you will discover is that "0" uses only one byte,
->while "10"  uses two bytes, which can
->complicate  your number_to_string function, but can still be done with
->patience. If you only want to convert 0 - 9 to
->string you can simply add 0x30 to them and get an ASCII representation.
->
->since you are all doing this under DOS you can check this by running the
->debug program.
->
->I hope this helps,
->
->,Fernan
->
->
->
->
->
->                                                                           
->             michael young                                                 
->             <mhyoung@valdosta                                             
->             .edu>                                                      To 
->             Sent by:                  linux-assembly@vger.kernel.org      
->             linux-assembly-ow                                          cc 
->             ner@vger.kernel.o                                             
->             rg                                                    Subject 
->                                       Re: DOS assembly questions?         
->                                                                           
->             10/22/03 02:05 AM                                             
->                                                                           
->                                                                           
->                                                                           
->                                                                           
->
->
->
->
->Hello,
->     Thanks to everyone for responding.
->I'm sorry for not giving enough info.
->What I want to do is starting at 10 (or some number).
->1. print the number.
->2. dec the number.
->3. loop back to step 1.
->4. when number reaches 0 print "All done" (or something).
->5 end program
->
->my code for this is:
->
->BITS 16
->ORG 0x0100
->
->
->SEGMENT .text
->
->START:
->  mov cx, 10
->  call myloop
->
->myloop:
->  mov dx, cx
->  mov ah, 9
->  int 21H
->  dec cx
->  jnz myloop
->  mov dx, donemsg
->  mov ah, 9
->  int 21H
->  mov ah, 4CH
->  int 21H
->
->SEGMENT .data
->
->donemsg db "All done!", 13, 10, "$"
->
->
->########### end of program ################
->
->the output should be:
->10
->9
->8
->7
->6
->5
->4
->3
->2
->1
->All done!
->
->
->Yall say I can't print the numbers that way.
->And sure enough that does not work.
->How would yall suggest I go about this?
->Also, I does loop the correct number of times but,
-> it prints "All done!" after every iteration.
->Can you tell me why that is?
->Mr. Burt, don't worry about offending me.
->Tell me what I need to hear.
->A sharp knife cuts the quickest and hurts the least.
->Mr. Hyde, wonderful site. What does IIRC mean?
->Again, thank you to all of you for your responses and links.
->
->Michael
->
->BTW: i'm using nasm16 and I'm reading "Assembly Language Step-by-Step
->2ed." by Jeff Duntemann.
->            I'm in DOS now but hope to move to LINUX assembly some day.
->
->
->-
->To unsubscribe from this list: send the line "unsubscribe linux-assembly"
->in
->the body of a message to majordomo@vger.kernel.org
->More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
->
+>best,
+>       hp
 >
 >  
 >
