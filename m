@@ -1,84 +1,22 @@
-From: willy meier <wklux@yahoo.co.uk>
-Subject: Re: DOS assembly questions?
-Date: Fri, 24 Oct 2003 18:12:44 +0100
+From: Slack Traq <slacktraq@yahoo.com>
+Subject: RE: DOS Assembly Question
+Date: Fri, 24 Oct 2003 09:24:38 -0700 (PDT)
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <3F995D8C.5BF018AE@yahoo.co.uk>
-References: <3F9473D9.8010304@valdosta.edu> <3F957562.7060302@valdosta.edu> <3F961EB4.BE9DB472@yahoo.co.uk> <3F980930.6080207@valdosta.edu>
+Message-ID: <20031024162438.97906.qmail@web11410.mail.yahoo.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: michael young <mhyoung@valdosta.edu>
-Cc: linux-assembly@vger.kernel.org, linux-assembly@mlists.in-berlin.de
+Content-Transfer-Encoding: 7bit
+To: linux-assembly@vger.kernel.org
 
-michael young wrote:
-> 
-> Hi willy,
-> thank you for your response.
-> a question below.
-> 
-> willy meier wrote:
-> 
-> >michael young wrote:
-> >
-> >apparently, a common 'problem':
-> >if ah:=9 and int 21 is supposed to send text,
-> >the binary counter data can't appear visibly.
-> >
-> >
-> >       [...]
-> >
-> >
-> >>START:
-> >>
-> >>
-> >   mov cx, 10  =>      mov cx,"9"
-> >
-> >
-> >>  call myloop
-> >>
-> >>myloop:
-> >>  mov dx, cx
-> >>  mov ah, 9
-> >>  int 21H
-> >>  dec cx
-> >>
-> >>
-> >                       cmp cx,"0"
-> >   jnz myloop  =>      jc myloop	(<----- false, use 'jnc')
-> >
-> Here, wouldn't the 'dec' instruction set the 'ZF' if cx hit 0?
+Sorry if I appear as a jerk-off but this is not a
+Linux only assembly list????
+If don't, I'm in the wrong list.
+Regards,
+                                           Slack
 
-right but, binary value 0 would (if the rsp. terminal permits) just be
-the control code of <nul>. apparently (I know nothing about pc-dos
-specifica), the int-routine requires a character code in <dx> thus you
-either count and compare by chars codes or, add the byte value
-48(decimal) to the counter value to sending the rsp char.
-much simplified, useable only for single digits (characters).
-
-> where am I going wrong on this?
-
-correction: the added opr should read 'jnc myloop'.
-loop terminates after cx was counted down to code("0")-1
-(assuming that int 21 won't modify cx value)
-
-did you forget the <ret> code after <call myloop>?
-if no other code follows after <call myloop> you could either, use <jmp>
-or, delete the call instr, otherwise, in your example, 'myloop' would be
-run once more, before termination.
-
-> 
-> >
-> >
-> >>  mov dx, donemsg
-> >>
-> >>
-> >       [...]
-
-best,
-       hp
-
--- 
-Linux,Assembly,Forth: http://www.lxhp.in-berlin.de/index-lx.shtml
-  >> hp -at- lxhp -dot- in-berlin -dot- de <<
+__________________________________
+Do you Yahoo!?
+The New Yahoo! Shopping - with improved product search
+http://shopping.yahoo.com
