@@ -1,77 +1,120 @@
-From: "=?iso-8859-1?q?Rodrigo=20F.=20Baroni?=" <rodrigobaroni@yahoo.com.br>
+From: Jack Dennon <jdennon@seasurf.net>
 Subject: Re: int 16 ?
-Date: Sat, 15 Feb 2003 15:17:26 -0300 (ART)
+Date: Sat, 15 Feb 2003 13:36:34 -0800
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <20030215181726.56630.qmail@web11101.mail.yahoo.com>
-References: <3E4D4D4A.9D5A139@seasurf.net>
-Reply-To: rodrigobaroni@yahoo.com.br
+Message-ID: <3E4EB2E2.7DA23F1@seasurf.net>
+References: <20030215181726.56630.qmail@web11101.mail.yahoo.com>
+Reply-To: jdennon@seasurf.net
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: multipart/mixed; boundary="------------5371523B96CECBA198829884"
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <3E4D4D4A.9D5A139@seasurf.net>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
-To: jdennon@seasurf.net
+To: rodrigobaroni@yahoo.com.br
 Cc: linux-assembly@vger.kernel.org
 
- --- Jack Dennon <jdennon@seasurf.net> escreveu: >
-When the PC boots up, the BIOS sets up an interrupt
-> vector
-> table at 0000:0000 with int 0x16 pointing into the
-> BIOS keyboard
-> driver. Linux uses this same vector table to access
-> BIOS disk
-> routines that are used for booting the system. Linux
-> then sets up
-> its own interrupt vector table and switches into
-> protected mode.
-> None of the original BIOS interrupts are then
-> available, nor
-> are they needed. There are several ways to read a
-> single character
-> at a time. One of the easier ways is provided by the
-> curses
-> library. Get on Amazon and look at the programming
-> books
-> by Matthew & Stones, and maybe even by J. Dennon.
-
-    So the interrupt vector table created by linux is
-other, that access the hardware of the another way so
-(using for this others functions/drivers) ?
-
-    I'm a student that loves architeture of computer,
-assembly... , and I'm studing this topics at my
-univesity now - I would like to do a lot of programs
-to test and 'feel' the hardware and the intel
-processor (I did this some time ago, but in DOS), but
-using linux ...  There is some way to do this ? Like
-manipulate control registers, bios interrupts, and so
-on ? I had read "Linux Device Drivers", and some
-another stuff, but I would like to know more about,
-but in the raw mode - assembly, and if possible, in
-"binary" mode (100101) or using hexa characteres - I
-got this in DOS sometime ago (okay, I'm not crazy,
-just wanting feel what is really going happen).
-
-   Any knowlegde, docs, references about would be very
-appreciated.
+This is a multi-part message in MIME format.
+--------------5371523B96CECBA198829884
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 
 
-  Thanks a lot
-Rodrigo F. Baroni
 
-Computer Science Bach's Student
-Sao Paulo, Brazil
-  =20
+--------------5371523B96CECBA198829884
+Content-Type: text/plain; charset=us-ascii; name="sysread.txt"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline; filename="sysread.txt"
 
 
-_______________________________________________________________________
-Busca Yahoo!
-O servi=E7o de busca mais completo da Internet. O que voc=EA pensar o Y=
-ahoo! encontra.
-http://br.busca.yahoo.com/
--
-To unsubscribe from this list: send the line "unsubscribe linux-assembl=
-y" in
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Here is an assembly language routine to call
+the system read function via int 0x80:
+
+-------------------------------------------------
+#/* void asm_sysread(
+#	int filedescriptor,
+#	char *buffer,
+#	int buffer_length)
+#
+#	invoke syscall __NR_read = 3
+# */
+	.file	"asm_sysread.s"
+.text
+.global	asm_sysread
+.align	4
+SIZE	= 16
+BUFF	= 12
+FILE	=  8
+
+asm_sysread:
+	pushl	%ebp
+	movl	%esp,%ebp
+	movl	FILE(%ebp),%ebx	#file descriptor
+	movl	BUFF(%ebp),%ecx	#buffer fwa
+	movl	SIZE(%ebp),%edx	#buffer size
+	movl	$3,%eax		# __NR_read
+	int	$0x80
+	cmpl	$-126,%eax	#check return code
+	jbe	.L1		#if no error
+#
+	negl	%eax		#complement eax
+	movl	%eax,%ecx
+	movl	$-1,%eax	#on error, return -1
+.L1:		
+	movl	%ebp,%esp
+	popl	%ebp
+	ret
+	
+	.type asm_sysread,@function
+	.size asm_sysread,.-asm_sysread
+--------------------------------------------------------
+
+And here is a C program to call the above function:
+
+---------------------------------------------------------
+/* sysread.c: test the  read  system call
+ */
+#include <stdio.h>
+
+#define BUFSIZE 16
+extern void asm_sysread(int fd, char *buff, int bufsize);
+
+main()
+{
+	int i;
+	int fd = 0;		/* stdin */
+	char buff[BUFSIZE];	/* input buffer */
+	
+	for (i = 0; i < BUFSIZE; i++)
+		buff[i] = '\0';
+		
+	asm_sysread(fd,buff,1);	/* read one char */
+	
+	for (i = 0; i < BUFSIZE; i++)
+		printf("%02x ",buff[i]);
+		
+	printf("\n");
+}
+----------------------------------------------------------
+
+If you put these in separate files named, for example,
+asm_sysread.s and sysread.c, then you can compile,
+assemble, and link with the command
+
+	gcc -o sysread sysread.c asm_sysread.s
+	
+When called with the command
+
+	sysread
+
+it somewhat works, but it does not do what we want;
+the routine asm_sysread does not return after just
+one key has been pressed, it returns only after we
+hit [Enter]. So the question is, how do we modify
+this code to do exactly what we want: fetch the
+next keyboard entry and return immediately with it?
+
+Having stalled out on this, I use curses.
+
+
+
+--------------5371523B96CECBA198829884--
+
