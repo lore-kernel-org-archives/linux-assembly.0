@@ -1,56 +1,29 @@
-From: Robert Plantz <plantz@sonoma.edu>
+From: Scott Lanning <slanning@theworld.com>
 Subject: Re: looping_code
-Date: Sat, 31 Aug 2002 10:10:02 -0700
+Date: Sat, 31 Aug 2002 13:36:50 -0400
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <7D0EEAE2-BD04-11D6-B059-003065A88832@sonoma.edu>
-References: <3D70E61F.39C1CA6B@wp.pl>
-Mime-Version: 1.0 (Apple Message framework v482)
-Content-Transfer-Encoding: 7bit
+Message-ID: <Pine.SGI.4.40.0208311331380.81531310-100000@shell01.TheWorld.com>
+References: <189BA622-BCF3-11D6-B94A-003065A88832@sonoma.edu>
+Mime-Version: 1.0
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <3D70E61F.39C1CA6B@wp.pl>
+In-Reply-To: <189BA622-BCF3-11D6-B94A-003065A88832@sonoma.edu>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: m_hrebien@wp.pl
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Robert Plantz <plantz@sonoma.edu>
 Cc: linux-assembly@vger.kernel.org
 
-On Saturday, August 31, 2002, at 08:51  AM, Maciej Hrebien wrote:
-
->> On Mon, 26 Aug 2002, ssams wrote:
->>> .data
->>> msg: .byte 65,10
->>>
->>> .text
->>>    .globl mulai
->>> mulai:
->>>     mov $10,%edx
->>>
->>> ulang:
->>>   mov $4,%eax
->>>   mov $1,%ebx
->>>   mov $msg,%ecx
+On Sat, 31 Aug 2002, Robert Plantz wrote:
+> On Friday, August 30, 2002, at 11:17  PM, Scott Lanning wrote:
+> > On Mon, 26 Aug 2002, ssams wrote:
+> >>   mov $msg,%ecx
+> >
+> > This moves the value at 'msg'
+> > rather than a pointer to 'msg'.
 >
-> "mov $msg,%ecx" and "lea msg,%ecx" does the same thing in this example -
-> moves ptr to 'msg' to the ecx register. The only difference is that the
-> first one is coded one byte shorter.
->
+> Sorry, but the gas assembler *will* treat the address
+> as an immediate. Proof:
 
-which can be seen if you do:
-mov $msg,%ecx
-leal msg,%edx
-
-and look in the debugger ---
-(gdb) i r
-eax            0x4      4
-ecx            0x80494c8        134517960
-edx            0x80494c8        134517960
-ebx            0x1      1
-
-Furthermore, if you look at the listing --
-   12 000f B9000000      mov $msg,%ecx
-   12      00
-   13 0014 8D150000      leal msg,%edx
-   13      0000
-
-
---- Bob Plantz
+Right, sorry. ssams, ignore that part.
+Fix the %ecx loop count.
 
