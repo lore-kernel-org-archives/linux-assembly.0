@@ -1,42 +1,39 @@
-From: Justinas <justinas@patikimi.lt>
+From: Brian Raiter <breadbox@muppetlabs.com>
 Subject: Re: Access to Program Counter in C
-Date: Fri, 19 Nov 2004 10:03:00 +0200
-Message-ID: <20041119100300.731ff5ed@biesas.adminas.net>
-References: <90db62064205.419d30cd@usc.edu>
+Date: Fri, 19 Nov 2004 03:30:54 -0800
+Message-ID: <16797.55662.422644.907944@eidolon.muppetlabs.com>
+References: <20041116163821.61564.qmail@web51902.mail.yahoo.com>
+	<419D9361.6070903@codito.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <90db62064205.419d30cd@usc.edu>
+In-Reply-To: <419D9361.6070903@codito.com>
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: siddharth vora <sjv@usc.edu>
-Cc: sandeep <sandeep@codito.com>, A M <alim1993@yahoo.com>, linux-c-programming@vger.kernel.org, linux-assembly@vger.kernel.org
+To: linux-assembly@vger.kernel.org
 
-On Thu, 18 Nov 2004 23:31:25 -0800
-siddharth vora <sjv@usc.edu> wrote:
+> A M wrote:
+>> Does anybody know how to access the address of the
+>> current executing instruction in C while the program
+>> is executing?
+> doing exactly as your words say, won't be possible (as
+> far as my limited experience with ix86 architecture goes),
+> but something nearabout can be achieved with little inline
+> assembly fragment.
 
-> 
-> Try :
-> 
->  Call ($+5)
->   pop ebp
+Actually, there's a gcc-specific extension that can do this, namely
+the unary && operator, which will return the address of a goto label:
 
-yes, something like that.
-In x86(DOS) when u do a call to near function(near, that means program don't change a code segment(CS) register) processot does something like this:
-	mov	sp,sp-2
-	mov	[sp],ip (next executable ip)
+int somefunction(void)
+{
+    /* ... */
+    void *pc = &&here;
+  here:
+    /* ... */
+}
 
-when call'e ret executed processor does:
-	mov	ip,[sp]
-	mov	sp,sp+2
+Of course you shouldn't use this unless you completely don't care
+about portability.
 
-so, you inscruction after call should be
-	call <some function>
-	mov  [ipdrr], sp-2
-you'll get the IP if this instuction;]
-I think u got the idea, look for call inctruction execution inside cpu for more details. I whote here with intension that cpu's word is 2B;]
-
-_
-Justinas Gulbinas
-justinas@patikimi.lt
+b
