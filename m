@@ -1,191 +1,51 @@
-From: =?iso-8859-1?q?Anticipating=20a=20Reply?= <ruxyz@yahoo.com>
-Subject: Re: Prblem with AT&T
-Date: Thu, 8 Aug 2002 10:28:09 +0100 (BST)
+From: h-peter recktenwald <*@lxhp.in-berlin.de>
+Subject: Re: gas' nop(s)
+Date: Thu, 8 Aug 2002 15:50:47 +0000
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <20020808092809.84870.qmail@web14502.mail.yahoo.com>
-References: <3D5225AD.3000302@eprocess.fr>
-Reply-To: ruxyz@yahoo.com
+Message-ID: <20020808155047.74fd863e.*@lxhp.in-berlin.de>
+References: <3D4D8E7F.8A393F62@wp.pl>
+	<20020805102040.7d12bd33.*@lxhp.in-berlin.de>
+	<3D4EBBA5.698AA14D@wp.pl>
+	<20020805222102.193b66fc.lx@lxhp.in-berlin.de>
+	<3D4F9750.328C98B1@wp.pl>
+	<20020807074136.0a1c2cf3.lx@lxhp.in-berlin.de>
+Reply-To: lx@lxhp.in-berlin.de
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <3D5225AD.3000302@eprocess.fr>
+In-Reply-To: <20020807074136.0a1c2cf3.lx@lxhp.in-berlin.de>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: fmarmond@eprocess.fr, linux-assembly@vger.kernel.org
+Content-Type: text/plain; charset="iso-8859-1"
+To: linux-assembly@vger.kernel.org
+Cc: m_hrebien@wp.pl
 
-Hi Frederic !
+On Wed, 7 Aug 2002 07:41:36 +0000
+h-peter recktenwald <lx@lxhp.in-berlin.de> wrote:
 
-  I'am fine but got up late this morning , 
-because of the beautiful dream .
+> On Tue, 06 Aug 2002 11:30:56 +0200
+> m_hrebien@wp.pl wrote:
+>=20
+> > > asm 4 bytes shorter w/o the ".global" statement, <jnc> then w. by=
+te disp.
+> >=20
+> > Yes, right! But it still adds "89F6" padding which stands for "mov
+> > %esi,%esi" & my question was how to avoid this.
+>=20
+> ok. you can not.
 
-  The code you sent was for 32 bit mode 
-and I have passed the address in the same 
-manner to "bp" . 
-
-   I think there is some other method to 
-pass the address to the " bp " for 16 
-bit mode which is OS independent  .
-
-   Hope some AT&T 16 bit specialist 
-will rescue me out of this problem .
-
-   Waiting for the AT&T Robinhood to 
-help me out .
-
-Harmony !
+just tried: apparently, the ".end" directive inhibits those alignemt by=
+tes,=20
+(if not a label at end of code).
 
 
-  
- --- Frederic Marmond <fmarmond@eprocess.fr> wrote: >
-hi!
-> 
-> how are you today?
-> ;-)
-> 
-> well, with your error code, I think that what i said
-> yesterday was right:
-> your syntax at
-> 
-> mymsg: 
-> 	.byte 13,10 
-> 	.ascii "Handling BIOS interrupts"
-> 
-> [...]
-> 
-> 	movw $mymsg,%bp 
-> 
-> But as I don't know about At&t syntax, here is an
-> example of good syntax
-> 
-> $ cat write.s
-> .data
-> hw:
-> 	.string "hello world\n"
-> .text
-> .globl main
-> main:
-> 	movl	$SYS_write,%eax
-> 	movl	$1,%ebx
-> 	movl	$hw,%ecx
-> 	movl	$12,%edx
-> 	int	$0x80
-> 	movl	$SYS_exit,%eax
-> 	xorl	%ebx,%ebx
-> 	int	$0x80
-> 	ret
-> 
-> 
-> For At&t / intel syntax, please refer to:
-> www.linuxassembly.org
-> or more precisely:
-> http://www.linuxassembly.org/linasm.html
-> 
-> 
-> happy new year!
-> 
-> ;-)
-> Fred
-> 
-> 
-> Anticipating a Reply wrote:
-> 
-> >Hi All !
-> >
-> >  I have got the below 16 bit code which is 
-> >in Intel Syntax . 
-> >
-> >----------- INTEL SYNTAX CODE
-> ------------------------
-> >
-> >entry start 
-> >
-> >start: 
-> >	mov ah,#0x03 ; read cursor position. 
-> >	xor bh,bh 
-> >	int 0x10 
-> >	mov cx,#26 ; length of our beautiful string. 
-> >	mov bx,#0x0007 ; page 0, attribute 7 (normal) 
-> >	mov bp,#mymsg 
-> >	mov ax,#0x1301 ; write string, move cursor 
-> >	int 0x10 
-> >	
-> >	loop1: jmp loop1 
-> >	
-> >mymsg: 
-> >	.byte 13,10 
-> >	.ascii "Handling BIOS interrupts"
-> >
-> >
-> >---------------------------------------------
-> >
-> >I am trying to write to the above code in 
-> >AT&T format as given below . 
-> >
-> > But I get the error in "ld" . 
-> >
-> >sect2.o: In function `_start':
-> >sect2.o(.text+0xd): relocation truncated to fit:
-> >R_386_16 data
-> >
-> >  
-> >-------------AT&T SYNTAX --------------------
-> >
-> >
-> >.code16
-> >
-> >.align 4
-> >
-> >.data
-> >
-> >mymsg: 
-> >	.byte 13,10 
-> >	.ascii "Handling BIOS interrupts"
-> >
-> >.text
-> >
-> >.globl _start 
-> >
-> >_start: 
-> >	movb $0x03,%ah   # read cursor position. 
-> >	xor  %bh,%bh
-> > 
-> >	int  $0x10 
-> >
-> >	movw $24,%cx     # length of our beautiful string.
-> 
-> >	movw $0x0007,%bx # page 0, attribute 7 (normal) 
-> >	movw $mymsg,%bp 
-> >	movw $0x1301,%ax # write string, move cursor 
-> >
-> >	int  $0x10 
-> >	
-> >loop1: 
-> >        jmp loop1 
-> >	
-> >----------------------------------------------
-> >
-> >   Please help me how to resolve this .
-> >
-> >Regards 
-> >
->
->________________________________________________________________________
-> >Want to sell your car? advertise on Yahoo Autos
-> Classifieds. It's Free!!
-> >       visit http://in.autos.yahoo.com
-> >-
-> >To unsubscribe from this list: send the line
-> "unsubscribe linux-assembly" in
-> >the body of a message to majordomo@vger.kernel.org
-> >More majordomo info at 
-> http://vger.kernel.org/majordomo-info.html
-> >
-> >  
-> >
-> 
-> 
->  
+hp
 
-________________________________________________________________________
-Want to sell your car? advertise on Yahoo Autos Classifieds. It's Free!!
-       visit http://in.autos.yahoo.com
+--=20
+Linux,Assembly,Forth: http://www.lxhp.in-berlin.de/index-lx.shtml en/de
+NO abusive=A0software=A0patents=A0http://petition.eurolinux.org/pr/pr17=
+=2Ehtml
+-
+To unsubscribe from this list: send the line "unsubscribe linux-assembl=
+y" in
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
