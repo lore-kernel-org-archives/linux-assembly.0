@@ -1,32 +1,20 @@
-From: =?iso-8859-1?q?Anticipating=20a=20Reply?= <ruxyz@yahoo.com>
-Subject: Regarding Linker (ld) option
-Date: Tue, 15 Apr 2003 14:50:50 +0100 (BST)
+From: "Guilherme Romao" <gui_slack@linuxmail.org>
+Subject: Make a Calculator! Help-me
+Date: Thu, 17 Apr 2003 14:11:44 +0800
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <20030415135050.27156.qmail@web41101.mail.yahoo.com>
-Reply-To: ruxyz@yahoo.com
+Message-ID: <20030417061144.6358.qmail@linuxmail.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
+Content-Disposition: inline
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Assembly Linux <linux-assembly@vger.kernel.org>
+To: linux-assembly@vger.kernel.org
 
-Hi all ,
+I am new in the language assembly and I would like to understand better on the recorders, I am trying to make a calculator that reads two numbers of the keyboard and later addition the two numbers.  Somebody could make this calculator and pass me the source.  So that I can to study.  Thank you!
+-- 
+______________________________________________
+http://www.linuxmail.org/
+Now with e-mail forwarding for only US$5.95/yr
 
-  Can anybody please let me know what is 
-the purpose of the "-u" or "-undefined"
-option for "ld" linker . 
-
-   After reading the man page , I could 
-not understand how to use it .
-
-   A small sample code demonstrating its
-use would be appreciated .
-
-   Thanks in advance .
-
-Regards !
-
-________________________________________________________________________
-Missed your favourite TV serial last night? Try the new, Yahoo! TV.
-       visit http://in.tv.yahoo.com
+Powered by Outblaze
