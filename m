@@ -1,22 +1,43 @@
-From: xlp <xlp@emtel.net.co>
-Subject: shellcode, offset, opcode
-Date: Fri, 19 Jul 2002 17:52:03 -0500
+From: h-peter recktenwald <lx@lxhp.in-berlin.de>
+Subject: Re: i386: far jumps
+Date: Fri, 19 Jul 2002 17:44:10 +0000
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <20020719175203.B421@nietzsche.metrotel.net.co>
+Message-ID: <20020719174410.7c8f0d1f.lx@lxhp.in-berlin.de>
+References: <1026786087.2055.99.camel@italia>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-assembly-owner@vger.kernel.org>
-Content-Disposition: inline
+In-Reply-To: <1026786087.2055.99.camel@italia>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: linux-assembly@vger.kernel.org
+Content-Type: text/plain; charset="iso-8859-1"
+To: Emanuele Altieri <ealtieri@hampshire.edu>
+Cc: linux-assembly@vger.kernel.org
 
-Hi assembly ppl. I want to understand What is the shellcode variable in a exploit code?, Why is it wrote in hexadecimal? What is it for?.
-What is "opcode" ?, What is the offset?, I am reading AoA for linux, What are the stage of a security hole developement? When should i use asm skills ?.
+On 15 Jul 2002 22:21:26 -0400
+Emanuele Altieri <ealtieri@hampshire.edu> wrote:
 
-PLEASE, dont suggest me to read "smashing the stack for fun and profit".
-I have several bof how-to, but, I want to understand the whole proccess from a computer science point of view, not a intruder one.
+> Greetings,
+>=20
+> I'm doing some experiments with far jumps to different code segments.
+> For example:
+>=20
+>    ljmp *%fs:hello
+>=20
+> I get a general protection error. I don't understand why. I believe i=
+t's
+> a notation error. Can anybody see it?
+>=20
+> I'm interested in this because I need the segment argument of ljmp to=
+ be
 
-thanks.
+	Linux?
 
-
+--=20
+Linux,Assembly,Forth: http://www.lxhp.in-berlin.de/index-lx.shtml en/de
+NO abusive=A0software=A0patents=A0http://petition.eurolinux.org/pr/pr17=
+=2Ehtml
+-
+To unsubscribe from this list: send the line "unsubscribe linux-assembl=
+y" in
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
