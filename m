@@ -1,101 +1,50 @@
-From: =?iso-8859-1?q?Anticipating=20a=20Reply?= <ruxyz@yahoo.com>
-Subject: Newbie doubts about stack !
-Date: Sun, 15 Sep 2002 11:47:51 +0100 (BST)
+From: Mateusz Srebrny <m.srebrny@students.mimuw.edu.pl>
+Subject: linking with ld
+Date: Sun, 15 Sep 2002 04:57:23 +0200
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <20020915104751.47329.qmail@web14507.mail.yahoo.com>
-Reply-To: ruxyz@yahoo.com
+Message-ID: <3D83F713.4860A455@students.mimuw.edu.pl>
+References: <4.3.2.7.2.20020914112556.00bdb340@mail.ciudad.com.ar> <20020914225123.48cbc74e.lx@lxhp.in-berlin.de>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Assembly Linux <linux-assembly@vger.kernel.org>
+To: linux-assembly@vger.kernel.org
 
+Hi,
 
-Hello All !
+I have question about ld.
+Precisely: 
+I have an ELF object (produced by nasm) defining global procedure named
+start.
+I want to link it with object made by 'gcc -c' on file loking like this:
 
-   I wrote the following C program and
-obtained its assembly version , using command :
+#include <stdio.h>
 
-  cc -S temp.c
+extern void start(void);
 
-< on an x-86 Linux machine >
-
-/* File Name - temp.c */
-
-void function(int a, int b, int c) {
-   char buffer[SIZE];  -------------------> SIZE=51 
-}
-
-void main() {
-  function(1,2,3);
+int main() {
+  start();
+  return 0;
 }
 
 
-The Assembly File is as below :-
+I tried 'ld main.o start.o -o main -lc'...
+it complained sth about not defining _start label, and then refused to
+execute main file (which was produced despite ld warnings)...
+
+I wanted to do it with ld, 'couse I thought that linker is to link
+things...
+Of course linking it with gcc works, but again I thought that compiler
+is to compile things to objects...
+
+and the info for ld doesn't offer help in the matter... (at least I
+don't see it there)
+
+I would be grateful for your help...
+	Mateusz Srebrny
+
+PS the question "why do I want to link a nasm object with a C one?" is
+very difficult to answer... i just have to do it...
 
 
-.file	"temp.c"
-	.version	"01.01"
-gcc2_compiled.:
-.text
-	.align 4
-.globl function
-	.type	 function,@function
-function:
-	pushl	%ebp
-	movl	%esp, %ebp
-	subl	$72, %esp -----------> Stack allocation
-	leave
-	ret
-.Lfe1:
-	.size	 function,.Lfe1-function
-	.align 4
-.globl main
-	.type	 main,@function
-main:
-	pushl	%ebp
-	movl	%esp, %ebp
-	subl	$8, %esp
-	subl	$4, %esp
-	pushl	$3
-	pushl	$2
-	pushl	$1
-	call	function
-	addl	$16, %esp
-	leave
-	ret
-.Lfe2:
-	.size	 main,.Lfe2-main
-	.ident	"GCC: (GNU) 2.96 20000731 (Red Hat Linux 7.1
-2.96-81)"
-
-
-In the function part of the assembly 
-file , I noticed that the depending on 
-the "SIZE" of the array , it allocates 
-memory on stack as shown in the below
-table .  
-
- Array Size       Actual stack allocation 
-
-    0  - 4     =    4 
-    5  - 16    =   24 
-    17 - 32    =   40 
-    33 - 48    =   56 
-    49 - 64    =   72
-
-Can anybody please explain me ,
-what is the reason behind this ?
-
-Why is it that only the required 
-amount of stack is not allocated ?
-
-
-Harmony !
-
-
-
-________________________________________________________________________
-Missed your favourite TV serial last night? Try the new, Yahoo! TV.
-       visit http://in.tv.yahoo.com
