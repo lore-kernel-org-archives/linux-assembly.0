@@ -1,140 +1,130 @@
 From: Frederic Marmond <fmarmond@eprocess.fr>
 Subject: Re: stack contents at function call
-Date: Fri, 05 Mar 2004 08:26:48 +0100
+Date: Fri, 05 Mar 2004 10:00:09 +0100
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <40482BB8.5040201@eprocess.fr>
-References: <20040301131824.02c597f0.vadiraj@mail.cyberneme.com>	<4042F610.9080307@eprocess.fr> <20040301141225.479aa4d5.vadiraj@mail.cyberneme.com> <40430572.1000702@eprocess.fr>
+Message-ID: <40484199.5040401@eprocess.fr>
+References: <20040301131824.02c597f0.vadiraj@mail.cyberneme.com>	<4042F610.9080307@eprocess.fr>	<20040301141225.479aa4d5.vadiraj@mail.cyberneme.com>	<40430572.1000702@eprocess.fr>	<40482BB8.5040201@eprocess.fr> <20040305135011.3ac14610.vadiraj@mail.cyberneme.com>
 Reply-To: fmarmond@eprocess.fr
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <40430572.1000702@eprocess.fr>
+In-Reply-To: <20040305135011.3ac14610.vadiraj@mail.cyberneme.com>
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: fmarmond@eprocess.fr
-Cc: Vadiraj C S <vadiraj@mail.cyberneme.com>, linux-assembly@vger.kernel.org
+To: Vadiraj C S <vadiraj@mail.cyberneme.com>, linux-assembly@vger.kernel.org
 
-Hi,
-Did you find the problem?
-I would appreciate feed-backs, as I don't see what may differ from intel 
-and gcc...
-If you find the explanation, it would be nice to share it!
-And if you didn't find, just send me the generated assembly (see at the 
-end of my last reply) I may be in some help...
+Vadiraj C S wrote:
+
+>  the displace which is given above is specific to gcc and in windows it would 
+>be something else, I dint get time to research on this much but the difference is
+>that, I had to change it 24, 28 and 32 to make it work on icc. 
+>
+> And yes this asm code is call from an insline asm itself the sequence of code before 
+>the call is this
+>
+>  asm volatile ("push %ebx") //which is the last parameter to Func_call
+>  asm volatile ("push %edx") // which is the middle one b
+>  asm volatile ("push %esi") // which is the address of a
+>  asm volatile ("call Func_call") ;
+>
+>
+> I'm sorry for the delay in response, I would appreciate if you can put some information
+>on this at your free time..
+>
+>
+>  
+>
+Hum, if you send your code parts to parts, it is a bit difficult to see 
+what you are doing...
+If I understand the (very few) parts you gave, the 4 bytes added by gcc 
+to stack are the 'Func_call'.
+You can check it be compiling with -save-temps and see the assembly 
+generated code.
+
+If you really want me to confirm, please, create a simple hello-world 
+that reproduce this behaviour, compil it with -save-temps option, and 
+send me both the .c and the .s files.
+Then, I think I would have enough data to tell you exactly what appens 
+(and how change it if you want the same code to work the same in windows 
+and linux)
 
 Fred
+(PS: and please, keep reply to the community, as your problem and its 
+solution may be usefull for somebody in the futur. Thanks)
 
-Frederic Marmond wrote:
 
-> Vadiraj C S wrote:
+
+
+Vadiraj C S wrote:
+
+> Mr Fred,
 >
->> Mr Fred
+>
+>  
+>
+>>Hi,
+>>Did you find the problem?
+>>I would appreciate feed-backs, as I don't see what may differ from intel 
+>>and gcc...
+>>    
 >>
->>  
+>
+>   Yes there is difference in the displacement from the ebp at call values 
+>in gcc and intel.
+>
+>
+>  
+>
+>>If you find the explanation, it would be nice to share it!
+>>And if you didn't find, just send me the generated assembly (see at the 
+>>end of my last reply) I may be in some help...
 >>
->>> Convention for C on x86 (I guess you are on this arch) is to pass 
->>> arguments to stack. So, if you respect this convention from 
->>> assembly, the sequence is the same.
->>>
->>>   
+>>    
 >>
->>   Yes I'm in x86 arch..
->>  
->>
->>>> Cos I noticed difference with gcc(GNU compiler) and icc (Intell 
->>>> compiler)
+>
+>
+>void Func_call(unsigned long *a, unsigned shor int b, unsigned short 
+>  
+>
+>>>>int c)
+>>>>{
 >>>>
+>>>>       asm volatile ("pushl %esi");
+>>>>       asm volatile ("pushl %edi");
+>>>>       asm volatile ("pushl %ebp");
+>>>>       asm volatile ("pushl %ebx");
 >>>>
->>>>     
->>>
->>> Can you give example? Be more precise...
->>>   
->>
->>
->>
->> void Func_call(unsigned long *a, unsigned shor int b, unsigned short 
->> int c)
->> {
->>
->>        asm volatile ("pushl %esi");
->>        asm volatile ("pushl %edi");
->>        asm volatile ("pushl %ebp");
->>        asm volatile ("pushl %ebx");
->>
->> This below code works different in gcc and in icc
->>    {
->>        asm volatile ("movl 28(%esp),%esi");  
->>        asm volatile ("movw 32(%esp),%dx");
->>
->>        asm volatile ("movl 36(%esp),%ebx");
->>
->>    }
->>     
->>  Thought  it should be, 16 bytes for the pushed values, and 4 bytes 
->> for return address
->> so 24th byte should be the pointer to the first parameter a, GCC 
->> points to the perfect with 28th being referrenced to the first 
->> parameter. How is this...
->>  
->>
-> I agree it seems strange.
-> But:
-> - can you give the entire function?
->    If you use any temporary data in your function, its memory will be 
-> reserved on the stack (and then, be inserted before your first "pushl 
-> %esi")
-> - can you create a helloworld.c that contains this function, called in 
-> the main, and compile it with the '--save-temps' option?
->    With gcc-3.x, it will create a helloworld.s file, that is the 
-> assembly generated file from your helloworld.c
->    We will see better what append
->
->>
->>
->> and icc (intell compiler) it is what we expect it to be. esi is 
->> having the b value...
->>
->> It was strange..
->>
->>
->>      asm volatile ("movl %esi,%ebp");
->>
->>       does ebp store any thing important, cos when  this statement is 
->> executed the parameter values get changed
->> while tracing from GDB. Please throw some light regarding ebp..
->>  
->>
-> The function of ebp is to keep track of the local data on stack.
-> Generaly, you set ebp to esp when entering the function, and use it to 
-> reference your local data.
-> Then, if you push/pop things (affect esp) the data will be always at 
-> the same place regarding ebp.
-> for exemple:
->    push %ebx
->    push %edx
->    call foo_function
->    ...
-> foo_function:
->    mov %esp,%ebp
->        4(%ebp)   => refer to pushed edx
->       4(%esp)    => refer to pushed edx
->    push   %eax
->        4(%ebp)     still refer to the pushed edx
->        4(%esp)   doesn't refer to pushed edx anymore
->
->> Thanks for the support Fred
->>  
->>
-> You're welcome, I'm at work and have nothing to do for now...
-> boring! ;)
->
-> Fred
->
->>
->>  
->>
+>>>>This below code works different in gcc and in icc
+>>>>   {
+>>>>       asm volatile ("movl 28(%esp),%esi");  
+>>>>       asm volatile ("movw 32(%esp),%dx");
+>>>>
+>>>>       asm volatile ("movl 36(%esp),%ebx");
+>>>>
+>>>>   }
+>>>>
+>>>>        
+>>>>
 >
 >
+>  the displace which is given above is specific to gcc and in windows it would 
+>be something else, I dint get time to research on this much but the difference is
+>that, I had to change it 24, 28 and 32 to make it work on icc. 
+>
+> And yes this asm code is call from an insline asm itself the sequence of code before 
+>the call is this
+>
+>  asm volatile ("push %ebx") //which is the last parameter to Func_call
+>  asm volatile ("push %edx") // which is the middle one b
+>  asm volatile ("push %esi") // which is the address of a
+>  asm volatile ("call Func_call") ;
+>
+>
+> I'm sorry for the delay in response, I would appreciate if you can put some information
+>on this at your free time..
+>
+>
+>  
 >
 
 
