@@ -1,34 +1,47 @@
-From: lx <lx@lxhp.in-berlin.de>
-Subject: Re: ald
-Date: Sun, 1 Sep 2002 00:18:10 +0000
+From: Maciej Hrebien <m_hrebien@wp.pl>
+Subject: Re: looping_code
+Date: Sun, 01 Sep 2002 11:21:36 +0200
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <20020901001810.2e3eb3a5.lx@lxhp.in-berlin.de>
-References: <Pine.LNX.4.10.10207121652080.5471-100000@newton.physics.drexel.edu>
-Reply-To: lx@lxhp.in-berlin.de
+Message-ID: <3D71DC20.A89B7F13@wp.pl>
+References: <7D0EEAE2-BD04-11D6-B059-003065A88832@sonoma.edu>
+Reply-To: m_hrebien@wp.pl
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <Pine.LNX.4.10.10207121652080.5471-100000@newton.physics.drexel.edu>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
-To: Patrick Alken <cosine@newton.physics.drexel.edu>
-Cc: linux-assembly@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: linux-assembly@vger.kernel.org
 
-On Fri, 12 Jul 2002 16:54:11 -0400 (EDT)
-Patrick Alken <cosine@newton.physics.drexel.edu> wrote:
+Robert Plantz wrote:
+> 
+> > "mov $msg,%ecx" and "lea msg,%ecx" does the same thing in this example -
+> > moves ptr to 'msg' to the ecx register. The only difference is that the
+> > first one is coded one byte shorter.
+> >
+> 
+> which can be seen if you do:
+> mov $msg,%ecx
+> leal msg,%edx
+> 
+> and look in the debugger ---
+> (gdb) i r
+> eax            0x4      4
+> ecx            0x80494c8        134517960
+> edx            0x80494c8        134517960
+> ebx            0x1      1
+> 
+> Furthermore, if you look at the listing --
+>    12 000f B9000000      mov $msg,%ecx
+>    12      00
+>    13 0014 8D150000      leal msg,%edx
+>    13      0000
 
-i'd forget:
+Yes, that's right. Sorry for the mess - (don't know why) i received Your
+"proof reply" just after i send my. In final we got two messages saying
+the same :)
 
-< reg eax 0xffff0000 >
-in unsigned pattern > 0x7fffffff m.s.bit appears always un-set.
+Regards,
 
-hp
+-- 
+Maciej Hrebien
 
---=20
-Linux,Assembly,Forth: http://www.lxhp.in-berlin.de/index-lx.shtml en/de
-    software=A0patents =A0http://petition.eurolinux.org/pr/pr17.html
--
-To unsubscribe from this list: send the line "unsubscribe linux-assembl=
-y" in
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
