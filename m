@@ -1,27 +1,30 @@
-From: Dragan Stancevic <visitor@xalien.org>
-Subject: Re: Domain name problems
-Date: Thu, 8 May 2003 15:17:06 -0700
+From: Geiregat Jonas <kemu@sdf-eu.org>
+Subject: question about variables
+Date: Thu, 15 May 2003 16:50:12 +0000
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <200305081517.06497.visitor@xalien.org>
-References: <Law10-F4jo7365ZGAub00009479@hotmail.com>
+Message-ID: <3EC3C544.8050307@sdf-eu.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <Law10-F4jo7365ZGAub00009479@hotmail.com>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: Joshua Hudson <joshudson@hotmail.com>, linux-assembly@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: linux-assembly@vger.kernel.org
 
-On Thursday 08 May 2003 14:57, Joshua Hudson wrote:
-> www.linuxassembly.org doesn't work (old)
->
-> cannot send mail to konst@linuxassembly.org
-> (this just started TODAY).
+Hey, I have 2question about linux assembly
+I have written a basic programme
+It's really simple I use the open, read and write syscall
+To open a file (/etc/passwd) read it and print it out to the screen.
+Now when reading the file I read it into a buffer declared like this 
+(using nasm)
+section .bss
+    buffer  resd 1
 
-PS: on the email part it seems that their nameservers are at it again. When I 
-try to send email to my self it tries to send mail to xalien but when it does 
-a lookup they come up with a server that has been gone for at least 3 years.
+so I reserve one double word of space. so that is 4bytes. /etc/passwd is 
+much bigger then that but still I see the whole file printed I find this 
+strange (I'm also not sure about the 1 behind resd I think it's stands 
+for reserve 1 doubleword of space)
 
--- 
-Peace can only come as a natural consequence
-of universal enlightenment. -Dr. Nikola Tesla
+My other question is how can I accept,  command line arguments in asm 
+using nasm
+Regards Jonas
+
