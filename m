@@ -1,45 +1,33 @@
-From: Robin Miyagi <penguin@dccnet.com>
-Subject: Re: code-need-to-correct
-Date: Thu, 19 Sep 2002 08:51:11 -0700
+From: Gagan Grewal <gagan_grewal@vsnl.net>
+Subject: RTFM and Yikes Too !!!
+Date: Thu, 19 Sep 2002 22:57:41 +0530
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <B0314398447@yoda.dccnet.com>
-References: <20020919145858.17433.qmail@web9806.mail.yahoo.com>
+Message-ID: <20020919171932Z271851-685+50612@vger.kernel.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7BIT
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <20020919145858.17433.qmail@web9806.mail.yahoo.com>
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 To: linux-assembly@vger.kernel.org
 
-I have been getting rather tired of being asked homework questions.  If there 
-is abundant info out there, I refer that person to this info.  This way they 
-learn to RTFM.
+Hi,
 
-On Thursday 19 September 2002 07:58, Doctor Owl wrote:
-> Do what thou wilt shall be the whole of the Law,
->
-> I'd just like to provide my support to anyone that feels the need to fly
-> into a fit of rage and abuse people who post stupid questions without any
-> independant thought or research into exactly what they're doing, and most
-> likely do not even know who or where they are.
->
-> Most of you are doing a stand-up job replying to these peoples requests,
-> but are you going to hold their hands forever?  It's not like there is a
-> lack of information about this stuff floating about the net.
->
-> Regards,
-> DoctorOwl
->
->
-> http://mobile.yahoo.com.au - Yahoo! Messenger for SMS
-> - Always be connected to your Messenger Friends
-> -
-> To unsubscribe from this list: send the line "unsubscribe linux-assembly"
-> in the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Well ... guys ... dunno if this query comes in at the right time or not,
+neither I am sure wether this is the right place too or not ... but I think
+it _is_ related to assembly programming.
 
+But ... definitely ... am looking for _pointers_ in the right direction.
+
+I read the TSI document describing the ELF32 format ... have been able
+to make out most of it ... like extracting sections and symbols info
+etc. out of an ELF file ... but I haven't completely understood the 
+Relocations.
+
+Does somebody know of some document or site that makes it a little simple
+for beginners like me to ... understand Relocations better ???
+
+I hope am not offending the Gurus :)
+
+Regards,
+Gags.
 -- 
-Robin Miyagi<penguin@dccnet.com>
-http://www.geocities.com/SiliconValley/Ridge/2544/asm/assembler.html
-The funny thing about brakes, is that when they break, they don't brake.
