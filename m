@@ -1,51 +1,43 @@
-From: h-peter recktenwald <lx@lxhp.in-berlin.de>
+From: mailing-lists@xs4all.nl
 Subject: Re: ----  COMPREHENSIVE DOCUMENTATION FOR A NEWBIE  ----
-Date: Tue, 2 Jul 2002 16:00:31 +0000
+Date: Tue, 2 Jul 2002 17:47:55 +0200 (CEST)
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <20020702160031.1c5502e6.lx@lxhp.in-berlin.de>
-References: <E18972FDE634D611A4670030847664620E25F9@AGROSERVER>
+Message-ID: <Pine.LNX.4.21.0207021742460.837-100000@hestia.rdrs.net>
+References: <Pine.LNX.4.44.0207011950310.18407-100000@zodiac.mimuw.edu.pl>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <E18972FDE634D611A4670030847664620E25F9@AGROSERVER>
+In-Reply-To: <Pine.LNX.4.44.0207011950310.18407-100000@zodiac.mimuw.edu.pl>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: linux-assembly@vger.kernel.org
 
-On Tue, 2 Jul 2002 15:37:27 +0300=20
-Staffan H=F6stman <staffan.hostman@AGROLINK.FI> wrote:
+On Mon, 1 Jul 2002, Stanislaw Findeisen wrote:
+> 
+> Hi, I'm _really_ new to the field, and need some _comprehensive_
+> documentation about things like:
+> 
+> - basic existing registers and their purposes,
+> 
+> - assembler instructions and their _exact_ semantics (like 'call', 'ret'
+> and so on).
+> 
+> Could anyone help?  I tried to find sth at linuxassembly.org, but all man
+> can get there is fifty tutorials about "hello world" and syscalls... I
+> don't want samples, just documentation!  :-)
+> 
+> Thanks !
+> 
+> 
+> - Stanislaw Findeisen
+>   http://rainbow.mimuw.edu.pl/~sf                 Christianity:  just Get Real!
 
-> =20
-> Yes, I agree with Konstantin. If you want some real documentation, do=
- a
-> search for Art of Assembly by Randal Hyde as mentioned earlier.
+Hello,
+I found the book `Linux Assembly Language Programming' from author: `Bob
+Neveln' ISBN: 0-13-087940-1 quite helpfull. It's from the open-source
+technology series from Prentice Hall PTR `www.phptr.com'.
 
-i'd never ever recommend #any# 2nd-ary source docs for the initial appr=
-oach=20
-to anything, not even to how to manage a cpu by programming...
+g00d 1uck,
 
-re
-	http://www.sandpile.org		dir of manufacturer information
-	http://www.google.com		...
+J.
 
-x86 cpu:
-	http://www.amd.com/
-	http://developer.intel.com/sites/developer/
-	ftp://download.intel.com/design/
-
-hardware:
-	http://www.xs4all.nl/~ganswijk/chipdir/chipdir.html
-
-
-best,
-	hp
-
---=20
-Linux,Assembly,Forth: http://www.lxhp.in-berlin.de/index-lx.shtml en/de
-NO abusive=A0software=A0patents=A0http://petition.eurolinux.org/pr/pr17=
-=2Ehtml
--
-To unsubscribe from this list: send the line "unsubscribe linux-assembl=
-y" in
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
