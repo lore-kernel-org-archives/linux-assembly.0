@@ -1,59 +1,52 @@
-From: "=?iso-8859-1?q?Rodrigo=20F.=20Baroni?=" <rodrigobaroni@yahoo.com.br>
-Subject: Write functions in assembly ?
-Date: Mon, 10 Mar 2003 14:39:40 -0300 (ART)
+From: Vince Weaver <vince@deater.net>
+Subject: tb_asm, a linux assembly game in 8k
+Date: Mon, 24 Mar 2003 11:11:37 -0500 (EST)
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <20030310173941.31982.qmail@web11102.mail.yahoo.com>
-Reply-To: rodrigobaroni@yahoo.com.br
+Message-ID: <Pine.LNX.4.44.0303241106150.3908-100000@pianoman.cluster.toy>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-assembly-owner@vger.kernel.org>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: linux-assembly@vger.kernel.org
 
-Hello all,
+Hello,
 
-  Is there some way to write just a function (or
-method - c++) in assembly  that will be called from a
-main program ? (Receiving the parameters passed to it)
+Tired of bloated video games that require extravagant hardware?
+Want a game on your rescue boot disk but can never find room?
 
+Announcing "tb_asm" the fast-paced space game that fits in under 8k.
 
-  Example :
+Hand-written in x86 assembly language, the game requires _no_
+external libraries, not even glibc.  8k standalone [plus the Linux Kernel].
 
-file main.c:
---------
-#include <stdio.h>
-#include "myfunction.h"
-int main( void )
-{
-    int a =3D 10 , b =3D 20 , c =3D 0;
-    c =3D myfunction( &a, &b );
-    return c;
-}
+[Note... a PPC version is underway, but due to immediate time constraints
+will not be done until mid April].
 
-file myfunction.h
-------
-extern int myfunction( int *, int * );
+The game plays best in text-mode.  [CTRL-ALT-F1 for those of you in X].
+It will work in an xterm, but with degraded graphics and no sound.
+Also, it only works under Linux as far as I know.
 
-file myfunction.c  <<-- this file in assembly !
--------
-int myfunction( int *var1 , int *var2 )
-{
-    *var1 =3D *var2 + *var1;
-    return *var2 * var1;
-}
+It has to be seen to be believed.  Download it today:
+
+http://www.deater.net/weave/vmwprod/tb1/tb_asm.html
+
+Also, while in disk-saving mode, check out linux_logo in under 1k:
+
+http://www.deater.net/weave/vmwprod/asm/ll.html
 
 
-  Thanks
-Rodrigo F Baroni
+Thanks to: John Clemens (for the initial idea)
+           Stephan Walter (for getting me interested in size
+                           optimization with "ll")
+           Brian Raiter (for sstrip)
 
-_______________________________________________________________________
-Busca Yahoo!
-O servi=E7o de busca mais completo da Internet. O que voc=EA pensar o Y=
-ahoo! encontra.
-http://br.busca.yahoo.com/
--
-To unsubscribe from this list: send the line "unsubscribe linux-assembl=
-y" in
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+
+Vince
+
+-- 
+/* Vince Weaver  --  vince@deater.net  --  http://www.deater.net/weave */
+
+main(){char O,o[66]="|\n\\/_  ",*I=o+7,l[]="B!FhhBHCWE9C?cJFKET$+h'Iq*chT"
+,i=0,_;while(_=l[i++])for(O=0;O++<_>>5;)*I=*(I++-(_&31));*I=0;puts(o+5);}
+
