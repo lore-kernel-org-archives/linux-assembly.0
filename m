@@ -1,24 +1,31 @@
-From: Dragan Stancevic <visitor@xalien.org>
+From: hpr <phpr@snafu.de>
 Subject: Re: Newbie Question
-Date: Thu, 27 Feb 2003 16:45:34 -0800
+Date: Fri, 28 Feb 2003 06:28:27 +0000
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <200302271645.34454.visitor@xalien.org>
-References: <Pine.VMS.3.91-2(vms).1030228001923.25337A-100000@cs.felk.cvut.cz>
+Message-ID: <200302280636.h1S6afXG014076@hirsch.in-berlin.de>
+References: <1EAF5F87-4AAD-11D7-BC68-0030657C1952@sonoma.edu>
+Reply-To: lx@snafu.de
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7BIT
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <Pine.VMS.3.91-2(vms).1030228001923.25337A-100000@cs.felk.cvut.cz>
+In-Reply-To: <1EAF5F87-4AAD-11D7-BC68-0030657C1952@sonoma.edu>
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Rudolf Marek <MAREKR2@cs.felk.cvut.cz>, dAvId KeDrOsKy <davidkedrosky@rogers.com>
+To: "Robert G. Plantz" <plantz@SONOMA.EDU>, dAvId KeDrOsKy <davidkedrosky@rogers.com>
 Cc: Linux Assembly Programming List <linux-assembly@vger.kernel.org>
 
-On Thursday 27 February 2003 15:26, Rudolf Marek wrote:
-> Ah dragan you were faster....
-> Regards
+Robert G. Plantz am Donnerstag, 27. Februar 2003 23:42:
+> Assuming that you want the (16-bit) word at address 1234 to be loaded
+> into ax, I see two problems:
+> a. address 1234 probably cannot be accessed by your program, and
+> b. linux is unhappy if you change ebx. (Your program needs to
+>     save/restore ebx.)
 
-:-))))))
+not linux, but (probably) "C"...
+i/o related syscalls use ebx for the file descriptor
+
+hp
 
 -- 
-Peace can only come as a natural consequence
-of universal enlightenment. -Dr. Nikola Tesla
+Linux,Assembly,Forth: <http://www.lxhp.in-berlin.de/index-lx.shtml>
+    pse, reply to << lxhp -at- lxhp -dot- in-berlin -dot- de >>
