@@ -1,45 +1,36 @@
-From: Brian Raiter <breadbox@muppetlabs.com>
+From: Vadiraj C S <vadiraj@mail.cyberneme.com>
 Subject: Re: How to get allocate memory run time
-Date: Wed, 11 Feb 2004 16:51:39 -0800
+Date: Thu, 12 Feb 2004 09:39:30 +0530
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <16426.52763.577200.389101@eidolon.muppetlabs.com>
+Message-ID: <20040212093930.39dcba89.vadiraj@mail.cyberneme.com>
 References: <20040211172713.07ca6282.vadiraj@mail.cyberneme.com>
+	<16426.52763.577200.389101@eidolon.muppetlabs.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <20040211172713.07ca6282.vadiraj@mail.cyberneme.com>
+In-Reply-To: <16426.52763.577200.389101@eidolon.muppetlabs.com>
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Vadiraj C S <vadiraj@mail.cyberneme.com>
+To: Brian Raiter <breadbox@muppetlabs.com>
 Cc: linux-assembly@vger.kernel.org
 
->   I was wondering how to allocate memory run time in assembly? till
-> now I used to allocate from c and pass it to the assembly function,
-> and when I looked at the assembly code of small funtion which calls
-> malloc, the asm calls malloc internally.
-> 
->   If any one know how to allocate memory in assembly other than
-> calling the extern c funtion..
 
-libc's malloc et al work by using the brk system call (#45 in Linux).
+Mr Brian,
 
-All this system call does is increase the amount of memory your
-application can use. Typically, your program is organized in memory so
-that code (and read-only data) come first, then initialized writeable
-data, and finally zero-initialized writeable data (i.e. the .bss
-segment). The brk system call can then be seen as a way to expand the
-size of your bss segment at runtime (although without
-zero-initializing).
+> libc's malloc et al work by using the brk system call (#45 in Linux).
 
-The typical way to use it is to first call brk with an argument of
-zero. The return value then gives you the initial break position. Save
-this value, and then use it in a second call to brk after increasing
-it by the amount of extra memory you desire. (If the return value is
-the same as the saved value, then the allocation request failed.) The
-saved value is then your pointer to the bottom of the new memory.
+  I know the implementation of malloc, using brk this is again a C implementation, What is the procedure
+behind it, I mean how can this be done in assembly language. I dont want to call the extern functions from
+asm. There would be some kind of asm implementation which does exactly what brk and sbrk does. I just want 
+to know them.
 
-Note that the system does not do any arena or heap management. That is
-what libc provides. So, if you need arbitrarily large amounts of
-arbitrarily-sized memory, using libc is definitely the easiest way.
+  Thanks
+  
+-- 
+                       With knowledge comes power, and with power comes responsability.  
 
-b
+
+With Best Regards
+Vadiraj C S
+
+
