@@ -1,8 +1,8 @@
 From: RCS <cryptik@ig.com.br>
-Subject: Re: variables
-Date: Fri, 23 Aug 2002 08:27:30 -0300
+Subject: Re: How interrupts work
+Date: Fri, 23 Aug 2002 08:30:51 -0300
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <20020823112328Z318770-685+36065@vger.kernel.org>
+Message-ID: <20020823112649Z318750-685+36066@vger.kernel.org>
 Mime-Version: 1.0
 Return-path: <linux-assembly-owner@vger.kernel.org>
 List-Id: <linux-assembly.vger.kernel.org>
@@ -10,69 +10,50 @@ Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 To: linux-assembly@vger.kernel.org
 
-Thanks, with that command-line I could anderestand=20
-a simple program as followed:=20
+  Thanks, but which assembler must I use for this code? GNU as?=20
+  I'm asking that because I am only familiar with nasm.=20
 
-C-CODE=20
-------=20
+  Thanks Again,=20
 
-int a =3D 1;=20
-
-int main(void)=20
-{=20
-  int b =3D 2;=20
-
-  a =3D b;=20
-}=20
-
-ASSEMBLER CODE=20
---------------=20
-
-	.file	"Variaveis.c"=20
-	.version	"01.01"=20
-gcc2_compiled.:=20
-globl a=20
-data=20
-	.align 4=20
-	.type	 a,@object=20
-	.size	 a,4		;  Global Variable Size Definition a (4 bytes)=20
-a:=20
-	.long 1			;  Global Variable a =3D 1=20
-text=20
-	.align 4=20
-globl main=20
-	.type	 main,@function=20
-main:=20
-	pushl %ebp=20
-	movl %esp,%ebp=20
-	subl $24,%esp=20
-	movl $2,-4(%ebp)	;  Local Variable b =3D 2=20
-	movl -4(%ebp),%eax=20
-	movl %eax,a		;  a =3D b=20
-L2:=20
-	leave=20
-	ret=20
-Lfe1:=20
-	.size	 main,.Lfe1-main=20
-	.ident	"GCC: (GNU) 2.95.3 20010315 (release) (conectiva)"=20
-
-
-ARE THE COMMENTS CORRECT ?=20
-
+                                  RCS=20
 
 
 Em Aug 2002, Dmitry Trunikov escreveu:=20
 
 >RCS wrote:=20
 >=20
->> Can anyone explain me how global and local variables from C are treated =
-
->in=20
->>assembler?=20
->> Is that write that local variables are storage in the stack?=20
+>> I need some help to understand how interrupts work on Intel.=20
+>> For example, how do I print a character in the screen?=20
+>>Wich register must contain the character for that? Is "int 10h" the=20
+correct=20
+>>interrupt for that?=20
 >>=20
->Yes.=20
->You can compile c-program to asm-source. Try gcc -S program.c=20
+>>=20
+>It depends on which pc or OS you use. "int 10h" is a BIOS (base input=20
+>output system) interrupt i.e. it can be used AFAIK only in real CPU=20
+>mode. Usually for character output is used OS API. In MSDOS you can uset=20
+>"int 10h" or "int 21h" for input/output. Under linux you can use system=20
+>call "int 80h".=20
+>This is an example for output string under linux:=20
+>=20
+>// ssize_t write(int fd, const void *buf, size_t count);=20
+>// write(fileno(stdout), "hello", 6);=20
+>=20
+>.data=20
+>hello:=20
+> .string "hello world\n"=20
+>.text=20
+>.globl _start=20
+>_start:=20
+> movl 4,%eax // 4 - sys function 'write'=20
+> movl 1,%ebx // fd =3D fileno(stdio)=20
+> movl $hello,%ecx // buf =3D str=20
+> movl $12,%edx // count=20
+> int $0x80=20
+>=20
+> movl 1,%eax // sys function 'exit'=20
+> xorl %ebx,%ebx=20
+> int $0x80=20
 >=20
 >----------=20
 
