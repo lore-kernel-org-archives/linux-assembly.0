@@ -1,38 +1,42 @@
-From: wintah <wintrmute@retemail.es>
-Subject: Re: question about variables
-Date: Thu, 15 May 2003 18:30:58 +0200
+From: dave young <young@farstone.com>
+Subject: Re: Regarding Linker (ld) option
+Date: Thu, 15 May 2003 15:49:42 +0800
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <20030515183058.4044accb.wintrmute@retemail.es>
-References: <3EC3C544.8050307@sdf-eu.org>
+Message-ID: <b9vg7u$r0b$1@main.gmane.org>
+References: <20030415135050.27156.qmail@web41101.mail.yahoo.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <3EC3C544.8050307@sdf-eu.org>
+In-Reply-To: <20030415135050.27156.qmail@web41101.mail.yahoo.com>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: Geiregat Jonas <kemu@sdf-eu.org>, linux-assembly@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; 
+To: linux-assembly@vger.kernel.org
 
-On Thu, 15 May 2003 16:50:12 +0000
-Geiregat Jonas <kemu@sdf-eu.org> wrote:
+Anticipating a Reply ??:
+> Hi all ,
+> 
+>   Can anybody please let me know what is 
+> the purpose of the "-u" or "-undefined"
+> option for "ld" linker . 
+> 
+>    After reading the man page , I could 
+> not understand how to use it .
+> 
+>    A small sample code demonstrating its
+> use would be appreciated .
+> 
+>    Thanks in advance .
+> 
+> Regards !
+> 
+> ________________________________________________________________________
+> Missed your favourite TV serial last night? Try the new, Yahoo! TV.
+>        visit http://in.tv.yahoo.com
+> -
+> To unsubscribe from this list: send the line "unsubscribe linux-assembly" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 
+I guess it is used to force the symbol to be "EXTERN"
 
-> Hey, I have 2question about linux assembly
-> I have written a basic programme
-> It's really simple I use the open, read and write syscall
-> To open a file (/etc/passwd) read it and print it out to the screen.
-> Now when reading the file I read it into a buffer declared like this 
-> (using nasm)
-> section .bss
->     buffer  resd 1
-> so I reserve one double word of space. so that is 4bytes. /etc/passwd >is much bigger then that but still I see the whole file printed I find >this strange (I'm also not sure about the 1 behind resd I think it's >stands for reserve 1 doubleword of space)
 
- Yep, it seems strange. Anyway, if you want to print the whole file (even manipulate it), the sys_mmap syscall would be a lot better (open the file, then with mmap project it on memory, it dinamically creates a zone for the file and loads it, so you can access it withouth having to deal with pointers & stuff).
-
-> My other question is how can I accept,  command line arguments in asm 
-> using nasm
-
- Check out the stack, the pointers for arguments the user provides are stacked there when the program begins ;)
-
-
--- 
-* Origin: http://pagina.de/wintermute
-... learn to swim
