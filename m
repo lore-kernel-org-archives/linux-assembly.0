@@ -1,63 +1,94 @@
-From: Maciej Hrebien <m_hrebien@wp.pl>
-Subject: Re: inside_SUB
-Date: Thu, 19 Sep 2002 14:24:25 +0200
+From: "ssams" <ssams@telkom.net>
+Subject: code-need-to-correct
+Date: Thu, 19 Sep 2002 21:40:09 +0700
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <3D89C1F9.7D3DA7@wp.pl>
-References: <web-50089505@m1.plasa.com>
-Reply-To: m_hrebien@wp.pl
+Message-ID: <web-50448669@m1.plasa.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-assembly-owner@vger.kernel.org>
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 To: linux-assembly@vger.kernel.org
 
-ssams wrote:
-> 
-> thanks for your replay
-> this is make me learning more.
-> But when i try to try, i found a new problem when i try to
-> read
-> the value from ecx after doing syscall read.
-> mov $3,%eax
-> mov $0,%ebx
-> mov $6,%edx
-> 
-> how can i read input from this code and reprinting it...?
-> for example output:
-> Enter e number: 4       #we enter 4
-> you have number: 4      #reprinting
-> 
-> help me please
-> regard
-> ssams
 
+ .macro sys_write
+	mov $4,%eax
+	mov $1,%ebx
+	int $0x80
+.endm
+.macro sys_read
+	mov $3,%eax
+	mov $2,%edx
+	mov $0,%ebx
+	int $0x80
+.endm
 .data
-
-char: .byte 0
-
-.text
-
+msg1: .ascii "Masukkan Angka: "
+jum_masuk: 
+	.byte .- msg1
+satu: .ascii "Satu Lagi: "
+jum_satu: 
+	.byte .- satu
+spasi: .byte 10
+.bss
+.lcomm input1,0
+.lcomm input2,0
+angka: .byte 0
+.text 
 .globl _start
 _start:
-	mov $3,%eax
-	xor %ebx,%ebx
-	mov $char,%ecx
+	mov $msg1,%ecx
+	mov $16,%edx
+	sys_write
+	sys_read
+	mov %eax,input1
+
+	
+	mov $satu,%ecx
+	mov $11,%edx
+	sys_write
+	sys_read
+	mov %eax,input2
+
+
+tambah:
+	mov (input2),%eax
+	add (input1),%eax
+	mov $10,%bx
+	xor %ecx,%ecx
+ulang:
+	div %bx
+	push %edx
+	inc %ecx
+	cmp $0,%al
+	jne ulang
+cetak:
+	pop %edx
+	add $0x30,%dx
+	mov %dx,angka
+	push %ecx
+	mov $angka,%ecx
 	mov $1,%edx
-	int $0x80
+	sys_write
+	pop %ecx
+	loop cetak	
 
-	mov $4,%eax
-	inc %ebx
-	int $0x80
+	mov $spasi,%ecx
+	mov $1,%edx
+	sys_write
 
-	mov $1,%eax
-	int $0x80
+	movl $1,%eax	#exit
+	movl $1,%eax	#exit
+	movl $0,%ebx
+	int  $0x80
 
-Regards,
+output:
 
-PS I recommend to read some tutorial(s) on how to write assembly code
-useing Linux's calls.
+Masukkan angka: 4
+Satu lagi: 5
+2478030160157010470915781817.....
 
--- 
-Maciej Hrebien
-
+How to read input...?
+=========================================================================
+Khusus Pelanggan Telepon DIVRE 2, Tekan 166 untuk mendengarkan pesan Anda.
+=========================================================================
