@@ -1,51 +1,56 @@
-From: Maciej Hrebien <m_hrebien@wp.pl>
-Subject: Re: Need Some Linux Internal help
-Date: Thu, 21 Aug 2003 16:56:32 +0200
+From: dante@virtualblueness.net
+Subject: How to set up struct pt_regs in assembly?
+Date: Thu, 21 Aug 2003 20:24:56 -0400 (EDT)
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <3F44DDA0.5E270F77@wp.pl>
-References: <8EA11405E59BD611BA7100104B93C26001EF5EEB@exdel01.del.mgsl.com>
-Reply-To: m_hrebien@wp.pl
+Message-ID: <Pine.LNX.4.44.0308212010480.6588-100000@reddevil.virtualblueness.net>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: Harmeet Uppal <Harmeet_Uppal@KeaneIndia.com>
-Cc: linux-assembly@vger.kernel.org, linux-assembly@mlists.in-berlin.de
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: linux-assembly@vger.kernel.org
 
-Harmeet Uppal wrote:
-> 
-> I need some help on Linux internals where in the I can get some
-> documentation on the Internals of (IPC handling Internal level) etc and
-> needs and advantages etc.I am currently placed at a place where I have just
-> no access to the Internet. I also need to understand the methods of
-> implementation of various synchronization techniques.
 
-If you are without the net the only recomendation is the literature. Any
-book about the Linux kernel internals or internals of the Unix System or
-any book about process communication in those systems and
-synchronization like ie. semaphores or even the Linux kernel source
-files may be useful for you.
+Hi everyone,
 
-> Could you kindly help
-> me or put me through some one who can help me on this.
+I'm having some problems writing the assembly code to set up the eax, 
+ebx, ecx and edx registers for a int 0x80 call to sys_execve on 2.4 
+kernels.  In C, the function is defined as int sys_execve(struct pt_regs 
+regs) where struct pt_regs is defined in <asm/ptrace.h>.  I don't know 
+what to put into eax-edx to get (struct pt_regs regs) right.
 
-If you are newbie in this theme, you should read some book(s) first i
-think. And if you will have more questions you may ask it on some
-mailing lists like: linux-assembly@vger.kernel.org or
-linux-assembly@mlists.in-berlin.de. I think the whole group of people in
-there will help you better than me if you stuck on something serious.
+In 2.2 it was easy, you just did (in nasm):
 
-Note also that some of the people subscribed to those lists enjoy their
-vacation time right now ;)
- 
-> I know it really is bad to be without a google.
-> 
-> Thanks and Regards,
-> Harmeet Uppal
 
-Regards,
+; int sys_execve(const char *filename, char const argv[], char const envp[]
+%macro execve 3     
+        mov ebx,%1  ; ptr to null terminated string containing program
+        mov ecx,%2  ; ptr to null terminated string of arguments
+        mov edx,%3  ; ptr to null terminated string of environment
+        mov eax,11
+        int 0x80
+%endmacro
 
--- 
-Maciej Hrebien
+global _start
+section .data
+        shell   db "/bin/sh",0
+        nothing db 0
+
+section .text
+_start: execve shell, nothing, nothing
+
+
+
+What is the equivalent for 2.4 kernels?
+
+-------------------------------------------------------------------
+
+Anthony G. Basile, Ph.D.
+Director of Information Technology,
+D'Youville College,
+320 Porter Ave.
+Buffalo NY, 14201
+
+Work: (716) 881-8197 (voicemail)
+
 
