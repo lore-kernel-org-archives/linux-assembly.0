@@ -1,96 +1,31 @@
-From: "Jason Roberts" <v3ct0r99@hotmail.com>
-Subject: smc-help
-Date: Tue, 04 Nov 2003 14:12:06 +0000
+From: Konstantin Boldyshev <konst@linuxassembly.org>
+Subject: Re: mailing list
+Date: Tue, 4 Nov 2003 19:03:53 +0300 (MSK)
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <Law9-F88milcMPyp4cS0001780b@hotmail.com>
+Message-ID: <Pine.LNX.4.43L.0311040952340.1618-100000@alpha.linuxassembly.org>
+References: <200311031458.13532.beckin@earthlink.net>
 Mime-Version: 1.0
 Return-path: <linux-assembly-owner@vger.kernel.org>
+In-Reply-To: <200311031458.13532.beckin@earthlink.net>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; format=flowed; charset="us-ascii"
+Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: linux-assembly@vger.kernel.org
+To: hamnose <beckin@earthlink.net>
+Cc: linux-assembly@vger.kernel.org
 
-I've read enough about smc that I figured it'd be a cool thing to
-learn...The basic concept is simple; implementation,however , is not!
-Here's my code(using nasm) and following a session with gdb.
-Thankyou for any insight
+On Mon, 3 Nov 2003, hamnose wrote:
 
-       BTW-- I decided to include only the output from objdump rather than 
-bloat this
-       already bloated post with nasm src. I'll assume most can read gas 
-syntax--
-        I'm new to asm and had no prob differentiating the two styles.
+> I noticed that nearly all message in the  "archives" are not related
+> to assembly or any type of programming or operating system. I would
+> love to find a group of individuals whose interest is assembly and
+> "unix/linux like" operating systems. Obviously this mail list on
+> Yahoo is not being used for a very long time. Where can I find posts
+> to this list?
 
+Last year posts are at http://marc.theaimsgroup.com/?l=linux-assembly.
 
-<self modifying code>
+-- 
+Regards,
+Konstantin
 
-
-./smc:     file format elf32-i386
-
-Disassembly of section .text:
-
-08048080 <.text>:
-8048080:	e9 1b 00 00 00       	jmp    0x80480a0
-8048085:	ba 11 00 00 00       	mov    $0x11,%edx
-804808a:	b8 04 00 00 00       	mov    $0x4,%eax
-804808f:	bb 01 00 00 00       	mov    $0x1,%ebx
-8048094:	b9 eb 90 04 08       	mov    $0x80490eb,%ecx
-8048099:	cd 80                	int    $0x80
-804809b:	e9 2e 00 00 00       	jmp    0x80480ce
-80480a0:	e8 18 00 00 00       	call   0x80480bd
-80480a5:	31 c0                	xor    %eax,%eax
-80480a7:	ba 13 00 00 00       	mov    $0x13,%edx
-80480ac:	b8 04 00 00 00       	mov    $0x4,%eax
-80480b1:	bb 01 00 00 00       	mov    $0x1,%ebx
-80480b6:	b9 d8 90 04 08       	mov    $0x80490d8,%ecx <------ buffer
-80480bb:	cd 80                	int    $0x80
-80480bd:	bf c9 80 04 08       	mov    $0x80480c9,%edi <------- our jmp
-80480c2:	89 3d a7 80 04 08    	mov    %edi,0x80480a7   <--- modify!
-80480c8:	c3                   	ret
-80480c9:	e9 b7 ff ff ff       	jmp    0x8048085
-80480ce:	89 c3                	mov    %eax,%ebx
-80480d0:	b8 01 00 00 00       	mov    $0x1,%eax
-80480d5:	cd 80                	int    $0x80
-Disassembly of section .data:
-
-080490d8 <.data>:
-80490d8:	6e                   	outsb  %ds:(%esi),(%dx)
-80490d9:	6f                   	outsl  %ds:(%esi),(%dx)
-80490da:	72 6d                	jb     0x8049149
-80490dc:	61                   	popa
-80490dd:	6c                   	insb   (%dx),%es:(%edi)
-80490de:	20 65 78             	and    %ah,0x78(%ebp)
-80490e1:	65 63 75 74          	arpl   %si,%gs:0x74(%ebp)
-80490e5:	69 6f 6e 0a 0d 00 49 	imul   $0x49000d0a,0x6e(%edi),%ebp
-80490ec:	20 61 6d             	and    %ah,0x6d(%ecx)
-80490ef:	20 6d 6f             	and    %ch,0x6f(%ebp)
-80490f2:	64 69 66 69 65 64 21 	imul   $0xa216465,%fs:0x69(%esi),%esp
-80490f9:	0a
-80490fa:	0d                   	.byte 0xd
-
-[L4@weirdo L4]$ gdb ./smc
-(gdb) r
-Starting program: /home/L4/./smc
-warning: shared library handler failed to enable breakpoint
-
-Program received signal SIGSEGV, Segmentation fault.
-0x080480c2 in ?? ()
-ok...now test trampoline...
-(gdb) j *0x80480c9
-Continuing at 0x80480c9.
-I am modified!
-Program exited with code 021.
-ok...good...
-lets check that edi holds jmp addy...
-Breakpoint 1, 0x080480c2 in ?? ()
-edi   =   0x80480c9    yep,good
-ok now lets see if addy was modified(thats at 0x80480a7)
-(gdb) x/i *0x80480a7
-0x80480c9:      jmp    0x8048085  <-------- and there it is!
-sweet!!! well, not quite...why does it segfault???
-
-_________________________________________________________________
-From Beethoven to the Rolling Stones, your favorite music is always playing 
-on MSN Radio Plus. No ads, no talk. Trial month FREE!  
-http://join.msn.com/?page=offers/premiumradio
 
