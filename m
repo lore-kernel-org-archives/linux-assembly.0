@@ -1,49 +1,25 @@
-From: =?iso-8859-1?q?Sebastien=20Fortas?= <doctorbigtime@yahoo.com>
+From: Jim Boedicker <jdb-sdi@earthlink.net>
 Subject: Re: Hi folks
-Date: Fri, 23 Apr 2004 19:28:30 +0200 (CEST)
+Date: Fri, 23 Apr 2004 17:23:07 -0500
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <20040423172830.72153.qmail@web13909.mail.yahoo.com>
+Message-ID: <4089974B.1080604@earthlink.net>
 References: <20040422231507.GA1495@absinth.net>
-Reply-To: bub@hell.com
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
 In-Reply-To: <20040422231507.GA1495@absinth.net>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
 To: linux assembly <linux-assembly@vger.kernel.org>
 
-
-Greetings from paris,
-
-There seems to be no more interest in writing bootstrap loaders anymore=
-, or
-maybe the information is readily available on web sites that convienien=
-tly lack
-human interactivity.
-
-How I long for the old days of usenet and mailing lists.
-
-- sdf
-
- --- Steffen Solyga <solyga@absinth.net> a =E9crit=A0:=20
+Steffen Solyga wrote:
 > is it really that silent in here?
 > nevertheless, greetings from berlin!
+> 
+Someone please put something in her for everyone to kick around, and 
+Learn from?
 
+Jim
+-- 
+/earth: file system full
 
-
-=09
-
-=09
-	=09
-Yahoo! Mail : votre e-mail personnel et gratuit qui vous suit partout !=
-=20
-Cr=E9ez votre Yahoo! Mail sur http://fr.benefits.yahoo.com/
-
-Dialoguez en direct avec vos amis gr=E2ce =E0 Yahoo! Messenger !T=E9l=E9=
-chargez Yahoo! Messenger sur http://fr.messenger.yahoo.com
--
-To unsubscribe from this list: send the line "unsubscribe linux-assembl=
-y" in
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
