@@ -1,42 +1,29 @@
 From: peter w krause <wklux@yahoo.co.uk>
-Subject: Re: reply to jeff message
-Date: Thu, 18 Sep 2003 09:13:20 +0100
+Subject: Re: Does anyone code in assembler today?
+Date: Thu, 18 Sep 2003 08:57:12 +0100
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <200309180913.20136.wklux@yahoo.co.uk>
-References: <3F6906D4.6050008@hotpop.com>
+Message-ID: <200309180857.13383.wklux@yahoo.co.uk>
+References: <200309110801.37516.rafael.diniz@ic.unicamp.br> <200309171020.17639.jko@save-net.com> <3F695140.60003@eprocess.fr>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <3F6906D4.6050008@hotpop.com>
+In-Reply-To: <3F695140.60003@eprocess.fr>
 Content-Disposition: inline
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: linux-assembly@vger.kernel.org
+To: fmarmond@eprocess.fr, jeff <jko@save-net.com>
+Cc: linux-assembly-admin@mlists.in-berlin.de, linux-assembly@vger.kernel.org
 
-Lawrence am Donnerstag, 18. September 2003 02:13:
-> Hi All,
+Frederic Marmond am Donnerstag, 18. September 2003 07:31:
+	[...]
 >
-> From my experience, I think the most salient problem that hinder people
-> from using assembly as her development tool lies in the absent of a
-> robust assembly debugger.  Although people says gdb is good enough, I
-> still don't know how to treak it to symbolically debug my intel-syntax
-> asm program.  I've also try ald before, but I think it's the problem of
-> nasm, it cannot show the symbols too.
+> But I don't think assembly may be used for a 'real soft' other than just
+> parts of a lib or driver... :-(
+> This good old time is now deprecated ;)
 
-latest version can. the older one can be patched:
-re http://www.lxhp.in-berlin.de/lhplinks.html#ald
+'embedded systems' (which is quite a bit)
 
->
-> After I got the gift from Jeff, I've tried it out all night,  and I
-> finally figure out how to debug my asm program symboliclly under kdbg,
-> with his suggestion of using another version of nasm.  With Jeff's tool,
-> I finally can tried to start doing the porting.
-
-did I miss something?
-
-
-best,
-	hp
+hp
 
 -- 
 Linux,Assembly,Forth: http://www.lxhp.in-berlin.de/index-lx.shtml
