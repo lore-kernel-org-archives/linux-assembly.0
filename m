@@ -1,21 +1,27 @@
-From: xlp <xlp@emtel.net.co>
+From: Rudolf Marek <MAREKR2@cs.felk.cvut.cz>
 Subject: Re: sound
-Date: Mon, 24 Jun 2002 20:02:12 -0500
+Date: Tue, 25 Jun 2002 10:06:40 +0200
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <20020624200212.A23265@nietzsche>
+Message-ID: <af98cq$lbr$2@main.gmane.org>
 References: <3D17944F.E391DBF4@freesurf.fr>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <3D17944F.E391DBF4@freesurf.fr>; from pvir@freesurf.fr on Mon,
-    Jun 24, 2002 at 11:51:11PM +0200
-Content-Disposition: inline
+In-Reply-To: <3D17944F.E391DBF4@freesurf.fr>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: philippe <pvir@freesurf.fr>
 Cc: Linux-assembly@vger.kernel.org
 
-On Mon, Jun 24, 2002 at 11:51:11PM +0200, philippe wrote:
+
+
+On Mon, 24 Jun 2002, philippe wrote:
+
+> Date: Mon, 24 Jun 2002 23:51:11 +0200
+> From: philippe <pvir@freesurf.fr>
+> To: Linux-assembly@vger.kernel.org
+> Subject: sound
+> 
 > hi
 > I am new on this list and my name is Philippe.
 > I used to make some programs on windows but wanted to trye on linux.
@@ -24,11 +30,29 @@ On Mon, Jun 24, 2002 at 11:51:11PM +0200, philippe wrote:
 > But when i translate it on linux, it doesn't work any more.
 > It compile and link correctly(nasm), but on execution it writes:
 > segmentation fault!
+Maybe You have no permission to write to that ports.
+Use io_perm syscall to set it.
+
+Also this king of programming is not good choice for linux. Use kernel to 
+do the dirty work. You can use a "services" (ioctls) of sound driver to 
+produce sound. I think there is an tutorial on www.linuxassembly.org
+for a sound too.
+
+
 > I post you the sources at the end of this message.
 > 
 > I had an other question:
 > Where can I find bible of all the interruptions and what is the  name of
 > it?
+
+It is called Ralf's Brown Inetrrupt list.
+Use google.com to find it (it was on Simtelnet mirrors)
+
+
+Regards
+
+	Rudolf
+
 > 
 > 
 > Philippe
@@ -199,4 +223,7 @@ On Mon, Jun 24, 2002 at 11:51:11PM +0200, philippe wrote:
 > the body of a message to majordomo@vger.kernel.org
 > More majordomo info at  http://vger.kernel.org/majordomo-info.html
 > 
+> 
+> 
+
 
