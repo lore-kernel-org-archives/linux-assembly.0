@@ -1,95 +1,28 @@
-From: =?iso-8859-1?q?Anticipating=20a=20Reply?= <ruxyz@yahoo.com>
-Subject: asm newbie about asm-utils !
-Date: Tue, 20 Aug 2002 06:09:36 +0100 (BST)
+From: Matti Aarnio <matti.aarnio@zmailer.org>
+Subject: Archive hunt for vger's lists ...  (and FAQs too!)
+Date: Wed, 21 Aug 2002 12:29:07 +0300
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <20020820050936.60077.qmail@web14506.mail.yahoo.com>
-References: <F8Yu0aMCFUGafjSW3H9000259c7@hotmail.com>
-Reply-To: ruxyz@yahoo.com
+Message-ID: <20014.9395772771$1029922094@news.gmane.org>
+Reply-To: webmaster@vger.kernel.org
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <F8Yu0aMCFUGafjSW3H9000259c7@hotmail.com>
+Content-Disposition: inline
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Paul Carter <pacman128@hotmail.com>, linux-assembly@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+To: linux-kernel@vger.kernel.org, linux-admin@vger.kernel.org
+Cc: linux-8086@vger.kernel.org, linux-apps@vger.kernel.org, linux-alpha@vger.kernel.org, linux-assembly@vger.kernel.org
 
 
-Hi !
+At vger's web we have:
+  http://vger.kernel.org/vger-lists.html
 
-  I was wondering why the "a-linux" 
-development is using "nasm" as the
-assembler tool ?
+which has all lists at vger, and links to all list archives that
+I found last week (at google/marc) when I did a full review of those.
 
-  This is not to hurt the sentiments
-of any community or bcoz of a bias to
-a particular assembler .
+If you know any archive that should be listed there, please tell
+vger's webmaster.  (NOT the lists!)
 
-  Should it not be convinient to 
-stick to GNU-assembler ,.ie.gas ,
-because it is a standard tool 
-used in gcc & linux . 
-
-   It becomes pretty clumsy trying
-to learn about different assemblers 
-instead of perfecting a single tool .
-
-   Is it possible to compile the 
-"a-linux" using gas ?
-
-
-With Regards.
-
-
- --- Paul Carter <pacman128@hotmail.com> wrote: >
->From: Benjamin Michotte <binny@baby-linux.net>
-> >To: linux-assembly@vger.kernel.org
-> >Subject: asm newbie
-> >Date: 18 Aug 2002 18:52:17 +0200
-> >MIME-Version: 1.0
-> >
-> >hello,
-> >
-> >first, sorry if this mailing-list is not the right
-> one.
-> >
-> >Two years ago, I learned "MS-DOS" assembly (I
-> forget it now) and now, I
-> >would like to learn 32 bits unix assembly.
-> >
-> >Where can I find a good doc or is there a good book
-> about assembly under
-> >unix and particulary Linux ?
-> >
-> >Yours,
-> >Benjamin
-> 
-> 
-> You might be interested in my on-line book at:
-> 
->   http://www.drpaulcarter.com/pcasm/
-> 
-> It uses NASM and has Linux examples.
-> 
-> Also,
-> 
-> http://www.linuxassembly.org/
-> 
-> is a good source of Linux assembly info
-> 
-> Paul Carter
-> 
->
-_________________________________________________________________
-> Send and receive Hotmail on your mobile device:
-> http://mobile.msn.com
-> 
-> -
-> To unsubscribe from this list: send the line
-> "unsubscribe linux-assembly" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at 
-http://vger.kernel.org/majordomo-info.html 
-
-________________________________________________________________________
-Want to sell your car? advertise on Yahoo Autos Classifieds. It's Free!!
-       visit http://in.autos.yahoo.com
+Also, if any list has a FAQ, we would like to know about it too!
+My plan is to add archive and FAQ pointters to all list footers
+(in style similar to linux-kernel).
