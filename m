@@ -1,35 +1,32 @@
 From: Konstantin Boldyshev <konst@linuxassembly.org>
 Subject: Re: asmutils 0.17
-Date: Sun, 18 Aug 2002 18:53:23 +0400 (MSD)
+Date: Sun, 18 Aug 2002 18:53:45 +0400 (MSD)
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.43L.0208181456380.1622-100000@alpha.linuxassembly.org>
-References: <Pine.SGI.4.40.0208180217240.73044568-100000@shell01.TheWorld.com>
+Message-ID: <Pine.LNX.4.43L.0208181505381.1622-100000@alpha.linuxassembly.org>
+References: <20020817181020.28d3a051.stephan.walter@gmx.ch>
 Mime-Version: 1.0
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <Pine.SGI.4.40.0208180217240.73044568-100000@shell01.TheWorld.com>
+In-Reply-To: <20020817181020.28d3a051.stephan.walter@gmx.ch>
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: linux-assembly@vger.kernel.org
+To: Stephan Walter <stephan.walter@gmx.ch>
+Cc: linux-assembly@vger.kernel.org
 
-On Sun, 18 Aug 2002, Scott Lanning wrote:
+On Sat, 17 Aug 2002, Stephan Walter wrote:
 
-> > Also, now there's a pure assembly Linux distribution, called a-Linux,
-> > based on Linux kernel and asmutils (it has derived from the asmutils
-> > bootdisk).
->
-> Looks cool. I put the floppy in my old 486 and accessed
-> the httpd from my laptop. Amusing. :)
+> truss.asm should be updated. As a label of a "dd" statement it uses
+> "pause", which is a reserved word in NASM 0.98.33 (and possibly in all
+> the 0.98.xx versions).
 
-Great! Does ftpd work too? :)
+Yes, I will update it, but not because of nasm.
+It introduces quite an issue with LIBC build.
 
-> > It will evetually become a completely separate project.
->
-> Why will it be separate?
+> The file MCONFIG or the Makefile respectively should be changed
+> to allow compiling with NASM 0.98.33 (and higher) as well.
 
-Development of the _distribution_ itself can be done in parallel
-with asmutils, and involves various kernel and root fs updates
-that simply do not depend on asmutils.
+Sorry, for now I do not plan to support any nasm versions
+other than clean 0.98, I am tired of problems that they cause.
 
 -- 
 Regards,
