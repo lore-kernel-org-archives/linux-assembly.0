@@ -1,39 +1,61 @@
-From: Brian Raiter <breadbox@muppetlabs.com>
-Subject: Re: GCC Optimization?
-Date: Mon, 22 Nov 2004 17:06:06 -0800
-Message-ID: <16802.36094.728820.244374@eidolon.muppetlabs.com>
-References: <2462.1101169594@www25.gmx.net>
+From: Jan-Benedict Glaw <jbglaw@lug-owl.de>
+Subject: Re: monitoring code while executing.
+Date: Tue, 23 Nov 2004 06:50:23 +0100
+Message-ID: <20041123055022.GR26791@lug-owl.de>
+References: <20041122211505.28131.qmail@web51903.mail.yahoo.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="soWJpSPh+l8Y6Fy7"
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <2462.1101169594@www25.gmx.net>
+Content-Disposition: inline
+In-Reply-To: <20041122211505.28131.qmail@web51903.mail.yahoo.com>
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: linux-assembly@vger.kernel.org
+To: A M <alim1993@yahoo.com>
+Cc: linux-assembly@vger.kernel.org
 
-> But why do they use and .... I think and does only even %esp
-> so that the last 4 Bits are set to Zero. 
-> But if %esp was 0xcccccccc before it would now be 0xccccccc0
-> what happens to the 4 Bits from 0xccccccc0 to 0xcccccccc?
-> And what is this good for?
 
-The x86 push and pop instructions are much, much less efficient if the
-stack pointer is not dword-aligned. So if one function (say) pushes a
-segment register onto the stack, it can affect the performance of
-every function that is called from there.
+--soWJpSPh+l8Y6Fy7
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> Second question:
-> What does mov $0x0,%eax? Why dont they use xor %eax and what is it
-> good for?
+On Mon, 2004-11-22 13:15:05 -0800, A M <alim1993@yahoo.com>
+wrote in message <20041122211505.28131.qmail@web51903.mail.yahoo.com>:
+> >Any debugger (like gdb) or system/library call tracer
+> >(strace, ltrace)
+> >does this using the ptrace system call.
+>=20
+> That is true but I am looking for a method that does
+> its work passively with out affecting the performance
+> of the original code.=20
 
-It zeros the accumulator, of course. As for why they don't use xor,
-why should they? What would be the advantage?
+Total control without any loss of performance? I guess that won't
+work...
 
-> Third question: 
-> What is sub %eax,%esp good for? We subtract 0 from
-> esp... mmmhh... for what?
+MfG, JBG
 
-Did you try building the same code with gcc optimizations turned on?
+--=20
+Jan-Benedict Glaw       jbglaw@lug-owl.de    . +49-172-7608481             =
+_ O _
+"Eine Freie Meinung in  einem Freien Kopf    | Gegen Zensur | Gegen Krieg  =
+_ _ O
+ fuer einen Freien Staat voll Freier B=FCrger" | im Internet! |   im Irak! =
+  O O O
+ret =3D do_actions((curr | FREE_SPEECH) & ~(NEW_COPYRIGHT_LAW | DRM | TCPA)=
+);
 
-b
+--soWJpSPh+l8Y6Fy7
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.2.5 (GNU/Linux)
+
+iD8DBQFBos+eHb1edYOZ4bsRAseTAJwOqXZfsq+F/HtdJG2R9gHFnVYpvgCfWvuR
+mc5xf2Dx6kr00t9TNDF4CWw=
+=6kSS
+-----END PGP SIGNATURE-----
+
+--soWJpSPh+l8Y6Fy7--
