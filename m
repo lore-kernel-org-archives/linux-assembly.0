@@ -1,26 +1,33 @@
-From: Fekete Gabor <feketga@delfin.unideb.hu>
-Subject: gas jump
-Date: Sun, 31 Aug 2003 00:46:35 +0200 (DFT)
+From: Maciej Hrebien <m_hrebien@wp.pl>
+Subject: Re: gas jump
+Date: Sun, 31 Aug 2003 11:38:56 +0200
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <Pine.A41.4.20.0308310041440.93300-100000@delfin.unideb.hu>
+Message-ID: <3F51C230.D94AF7EC@wp.pl>
+References: <Pine.A41.4.20.0308310041440.93300-100000@delfin.unideb.hu>
+Reply-To: m_hrebien@wp.pl
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"
 To: linux-assembly@vger.kernel.org
 
-hi
+Fekete Gabor wrote:
+> 
+> hi
+> 
+> i want to make a relative jump.
+> i tried it with "jmp 0x09" and expected it to
+> jump to the address that comes 9 bytes after
+> this "jmp".
+> is it correct?
 
-i want to make a relative jump.
-i tried it with "jmp 0x09" and expected it to
-jump to the address that comes 9 bytes after
-this "jmp".
-is it correct?
-i'm asking because when I examined (x/bx) the code with
-gdb it didn't really show any bytes with value 0x09 when
-looking at this jump instruction.
+Nope. Try jmp .+9 as Robert Plantz suggested in his post dated
+02.02.2003 ("." means current address that gas is assembling into so ie.
+l: .long . gives you l with its own address stored into) or hard code it
+as .byte 0xeb, 0x09 (0xeb is jmp rel8). Isn't it better to just label if
+your code isn't the fixed one? ;)
 
-thanks
-
+-- 
+Maciej Hrebien
 
