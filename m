@@ -1,30 +1,31 @@
 From: hp <lx@lxhp.in-berlin.de>
 Subject: Re: Keyboard and Mouse library
-Date: Wed, 16 Jul 2003 07:46:30 +0100
+Date: Wed, 16 Jul 2003 07:49:10 +0100
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <200307160746.30936.lx@lxhp.in-berlin.de>
-References: <E19cPhx-0000W5-00@mail.tv-sign.ru> <200307160303.16120.jko@save-net.com> <oprsdu2dzklmcbdf@smtp-server.woh.rr.com>
+Message-ID: <200307160749.10288.lx@lxhp.in-berlin.de>
+References: <E19cPhx-0000W5-00@mail.tv-sign.ru> <200307160303.16120.jko@save-net.com> <200307160015.06499.lx@lxhp.in-berlin.de>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <oprsdu2dzklmcbdf@smtp-server.woh.rr.com>
+In-Reply-To: <200307160015.06499.lx@lxhp.in-berlin.de>
 Content-Disposition: inline
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: linuxassembly@evobsyniva.com, jeff <jko@save-net.com>
-Cc: linux-assembly@vger.kernel.org
+To: hp <lx@lxhp.in-berlin.de>, jeff <jko@save-net.com>, linux-assembly@vger.kernel.org
 
-linuxassembly@evobsyniva.com am Mittwoch, 16. Juli 2003 04:09:
-> On Wed, 16 Jul 2003 03:03:15 -0700, jeff <jko@save-net.com> wrote:
+hp am Mittwoch, 16. Juli 2003 00:15:
+> > but find the "c" code difficult.  Assembler for me
+> > is much easier to understand.
 >
-> There are some mysterious ioctls that control this as well, but they don't
-> seem to be documented anywhere at all.  However, you can simply call the
+> yes, but (most of) those C-'programmers' don't understand (and ignore)
+...and are ignorant of...
+> assembly, so you might need to learn their 'language'...
 
-man 4 console_ioctl (or console_ioctls, old vers.)
+even in this group...
 
-hp
+ 	hp
+
 -- 
 Linux,Assembly,Forth: http://www.lxhp.in-berlin.de/index-lx.shtml en/de
-	FAQ(s) + DOCs at http://linuxassembly.org
   pse, reply to << lx -at- lxhp -dot- in-berlin -dot- de >>
 
