@@ -1,50 +1,45 @@
-From: h-peter recktenwald <*@lxhp.in-berlin.de>
+From: Maciej Hrebien <m_hrebien@wp.pl>
 Subject: Re: gas' nop(s)
-Date: Fri, 9 Aug 2002 16:07:27 +0000
+Date: Fri, 09 Aug 2002 21:47:12 +0200
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <20020809160727.0462fe8c.*@lxhp.in-berlin.de>
+Message-ID: <3D541C40.C8BD3519@wp.pl>
 References: <3D4D8E7F.8A393F62@wp.pl>
-	<20020805102040.7d12bd33.*@lxhp.in-berlin.de>
-	<3D4EBBA5.698AA14D@wp.pl>
-	<20020805222102.193b66fc.lx@lxhp.in-berlin.de>
-	<3D4F9750.328C98B1@wp.pl>
-	<20020807074136.0a1c2cf3.lx@lxhp.in-berlin.de>
-	<20020808155047.74fd863e.*@lxhp.in-berlin.de>
-Reply-To: lx@lxhp.in-berlin.de
+					<20020805102040.7d12bd33.*@lxhp.in-berlin.de>
+					<3D4EBBA5.698AA14D@wp.pl>
+					<20020805222102.193b66fc.lx@lxhp.in-berlin.de>
+					<3D4F9750.328C98B1@wp.pl>
+					<20020807074136.0a1c2cf3.lx@lxhp.in-berlin.de>
+					<20020808155047.74fd863e.*@lxhp.in-berlin.de> <20020809160727.0462fe8c.*@lxhp.in-berlin.de>
+Reply-To: m_hrebien@wp.pl
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <20020808155047.74fd863e.*@lxhp.in-berlin.de>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
+Content-Type: text/plain; charset="us-ascii"
 To: linux-assembly@vger.kernel.org
-Cc: m_hrebien@wp.pl
 
-On Thu, 8 Aug 2002 15:50:47 +0000
-h-peter recktenwald <*@lxhp.in-berlin.de> wrote:
+h-peter recktenwald wrote:
+> 
+> > > > Yes, right! But it still adds "89F6" padding which stands for "mov
+> > > > %esi,%esi" & my question was how to avoid this.
+> >
+> > just tried: apparently, the ".end" directive inhibits those alignemt bytes,
+> > (if not a label at end of code).
+> 
+> that was an error. though i wonder how some program of mine ends up
+> with an odd address. probably due to its .data end. so i tried asm
+> into a .data section, which works and, does #not# align. so, since you
+> seem not to asm to any fixed 'format', that might be the alternative.
 
-> > >=20
-> > > Yes, right! But it still adds "89F6" padding which stands for "mo=
-v
-> > > %esi,%esi" & my question was how to avoid this.
->=20
-> just tried: apparently, the ".end" directive inhibits those alignemt =
-bytes,=20
-> (if not a label at end of code).
+Good idea!! I've tried to move our example (this with simple exit call)
+to the .data section but it still adds padding - it's: add %al,(%eax)
+(coded as "00 00") on my gas even with .align directive set to 1. But!
+I've followed Your way of thinking and guess what?! :) "why not to move
+this code to the .rodata section?" and... it works just fine!! No
+paddings!! :)
 
-that was an error. though i wonder how some program of mine ends up=20
-with an odd address. probably due to its .data end. so i tried asm=20
-into a .data section, which works and, does #not# align. so, since you=20
-seem not to asm to any fixed 'format', that might be the alternative.
+Thank You very much for Your suggestion Peter (is that Your name?)!!!
 
-hp
+-- 
+Maciej Hrebien
 
---=20
-Linux,Assembly,Forth: http://www.lxhp.in-berlin.de/index-lx.shtml en/de
-NO abusive=A0software=A0patents=A0http://petition.eurolinux.org/pr/pr17=
-=2Ehtml
--
-To unsubscribe from this list: send the line "unsubscribe linux-assembl=
-y" in
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
