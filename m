@@ -1,30 +1,27 @@
-From: Rudolf Marek <MAREKR2@cs.felk.cvut.cz>
-Subject: ALD - patch update
-Date: Mon, 8 Apr 2002 12:26:12 +0200
+From: Patrick Alken <cosine@ellipse.mcs.drexel.edu>
+Subject: new version of ald
+Date: Sat, 13 Apr 2002 14:59:52 -0400 (EDT)
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <a8rrcc$60j$2@main.gmane.org>
+Message-ID: <Pine.BSF.4.30.0204131453440.37876-100000@ellipse.mcs.drexel.edu>
 Mime-Version: 1.0
+Return-path: <linux-assembly-owner@vger.kernel.org>
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 To: linux-assembly@vger.kernel.org
 
+ I have a new version of the Assembly Language Debugger (0.1.0) up on
+the site: http://ellipse.mcs.drexel.edu/ald.html.
 
-Hello,
-	I fixed some things around attach/detach (breakpoints cleanups etc)
-plus I added flags register decoding (Yeah now you can stop extracting 
-flags bits by hand :))
+ There are finally attach/detach commands for attaching to running
+processes as many have requested :)
+ There is also a human readable breakdown of the flags register output
+during debugging.
 
-It can be downloaded from http://ruik.sh.cvut.cz/ald.html
-where you can find original source and a link to patch.
+ I made many internal code cleanups/changes so there are bound to be bugs.
+Please let me know of any you find.
 
-I have added L2 cache (thanks to H-Peter) to this mashine so I hope it 
-will be OK. (got several hangups during boot, but adjusteted timigs and 
-it is still running :)
+This version was tested on: Linux 2.4.7 and FreeBSD 4.1.1-STABLE
 
-Regards
-		Rudolf
-
-
-
+Patrick Alken
 
