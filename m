@@ -1,8 +1,8 @@
 From: Allan Wooley <awooley@exeter.edu>
 Subject: chdir command
-Date: Fri, 03 May 2002 15:54:31 -0400
+Date: Fri, 03 May 2002 15:55:00 -0400
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <3CD2EAF6.5A27E998@exeter.edu>
+Message-ID: <3CD2EB13.31635C91@exeter.edu>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
@@ -29,4 +29,6 @@ _start:
 
 Although I have gotten system calls 1, 3-6 & 11 to work fine in assembly
 programs, I can not get the change-working-directory call to work.
+
+Thanks, Al (awooley@exeter.edu)
 
