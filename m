@@ -1,39 +1,27 @@
-From: "Johann 'Myrkraverk' Oskarsson" <myrkraverk@users.sourceforget.net>
-Subject: Re: back to asm after 3 year absense
-Date: Sun, 20 Mar 2005 21:18:56 +0000
-Message-ID: <m33buquibj.fsf@jin.myrkraverk.com>
-References: <200503190014.26600.robin.miyagi@linuxprogramming.ca>
+From: ahmet fazil say <ahmetfazil@gmail.com>
+Subject: how can i compile C code for m68000 with gcc
+Date: Thu, 24 Mar 2005 21:09:17 +0200
+Message-ID: <cb3a16fe05032411094a21d73e@mail.gmail.com>
+Reply-To: ahmet fazil say <ahmetfazil@gmail.com>
 Mime-Version: 1.0
-In-Reply-To: <200503190014.26600.robin.miyagi@linuxprogramming.ca> (Robin
- Miyagi's message of "Sat, 19 Mar 2005 00:14:26 -0700")
+Content-Transfer-Encoding: 7bit
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
 To: linux-assembly@vger.kernel.org
 
-Robin Miyagi <robin.miyagi@linuxprogramming.ca> writes:
+Hi,
+I am trying to compile C code for m680x0, but i can't.
+i am using my P4 1.6ghz processor, gcc version 3.3.5 and using Debian Linux 3.
 
-> In the last three years I have been very busy with database
-> programming and other pursuits.
->
-> I am getting back into asm again.  However there seems to be less
-> interest in the subject nowadays, compared to say 5 years ago.
-> Surely there must be some activity in the microcontroller and
-> operating system kernel circles.
->
-> Please drop me a line if I am missing something.
+I tried
+         %gcc -b68000  .....
+but it gave error
+         gcc-3.3: couldn't run `m68000-gcc-3.3.5': No such file or directory
 
-When I program assembly, it is in MIPS on my PlayStation 2 (running
-Linux) so I don't have much in common with PC specific discussion
-here.
+than i tried
+         %gcc -o filex  filex.c   -m68000
+again it gave error
+         cc1: error: invalid option `68000'
 
-I have to say that I haven't done anything with it for quite some time
-now, but I hope I'll be able to start again, in not too distant
-future.
-
-Johann
-
--- 
-This line is left blank intentionally
-
+what must i do.
