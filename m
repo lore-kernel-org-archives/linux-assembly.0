@@ -1,44 +1,54 @@
-From: "Brien B." <admin@brien.com>
-Subject: Re: Art of Assembly Is Real!
-Date: Tue, 16 Sep 2003 02:54:13 -0400
+From: jeff <jko@save-net.com>
+Subject: Does anyone code in assembler today?
+Date: Wed, 17 Sep 2003 10:20:17 -0700
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <200309160254.13681.admin@brien.com>
-References: <200309110801.37516.rafael.diniz@ic.unicamp.br> <029801c37bfc$2f3540a0$6501a8c0@rhyde>
+Message-ID: <200309171020.17639.jko@save-net.com>
+References: <200309110801.37516.rafael.diniz@ic.unicamp.br> <200309111414.47716.wklux@yahoo.co.uk> <200309150730.23968.jko@save-net.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <029801c37bfc$2f3540a0$6501a8c0@rhyde>
+In-Reply-To: <200309150730.23968.jko@save-net.com>
 Content-Disposition: inline
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Randall Hyde <aoax86@earthlink.net>
-Cc: linux-assembly@vger.kernel.org
+To: linux-assembly-admin@mlists.in-berlin.de, linux-assembly@vger.kernel.org
 
-I have a book named this, but reading further, I realize it's not the same 
-one. :-)
+I guess most programmers work in Java one of the
+newer object oriented languages.   Or maybe
+Linux is not ideal for assembler and the few remaining
+coders use other platforms?
 
-That's neat. Good job.
+The level of activity on this list and others indicate
+the assembler community is not very active.   That
+is one indicator.  Another is the number of people
+interested in new programs.  Ten years ago when
+i released a program, a large number of people
+jumped on it to look at the code.  My release of a
+few days ago resulted in three responses.
 
-Brien
+So.. maybe we are a small community which is
+difficult to join?  That's OK, there is always a niche
+for small fast code and as systems mature the
+competition moves from features to speed. 
 
-On Monday 15 September 2003 10:42 pm, Randall Hyde wrote:
-> Friday, Sept 12, I headed up to San Francisco
-> for an interview on TechTV about my book
-> "The Art of Assembly Language".
-> While I was there, the books arrived from the printers.
-> Yes, people, "The Art of Assembly Language" is *really*
-> available now.
->
-> As Border's, Amazon, etc., have put the book on hold
-> waiting for it to finally arrive, my suggestion is to go to
-> the publisher's web site (http://www.nostarch.com)
-> and get it there. They have a special offer right now on
-> the book (limited time offer, until the other on-line outfits
-> get their act together).
-> Cheers,
-> Randy Hyde
-> -
-> To unsubscribe from this list: send the line "unsubscribe linux-assembly"
-> in the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+I think this happened to some extent with DOS.  Once
+it matured the companies needed something new to
+sell.  They had a problem with the competition building
+fast programs optimized in .asm.  This happened with
+spreadsheets and other programs.
+
+Of course, the argument is that hardware is getting faster
+and speed is no longer an issue.  Also, memory is cheap
+and big bloated programs are best because they get into the
+market quickly.  It is much easier to train programmers
+in the newer languages and todays tools isolates everyone
+from knowing much about hardware or hex.
+
+So.. i wonder if it would be better to port some old DOS
+libraries to work under X or stay with the console?  I see
+some asm activity in graphics and games.  There is also
+the embedded linux area...
+
+ jeff (looking for an interesting asm project)
+
 
