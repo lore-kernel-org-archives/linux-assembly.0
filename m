@@ -1,31 +1,38 @@
-From: Emmet Ford <emmet@optonline.net>
-Subject: Re: Directory contents
-Date: Sat, 27 Nov 2004 17:38:44 -0500
-Message-ID: <41A901F4.60808@optonline.net>
-References: <200411271900.48627.hitoc_mail@yahoo.it>
+From: A M <alim1993@yahoo.com>
+Subject: Accessing a process structure in the processes link list
+Date: Sun, 28 Nov 2004 14:57:20 -0800 (PST)
+Message-ID: <20041128225720.99389.qmail@web51909.mail.yahoo.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
-Return-path: <linux-c-programming-owner@vger.kernel.org>
-In-reply-to: <200411271900.48627.hitoc_mail@yahoo.it>
-Sender: linux-c-programming-owner@vger.kernel.org
+Return-path: <linux-assembly-owner@vger.kernel.org>
+Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: HIToC <hitoc_mail@yahoo.it>
-Cc: Linux C programming <linux-c-programming@vger.kernel.org>, Linux Assembly <linux-assembly@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: linux-kernel@vger.kernel.org, linux-assembly@vger.kernel.org, linux-c-programming@vger.kernel.org
 
-opendir, readdir, closedir are C standard library calls.
+Would it be possible for a program running as root
+that wasn't compiled with the kernel to access a
+process structure in the processes link list? 
 
-HIToC wrote:
+I've read an article about hiding processes and the
+article made sound so easy to access the link list and
+hide a process, how easy is it? 
 
->Hi all!
->
->I want to write a function that can read the contents of a specified directory
->in order to find a certain type of file or to copy a directory-tree or
->something else.
->Neverthless I need of some system functions that find the files that are
->contained in that directory (like FINDFIRST and FINDNEXT under ms-dos).
->
->Who can help me?
->
->  
->
+Is it possible to a process to access its own entry in
+the processes link list?
+
+
+Thanks, 
+
+Ali 
+
+
+
+
+		
+__________________________________ 
+Do you Yahoo!? 
+Meet the all-new My Yahoo! - Try it today! 
+http://my.yahoo.com 
+ 
+
