@@ -1,40 +1,39 @@
-From: QUASAR <quasar2@o2.pl>
-Subject: Re[2]: ald 0.1.2
-Date: Sun, 23 Jun 2002 08:40:23 +0000 (UTC)
+From: Frederic Marmond <fmarmond@eprocess.fr>
+Subject: how can I have access to the memory as in flat mode?
+Date: Sun, 23 Jun 2002 17:13:51 +0200
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <495184185.20020723103849@quasar.prv.pl>
-References: <Pine.BSF.4.30.0206142208470.30769-100000@ellipse.mcs.drexel.edu>
- <20020615194422.228e614b.*@lxhp.in-berlin.de>
-Reply-To: QUASAR <quasar@quasar.prv.pl>
+Message-ID: <3D15E5AF.5010706@eprocess.fr>
+Reply-To: fmarmond@eprocess.fr
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <20020615194422.228e614b.*@lxhp.in-berlin.de>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
 To: linux-assembly@vger.kernel.org
 
-Witam h-peter recktenwald!
 
-hpr> On Fri, 14 Jun 2002 22:12:49 -0400 (EDT)
-hpr> Patrick Alken <cosine@ellipse.mcs.drexel.edu> wrote:
+Hi,
 
->> 
->> As always, comments and bug reports are welcome.
-hpr>                 ^^
+few days ago, i posted mails to try to know better about linear memory 
+in linux.
+perhapse you've already answer me, but I could'nt see mails from the list...
+So, I managed to make my prog work by using /dev/mem
+it's very ugly, but it worked.
 
-hpr> could you add symbols' display. listing which ones exist and, 
-hpr> at display a breakpt, if that is also a symbol address ?
+Is there any other way to access somewhere?
+In fact the exact problem is:
 
-hpr> thx, so far, i won't be able to succed without ald, already:)
+on a embeded system, the mac-adress of  eth0 and eth1 are stored in a 
+flash memory, mapped somewhere.
+The 'standard' driver (natsemi) doesn't know this, and try to access to 
+the 'normal' pci network card.
+So, i have to read the mac adress by hand, and modify the value returned 
+by the 'standard' driver.
 
-hpr> best,
-hpr>         hp
-Hmm, but I think Linice is the best for linux assembly programming!
+I know the adress, but I've got seg-faults when trying to access it from 
+the driver (readb, (unsigned char*)0xf8000, ...)
 
--- 
-pozdrawiam
-QUASAR
-quasar@quasar.prv.pl
-http://www.quasar.prv.pl
+any help?
+
+Fred
 
