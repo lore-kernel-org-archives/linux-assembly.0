@@ -1,30 +1,45 @@
-From: Stephan Walter <stephan.walter@gmx.ch>
-Subject: Re: gunzip
-Date: Sat, 31 Aug 2002 17:08:43 +0200
+From: Maciej Hrebien <m_hrebien@wp.pl>
+Subject: Re: looping_code
+Date: Sat, 31 Aug 2002 17:51:59 +0200
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <20020831170843.549e30f9.stephan.walter@gmx.ch>
-References: <1030783657.5588.8.camel@freyr.localnet>
+Message-ID: <3D70E61F.39C1CA6B@wp.pl>
+References: <Pine.SGI.4.40.0208310210540.117091029-100000@shell01.TheWorld.com>
+Reply-To: m_hrebien@wp.pl
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <1030783657.5588.8.camel@freyr.localnet>
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 To: linux-assembly@vger.kernel.org
 
-On Sat, 31 Aug 2002 10:47:37 +0200, Ewald Wasscher
-<ewald.wasscher@pobox.com> wrote:
-> Hello all,
+Scott Lanning wrote:
 > 
-> Does anyone know if a mini implementation of g(un)zip in assembly
-> exists?
+> On Mon, 26 Aug 2002, ssams wrote:
+> > .data
+> > msg: .byte 65,10
+> >
+> > .text
+> >    .globl mulai
+> > mulai:
+> >     mov $10,%edx
+> >
+> > ulang:
+> >   mov $4,%eax
+> >   mov $1,%ebx
+> >   mov $msg,%ecx
+> 
+> This moves the value at 'msg'
+> rather than a pointer to 'msg'.
+> Try this:
+> 
+>     leal msg, %ecx
 
-I do not know of any. Gzip's algorithm is quite complicated. But it
-shouldn't be impossible to write one yourself ;-)
+"mov $msg,%ecx" and "lea msg,%ecx" does the same thing in this example -
+moves ptr to 'msg' to the ecx register. The only difference is that the
+first one is coded one byte shorter.
 
-There is an LZSS compression algorithm implemented (see asmutils). I can
-send you a LZP-compression program if you are interested (but it is not
-mature yet)
+Regards,
 
-Cheers,
-Stephan
+-- 
+Maciej Hrebien
+
