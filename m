@@ -1,38 +1,47 @@
-From: Maciej Hrebien <m_hrebien@wp.pl>
+From: peter w krause <wklux@yahoo.co.uk> (by way of peter w krause
+	<wklux@yahoo.co.uk>)
 Subject: Re: gas jump
-Date: Sun, 31 Aug 2003 11:55:23 +0200
+Date: Sun, 31 Aug 2003 12:06:37 +0100
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <3F51C60B.F6ED8DD6@wp.pl>
-References: <Pine.A41.4.20.0308310041440.93300-100000@delfin.unideb.hu> <3F51C230.D94AF7EC@wp.pl>
-Reply-To: m_hrebien@wp.pl
+Message-ID: <200308311206.37056.wklux@yahoo.co.uk>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
+Content-Disposition: inline
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 To: linux-assembly@vger.kernel.org
+Cc: Linux-assembly@mlists.in-berlin.de
 
-Maciej Hrebien wrote:
-> 
-> Fekete Gabor wrote:
-> >
-> > hi
-> >
-> > i want to make a relative jump.
-> > i tried it with "jmp 0x09" and expected it to
-> > jump to the address that comes 9 bytes after
-> > this "jmp".
-> > is it correct?
-> 
-> Nope. Try jmp .+9 as Robert Plantz suggested in his post dated
-> 02.02.2003 ("." means current address that gas is assembling into so ie.
-> l: .long . gives you l with its own address stored into) or hard code it
-> as .byte 0xeb, 0x09 (0xeb is jmp rel8). Isn't it better to just label if
-> your code isn't the fixed one? ;)
+Fekete Gabor am Samstag, 30. August 2003 23:46:
+> hi
+>
+> i want to make a relative jump.
+> i tried it with "jmp 0x09" and expected it to
 
-I missed something, 9 bytes AFTER, so +2 because jmp rel8 encodes with 2
-bytes. Sorry!
+the actual displacement is not an argument to <jmp>
 
--- 
-Maciej Hrebien
+> jump to the address that comes 9 bytes after
+> this "jmp".
+> is it correct?
+
+no.
+
+> i'm asking because when I examined (x/bx) the code with
+> gdb it didn't really show any bytes with value 0x09 when
+> looking at this jump instruction.
+
+should copile a branch to address stored at location 0x09
+
+correct code would be:
+		jmp 1f
+	...
+1f:
+
+
+best,
+	hp
+
+--
+Linux,Assembly,Forth: http://www.lxhp.in-berlin.de/index-lx.shtml
 
