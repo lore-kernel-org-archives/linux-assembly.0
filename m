@@ -1,38 +1,37 @@
-From: Oleg Nesterov <oleg@tv-sign.ru>
-Subject: Re: Q: -fpic and $_GLOBAL_OFFSET_TABLE_
-Date: Wed, 16 Jul 2003 17:51:10 +0400
+From: jeff <jko@bctonline.com>
+Subject: Re: Keyboard and Mouse library
+Date: Thu, 17 Jul 2003 00:17:27 -0700
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <E19cmgY-0003jZ-00@mail.tv-sign.ru>
-Return-path: <linux-assembly-owner@vger.kernel.org>
-List-Id: <linux-assembly.vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Message-ID: <200307170017.27280.jko@bctonline.com>
+References: <E19cPhx-0000W5-00@mail.tv-sign.ru> <200307160303.16120.jko@save-net.com> <200307160015.06499.lx@lxhp.in-berlin.de>
+Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-To: linux-assembly@vger.kernel.org, lx@lxhp.in-berlin.de
+Return-path: <linux-assembly-owner@vger.kernel.org>
+In-Reply-To: <200307160015.06499.lx@lxhp.in-berlin.de>
+Content-Disposition: inline
+List-Id: <linux-assembly.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: linux-assembly@vger.kernel.org
 
-Hello.
+On Tuesday 15 July 2003 04:15 pm, hp wrote:
+> yes, but (most of) those C-'programmers' don't understand (and ignore)
+> assembly, so you might need to learn their 'language'...
 
-hp <lx () lxhp ! in-berlin ! de> wrote:
->
-> Oleg Nesterov am Dienstag, 15. Juli 2003 14:19:
-> > Hello.
-> >
-> > I thought, that &GOT == $_GLOBAL_OFFSET_TABLE_ + .
->						^^^^^^^^^^^^^^^^^^^^^
-> thus your GOT would be at a different place whenever fetched at a different 
-> address in your code - not very likely...
+True, most of Linux seems to be documented from a "C" programmers
+perspective.  One has to learn a long list of symbolic names for
+things and then look in the .h files to see what codes they create.
+Then you run into a lot of ifdef statements and have trouble
+deciding if this symbol code is for BSD or AIX or ?   Eventually,
+it is necessary to compile the code and use GDB to see
+what code is generated.
 
-There is R_386_GOTPC relocation item for _GLOBAL_OFFSET_TABLE_.
+Sigh... I sometimes wish we had a simple assembler interface
+to the kernel.  If a call can only be accessed as root then
+that would be handled etc.  Everything clearly documented
+for assembler code.  No macros.   No includes.  Just
+registers, dwords, words, and bytes.  If common operations
+require several kernel functions they could be added.
 
-Look at this code produced by gcc to load &GOT in ebx:
+Enough dreaming... back to work <grin>  Jeff Owens
 
-	call .L3
-.L3:
-	popl %ebx
-	addl $_GLOBAL_OFFSET_TABLE_+[.-.L3],%ebx
 
-So &GOT = .L3 + $_GLOBAL_OFFSET_TABLE_+ . - .L3 = $_GLOBAL_OFFSET_TABLE_+ .
-
-Thank you for response,
-
-Oleg.
