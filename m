@@ -1,40 +1,47 @@
-From: h-peter recktenwald <*@lxhp.in-berlin.de>
-Subject: Re: ald 0.1.2
-Date: Sat, 15 Jun 2002 19:44:22 +0000
+From: Rudolf Marek <MAREKR2@cs.felk.cvut.cz>
+Subject: OpenWeekend and other stuff.
+Date: Tue, 18 Jun 2002 21:04:26 +0200
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <20020615194422.228e614b.*@lxhp.in-berlin.de>
-References: <Pine.BSF.4.30.0206142208470.30769-100000@ellipse.mcs.drexel.edu>
-Reply-To: lx@lxhp.in-berlin.de
+Message-ID: <aeo07s$c7c$2@main.gmane.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <Pine.BSF.4.30.0206142208470.30769-100000@ellipse.mcs.drexel.edu>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
-To: Patrick Alken <cosine@ellipse.mcs.drexel.edu>
-Cc: linux-assembly@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: linux-assembly@vger.kernel.org
 
-On Fri, 14 Jun 2002 22:12:49 -0400 (EDT)
-Patrick Alken <cosine@ellipse.mcs.drexel.edu> wrote:
 
->=20
-> As always, comments and bug reports are welcome.
-		^^
+Hello,
 
-could you add symbols' display. listing which ones exist and,=20
-at display a breakpt, if that is also a symbol address ?
+After some hesitation I wrote:
 
-thx, so far, i won't be able to succed without ald, already:)
+There was a security conference in Prague. And I had a speech about 
+linuxassembly programming. Among athers there were well known developers
+Amon Ott (RSBAC author), Philippe Biondi (LIDS author), Milan Pikula and  
+Martin Ockajak (Medusa DS9) authors. Their speech and discussion was held
+in english. My speech in Czech.
 
-best,
-	hp
+For more details please visit http://www.openweekend.cz or 
+http://en.openweekend.cz
 
---=20
-Linux,Assembly,Forth: http://www.lxhp.in-berlin.de/index-lx.shtml en/de
-NO abusive=A0software=A0patents=A0http://petition.eurolinux.org/pr/pr17=
-=2Ehtml
--
-To unsubscribe from this list: send the line "unsubscribe linux-assembl=
-y" in
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+And now the best: Me :) 
+
+At http://ruik.sh.cvut.cz/ruik.jpg with 5x5m screen with ALD :). { must 
+see Patrick :) } 
+
+More photos at: http://foto.blisty.cz (Mozilla has problems here, photos 
+are free for non-comertional, personal use)
+
+If you want to see videos (divX) its on ftp://ftp.sh.cvut.cz/OpenWeekend/
+All Slides: http://openweekend.cz/ow2/slajdy
+
+So thats it. 
+
+Now please,
+ will anyone here improve ftpd.asm during next month ?? If not I will 
+take it. Also I'm planning to implement hostname2ip to net utils.
+
+Regards
+		Rudolf 
+
+
