@@ -1,25 +1,27 @@
-From: hp <hp@lxhp.in-berlin.de>
-Subject: Re: .intel_syntax
-Date: Thu, 16 Jan 2003 06:36:09 +0000
+From: "n  mishra" <mishra_nn@rediffmail.com>
+Subject: (unknown)
+Date: 18 Jan 2003 05:26:53 -0000
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <200301160644.h0G6i9Dl006833@hirsch.in-berlin.de>
-References: <20030116011903.21711.qmail@webmail28.rediffmail.com>
+Message-ID: <20030118052653.22606.qmail@webmail16.rediffmail.com>
+Reply-To: "n  mishra" <mishra_nn@rediffmail.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
 Return-path: <linux-assembly-owner@vger.kernel.org>
+Content-Disposition: inline
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: n mishra <mishra_nn@rediffmail.com>, linux-assembly@vger.kernel.org
+Content-Type: text/plain;
+	format=flowed; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: linux-assembly@vger.kernel.org
 
-hp am Donnerstag, 16. Januar 2003 06:30:
+Hi all!
+This sounds slightly silly but is it possible to link the .obj 
+files from one compiler to another.I have been working with bcc 
+and gcc and was wondering if it was possible to link files created 
+in one compiler for eg bcc to the other for eg gcc.
+I tried to create a obj file in bcc and load it using ld but it 
+said the file format was not recognisable.
+Also how do you execute a binary file created using as86 and the 
+-b option.
+Thanks in advance.
+mishra.
 
-I forgot (didn't read carefully)
-
-intel_syntax is not documented, at all. but, you'll find several examples to 
-almost all mnemonics in the <binutils> sources - which also reveal the 
-current state of in-completeness. 
-
-
--- 
-Linux,Assembly,Forth: http://www.lxhp.in-berlin.de/index-lx.shtml en/de
-  >> hp -at- lxhp -dot- in-berlin -dot- de <<
