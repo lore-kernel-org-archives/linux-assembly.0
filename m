@@ -1,21 +1,25 @@
-From: "ssams" <ssams@telkom.net>
-Subject: is_more_resource
-Date: Fri, 20 Sep 2002 08:24:13 +0700
+From: halfdead <halfdead@cannabis.daphnes.ro>
+Subject: kernel vulnerabilities
+Date: Sun, 22 Sep 2002 15:29:21 +0300 (EEST)
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <web-50553455@m1.plasa.com>
+Message-ID: <Pine.LNX.4.33.0209221525350.704-100000@cannabis.daphnes.ro>
+References: <3D81ADF5.9070302@eprocess.fr>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
 Return-path: <linux-assembly-owner@vger.kernel.org>
+In-Reply-To: <3D81ADF5.9070302@eprocess.fr>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: linux-assembly@vger.kernel.org
 
-i think assembly programming in linux need more resource.
-it come when 
-we compare it with for ex, tasm.
-the case is: we need register, eax,ebx,ecx,edx,to do just
-write input
-is my think wrong, or there is something behind this..? 
-=========================================================================
-Khusus Pelanggan Telepon DIVRE 2, Tekan 166 untuk mendengarkan pesan Anda.
-=========================================================================
+Hey,
+Its been rumoured for a while that certain vulnerabilities reside at
+kernel level in different unix flavours (solaris/bsd/linux). Some of them
+claim to be remotely exploitable (ABfrags.c, ABremkrnl.c, etc.). I have
+seen local kernel vulnerabilities and they seem to be pretty tricky to
+exploit hence i highly doubt that anyone would be able to work out a
+clean remote exploitation. Is any of you guys aware of any method or is
+this just FUD?
+
+- halfdead
+
