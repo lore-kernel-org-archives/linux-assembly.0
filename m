@@ -1,58 +1,39 @@
-From: HIToC <hitoc_mail@yahoo.it>
-Subject: read key from keyboard
-Date: Mon, 1 Nov 2004 17:55:25 +0100 (CET)
-Message-ID: <20041101165525.33834.qmail@web25104.mail.ukl.yahoo.com>
+From: A M <alim1993@yahoo.com>
+Subject: Access to Program Counter in C
+Date: Tue, 16 Nov 2004 08:38:21 -0800 (PST)
+Message-ID: <20041116163821.61564.qmail@web51902.mail.yahoo.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-assembly-owner@vger.kernel.org>
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="windows-1252"
-To: linux-assembly@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: linux-c-programming@vger.kernel.org, linux-assembly@vger.kernel.org
 
-Hi all
+Hello, 
 
-How can I read a key from the keyboard when the key is
-available?
-I wish also to know the keyboard scan code... Do you
-remember the
-funtion 0 of interrupt 16h of BIOS??
+Does anybody know how to access the address of the
+current executing instruction in C while the program
+is executing? 
 
-	xor	ah, ah
-	int	16h
-returns:
-	AH =3D BIOS scan code
-	AL =3D ASCII character
+Also, is there a method to load a program image from
+memory not a file (an exec that works with a memory
+address)? Mainly I am looking for a method that brings
+a program image into memory modify parts of it and
+start the in-memory modified version. 
 
+Can anybody think of a method to replace a thread
+image without replacing the whole process image? 
 
-I have seen that on Linux we can read from the stdin:
+Thanks, 
 
-	mov	eax, 0x03	; sys_read
-	xor	ebx, ebx	; stdin =3D 0
-	mov	ebx, buffer	; buffer
-	mov	ecx, 0x01	; count
-	int	0x80		; Linux kernel
-
-but this code does not return the key when it is
-immediatelly
-available... It prints the key on stdout and waits
-that the
-user presses enter!
-
-Thanks!!
+Ali
 
 
-=3D=3D=3D=3D=3D
-HIToC
+		
+__________________________________ 
+Do you Yahoo!? 
+The all-new My Yahoo! - Get yours free! 
+http://my.yahoo.com 
+ 
 
-
-	=09
-___________________________________=20
-Nuovo Yahoo! Messenger: E' molto pi=F9 divertente: Audibles, Avatar, We=
-bcam, Giochi, Rubrica=85 Scaricalo ora!=20
-http://it.messenger.yahoo.it
--
-To unsubscribe from this list: send the line "unsubscribe linux-assembl=
-y" in
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
