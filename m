@@ -1,8 +1,10 @@
-From: "Randall Hyde" <randyhyde@earthlink.net>
-Subject: New Version of "Art of Assembly" Now Available
-Date: Wed, 18 Sep 2002 18:55:32 -0700
+From: Maciej Hrebien <m_hrebien@wp.pl>
+Subject: Re: inside_SUB
+Date: Thu, 19 Sep 2002 14:24:25 +0200
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <008701c25f7f$a3a12ed0$6601a8c0@rhyde>
+Message-ID: <3D89C1F9.7D3DA7@wp.pl>
+References: <web-50089505@m1.plasa.com>
+Reply-To: m_hrebien@wp.pl
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
@@ -10,32 +12,52 @@ List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 To: linux-assembly@vger.kernel.org
 
-I've just finished uploading an "upgrade" to
-"The Art of Assembly Language Programming"
-to Webster (http://webster.cs.ucr.edu).
-The new version includes dozens (if not hundreds)
-of changes suggested by readers over the past
-several months as well as lots of changes I've made
-during a couple of proofreading passes.
+ssams wrote:
+> 
+> thanks for your replay
+> this is make me learning more.
+> But when i try to try, i found a new problem when i try to
+> read
+> the value from ecx after doing syscall read.
+> mov $3,%eax
+> mov $0,%ebx
+> mov $6,%edx
+> 
+> how can i read input from this code and reprinting it...?
+> for example output:
+> Enter e number: 4       #we enter 4
+> you have number: 4      #reprinting
+> 
+> help me please
+> regard
+> ssams
 
-Probably the biggest news is that AoA is now
-available in an HTML format.  I still highly recommend
-that you read the PDF versions (because the HTML
-version is not formatted anywhere near as well;  in fact,
-some of the formatting problems introduce outright errors
-in the text).  However, for those with limited bandwidth
-connections or the desire to load AoA onto a device
-(like a PDA) that supports HTML but not PDF formats,
-the new version of AoA will fit the bill.  Note that to reduce
-download times, I have not bothered converting Volume Five
-of AoA to HTML format (Volume Five is *really* advanced
-stuff anyway, and few people read it, so I didn't bother with
-the conversion).
+.data
 
-The Art of Assembly Language Programming is available
-in PDF and HTML formats for both Windows and Linux
-platforms.
-Randy Hyde
+char: .byte 0
 
+.text
 
+.globl _start
+_start:
+	mov $3,%eax
+	xor %ebx,%ebx
+	mov $char,%ecx
+	mov $1,%edx
+	int $0x80
+
+	mov $4,%eax
+	inc %ebx
+	int $0x80
+
+	mov $1,%eax
+	int $0x80
+
+Regards,
+
+PS I recommend to read some tutorial(s) on how to write assembly code
+useing Linux's calls.
+
+-- 
+Maciej Hrebien
 
