@@ -1,28 +1,28 @@
-From: Matti Aarnio <matti.aarnio@zmailer.org>
-Subject: Archive hunt for vger's lists ...  (and FAQs too!)
-Date: Wed, 21 Aug 2002 12:29:07 +0300
+From: RCS <cryptik@ig.com.br>
+Subject: How interrupts work
+Date: Fri, 23 Aug 2002 07:15:45 -0300
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <20014.9395772771$1029922094@news.gmane.org>
-Reply-To: webmaster@vger.kernel.org
+Message-ID: <20020823101144Z318747-685+36028@vger.kernel.org>
 Mime-Version: 1.0
 Return-path: <linux-assembly-owner@vger.kernel.org>
-Content-Disposition: inline
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: linux-kernel@vger.kernel.org, linux-admin@vger.kernel.org
-Cc: linux-8086@vger.kernel.org, linux-apps@vger.kernel.org, linux-alpha@vger.kernel.org, linux-assembly@vger.kernel.org
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+To: linux-assembly@vger.kernel.org
 
+Hi all,=20
 
-At vger's web we have:
-  http://vger.kernel.org/vger-lists.html
+  I need some help to understand how interrupts work on Intel.=20
+  For example, how do I print a character in the screen?=20
+Wich register must contain the character for that? Is "int 10h" the correct=
+=20
+interrupt for that?=20
 
-which has all lists at vger, and links to all list archives that
-I found last week (at google/marc) when I did a full review of those.
+  Thanks for attention,=20
 
-If you know any archive that should be listed there, please tell
-vger's webmaster.  (NOT the lists!)
+                                        RCS=20
 
-Also, if any list has a FAQ, we would like to know about it too!
-My plan is to add archive and FAQ pointters to all list footers
-(in style similar to linux-kernel).
+_________________________________________________________
+Oi! Voc=EA quer um iG-mail gratuito?
+Ent=E3o clique aqui: http://registro.ig.com.br/
+
