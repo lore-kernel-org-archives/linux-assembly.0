@@ -1,36 +1,68 @@
-From: Maciej Hrebien <m_hrebien@wp.pl>
-Subject: question about Crusoe
-Date: Thu, 31 Jul 2003 15:53:20 +0200
+From: =?iso-8859-1?q?Anticipating=20a=20Reply?= <ruxyz@yahoo.com>
+Subject: Re: Retrieving compilation flags from Executables / Object files
+Date: Fri, 1 Aug 2003 05:44:01 +0100 (BST)
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <3F291F50.36D20A63@wp.pl>
-Reply-To: m_hrebien@wp.pl
+Message-ID: <20030801044401.45632.qmail@web41108.mail.yahoo.com>
+References: <200307291812.08551.lx@lxhp.in-berlin.de>
+Reply-To: ruxyz@yahoo.com
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-assembly-owner@vger.kernel.org>
+In-Reply-To: <200307291812.08551.lx@lxhp.in-berlin.de>
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: linux-assembly@vger.kernel.org
+To: hp <lx@lxhp.in-berlin.de>
+Cc: Assembly Linux <linux-assembly@vger.kernel.org>
 
-Hi there!
+Hello ,
 
-Does anyone of you worked with Transmeta's Crusoe? Or maybe you have
-this cpu still working for you? so, how's your battery? ;) Do you know
-where can i find more information about this cpu better than
-www.transmeta.com briefs?
+ Compiling a *.c file using "gcc" on Linux with the 
+flags  -S -fverbose-asm  , will give the complete 
+list of compilation flags used in the output *.s file.
 
-I just (for now ;)) wanna know how it works. Is it 1:1 with Intel cpus &
-which one? Does it or the code morphing soft support sse & does it have
-other instructions not present in x86 instruction list? What are the
-bottlenecks? How "smart" is the code morphing soft? Are there any parity
-rules like in Pentium? ... where can i find informations like that?
+ Hope this info is useful .
 
-..and one (stupid?) at the end, just theoretically: the soft is in flash
-memory, so i can create my own instruction list & code the soft so it
-will be able to cross my instructions into Crusoe's internal world,
-right?
+Regards !
 
-Regards,
 
--- 
-Maciej Hrebien
+ --- hp <lx@lxhp.in-berlin.de> wrote: > Anticipating a
+Reply am Dienstag, 29. Juli 2003
+> 15:21:
+> > Hi ,
+> >
+> >   Thank you for the response .
+> >
+> >   By compilation flags , I meant the
+> > flags used for Optimization or otherwise
+> > in general .
+> 
+> compilation flags aren't stored in the compiled
+> binary.
+> 
+> you only might be able to very vaguely deduce from
+> some characteristics how 
+> those flags were set. for instance, if you see
+> 		subl $4,esp
+> 		addl $-8,esp
+> 'optimization' was set to -O2 or lower level (w.
+> GCC) because -O3 would have 
+> compiled
+> 		subl $12,esp
+> instead. the 'no-frames' switch might also be
+> deduceable, and a few others 
+> but, most probably you'll never know whether your
+> findings are correct.
+> 
+> best
+> 	hp
+> 
+> -- 
+> Linux,Assembly,Forth:
+> http://www.lxhp.in-berlin.de/index-lx.shtml en/de
+> 	FAQ(s) + DOCs at http://linuxassembly.org
+>   pse, reply to << lx -at- lxhp -dot- in-berlin
+> -dot- de >>
+>  
 
+________________________________________________________________________
+Send free SMS using the Yahoo! Messenger. Go to http://in.mobile.yahoo.com/new/pc/
