@@ -1,50 +1,69 @@
-From: theguest <theguest@ono.com>
-Subject: Basic assembly
-Date: Mon, 11 Nov 2002 01:01:31 +0100
+From: "Joseph D. Wagner" <wagnerjd@prodigy.net>
+Subject: RE: Basic assembly
+Date: Sun, 10 Nov 2002 22:27:35 -0600
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <20021111000131.GA9775@theguest.homelinux.net>
+Message-ID: <000001c2893a$aa911ae0$ac231c43@joe>
+References: <20021111000131.GA9775@theguest.homelinux.net>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-Content-Disposition: inline
+In-Reply-To: <20021111000131.GA9775@theguest.homelinux.net>
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: linux-assembly@vger.kernel.org
+To: 'theguest' <theguest@ono.com>, linux-assembly@vger.kernel.org
 
-Hi!
-First of all, I'm spanish so sorry for my bad english.
-I'm new on the list and I'm a novice in assembly. I'm interested in
-linux assembly because I'm interested in linux security, buffer
-overflows...
-So, I'm reading the "Smash the stack for fun and profit" and the results
-that Aleph get are different from mine.
-For example he has this code in C:
--------------
-void function(int a, int b, int c){
-	char buffer1[5];
-	char buffer2[10];
-}
-void main(){
-	function (1,2,3);
-}
--------------
-He gets linux assembly code using gcc:
-$ gcc -S -o example1.s example1.c
+> First of all, I'm spanish so sorry for my bad english.
 
-He says his assembly code has a line like:
-subl $20,%esp
-He says the memory is reserved multiples of "word". He says word=4bytes.
-So our 5 bytes buffer needs 2 words = 8 bytes and buffer2[10]->12bytes.
-That's why uses subl to get 20 bytes from esp. That seems correct for
-me but when I compile it in assembly using gcc I don't get the same
-assembly code...
-For example:
-	subl $8,%esp
-	addl $-4,%esp
-in the main function 
-and in the function <function>:			
-	subl $40,%esp
-Why are my code reserving other quantity of space for variables?
-It's something related with optimizated compilation in gcc?
-Thanks in advance and sorry if something isn't correct in my first email
-to the list.
+Your English is better than some other people's English.
+
+> He says the memory is reserved multiples of "word".
+
+No.  In Linux, memory is allocated in "page frames", where 1 page frame
+= 4 Kbytes.
+
+> He says word=4bytes.
+
+No.  A Word is 2 bytes.
+
+WORD (Word) = 2 bytes (16 bits)
+DWORD (Double Word) = 4 bytes (32 bits)
+QWORD (Quad Word) = 8 bytes (64 bits)
+
+> So our 5 bytes buffer needs = 8 bytes ...
+> ...
+> Why are my code reserving other quantity of space for variables?
+
+All variables must be DWORD "aligned" except for variables smaller than
+1 DWORD.
+
+"DWORD Alignment" means that the amount of memory required for all
+variables will be rounded up to the nearest DWORD (4 bytes).
+
+For example, given the user defined class:
+class Pentagon {
+unsigned char Side1;
+unsigned char Side2;
+unsigned char Side3;
+unsigned char Side4;
+unsigned char Side5;
+};
+while the size of Pentagon is 5 bytes, the compiler rounds up allocation
+to 8 bytes so that Pentagon is DWORD Aligned.
+
+DWORD Alignment occurs with each instance of the variable.  In other
+words, an array of Pentagon, for example: Pentagon myPentagon[5];, is 25
+bytes but would round up to 40 bytes (not 28 bytes) because each
+instance of Pentagon is 8 bytes, so an array of 5 Pentagons would be 40
+bytes (8 byte alignment * 5 occurrences = 40 bytes).
+
+DWORD Alignment has nothing to do with Linux, the compiler, or any
+computer language.  DWORD Alignment is part of the x86 processor
+specification.  (A DWORD is 32 bits, and today's processors are 32 bit
+processors; that is not a coincidence.)
+
+I am not sure if this helps you.  Your specific problem was unclear to
+me.
+
+By the way, whoever is giving you your information is really
+misinformed.
+
