@@ -1,32 +1,28 @@
-From: Brian Raiter <breadbox@muppetlabs.com>
-Subject: Re: Mixing C and assembly
-Date: Wed, 5 Mar 2003 20:55:40 -0800
+From: "Anant Aneja" <anantaneja@rediffmail.com>
+Subject: vt100 escape codes
+Date: 6 Mar 2003 13:27:05 -0000
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <15974.54476.436663.588809@eidolon.muppetlabs.com>
-References: <200303052350.00680.davidkedrosky@rogers.com>
+Message-ID: <20030306132705.31400.qmail@webmail7.rediffmail.com>
+Reply-To: "Anant Aneja" <anantaneja@rediffmail.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <200303052350.00680.davidkedrosky@rogers.com>
+Content-Disposition: inline
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: dAvId KeDrOsKy <davidkedrosky@rogers.com>
-Cc: Linux Assembly Programming List <linux-assembly@vger.kernel.org>
+Content-Type: text/plain;
+	format=flowed; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: linux-assembly@vger.kernel.org
 
-> The error I am getting when I try to run the program in KDevelop (which uses 
-> gcc) is:
-> main.c: undefined reference to `asm_func' 
+i used the escape codes of vt100 to clear the screen and also 
+found on the net other such codes.
+now i want to do the folloeing :
+1.make the program wait until the user presses a key.
+when this is done the key pressed is not displayed but the program 
+no moves on
 
-That's right. There is no asm_func symbol.
 
-> section         .text
-> 
-> global _asm_func
-> 
-> _asm_func:
+Anant Aneja
 
-The practice of silently appending an underscore to exported C symbols
-is not done in the Unix world, in general. Export the same symbol you
-import.
 
-b
+
+
