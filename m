@@ -1,60 +1,42 @@
-From: siddharth vora <sjv@usc.edu>
+From: Justinas <justinas@patikimi.lt>
 Subject: Re: Access to Program Counter in C
-Date: Thu, 18 Nov 2004 23:58:40 -0800
-Message-ID: <9230369867a2.419d3730@usc.edu>
+Date: Fri, 19 Nov 2004 10:03:00 +0200
+Message-ID: <20041119100300.731ff5ed@biesas.adminas.net>
+References: <90db62064205.419d30cd@usc.edu>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
-Return-path: <linux-c-programming-owner@vger.kernel.org>
-Content-language: en
-Content-Disposition: inline
-Sender: linux-c-programming-owner@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+Return-path: <linux-assembly-owner@vger.kernel.org>
+In-Reply-To: <90db62064205.419d30cd@usc.edu>
+Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: sandeep <sandeep@codito.com>
-Cc: A M <alim1993@yahoo.com>, linux-c-programming@vger.kernel.org, linux-assembly@vger.kernel.org
+To: siddharth vora <sjv@usc.edu>
+Cc: sandeep <sandeep@codito.com>, A M <alim1993@yahoo.com>, linux-c-programming@vger.kernel.org, linux-assembly@vger.kernel.org
 
-Yep, 
- 
- This z standard technique for the viruse encryption. 
+On Thu, 18 Nov 2004 23:31:25 -0800
+siddharth vora <sjv@usc.edu> wrote:
 
-Sid.
------ Original Message -----
-From: sandeep <sandeep@codito.com>
-Date: Friday, November 19, 2004 0:04 am
-Subject: Re: Access to Program Counter in C
-
-> siddharth vora wrote:
-> > Here CALL instruction is 4 bytes instruction so call $+5 will 
-> call the
-> > 5th byte which is the next instruction. And based upon the "call"
-> > behavior, it pushes the next instruction on the stack first and then
-> > JUMP to the instruction. So, in this case, on the stack you will 
-> have> the exact instruction which you are executing !
-> am i right in taking it as, you meant to say - execution of call 
-> instruction 
-> pushes the return address, which is the address of instruction 
-> following call 
-> instruction. in the example you mentioned it would be the address 
-> of instruction 
-> "pop ebp". since you are jumping to this instuction (via call), at 
-> the end of 
-> it's execution ebp will have the address of "pop ebp" instruction.
 > 
-> -- 
-> regards
-> sandeep
-> --------------------------------------------------------------------
-> ------
-> It is said that the lonely eagle flies to the mountain peaks while the
-> lowly ant crawls the ground, but cannot the soul of the ant soar as
-> high as the eagle?
-> --------------------------------------------------------------------
-> ------
+> Try :
 > 
-> -
-> To unsubscribe from this list: send the line "unsubscribe linux-c-
-> programming" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> 
+>  Call ($+5)
+>   pop ebp
 
+yes, something like that.
+In x86(DOS) when u do a call to near function(near, that means program don't change a code segment(CS) register) processot does something like this:
+	mov	sp,sp-2
+	mov	[sp],ip (next executable ip)
+
+when call'e ret executed processor does:
+	mov	ip,[sp]
+	mov	sp,sp+2
+
+so, you inscruction after call should be
+	call <some function>
+	mov  [ipdrr], sp-2
+you'll get the IP if this instuction;]
+I think u got the idea, look for call inctruction execution inside cpu for more details. I whote here with intension that cpu's word is 2B;]
+
+_
+Justinas Gulbinas
+justinas@patikimi.lt
