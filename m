@@ -1,39 +1,48 @@
-From: Ankit Jain <ankitjain1580@yahoo.com>
-Subject: average
-Date: Wed, 29 Dec 2004 22:22:56 -0800 (PST)
-Message-ID: <20041230062256.64239.qmail@web52903.mail.yahoo.com>
+From: joy merwin monteiro <joy.merwin@gmail.com>
+Subject: Segfault on ioperm
+Date: Thu, 20 Jan 2005 19:22:39 +0530
+Message-ID: <4b0d6e0d0501200552126d8cbb@mail.gmail.com>
+Reply-To: joy_mm@ieee.org
 Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="windows-1252"
-To: assembly <linux-assembly@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: linux-assembly@vger.kernel.org
 
-hi
+Hi,
 
-actually problem i am facing is of average
+I had been here before, I can't figure out why the code isnt working.
 
-i have a variable of uint8_t type
+global _start
 
-now the problem is when i add(paddb) N numbers then
-the MMX register overflows i.e every byte overflow or
-get truncated
+port equ 378h
+stat equ port+1
+ctrl equ port+2
 
-so i want to make it a word....this is getting a prob.
+section .text
+_start:
+    
+    mov eax,101
+    mov ebx,port
+    mov ecx,3
+    mov edx,port
+    int 80h
+    mov dx,port
+    mov al,0xff
+    out 378h,al  <----- segfault here
+    mov eax,1
+    int 0x80
 
-thanks
+Any help/ pointers?
 
-ankit
+Thanks,
 
-
-	=09
-__________________________________=20
-Do you Yahoo!?=20
-All your favorites on one personal page =96 Try My Yahoo!
-http://my.yahoo.com=20
--
-To unsubscribe from this list: send the line "unsubscribe linux-assembly"=
- in
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Joy.M.Monteiro
+-- 
+people always turn away,
+from the eyes of a stranger...
+Afraid to know
+what lies behind the stare.......
+    --QueensRyche
