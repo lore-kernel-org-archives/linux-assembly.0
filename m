@@ -1,83 +1,71 @@
-From: Brian Raiter <breadbox@muppetlabs.com>
-Subject: Re: chdir command
-Date: Fri, 3 May 2002 14:31:03 -0700 (PDT)
+From: "Ryn" <mattyml@daemons.net>
+Subject: SPARC Stack frame organization
+Date: Sun, 5 May 2002 22:56:57 -0400
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <15571.407.735989.579814@shub.muppetlabs.com>
-References: <3CD2EAF6.5A27E998@exeter.edu>
+Message-ID: <001901c1f4a9$afbc7b20$0201a8c0@pooh>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <3CD2EAF6.5A27E998@exeter.edu>
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Allan Wooley <awooley@exeter.edu>
-Cc: Linux Assembly <linux-assembly@vger.kernel.org>
+To: linux-assembly@vger.kernel.org
 
-> I can not get system call #12 to work as advertised.  In Read Hat Linux
-> 7.2 under bash using nasm with elf I write:
-> 
-> section .text
->     global _start
-> 
-> path    db '/root',0
-> 
-> _start:
-> 
->     mov ebx, path
->     mov eax,12
->     int 80h
-> 
->     mov eax, 1
->     int 80h        ;; int 0x80
-> 
-> Although I have gotten system calls 1, 3-6 & 11 to work fine in assembly
-> programs, I can not get the change-working-directory call to work.
+I am trying to figure out main()s stack frame organization for the code in
+[Exhibit 1].  I get the
+following when I hit a breakpoint set at main():
 
-The chdir call is working just fine. What you're forgetting is that
-every process has its own current directory. That's why the cd command
-has to be a shell builtin -- a process can't change its parent's
-current directory, only its own.
-________________
+Breakpoint 1, 0x10544 in main ()
+1: x/i $pc  0x10544 <main+12>:  mov  0x31, %o0
 
-section .bss
-cwdbuf:
-    resb 1024
+(gdb) x $sp
+0xffffffffffbefb30:     0x0000000c
 
-%macro printcwd 0			;; call getcwd, then write
-		pusha
-		mov	ebx, cwdbuf
-		mov	ecx, 1024
-		mov	eax, 183
-		int	0x80
-		mov	byte [ebx + eax], 10
-		inc	eax
-		mov	edx, eax
-		mov	ecx, ebx
-		mov	ebx, 1
-		mov	eax, 4
-		int	0x80
-		popa
-%endmacro
+(gdb) x $fp
+0xffffffffffbefbc0:     0x00000001
+
+If I subtract the sp from the fp I get:
+
+0xffffffffffbefbc0 (%fp) - 0xffffffffffbefb30 (%sp) = 144 bytes
+
+Which comes out to 144 bytes. When I calculate the stack frame I get:
+
+  64 bytes for register window saving (%l0 - %l7 & %i0 - %i7)
++  4 bytes ptr to struct
++ 24 bytes for 6 arguments
++ 28 7 integers @ 4 bytes each
+  --
+  120 bytes
+
+I cannot seem to figure out why the stack frame is 144 bytes as opposed
+to the 120 bytes calculated above. If you have any thoughts or insight I would
+appreciate it.
+
+Thanks a ton,
+Ryan
+
+[Exhibit 1]
+#include <stdio.h>
+
+int main(int argc, char **argv)
+{
+        int buf1[6] = { '1' , '2' , '3' , '4' , '5',' '};
+        int i = 1;
+
+        myfunc1(i);
+}
+
+int myfunc1(int param)
+{
+        char buf1[6] = "CCCCC";
+        int i = 1;
+
+        myfunc2(i);
+}
+
+int myfunc2(int param)
+{
+        char buf1[5] = "EEEEE";
+        int i = 1;
+}
 
 
-section .text
-    global _start
-
-path    db '/root',0
-
-_start:
-
-	printcwd
-
-    mov ebx, path
-    mov eax, 12
-    int 80h
-
-	printcwd
-
-    xor ebx, ebx
-    mov eax, 1
-    int 80h        ;; int 0x80
-________________
-
-b
