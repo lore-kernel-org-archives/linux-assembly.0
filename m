@@ -1,43 +1,84 @@
-From: Emanuele Altieri <ealtieri@hampshire.edu>
-Subject: Re: flat binary
-Date: 24 Oct 2003 08:47:32 -0400
+From: willy meier <wklux@yahoo.co.uk>
+Subject: Re: DOS assembly questions?
+Date: Fri, 24 Oct 2003 18:12:44 +0100
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <1066999465.2234.8.camel@italia>
-References: <3F97F5B5.4010108@sh.cvut.cz>
+Message-ID: <3F995D8C.5BF018AE@yahoo.co.uk>
+References: <3F9473D9.8010304@valdosta.edu> <3F957562.7060302@valdosta.edu> <3F961EB4.BE9DB472@yahoo.co.uk> <3F980930.6080207@valdosta.edu>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <3F97F5B5.4010108@sh.cvut.cz>
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Mirek Dobsicek <m.dobsicek@sh.cvut.cz>
-Cc: linux-assembly@vger.kernel.org
+To: michael young <mhyoung@valdosta.edu>
+Cc: linux-assembly@vger.kernel.org, linux-assembly@mlists.in-berlin.de
 
-You should use GAS to generate an object file, then LD to generate the
-flat binary file:
+michael young wrote:
+> 
+> Hi willy,
+> thank you for your response.
+> a question below.
+> 
+> willy meier wrote:
+> 
+> >michael young wrote:
+> >
+> >apparently, a common 'problem':
+> >if ah:=9 and int 21 is supposed to send text,
+> >the binary counter data can't appear visibly.
+> >
+> >
+> >       [...]
+> >
+> >
+> >>START:
+> >>
+> >>
+> >   mov cx, 10  =>      mov cx,"9"
+> >
+> >
+> >>  call myloop
+> >>
+> >>myloop:
+> >>  mov dx, cx
+> >>  mov ah, 9
+> >>  int 21H
+> >>  dec cx
+> >>
+> >>
+> >                       cmp cx,"0"
+> >   jnz myloop  =>      jc myloop	(<----- false, use 'jnc')
+> >
+> Here, wouldn't the 'dec' instruction set the 'ZF' if cx hit 0?
 
-    $ as -o example.o example.s
-    $ ld -Ttext 0x0 -s --oformat binary -o example.bin example.o
+right but, binary value 0 would (if the rsp. terminal permits) just be
+the control code of <nul>. apparently (I know nothing about pc-dos
+specifica), the int-routine requires a character code in <dx> thus you
+either count and compare by chars codes or, add the byte value
+48(decimal) to the counter value to sending the rsp char.
+much simplified, useable only for single digits (characters).
 
---Emanuele
+> where am I going wrong on this?
 
-On Thu, 2003-10-23 at 11:37, Mirek Dobsicek wrote:
-> Hi,
-> 
-> I've my asm code in AT&T syntax a want to get flat binary file.
-> But gas seems cant produce flat file and nasm dont understand at&t syntax.
-> 
-> Sure I can use some syntax convertor a use nasm, but that's not what I 
-> want. Is there any suitable tool which understand at&t and produce flat 
-> binary?
-> 
-> 
-> Best regards, Elfi
-> 
-> ps: please CC me, I'm not it list
-> 
-> -
-> To unsubscribe from this list: send the line "unsubscribe linux-assembly" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+correction: the added opr should read 'jnc myloop'.
+loop terminates after cx was counted down to code("0")-1
+(assuming that int 21 won't modify cx value)
 
+did you forget the <ret> code after <call myloop>?
+if no other code follows after <call myloop> you could either, use <jmp>
+or, delete the call instr, otherwise, in your example, 'myloop' would be
+run once more, before termination.
+
+> 
+> >
+> >
+> >>  mov dx, donemsg
+> >>
+> >>
+> >       [...]
+
+best,
+       hp
+
+-- 
+Linux,Assembly,Forth: http://www.lxhp.in-berlin.de/index-lx.shtml
+  >> hp -at- lxhp -dot- in-berlin -dot- de <<
