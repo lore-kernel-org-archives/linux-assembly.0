@@ -1,32 +1,23 @@
-From: Konstantin Boldyshev <konst@linuxassembly.org>
-Subject: Re: your mail
-Date: Wed, 9 Oct 2002 22:04:32 +0400 (MSD)
+From: mahbubul azam <mahbubak@yahoo.com>
+Subject: (unknown)
+Date: Fri, 11 Oct 2002 19:08:22 -0700 (PDT)
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <Pine.LNX.4.43L.0210092152320.1778-100000@alpha.linuxassembly.org>
-References: <F129z5Bl8LgFuoe5ciz00000d57@hotmail.com>
+Message-ID: <20021012020822.69051.qmail@web14504.mail.yahoo.com>
 Mime-Version: 1.0
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <F129z5Bl8LgFuoe5ciz00000d57@hotmail.com>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Joshua Hudson <joshudson@hotmail.com>
-Cc: linux-assembly@vger.kernel.org, konst@ipian.kazan.ru
+To: linux-assembly@vger.kernel.org
 
-On Wed, 9 Oct 2002, Joshua Hudson wrote:
+i cannot compile assembly coding in c++ program using
+asm{} keyword.
+when i compile it with gcc, it cannot detect any
+assemble command (mov,...).
+Is there any library file which i should link with the
+gcc command? 
 
-> When hunting down the last errors remaining in tar, I came across
-> a particularly weird one in both tar and chmod.
->
-> Try chmod 4755 true. True will have mode 755.
-> This happens in linux 2.0.63, 2.2.22, 2.4.18-3
-> Is anybody else getting this? Anybody have a solution?
-
-It is chmod bug, it did 'mul bl' instead of mul bx.
-CVS version has this bug fixed.
-
--- 
-Regards,
-Konstantin
-
-
+__________________________________________________
+Do you Yahoo!?
+Faith Hill - Exclusive Performances, Videos & More
+http://faith.yahoo.com
