@@ -1,51 +1,41 @@
-From: dh <dh@icbook.com.ua>
-Subject: Re:variables & How interrupts work
-Date: Fri, 23 Aug 2002 14:52:19 +0200
+From: Stephan Walter <stephan.walter@gmx.ch>
+Subject: Re: How interrupts work
+Date: Fri, 23 Aug 2002 18:36:25 +0200
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <3D663003.7800E652@icbook.com.ua>
+Message-ID: <20020823183625.0a22af1c.stephan.walter@gmx.ch>
+References: <20020823112649Z318750-685+36066@vger.kernel.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
+In-Reply-To: <20020823112649Z318750-685+36066@vger.kernel.org>
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Assembly Linux <linux-assembly@vger.kernel.org>
+To: linux-assembly@vger.kernel.org
 
-Hi all!
+On Fri, 23 Aug 2002 08:30:51 -0300, RCS <cryptik@ig.com.br> wrote:
 
-> Hi all, 
+>   Thanks, but which assembler must I use for this code? GNU as? 
+>   I'm asking that because I am only familiar with nasm. 
 
- and Hi RCS!
+> >.data 
+> >hello: 
+> > .string "hello world\n" 
+> >.text 
+> >.globl _start 
+> >_start: 
+> > movl 4,%eax		// 4 - sys function 'write' 
+> > movl 1,%ebx		// fd = fileno(stdio) 
+> > movl $hello,%ecx	// buf = str 
+> > movl $12,%edx	// count 
+> > int $0x80 
+> > 
+> > movl 1,%eax 	// sys function 'exit' 
+> > xorl %ebx,%ebx 
+> > int $0x80 
 
+This is GNU as syntax. You can use 'intel2gas' to convert from gas to
+nasm and vice versa. (see
+http://www.niksula.cs.hut.fi/~mtiihone/intel2gas )
 
->
->  I need some help to understand how interrupts work on Intel. 
-
-Intel can help you to understand how interrupts work on x86 :)
-http://developer.intel.com/design/PentiumIII/manuals/
-
->  For example, how do I print a character in the screen? 
-> Wich register must contain the character for that? Is "int 10h" the correct 
-> interrupt for that? 
-
-Yes, int 10 is correct interrupt for that. 
-For more information, please, input in google.com string - helppc,
-download this program and just read.
-
-
-> Hi all, 
->
->  Can anyone explain me how global and local variables from C are treated in 
->assembler? 
-
-Many people know how it make, but explain this for you... 
-It's a very long story.
-
->  Is that write that local variables are storage in the stack? 
-Not, it isn't write :)
-
-Good buy all!
-
-Khmara Dmitro
-engineer, IC Book Lab
-dh@icbook.com.ua
-www.icbook.com.ua
+Regards,
+Stephan
