@@ -1,28 +1,23 @@
-From: Jack Dennon <jdd@seasurf.net>
-Subject: Re: Local Symbol Names
-Date: Wed, 25 Jun 2003 17:14:36 -0700
+From: lee <lee@biggdaddy4u.com>
+Subject: instruction "00 00"
+Date: Thu, 26 Jun 2003 01:35:19 +0000 (UTC)
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <03062517120000.00355@linux24>
-References: <Law14-F6AauNjVuMhvq0002ae10@hotmail.com> <03062511461400.00228@linux24> <16121.64387.51274.655658@eidolon.muppetlabs.com>
+Message-ID: <20050625204254.6d789a1c.lee@biggdaddy4u.com>
+Reply-To: lee@biggdaddy4u.com
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <16121.64387.51274.655658@eidolon.muppetlabs.com>
+Date: Sat, 25 Jun 2005 20:42:54 -0500
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 To: linux-assembly@vger.kernel.org
 
-On Wednesday 25 June 2003 12:44, Brian Raiter wrote:
-> >	The call instruction probably was used to empty the
-> >	the Execution Unit's instruction cache; thereby
-> >	forcing it to be reloaded from memory. Or, it could
-> >	be used just to force a time delay.
->
-> The pop %eax instruction, however, makes it clear that the purpose of
-> the code is to get the current PC address into eax. As hpr suggested,
-> almost certainly for use in writing position-independent code.
->
-	Hmm, yes you have a point.
-	But then, why not just push and pop?
-	jdennon@seasurf.com
+hi.
 
+I am using objdump and ldasm to disassemble a win32 dll i made.
+
+one question i have is whenever i see the instruction "00 00" apear, the assembly code given for that is "add ptr [eax], al".
+
+is this normal?
+
+thanx
