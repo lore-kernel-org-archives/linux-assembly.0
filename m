@@ -1,37 +1,47 @@
-From: Brian Raiter <breadbox@muppetlabs.com>
-Subject: Re: Protected2Real
-Date: Thu, 13 Feb 2003 22:17:34 -0800
+From: Rudolf Marek <MAREKR2@cs.felk.cvut.cz>
+Subject: Re: int 16 ?
+Date: Fri, 14 Feb 2003 09:07:09 +0100
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <15948.35326.877704.290091@eidolon.muppetlabs.com>
-References: <20030214010206.4210.qmail@web11402.mail.yahoo.com>
+Message-ID: <16688.418822787$1045209913@news.gmane.org>
+References: <200302140023.23837.davidkedrosky@rogers.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <20030214010206.4210.qmail@web11402.mail.yahoo.com>
+In-Reply-To: <200302140023.23837.davidkedrosky@rogers.com>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: Slack Traq <slacktraq@yahoo.com>
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: dAvId KeDrOsKy <davidkedrosky@rogers.com>
 Cc: linux-assembly@vger.kernel.org
 
-> I have a question. When Linux loads it first load
-> itself in real-mode (obviously) and then switch to
-> protected or virtual mode. How can I do to reset the
-> micro and switch from protected mode to real?
-> I'd read that it can be done through a Triple-SegFault
-> of the micro. If that is the solution, how can I do to
-> SegFault the processor?
 
-Your information is out of date.
 
-The triple-fault technique of resetting the processor to get out of
-protected mode (which was done by causing a fault while inside the
-double-fault exception handler) was only necessary for the 80286. On
-all later processors, you can just clear the low bit in CR0:
 
-	mov	eax, cr0
-	and	eax, ~1
-	mov	cr0, eax
+> 
+> I was told there exists int 0x16, which can be used to read a single character 
+> at a time.  Does this interrupt exist in Linux 
 
-Note that you'll need to be privileged in order to do any of this.
+no, just use stdin for reading the keyboard, see examples at asmutils 
+(linuxassembly.org/asmutils.html) for example in sh.asm or snake.asm
 
-b
+simply: man 2 read
+        man 2 open (stdin is already open in your process by default and 
+has file desc. number 0)
+
+and mabe man stdin
+
+sys_read STDIN, buff,buff_len 	;<= this is asmutils macro, wich reads 
+				;from stdin 
+
+which on linux works this way:
+
+mov eax,   ; service number, dont remember look at 
+           ; /usr/src/linux/include/unistd.h
+mov ebx,0 ; stdin file descriptor 
+mov ecx,buff
+mov edx,buff_len
+int 0x80
+
+
+Regards
+	Rudolf
+
