@@ -1,62 +1,67 @@
-From: Rudolf Marek <MAREKR2@cs.felk.cvut.cz>
-Subject: Re: Assembly mnemonic
-Date: Tue, 28 May 2002 19:05:06 +0200
+From: <kieft_brian@si.com>
+Subject: GAS - \@ in macros and labels
+Date: Wed, 29 May 2002 10:49:36 -0400
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <ad0das$tbi$2@main.gmane.org>
-References: <200205281625.JAA14301@gold.he.net>
+Message-ID: <004C6F8A.C21188@si.com>
 Mime-Version: 1.0
-Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <200205281625.JAA14301@gold.he.net>
-List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: "J.S.Souza" <jssouza@pacbell.net>
-Cc: linux-assembly@vger.kernel.org
+Return-path: <linux-assembly-owner@vger.kernel.org>
+Content-Description: cc:Mail note part
+List-Id: <linux-assembly.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: linux-assembly@vger.kernel.org
 
-Hello,
+I'm having a little trouble with specifying labels inside of two different
+macros using the \@ variable. See the following...
 
-google.com found this:
+ .MACRO tableHdr    someArgs
+A_\@:
+     .DC.W  (B_\@ - A_\@)   
+    stuff....
 
-   The Intel-syntax conversion instructions
-      * cbw -- sign-extend byte in %al to word in %ax,
-      * cwde -- sign-extend word in %ax to long in %eax,
-      * cwd -- sign-extend word in %ax to long in %dx:%ax,
-      * cdq -- sign-extend dword in %eax to quad in %edx:%eax,
-      * cdqe -- sign-extend dword in %eax to quad in %rax (x86-64 only),
-      * cdo -- sign-extend quad in %rax to octuple in %rdx:%rax (x86-64 only)
+ .ENDM
 
-are called cbtw, cwtl, cwtd, cltd, cltq, and cqto in AT&T naming. as  as 
-                             ^^^^^
-accepts either naming for these instructions.
+ .MACRO tableEnd    someArgs
+B_\@:
+ .ENDM
 
-http://sources.redhat.com/binutils/docs-2.12/as.info/i386-Mnemonics.html
+Unfortunately the number produced by \@ will never be in sync between the two
+macros due to the fact that a new macro call will increment the counter (not to
+mention that there may be some other macros called in between Hdr and End).
 
+So I attempted to resolve the situation by creating my own variable...
 
-regards
-		Rudolf
+.MACRO  tableHdr    someArgs
+.SET    CMD_NUM,\@
+A_CMD_NUM:
+     .DC.W  (B_CMD_NUM - A_CMD_NUM)     
+    stuff....
 
+ .ENDM
 
-
-On Tue, 28 May 2002, J.S.Souza wrote:
-
-> Date: Tue, 28 May 2002 09:25:30 -0700
-> From: J.S.Souza <jssouza@pacbell.net>
-> To: linux-assembly@vger.kernel.org
-> Subject: Assembly mnemonic
-> 
-> I was looking at the assembly output from a small C program just to see how 
-> the compiler dealt with a certain procedure and can't figure out what the 
-> mnemonic "cltd" is.  Does anyone know what this is?  There is NO arguments 
-> for it, it's just by itself on a line.
-> 
-> 		Cheers,
-> 		Jeff Souza
-> -
-> To unsubscribe from this list: send the line "unsubscribe linux-assembly" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> 
-> 
-> 
+ .MACRO tableEnd    someArgs
+B_CMD_NUM:
+ .ENDM
 
 
+Unfortunately GAS sees this as literal text and throws a bunch of "symbol
+already defined" errors. Any ideas on how to make the CMD_NUM appear as its
+value in a label? Thanks,
+
+Brian
+
+
+**********************************************************************
+This e-mail and any files transmitted with it are confidential and may
+be legally privileged or otherwise exempt from disclosure under
+applicable law. This e-mail and its files are intended solely for
+the individual or entity to whom they are addressed and their content
+is the property of Smiths Aerospace.  If you are not the intended
+recipient, please do not read, copy, use or disclose this communication.
+If you have received this e-mail in error please notify the e-mail 
+administrator at postmaster@si.com and then delete this e-mail, its
+files and any copies.
+
+This footnote also confirms that this e-mail message has been scanned
+for the presence of known computer viruses.
+***********************************************************************
