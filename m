@@ -1,54 +1,101 @@
-From: lx <lx@lxhp.in-berlin.de>
-Subject: Re: debugging in linux
-Date: Sat, 14 Sep 2002 22:51:23 +0000
+From: =?iso-8859-1?q?Anticipating=20a=20Reply?= <ruxyz@yahoo.com>
+Subject: Newbie doubts about stack !
+Date: Sun, 15 Sep 2002 11:47:51 +0100 (BST)
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <20020914225123.48cbc74e.lx@lxhp.in-berlin.de>
-References: <4.3.2.7.2.20020914112556.00bdb340@mail.ciudad.com.ar>
-Reply-To: lx@lxhp.in-berlin.de
+Message-ID: <20020915104751.47329.qmail@web14507.mail.yahoo.com>
+Reply-To: ruxyz@yahoo.com
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <4.3.2.7.2.20020914112556.00bdb340@mail.ciudad.com.ar>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
-To: Hernan <beri@ciudad.com.ar>
-Cc: linux-assembly@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: Assembly Linux <linux-assembly@vger.kernel.org>
 
-On Sat, 14 Sep 2002 11:31:05 -0300
-Hernan <beri@ciudad.com.ar> wrote:
 
-> Hello,
->=20
-> I'm trying to debug a program (without debug information) with gdb bu=
-t I=20
-> can't do some things:
->=20
-> 1) How can I run step by step,
-> 2) see the registers values (including eip),
-> 3) make a dump of memory
->=20
-> I'm running code that starts in 0x80003c0 and when I try disas 0x8000=
-3c0 I=20
-> get "No function contains specified address".
+Hello All !
 
-try 'objdump -d'
+   I wrote the following C program and
+obtained its assembly version , using command :
 
-> The executable is a test that I'm doing I change the elf entry point =
-and=20
-> put some code there.
->=20
-> Is there a softice like debugger for linux? where can I get it?
+  cc -S temp.c
 
-no. linux. 'ald' might serve your purpose...
-url re http://linuxassembl.org
+< on an x-86 Linux machine >
 
-hp
+/* File Name - temp.c */
 
---=20
-Linux,Assembly,Forth: http://www.lxhp.in-berlin.de/index-lx.shtml en/de
-    software=A0patents =A0http://petition.eurolinux.org/pr/pr17.html
--
-To unsubscribe from this list: send the line "unsubscribe linux-assembl=
-y" in
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+void function(int a, int b, int c) {
+   char buffer[SIZE];  -------------------> SIZE=51 
+}
+
+void main() {
+  function(1,2,3);
+}
+
+
+The Assembly File is as below :-
+
+
+.file	"temp.c"
+	.version	"01.01"
+gcc2_compiled.:
+.text
+	.align 4
+.globl function
+	.type	 function,@function
+function:
+	pushl	%ebp
+	movl	%esp, %ebp
+	subl	$72, %esp -----------> Stack allocation
+	leave
+	ret
+.Lfe1:
+	.size	 function,.Lfe1-function
+	.align 4
+.globl main
+	.type	 main,@function
+main:
+	pushl	%ebp
+	movl	%esp, %ebp
+	subl	$8, %esp
+	subl	$4, %esp
+	pushl	$3
+	pushl	$2
+	pushl	$1
+	call	function
+	addl	$16, %esp
+	leave
+	ret
+.Lfe2:
+	.size	 main,.Lfe2-main
+	.ident	"GCC: (GNU) 2.96 20000731 (Red Hat Linux 7.1
+2.96-81)"
+
+
+In the function part of the assembly 
+file , I noticed that the depending on 
+the "SIZE" of the array , it allocates 
+memory on stack as shown in the below
+table .  
+
+ Array Size       Actual stack allocation 
+
+    0  - 4     =    4 
+    5  - 16    =   24 
+    17 - 32    =   40 
+    33 - 48    =   56 
+    49 - 64    =   72
+
+Can anybody please explain me ,
+what is the reason behind this ?
+
+Why is it that only the required 
+amount of stack is not allocated ?
+
+
+Harmony !
+
+
+
+________________________________________________________________________
+Missed your favourite TV serial last night? Try the new, Yahoo! TV.
+       visit http://in.tv.yahoo.com
