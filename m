@@ -1,24 +1,32 @@
-From: h-peter recktenwald <*@lxhp.in-berlin.de>
-Subject: lib4th 1-1-2
-Date: Sun, 30 Jun 2002 22:07:14 +0000
+From: Stanislaw Findeisen <sf181257@students.mimuw.edu.pl>
+Subject: ----  COMPREHENSIVE DOCUMENTATION FOR A NEWBIE  ----
+Date: Mon, 1 Jul 2002 20:01:51 +0200 (CEST)
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <20020630220714.40c93a2c.*@lxhp.in-berlin.de>
-Reply-To: news@lxhp.in-berlin.de
+Message-ID: <Pine.LNX.4.44.0207011950310.18407-100000@zodiac.mimuw.edu.pl>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: phpr@snafu.de
-Cc: linux-assembly <linux-assembly@vger.kernel.org>, bj <bj@isv-gmbh.de>
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: linux-assembly@vger.kernel.org
 
-L4 release:
 
-	http://www.lxhp.in-berlin.de/lhpf8.html		(en)
-	http://www.lxhp.in-berlin.de/lhpf8d.html	(de)
-new:
-	http://www.lxhp.in-berlin.de/lib4th-changes.txt.gz
+Hi, I'm _really_ new to the field, and need some _comprehensive_
+documentation about things like:
 
-regards,
-	hp
+- basic existing registers and their purposes,
+
+- assembler instructions and their _exact_ semantics (like 'call', 'ret'
+and so on).
+
+Could anyone help?  I tried to find sth at linuxassembly.org, but all man
+can get there is fifty tutorials about "hello world" and syscalls... I
+don't want samples, just documentation!  :-)
+
+
+Thanks !
+
+
+- Stanislaw Findeisen
+  http://rainbow.mimuw.edu.pl/~sf                 Christianity:  just Get Real!
 
