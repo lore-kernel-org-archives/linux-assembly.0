@@ -1,53 +1,25 @@
-From: Maciej Hrebien <m_hrebien@wp.pl>
-Subject: Re: atomic_add_and_test
-Date: Fri, 20 Jun 2003 13:51:48 +0200
+From: Fabio Miranda Hamburger <fabmirha@ns.isi.ulatina.ac.cr>
+Subject: Motorola 68HC11
+Date: Fri, 20 Jun 2003 16:04:17 -0600 (CST)
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <3EF2F554.56611A01@wp.pl>
-References: <Law11-F123JwM21tVHd000a4bf1@hotmail.com>
-Reply-To: m_hrebien@wp.pl
+Message-ID: <Pine.LNX.4.44.0306201602250.627-100000@ns.isi.ulatina.ac.cr>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: linux-assembly@vger.kernel.org
 
-Mark Lobo wrote:
-> 
-> static __inline__ int32_t atomic_add_and_test(atomic_t * p_plValue, int32_t
-> p_lAdd)
-> {
->     int32_t l_lResult;
->     __asm__ __volatile__ (
->             "push %%EBX;"
->             "movl %1, %%EBX;"
->             "movl %2, %%EAX;"
->             "lock; xadd %%EAX, (%%EBX);"
->             "inc %%EAX;"
->             "mov %%EAX, %0;"
->             "pop %%EBX"
->             : "=g"(l_lResult) : "g"(p_plValue), "g"(p_lAdd):"%eax", "ebx" );
->     return l_lResult;
-> }
+Hi, I am taking a subject at university about motorola 68hc11, I would
+like to know What are the major different between asm on motorola or IA-32
+or Sparc?
+What about the asm syntax? registers? addressing?
 
-Can't you just:
+thanks,
 
-inline int add_and_test(int* value, int to_add)
-{
-   int old_result;
+---
+Fabio Andres Miranda
+Ingenieria de sistemas informaticos
+Universidad Latina - Costa Rica
 
-   asm volatile("
-      lock
-      xadd %%eax,(%%ebx)
-   " : "=eax" (old_result) : "a" (to_add), "b" (value) );
-
-   return old_result;
-}
-
-? Do you have to push %ebx on stack? Why do you inc %eax after xadd?
-
-Regards,
-
--- 
-Maciej Hrebien
 
