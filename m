@@ -1,88 +1,98 @@
-From: Frederic Marmond <fmarmond@eprocess.fr>
+From: peter willy krause <wklux@yahoo.co.uk>
 Subject: Re: stack contents at function call
-Date: Mon, 01 Mar 2004 09:36:32 +0100
+Date: Mon, 1 Mar 2004 09:40:17 +0000
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <4042F610.9080307@eprocess.fr>
+Message-ID: <200403010940.22587.wklux@yahoo.co.uk>
 References: <20040301131824.02c597f0.vadiraj@mail.cyberneme.com>
-Reply-To: fmarmond@eprocess.fr
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-assembly-owner@vger.kernel.org>
 In-Reply-To: <20040301131824.02c597f0.vadiraj@mail.cyberneme.com>
+Content-Description: clearsigned data
+Content-Disposition: inline
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Vadiraj C S <vadiraj@mail.cyberneme.com>
-Cc: linux-assembly@vger.kernel.org
+Content-Type: Text/Plain; charset="iso-8859-1"
+To: vadiraj@mail.cyberneme.com, linux-assembly@vger.kernel.org, linux-assembly@mlists.in-berlin.de
 
-Hi,
-Vadiraj C S wrote:
+assuming ia32 architecture...
+Q1)	return stack, if existent, is set up by the rsp. cpu;
+	programming languages often put several data on the same stack as
+	arguments to a subroutine call which, requires specific conventions.
 
->  Hello Assembly Gurus
->
->   I'm working on Assembly programming under linux from few days, here are some issues
->
-> 1.When a function call is made the parameters are pushed on to the stack and a a call
->to the function is made. 
->  
->
-right in most systems compilators (x86 works that way, for example)
+users stack 'frame' can be set up by convention, which may be defined b=
+y a =20
+standard, e.g. 'posix' - which even assigns specific registers to certa=
+in=20
+tasks.
 
-> Now the top of the stack is the return address, Please correct me if I'm wrong here,
->and the parameters above it is the first parameter sent and so on..
->
-> 1. Is this OS dependent, or compiler dependent? 
->
-It depends... ;)
-Sure, it is NOT OS dependent. On Linux, for exemple, this may work 
-different from hardware to an other.
-For exemple, on x86, as there is not a lot of registers, all is passed 
-on a single stack.
-But on other architectures, wich have more registers, functions 
-parameters are splitted in registers (integers and float registers) and 
-in stack when there are no register free.
-Now, if you want a program to interact with others, you may respect 
-calling conventions.
-Since it is most likely to occurs (programs call each others), you may 
-guess compilers works the same way on a arch/OS.
+Q2)	basic return stack set up is not under programmers influence,=20
+	additional data may carefully be pushed/popped, e.g. "C"-ish=20
+	'arguments' or 'automatic' (i.e. locally available) variables &c.
+	assembly leaves full control to the programmer, no implied conventions=
+!
+	(or else, mickeysoft...)
 
-> 2. Does this sequence change when call from C language and call from assembly.
->  
->
-In Assembly, you can use what method you want to pass parameters. Look 
-at interrupts, for exemple. They only use registers as parameters. So, 
-you may create functions that only need registers as inputs, and other 
-functions that need stack copying. It's up to your choice. But if you 
-want to interract with other programs, you must respect the arch/OS 
-convention.
-Convention for C on x86 (I guess you are on this arch) is to pass 
-arguments to stack. So, if you respect this convention from assembly, 
-the sequence is the same.
+plain assembly is not bound to such conventions but, to different=20
+processor architectures.
 
-But for C++ compilers, its a bit different (object's methods need a 
-pointer to the instance, 'this').
+in principle, cpu-s w. stacks usually store the return address (or some=
+=20
+aequivalent data item) to top of stack and advance the stack pointer to=
+=20
+the next, unused position; whether this 'push' goes towards lower (most=
+=20
+commonly) or higher (e.g. some hp processors) addresses depends on the=20
+particular cpu design. some cpu-s can store additional data to the=20
+return-stack for interrupts or to supporting certain programming=20
+'languages', which got to be removed in an orderly manner, before=20
+accessing a previously stacked return address.
 
-You must also take care of alignement in stack.
-C/C++ may align 32bits data. And most likely for 64bits data (long long, 
-double).
+this basic procedure can be implemented in many different ways, thus=20
+depends on the particular cpu.
 
->Cos I noticed difference with gcc(GNU compiler) and icc (Intell compiler)
->  
->
-Can you give example? Be more precise...
+for instance, ia32 type cpu, 'protected mode', stores address after the=
+=20
+<call disp> opcode which, will be removed by the subroutine 'ret' opr.=20
 
->
-> Help is needed urgent, 
->  
->
-I'm ready to answer quickly today (french time)
+posix documents re	http://www.lxhp.in-berlin.de/lhplinks.html#sysv
+intel manuals		http://developer.intel.com/sites/developer/
+"C" vs assembly code	http://www.lxhp.in-berlin.de/lhplinks.html#cas
 
-Fred
+best
+	hp
 
->Thanks in advance...
+Am Montag, 1. M=E4rz 2004 07:48 schrieb Vadiraj C S:
+>   Hello Assembly Gurus
+>
+>    I'm working on Assembly programming under linux from few days, her=
+e
+> are some issues
+>
+>  1.When a function call is made the parameters are pushed on to the
+> stack and a a call to the function is made.
+>
+>  Now the top of the stack is the return address, Please correct me if
+> I'm wrong here, and the parameters above it is the first parameter se=
+nt
+> and so on..
+>
+>  1. Is this OS dependent, or compiler dependent?
+>  2. Does this sequence change when call from C language and call from
+> assembly.
+>
+> Cos I noticed difference with gcc(GNU compiler) and icc (Intell
+> compiler)
 >
 >
+>  Help is needed urgent,
 >
->  
->
+> Thanks in advance...
 
+--=20
+mail to 'hp': lx at lxhp : in-berlin : de
 
+-
+To unsubscribe from this list: send the line "unsubscribe linux-assembl=
+y" in
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
