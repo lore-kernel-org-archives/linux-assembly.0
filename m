@@ -1,41 +1,28 @@
-From: Zeeshan Ali <zeelists@yahoo.com>
-Subject: Test MMX code (Using inline Assembly)
-Date: Thu, 23 Jan 2003 12:17:12 -0800 (PST)
+From: Brian Raiter <breadbox@muppetlabs.com>
+Subject: Re: Test MMX code (Using inline Assembly)
+Date: Thu, 23 Jan 2003 14:17:17 -0800 (PST)
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <20030123201712.40527.qmail@web21209.mail.yahoo.com>
+Message-ID: <15920.27117.870637.394512@eidolon.muppetlabs.com>
+References: <20030123201712.40527.qmail@web21209.mail.yahoo.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="0-162658071-1043353032=:40368"
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
+In-Reply-To: <20030123201712.40527.qmail@web21209.mail.yahoo.com>
 List-Id: <linux-assembly.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
 To: linux-assembly@vger.kernel.org
+Cc: Zeeshan Ali <zeelists@yahoo.com>
 
---0-162658071-1043353032=:40368
-Content-Type: text/plain; charset=us-ascii
-Content-Id: 
-Content-Disposition: inline
+>   A test code of mine doesnt work. I dont understand at what is
+> wrong with it.
 
-Hello,
-  A test code of mine doesnt work. I dont understand
-at what is wrong with it. Plz have a look into it. Plz
-i want answers that why on earth it doesnt work and
-not advices to use other alternatives. Plz CC the
-answer to my address cause i am not subscribed..
-Thanks in advance, Bye.
+You're calling a BIOS interrupt. Assuming you're running this program
+under Linux, that's not permitted. The only interrupt available to you
+under Linux is int 0x80.
 
-__________________________________________________
-Do you Yahoo!?
-Yahoo! Mail Plus - Powerful. Affordable. Sign up now.
-http://mailplus.yahoo.com
---0-162658071-1043353032=:40368
-Content-Type: application/octet-stream; name="test.c"
-Content-Transfer-Encoding: base64
-Content-Description: test.c
-Content-Disposition: attachment; filename="test.c"
+> Plz i want answers that why on earth it doesnt work and not advices
+> to use other alternatives.
 
-I2luY2x1ZGUgPHN0ZGlvLmg+CiNpbmNsdWRlIDx1bmlzdGQuaD4KCmludCBt
-YWluKHZvaWQpCnsKICBhc20gICggIm1vdmIgJDB4MDAsICVhaDsKICAJICBt
-b3ZiICQweDEzLCAlYWw7CgkgIGludCAkMHgxMCIpOwoKICBzbGVlcCAoMyk7
-CgogIGFzbSAgKCAibW92YiAkMHgwMCwgJWFoOwogIAkgIG1vdmIgJDB4MDMs
-ICVhbDsKCSAgaW50ICQweDEwIiApOwogIAogIHJldHVybiAwOwp9Cg==
+Okay.... "You're calling a BIOS interrupt."
 
---0-162658071-1043353032=:40368--
+b
