@@ -1,47 +1,59 @@
-From: dAvId KeDrOsKy <davidkedrosky@rogers.com>
-Subject: Re: Mixing C and assembly
-Date: Thu, 6 Mar 2003 21:05:58 -0500
+From: "=?iso-8859-1?q?Rodrigo=20F.=20Baroni?=" <rodrigobaroni@yahoo.com.br>
+Subject: Write functions in assembly ?
+Date: Mon, 10 Mar 2003 14:39:40 -0300 (ART)
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <200303062105.58355.davidkedrosky@rogers.com>
-References: <200303052350.00680.davidkedrosky@rogers.com> <15974.54476.436663.588809@eidolon.muppetlabs.com>
+Message-ID: <20030310173941.31982.qmail@web11102.mail.yahoo.com>
+Reply-To: rodrigobaroni@yahoo.com.br
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <15974.54476.436663.588809@eidolon.muppetlabs.com>
-Content-Disposition: inline
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: Linux Assembly Programming List <linux-assembly@vger.kernel.org>
+Content-Type: text/plain; charset="iso-8859-1"
+To: linux-assembly@vger.kernel.org
 
-I fixed up the assembly code by taking out the underscores before asm_func but 
-I still get a linking error "main.c: undefined reference to asm_func"
+Hello all,
 
-Does anybody know why this could be occuring?
+  Is there some way to write just a function (or
+method - c++) in assembly  that will be called from a
+main program ? (Receiving the parameters passed to it)
 
-Thanks again, 
 
-Dave
+  Example :
 
-On March 5, 2003 11:55 pm, Brian Raiter wrote:
-> > The error I am getting when I try to run the program in KDevelop (which
-> > uses gcc) is:
-> > main.c: undefined reference to `asm_func'
->
-> That's right. There is no asm_func symbol.
->
-> > section         .text
-> >
-> > global _asm_func
-> >
-> > _asm_func:
->
-> The practice of silently appending an underscore to exported C symbols
-> is not done in the Unix world, in general. Export the same symbol you
-> import.
->
-> b
-> -
-> To unsubscribe from this list: send the line "unsubscribe linux-assembly"
-> in the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+file main.c:
+--------
+#include <stdio.h>
+#include "myfunction.h"
+int main( void )
+{
+    int a =3D 10 , b =3D 20 , c =3D 0;
+    c =3D myfunction( &a, &b );
+    return c;
+}
 
+file myfunction.h
+------
+extern int myfunction( int *, int * );
+
+file myfunction.c  <<-- this file in assembly !
+-------
+int myfunction( int *var1 , int *var2 )
+{
+    *var1 =3D *var2 + *var1;
+    return *var2 * var1;
+}
+
+
+  Thanks
+Rodrigo F Baroni
+
+_______________________________________________________________________
+Busca Yahoo!
+O servi=E7o de busca mais completo da Internet. O que voc=EA pensar o Y=
+ahoo! encontra.
+http://br.busca.yahoo.com/
+-
+To unsubscribe from this list: send the line "unsubscribe linux-assembl=
+y" in
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
