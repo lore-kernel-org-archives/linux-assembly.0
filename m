@@ -1,43 +1,42 @@
-From: Scott Lanning <slanning@theworld.com>
-Subject: Re: looping_code
-Date: Sat, 31 Aug 2002 02:17:18 -0400
+From: Ewald Wasscher <ewald.wasscher@pobox.com>
+Subject: Re: Problem building httpd
+Date: Sat, 31 Aug 2002 10:42:43 +0200
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <Pine.SGI.4.40.0208310210540.117091029-100000@shell01.TheWorld.com>
-References: <web-43200817@m1.plasa.com>
+Message-ID: <1030783363.5588.2.camel@freyr.localnet>
+References: <Pine.LNX.4.43L.0208180810220.1047-100000@alpha.linuxassembly.org>
 Mime-Version: 1.0
-Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <web-43200817@m1.plasa.com>
-List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: linux-assembly@vger.kernel.org
+Return-path: <linux-assembly-owner@vger.kernel.org>
+In-Reply-To: <Pine.LNX.4.43L.0208180810220.1047-100000@alpha.linuxassembly.org>
+List-Id: <linux-assembly.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: Konstantin Boldyshev <konst@linuxassembly.org>
+Cc: linux-assembly@vger.kernel.org
 
-On Mon, 26 Aug 2002, ssams wrote:
-> .data
-> msg: .byte 65,10
->
-> .text
->    .globl mulai
-> mulai:
->     mov $10,%edx
->
-> ulang:
->   mov $4,%eax
->   mov $1,%ebx
->   mov $msg,%ecx
+On Sun, 2002-08-18 at 06:11, Konstantin Boldyshev wrote:
+> On Sat, 17 Aug 2002, Ewald Wasscher wrote:
+> 
+> > I just anxiosly tried to build httpd from the new 0.17 release with cgi
+> > support enabled. Unfortunately it fails:
+> >
+> > bash-2.05a$ make httpd
+> > nasm -w+orphan-labels -w+macro-params -i../inc/ -f bin -D__LINUX__
+> > -D__KERNEL__=24 -D__SYSCALL__=__S_KERNEL__ -D__OPTIMIZE__=__O_SIZE__
+> > -D__ELF__ -D__ELF_MACROS__ httpd.asm
+> > httpd.asm:282: short jump is out of range
+> > make: *** [httpd] Error 1
+> >
+> > As I know next to nothing about assembler I wonder how one should fix
+> > that (replace jb with jmp?)
+> 
+> Replace 'jb' with 'jb near'.
+> This will be fixed in the next release.
+> 
 
-This moves the value at 'msg'
-rather than a pointer to 'msg'.
-Try this:
+With nasm 0.98.34 it builds fine though.
 
-    leal msg, %ecx
+Greetings,
 
-Also, how many times do you think it will loop? :)
-(hint: which register is the loop counter)
+Ewald
 
->   int $0x80
->   loop ulang
->
->   mov $1,%eax
->   int $0x80
 
