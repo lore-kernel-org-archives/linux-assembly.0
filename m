@@ -1,64 +1,38 @@
-From: Sameer.Seth@lntinfotech.com
-Subject: stack allocation for array
-Date: Tue, 3 Dec 2002 09:11:36 +0530
+From: =?iso-8859-1?q?Anticipating=20a=20Reply?= <ruxyz@yahoo.com>
+Subject: Nasm v/s Gas
+Date: Tue, 3 Dec 2002 12:06:22 +0000 (GMT)
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <OF1EA583A0.C585230F-ON65256C84.0013393E@lntinfotech.com>
+Message-ID: <20021203120622.54680.qmail@web41113.mail.yahoo.com>
+Reply-To: ruxyz@yahoo.com
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-assembly-owner@vger.kernel.org>
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: linux-assembly@vger.kernel.org
+To: Assembly Linux <linux-assembly@vger.kernel.org>
 
-hi,
-    could somebody help me out with this confusion. i wrote a C program and
-had an assembly output for that program by giving gcc -S option. the C
-program is something like this:
+Hi All ,
 
-int main()
-{
-        int  fd[3];
-        int pid = 0;
-        return 0;
-}
+   I'am a Assembly learner , working 
+on Linux Platform .
 
+   I was not able to decide whether I should
+learn assembly programming using NASM or 
+GNU-As  .
 
-+++++++++++++++=+++++++++++++++++++++++=++++++++++++++++++++++++++++++=+++++++++++++++++++++++++++++=+++++++++++++++++++++++==
-the .s file created is like this:
-        .file   "test_1.c"
-        .version        "01.01"
-gcc2_compiled.:
-.text
-        .align 4
-.globl main
-        .type    main,@function
-main:
-        pushl   %ebp
-        movl    %esp, %ebp
-        subl    $40,
-%esp-----------------------------------------------------> (why has the
-compiler allocated this much space for the
-                                          two local variables which would
-combinely would have taken 12 bytes)
-        movl    $0, -28(%ebp)
-        movl    $0, %eax
-        leave
-        ret
-.Lfe1:
-        .size    main,.Lfe1-main
-        .ident  "GCC: (GNU) 2.96 20000731 (Red Hat Linux 7.1 2.96-81)"
-++++++++++++++++++=++++++++++++++++++++++++++++++++++++=++++++++++++++++++++++++++++++++++++++++++++++++++++=+++++++++++++++++++
+   As Linux Inline assembly accepts 'gas'
+syntax , I would like to know which of 
+the two to use .
 
-please somebody let me know why has it done so. is it to keep some debug
-information and where can i get toread such protocols followed by compiler.
+   So I would like to know what are the 
+advantages and disadvantages involved in 
+using NASM v/s GNU-As ?
 
-regards
-sameer
+   Thanks in Advance .
 
+Bye,
+Sarvesh
 
-
-
-
-
-
-
+________________________________________________________________________
+Missed your favourite TV serial last night? Try the new, Yahoo! TV.
+       visit http://in.tv.yahoo.com
