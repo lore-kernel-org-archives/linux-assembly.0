@@ -1,73 +1,43 @@
-From: =?iso-8859-1?q?Anticipating=20a=20Reply?= <ruxyz@yahoo.com>
-Subject: Re: How to get allocate memory run time
-Date: Thu, 12 Feb 2004 06:00:43 +0000 (GMT)
+From: John Rodriguez <jr534@columbia.edu>
+Subject: question on linux RESTORE_ALL macro
+Date: Thu, 12 Feb 2004 07:46:19 -0500 (EST)
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <20040212060043.13155.qmail@web41115.mail.yahoo.com>
-References: <20040212093930.39dcba89.vadiraj@mail.cyberneme.com>
-Reply-To: ruxyz@yahoo.com
+Message-ID: <Pine.GSO.4.58.0402120744460.23783@mango.cc.columbia.edu>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <20040212093930.39dcba89.vadiraj@mail.cyberneme.com>
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: Vadiraj C S <vadiraj@mail.cyberneme.com>, Brian Raiter <breadbox@muppetlabs.com>
-Cc: linux-assembly@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: linux-assembly@vger.kernel.org
 
-Hi !
 
-  brk and sbrk are system calls are just interfaces 
-to the kernel implementation . 
+Browsing kernel 2.4.20 at
+http://lxr.linux.no/source/arch/i386/kernel/entry.S
 
-  To invoke system calls through assembly ,
-look at 
+I stumbled across this section of assembly
+I browsed GNU assembly manuals and understand up to line 119. After that
+all I know is that lines 119-124 respond to a problem with line 113.
 
-http://world.std.com/~slanning/asm/syscall_list.html
+1) What exactly is that problem cause by iret?
+2) Why is the stack segment selector copied to ds/es in lines 119-122.
+3) What is the meaning of the value 11 pushed onto the stack?
+4) Does line 124 freeze the kernel up?  What is exiting?  The exception
+   handler?  If so, what does it exit to (i assume not the same as iret)?
 
-SNo. 45
+112         addl $4,%esp;   \
+113 3:      iret;           \
+114 .section .fixup,"ax";   \
+115 4:      movl $0,(%esp); \
+116         jmp 1b;         \
+117 5:      movl $0,(%esp); \
+118         jmp 2b;         \
+119 6:      pushl %ss;      \
+120         popl %ds;       \
+121         pushl %ss;      \
+122         popl %es;       \
+123         pushl $11;      \
+124         call do_exit;   \
+125 .previous;              \
 
-  Google / check the mailing list archives for 
-sample examples of invoking system calls from 
-assembly .
-
-Cheers !
-
- --- Vadiraj C S <vadiraj@mail.cyberneme.com> wrote: >
-
-> Mr Brian,
-> 
-> > libc's malloc et al work by using the brk system
-> call (#45 in Linux).
-> 
->   I know the implementation of malloc, using brk
-> this is again a C implementation, What is the
-> procedure
-> behind it, I mean how can this be done in assembly
-> language. I dont want to call the extern functions
-> from
-> asm. There would be some kind of asm implementation
-> which does exactly what brk and sbrk does. I just
-> want 
-> to know them.
-> 
->   Thanks
->   
-> -- 
->                        With knowledge comes power,
-> and with power comes responsability.  
-> 
-> 
-> With Best Regards
-> Vadiraj C S
-> 
-> 
-> -
-> To unsubscribe from this list: send the line
-> "unsubscribe linux-assembly" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at 
-http://vger.kernel.org/majordomo-info.html 
-
-________________________________________________________________________
-Yahoo! India Education Special: Study in the UK now.
-Go to http://in.specials.yahoo.com/index1.html
+Thanks in advance.
+-John
