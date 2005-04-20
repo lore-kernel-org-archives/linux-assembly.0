@@ -1,60 +1,87 @@
-From: "Randall Hyde" <randyhyde@earthlink.net>
-Subject: Bug in Gas?
-Date: Sun, 10 Apr 2005 20:39:29 -0700
-Message-ID: <01d101c53e48$115b2300$6302a8c0@pentiv>
-References: <Pine.LNX.4.21.0503242354490.1652-100000@hestia>
+From: Renuka Prasad <msua_ts@yahoo.com>
+Subject: Info On Error
+Date: Wed, 20 Apr 2005 00:04:04 -0700 (PDT)
+Message-ID: <20050420070404.27344.qmail@web61209.mail.yahoo.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: linux-assembly@vger.kernel.org
 
 Hi All,
-I have been tracing down an insidious bug in HLA for a while and I believe I
-found a code generation problem in Gas. The problem (obviously, since it's a
-Gas bug) only manifests itself under Linux. Over the past several months
-I've been getting reports of problems with floating point code in the HLA
-standard library. The code generally works fine (under Linux, it always
-works fine under Windows), but recently I've noticed that the HLA compiler
-emits some strange looking constants when you statically initialize real64
-variables. Most of the time, it seems to work, even with the weird
-constants, but not always.
+ 
+    I found the following Error messages while
+installing  
+planet-lab(based on linux os).Information on the error
+is  needed.
 
-To make a long story short, I've discovered that whenever you initialize a
-floating point constant with a literal real value, the HLA compiler actually
-stores the real32 value of the constant into memory rather than the real64
-value. I couldn't figure out why: (1) it was doing this, and (2) why we'd
-get correct results most of the time (we should be getting errors all the
-time). Well, (2) turns out to be explanable: when the HLA stdlib is compiled
-with this bug in the compiler, all the real64 conversion routines wind up
-doing real32 conversions. Ugh. (1) was a bit more challenging to figure out
-what's going on, because if you look at the HLA compiler's output, it *is*
-correct.
+ISOLINUX 2.11 2004-08-16 Copyright(C) 1994-2004 H.
+Peter Arvin
+PlanetLab BootCD 3.0-beta0.1
+Loading Kernel.....................
+Loading initrd.gz..............................
+..............................................
+..........isolinux : Disk error 10,AX = 4280, drive EF
 
-The problem turns out to be the Gas fld and fstp  instructions. To convert
-from real80 to real64, I use an HLA sequence like this:
+Boot failed : Press a key to retry
 
-   fld( someReal80Value );
-   fstp( aReal64Variable );
+Action : Pressing a key
 
-HLA (correctly, I presume) emits the following Gas code:
+ISOLINUX 2.11 2004-08-16 Copyright(C) 1994-2004 H.
+Peter Arvin
+isolinux : Disk Error 20, AX=4210, drive EF
 
-   fld [ someReal80Value ]
-   fstpd aReal64Variable
+Boot failed : Press a key to retry
 
-Note that "fstpd" (presumably) stands for "floating point store and pop,
-double-precision" (that is, a real64 value. Note that "fstps" is how you
-would store away a single-precision (32-bit) value. However, when I
-*disassemble* the code assembled by Gas, it shows the following sequence:
+Action : Pressing a Key
 
-  fld someReal80Value
-  fstps aReal64Variable
+ISOLINUX 2.11 2004-08-16 Copyright(C) 1994-2004 H.
+Peter Arvin
+PlanetLab BootCD 3.0-beta0.1
+Loading Kernel.....................
+Loading initrd.gz..............................
+. 
+.
+.
+.
+Buffer i/o error on device device hda, logical block
+70677
+70678
+70679  
+ { Incriment interms of 1 }
+The following set of lines repeatedly displayed
+{
+  hda : media error(bad sector) : status=0x51{Drive
+Ready SeekComplete Error} 
+  hda : media error(bad sector) : error = 0x34
+                                          0x55
+  end_request : i/o error, dev hda , sector 282776
+                                            282780
+                                            282784
+                                       { Increment
+interms of 4 }      
+}
+The following lines were also displayed without
+repeatition
 
-IOW, either fstpd is *not* a double precision store and pop, or Gas is
-generating the wrong code here.
-Anyone have a clue?
-Cheers,
-Randy Hyde
+/etc/init.d/pl_sysinit : line 45: 184 bus error
+/bin/mount -o ro -t iso9660 /dev/$device /usr 2>&1 >
+/dev/null
 
+pl_sysinit : Checking for /usr Contents
+
+Unable to find boot Cdrom 
+
+Pl_sysinit : Bringing network Online
+
+Thanking You,
+Renuka Prasad T.G
+
+
+		
+__________________________________ 
+Do you Yahoo!? 
+Plan great trips with Yahoo! Travel: Now over 17,000 guides!
+http://travel.yahoo.com/p-travelguide
