@@ -1,49 +1,77 @@
-From: Herbert Poetzl <herbert@13thfloor.at>
-Subject: Re: inb
-Date: Sat, 11 Jun 2005 18:38:09 +0200
-Message-ID: <20050611163809.GA29844@MAIL.13thfloor.at>
-References: <BAY14-F280DE79C5B1BF611CB993BD0FE0@phx.gbl>
+From: Agner Fog <agner@agner.org>
+Subject: New C++ compiler with inline assembly support
+Date: Mon, 20 Jun 2005 09:02:50 +0200
+Message-ID: <42B66A1A.50004@agner.org>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <BAY14-F280DE79C5B1BF611CB993BD0FE0@phx.gbl>
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Martin Fflores <abebex17@hotmail.com>
-Cc: linux-assembly@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: linux-assembly@vger.kernel.org
 
-On Sat, Jun 11, 2005 at 02:18:25PM +0000, Martin Fflores wrote:
-> hi! everyone, i have a little problem with the extended assembly, when i 
-> try to compile this:
-> __asm__ __volatile__("inb %1,%0;":"=r"(returned):"r"(port));
-> it makes a error layout, if instead i write :
-> __asm__ __volatile("inb $0x64,%0;":"=r"(returned));
-> its work right; So how i can make a macro that recibe a port value or 
-> argumen like the first example???
-> i wan to write in any port not a const value;
-> 
-> i hope you can help, i'm so coriosus abpout all this things of linux.
-> Sorry abour my english
+Intel have just released version 9.0 of their C++ compiler with better 
+support for inline assembly.
+It can compile for the following platforms
+- Linux x86 32 bit
+- Linux x86 64 bit
+- Linux ia64 (Itanium)
+- Windows x86 32 bit
+- Windows x86 64 bit
+- Windows ia64 (Itanium)
+I haven't tested it on FreeBSD yet, but I assume that it works on 32 and 
+64 bit FreeBSD as well.
 
-int     _inb(int port)
-{
-        unsigned char ret;
-        __asm__ __volatile__ ("inb %w1,%0":"=a"(ret):"id"(port));
-        return ret;
+In Linux, you now have the choice between MASM syntax and AT&T syntax 
+for inline assembly. MASM syntax is almost the same as NASM. If you 
+choose MASM syntax, you can use the same C++ file with inline assembly 
+in both Linux and Windows. It can even translate MASM syntax assembly to 
+AT&T syntax, and this more reliably than any other translation tools I 
+have seen yet.
+
+To use MASM syntax under Linux, simply use the command line option  
+-use-msasm
+
+Example:
+
+int addnumbers (int a, int b) {
+   return a+b;}
+
+Same with inline assembly in MASM syntax:
+
+int addnumbers (int a, int b) {
+   __asm {
+      mov eax, a
+      add eax, b
+   }
 }
 
-best,
-Herbert
+This will work in both Linux and Windows, 32 and 64 bit. So you can use 
+the same C++/asm file on all platforms. It takes care of the differences 
+in calling conventions between the different platforms, and it 
+automatically pushes and pops any non-volatile registers that you use in 
+your code. This makes Linux assembly much easier! You can make the most 
+of your program in C++ and make the critical innermost loop with inline 
+assembly.
 
-> Martin Flores.
-> 
-> _________________________________________________________________
-> Express yourself instantly with MSN Messenger! Download today it's FREE! 
-> http://messenger.msn.click-url.com/go/onm00200471ave/direct/01/
-> 
-> -
-> To unsubscribe from this list: send the line "unsubscribe linux-assembly" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+In 64-bit Linux, function parameters are transferred in registers rdi, 
+rsi, rdx, rcx, r8, r9, xmm0-xmm7. If you know this, you can optimize the 
+above example:
+
+int addnumbers (int a, int b) {
+   __asm {
+      lea eax, [rdi+rsi]
+   }
+}
+
+But then your code is no longer platform independent, of course.
+
+The C++ compiler for Linux is available for free for noncommercial 
+users. Download it from http://www.intel.com/software/products/noncom/
+The C++ compiler for Windows is available with a time limited free 
+evaluation license from 
+https://registrationcenter.intel.com/EvalCenter/EvalForm.aspx?ProductID=411
+
+Agner Fog
+www.agner.org/assem
+
