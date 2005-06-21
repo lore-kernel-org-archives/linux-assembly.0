@@ -1,7 +1,7 @@
-From: Agner Fog <agner@agner.org>
-Subject: New C++ compiler with inline assembly support
-Date: Mon, 20 Jun 2005 09:02:50 +0200
-Message-ID: <42B66A1A.50004@agner.org>
+From: Paul Irofti <bulibuta@gmail.com>
+Subject: 'defines.h' file not found
+Date: Tue, 21 Jun 2005 18:36:30 +0000
+Message-ID: <42B85E2E.2060009@gmail.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
@@ -10,68 +10,21 @@ List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"
 To: linux-assembly@vger.kernel.org
 
-Intel have just released version 9.0 of their C++ compiler with better 
-support for inline assembly.
-It can compile for the following platforms
-- Linux x86 32 bit
-- Linux x86 64 bit
-- Linux ia64 (Itanium)
-- Windows x86 32 bit
-- Windows x86 64 bit
-- Windows ia64 (Itanium)
-I haven't tested it on FreeBSD yet, but I assume that it works on 32 and 
-64 bit FreeBSD as well.
+i have a question, i just moved to AT&T syntax and linux assembly 
+programming. getting up-to-date with the new syntax and kernel syscalls 
+was easy
 
-In Linux, you now have the choice between MASM syntax and AT&T syntax 
-for inline assembly. MASM syntax is almost the same as NASM. If you 
-choose MASM syntax, you can use the same C++ file with inline assembly 
-in both Linux and Windows. It can even translate MASM syntax assembly to 
-AT&T syntax, and this more reliably than any other translation tools I 
-have seen yet.
+now i found on a few tutorials, meant to make your way easier on the 
+transition from intel and win assembly to AT&T and *nix assembly, 
+reffrences to a defines.h file that had the most numbers for output 
+souces and such already defined and passed along to a more human kind of 
+abordation (i.e. $1 gets to be #STDOUT).
 
-To use MASM syntax under Linux, simply use the command line option  
--use-msasm
+my question is if there are this sort of headers standardized and 
+commonly used in the *nix asm world, or every coder makes his own.
 
-Example:
+searching google i found thousands of program samples that included the 
+file but no reffrence was made to it, as though it was a naturaly found 
+header file on every comp.
 
-int addnumbers (int a, int b) {
-   return a+b;}
-
-Same with inline assembly in MASM syntax:
-
-int addnumbers (int a, int b) {
-   __asm {
-      mov eax, a
-      add eax, b
-   }
-}
-
-This will work in both Linux and Windows, 32 and 64 bit. So you can use 
-the same C++/asm file on all platforms. It takes care of the differences 
-in calling conventions between the different platforms, and it 
-automatically pushes and pops any non-volatile registers that you use in 
-your code. This makes Linux assembly much easier! You can make the most 
-of your program in C++ and make the critical innermost loop with inline 
-assembly.
-
-In 64-bit Linux, function parameters are transferred in registers rdi, 
-rsi, rdx, rcx, r8, r9, xmm0-xmm7. If you know this, you can optimize the 
-above example:
-
-int addnumbers (int a, int b) {
-   __asm {
-      lea eax, [rdi+rsi]
-   }
-}
-
-But then your code is no longer platform independent, of course.
-
-The C++ compiler for Linux is available for free for noncommercial 
-users. Download it from http://www.intel.com/software/products/noncom/
-The C++ compiler for Windows is available with a time limited free 
-evaluation license from 
-https://registrationcenter.intel.com/EvalCenter/EvalForm.aspx?ProductID=411
-
-Agner Fog
-www.agner.org/assem
-
+any comments on this will be very well apreciated...thanks!
