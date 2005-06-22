@@ -1,7 +1,7 @@
 From: Paul Irofti <bulibuta@gmail.com>
-Subject: 'defines.h' file not found
-Date: Tue, 21 Jun 2005 18:36:30 +0000
-Message-ID: <42B85E2E.2060009@gmail.com>
+Subject: Re: 'defines.h' file not found
+Date: Wed, 22 Jun 2005 00:04:43 +0000
+Message-ID: <42B8AB1B.5030408@gmail.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
@@ -10,21 +10,40 @@ List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"
 To: linux-assembly@vger.kernel.org
 
-i have a question, i just moved to AT&T syntax and linux assembly 
-programming. getting up-to-date with the new syntax and kernel syscalls 
-was easy
+ofcourse, i need a header that has define directives as:
 
-now i found on a few tutorials, meant to make your way easier on the 
-transition from intel and win assembly to AT&T and *nix assembly, 
-reffrences to a defines.h file that had the most numbers for output 
-souces and such already defined and passed along to a more human kind of 
-abordation (i.e. $1 gets to be #STDOUT).
 
-my question is if there are this sort of headers standardized and 
-commonly used in the *nix asm world, or every coder makes his own.
+;output control
+%define NL 10
+%define STDIN 0
+%define STDOUT 1
+...
+;syscalls
+%define SYS_EXIT 1
+%define SYS_READ 3
+%define SYS_WRITE 4
+%define SYS_IOCTL 54
 
-searching google i found thousands of program samples that included the 
-file but no reffrence was made to it, as though it was a naturaly found 
-header file on every comp.
+....
 
-any comments on this will be very well apreciated...thanks!
+and a sample code that can be found at www.linuxassembly.org is:
+
+.include "defines.h"
+.data
+hello:
+	.string "hello world\n"
+
+.globl	main
+main:
+	movl	$SYS_write,%eax
+	movl	$STDOUT,%ebx
+	movl	$hello,%ecx
+	movl	$12,%edx
+	int	$0x80
+
+	ret
+
+
+that's about it, i need this for an easier code writting. i can use 
+interrupts and numbers but a 'defines.h' would be nicer.
+thanks.
