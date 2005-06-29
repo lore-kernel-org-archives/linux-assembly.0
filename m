@@ -1,104 +1,52 @@
-From: Herbert Poetzl <herbert@13thfloor.at>
-Subject: Re: New C++ compiler with inline assembly support
-Date: Wed, 22 Jun 2005 14:27:11 +0200
-Message-ID: <20050622122711.GB24422@MAIL.13thfloor.at>
-References: <42B66A1A.50004@agner.org>
+From: "Richard Cooper" <syloriza@xersedefixion.com>
+Subject: Re: TT6: High-quality custom logos and business identities
+Date: Wed, 29 Jun 2005 19:37:11 -0400
+Message-ID: <opss5nv9y85khrlj@sucks.airplane.fire>
+References: <200506292204.j5TM4mLj024638@zeus2.kernel.org>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-assembly-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <42B66A1A.50004@agner.org>
+In-Reply-To: <200506292204.j5TM4mLj024638@zeus2.kernel.org>
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Agner Fog <agner@agner.org>
-Cc: linux-assembly@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed	delsp=yes"
+To: "linux-assembly@vger.kernel.org" <linux-assembly@vger.kernel.org>
 
-On Mon, Jun 20, 2005 at 09:02:50AM +0200, Agner Fog wrote:
-> Intel have just released version 9.0 of their C++ compiler with better 
-> support for inline assembly.
-> It can compile for the following platforms
-> - Linux x86 32 bit
-> - Linux x86 64 bit
-> - Linux ia64 (Itanium)
-> - Windows x86 32 bit
-> - Windows x86 64 bit
-> - Windows ia64 (Itanium)
-> I haven't tested it on FreeBSD yet, but I assume that it works on 32 and 
-> 64 bit FreeBSD as well.
+> Your business lacks visual identity?
 
-great! btw, the FSF released the new GCC 4.0 (recently)
-with excellent support for inline assembly ...
-It can compile for the following platforms
+No, not really, I think it looks just fine.
 
- - alpha	- mips/64
- - arm		- powerpc/64
- - h8/300	- rs6k
- - hppa/64	- sparc/64
- - ix86 	- sh/4/5
- - ia64 	- s390/x
- - m32r 	- x86_64
- - m68k     	- ...
+> Marketing efforts falling short?
 
-it works on Linux, *BSD*, Windows, Solaris, ...
+Well, yes...
 
-best,
-Herbert
+> Invisible among a sea of competitors?
 
-> In Linux, you now have the choice between MASM syntax and AT&T syntax 
-> for inline assembly. MASM syntax is almost the same as NASM. If you 
-> choose MASM syntax, you can use the same C++ file with inline assembly 
-> in both Linux and Windows. It can even translate MASM syntax assembly to 
-> AT&T syntax, and this more reliably than any other translation tools I 
-> have seen yet.
-> 
-> To use MASM syntax under Linux, simply use the command line option  
-> -use-msasm
-> 
-> Example:
-> 
-> int addnumbers (int a, int b) {
->   return a+b;}
-> 
-> Same with inline assembly in MASM syntax:
-> 
-> int addnumbers (int a, int b) {
->   __asm {
->      mov eax, a
->      add eax, b
->   }
-> }
-> 
-> This will work in both Linux and Windows, 32 and 64 bit. So you can use 
-> the same C++/asm file on all platforms. It takes care of the differences 
-> in calling conventions between the different platforms, and it 
-> automatically pushes and pops any non-volatile registers that you use in 
-> your code. This makes Linux assembly much easier! You can make the most 
-> of your program in C++ and make the critical innermost loop with inline 
-> assembly.
-> 
-> In 64-bit Linux, function parameters are transferred in registers rdi, 
-> rsi, rdx, rcx, r8, r9, xmm0-xmm7. If you know this, you can optimize the 
-> above example:
-> 
-> int addnumbers (int a, int b) {
->   __asm {
->      lea eax, [rdi+rsi]
->   }
-> }
-> 
-> But then your code is no longer platform independent, of course.
-> 
-> The C++ compiler for Linux is available for free for noncommercial 
-> users. Download it from http://www.intel.com/software/products/noncom/
-> The C++ compiler for Windows is available with a time limited free 
-> evaluation license from 
-> https://registrationcenter.intel.com/EvalCenter/EvalForm.aspx?ProductID=411
-> 
-> Agner Fog
-> www.agner.org/assem
-> 
-> -
+Definately.
+
+> You're on the right track for a solution - keep reading...
+
+Whoohoo, I thought it was hopeless.
+
+> Our professional designers specialize in the creation of custom logos and business/corporate identities. Our design needs to be seen only once to gain customer attention and recognition. With one of our unique, eye-catching mages you'll never have to introduce yourself twice!
+
+Well, I don't think that's my problem.  You see, what's happened is I've made this awesome little web forum CGI script.  It's like WWWBoard, except that I designed it to prevent spam, you know, stuff like this email.  However, despite it's total awesomeness, and despite the fact that I'm giving it away free, I'm at a loss as to how to make it's existance known to people.  I tried listing it on freshmeat.net, but it's on the last of nine pages, where I know no one will see it because when I went looking for something like it, I got tired of looking once I hit page five and decided it'd be easier to write my own than to find one I liked.  So like you said, I'm invisible among a sea of competitors.  I've got a great easily customizable web forum script and yet everyone's still going over to Matt's Script Archive and downloading WWWBoard, only to find that it mixes up replies now and then, a
+  bug that it's had for the last five years.  However, they try to make do, but eventually!
+  have  
+to shut the thing down because of spam robots.  I have the solution, but I can't think of a way to make it known to people.  It's so frustrating.
+
+> We promise fast turnaround and 100% customer satisfaction. Choose from as any design ideas as necessary, select as many colors as you wish, order any modifications you like, and request any format. Our prices are affordable for any size of business, and get this: there are no hidden fees.
+
+Well, that's nice and all, but I don't think that some new colors are going to fix my problem.  But thanks for your email anyway.
+
 > To unsubscribe from this list: send the line "unsubscribe linux-assembly" in
 > the body of a message to majordomo@vger.kernel.org
 > More majordomo info at  http://vger.kernel.org/majordomo-info.html
+
+Does anyone still read this list?
+
+I can't help but feel like I'm responsible for all the spam.  A few years ago I was signed up, but I signed up with one email address and kept accidentally sending emails to the list with another address, and so I got those "your message has been queued for approval" messages, and the owner of the list kept getting "would you like to approve this message" emails.  I think he just got tired of dealing with me and set the list up to accept emails from anyone.  So now we have spam.
+
+Anyone know if the owner of linuxassembly.com has resurfaced yet?  Oh, well, nevermind.  I just typed it in and I see it's no longer there.
+
+I wonder where everyone's Assembly in Linux desires went.  This list used to have lots of messages, but I haven't seen anything besides spam lately.
