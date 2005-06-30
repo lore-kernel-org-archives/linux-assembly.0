@@ -1,28 +1,28 @@
-From: James Colannino <james@colannino.org>
+From: Herbert Poetzl <herbert@13thfloor.at>
 Subject: Re: TT6: High-quality custom logos and business identities
-Date: Wed, 29 Jun 2005 18:13:27 -0700
-Message-ID: <42C34737.5070208@colannino.org>
+Date: Thu, 30 Jun 2005 05:09:18 +0200
+Message-ID: <20050630030918.GC23229@MAIL.13thfloor.at>
 References: <200506292204.j5TM4mLj024638@zeus2.kernel.org> <opss5nv9y85khrlj@sucks.airplane.fire>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
+Content-Disposition: inline
 In-Reply-To: <opss5nv9y85khrlj@sucks.airplane.fire>
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: Richard Cooper <syloriza@xersedefixion.com>
 Cc: "linux-assembly@vger.kernel.org" <linux-assembly@vger.kernel.org>
 
-Richard Cooper wrote:
-
+[zapped]
 > Does anyone still read this list?
 
-I'm on the list :)
+hmm yeah ...
 
-James
--- 
-My blog: http://www.crazydrclaw.com/
-My homepage: http://james.colannino.org/
+> I wonder where everyone's Assembly in Linux desires went.
 
-" Those who would give up essential Liberty, to purchase a little
-temporary Safety, deserve neither Liberty nor Safety." --Benjamin Franklin
+no idea ...
+
+best,
+Herbert
+
