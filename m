@@ -1,28 +1,26 @@
-From: Herbert Poetzl <herbert@13thfloor.at>
+From: Steffen Solyga <solyga@absinth.net>
 Subject: Re: TT6: High-quality custom logos and business identities
-Date: Thu, 30 Jun 2005 05:09:18 +0200
-Message-ID: <20050630030918.GC23229@MAIL.13thfloor.at>
-References: <200506292204.j5TM4mLj024638@zeus2.kernel.org> <opss5nv9y85khrlj@sucks.airplane.fire>
+Date: Sat, 2 Jul 2005 00:31:55 +0200
+Message-ID: <20050701223155.GB3256@absinth.net>
+References: <200506292204.j5TM4mLj024638@zeus2.kernel.org> <opss5nv9y85khrlj@sucks.airplane.fire> <42C34737.5070208@colannino.org>
 Mime-Version: 1.0
 Return-path: <linux-assembly-owner@vger.kernel.org>
 Content-Disposition: inline
-In-Reply-To: <opss5nv9y85khrlj@sucks.airplane.fire>
+In-Reply-To: <42C34737.5070208@colannino.org>
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Richard Cooper <syloriza@xersedefixion.com>
-Cc: "linux-assembly@vger.kernel.org" <linux-assembly@vger.kernel.org>
+To: linux assembly <linux-assembly@vger.kernel.org>
 
-[zapped]
-> Does anyone still read this list?
+Citing James Colannino (Wednesday, 2005/06/29 18:13)...
 
-hmm yeah ...
+> Richard Cooper wrote:
+> 
+> > Does anyone still read this list?
+> 
+> I'm on the list :)
 
-> I wonder where everyone's Assembly in Linux desires went.
+So we're at least four :-p
 
-no idea ...
-
-best,
-Herbert
-
+Steffen
