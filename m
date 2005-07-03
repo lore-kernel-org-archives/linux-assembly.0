@@ -1,35 +1,32 @@
-From: Frank Kotler <fbkotler@comcast.net>
+From: Daniel Bonekeeper <thehazard@gmail.com>
 Subject: Re: TT6: High-quality custom logos and business identities
-Date: Sat, 02 Jul 2005 01:28:27 -0400
-Message-ID: <42C625FB.20303@comcast.net>
-References: <200506292204.j5TM4mLj024638@zeus2.kernel.org> <opss5nv9y85khrlj@sucks.airplane.fire> <42C34737.5070208@colannino.org> <20050701223155.GB3256@absinth.net>
+Date: Sun, 3 Jul 2005 02:15:20 -0400
+Message-ID: <e1e1d5f4050702231541f0546@mail.gmail.com>
+References: <200506292204.j5TM4mLj024638@zeus2.kernel.org>
+	 <opss5nv9y85khrlj@sucks.airplane.fire>
+	 <42C34737.5070208@colannino.org> <20050701223155.GB3256@absinth.net>
+	 <42C625FB.20303@comcast.net>
+Reply-To: Daniel Bonekeeper <thehazard@gmail.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <20050701223155.GB3256@absinth.net>
+In-Reply-To: <42C625FB.20303@comcast.net>
+Content-Disposition: inline
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: linux assembly <linux-assembly@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: Frank Kotler <fbkotler@comcast.net>
+Cc: linux assembly <linux-assembly@vger.kernel.org>
 
-Steffen Solyga wrote:
-> Citing James Colannino (Wednesday, 2005/06/29 18:13)...
->>Richard Cooper wrote:
->>>Does anyone still read this list?
->>
->>I'm on the list :)
-> 
-> So we're at least four :-p
+I am also on the list... it's 02:08am and look ! I readed the whole
+message... =P
+the funniest part is that there is not any URL of the web forum thing
+in the whole email... (or Im so sleepy that I missed it.. )
 
-I'm awake! ... but I don't usually read the ones about high quality 
-business logos :)
+Frank, they still segfaulting even if recompiled under a 2.6 kernel ?
 
-Anyone noticed anything strange about the newer 2.6 kernels? Gcc, even 
-Gas users wouldn't notice it, but some of the very "simple" programs we 
-can make with Nasm or Fasm (including the "elfexe" example with Fasm) - 
-segfault on new kernels! In the loader, they never even get to run! The 
-trick seems to be that you *must* have a writeable section last...
+[]'sss
+Daniel
 
-Best,
-Frank
-
+-- 
+# (perl -e "while (1) { print "\x90"; }") | dd of=/dev/evil
