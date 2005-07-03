@@ -1,66 +1,48 @@
-From: jko@bsn1.net
-Subject: Re: TT6: High-quality custom logos and business identities
-Date: Sun, 3 Jul 2005 10:17:37 -0700
-Message-ID: <200507031017.37918.jko@bsn1.net>
-References: <200506292204.j5TM4mLj024638@zeus2.kernel.org> <42C34737.5070208@colannino.org> <20050701223155.GB3256@absinth.net>
+From: "Stephen Pelc" <stephen@mpeltd.demon.co.uk>
+Subject: Re: new behavior with kernels 2.6.10+
+Date: Mon, 4 Jul 2005 00:30:02 +0100
+Message-ID: <42C8830A.14199.AAC6681@localhost>
+References: <070320050307.12502.42C75678000A24E5000030D62205884484C0CF9D0A0B0E0AAD0A08AB@comcast.net>
+Reply-To: Stephen Pelc <stephen@mpeltd.demon.co.uk>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <20050701223155.GB3256@absinth.net>
-Content-Disposition: inline
+In-reply-to: <42C7F316.9040205@comcast.net>
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: linux assembly <linux-assembly@vger.kernel.org>
+To: linux-assembly@vger.kernel.org
 
-On 07/01/2005 03:31 pm, Steffen Solyga wrote:
+> Doesn't appear to have a writeable section at all. But "objdump
+> -h" says:
+> 
+> Sections:
+> Idx Name          Size      VMA       LMA       File off  Algn
+>    0 .text         0000000c  00000000  00000000  00000034  2**2
+>                    CONTENTS, ALLOC, LOAD, READONLY, CODE
+>    1 .data         00000000  00000000  00000000  00000040  2**2
+>                    CONTENTS, ALLOC, LOAD, DATA
+>    2 .bss          00000000  00000000  00000000  00000040  2**2
+>                    ALLOC
 
-> So we're at least four :-p
+I don't know if this is relevant, but under Suse 9.2 an 
+executable program does not require any sections at all! 
+Providing that your code (text) segment is marked as writable, 
+everything is fine. Since an ELF file can be marked as RWX, my 
+tests using Nasm producing a binary file, and constructing the 
+ELF headers by hand, I can produce an ELF file that has three 
+segments (interp, text, dynamic) that loads libc and calls 
+printf.
 
-Most people just lurk on lists.  I suspect this list has
-more than 4 people signed up <grin>.
+According to a contact, the library loader does not require 
+sections at all. Sections are only required by the the system 
+linker, usually ld.
 
-I'm currently spending a lot of time writting assembly programs
-and have a few close to release state.  The file manager (AsmMgr)
-has had a major update and the library (AsmLib) has had lots
-of bug fixes, it now has over 200 functions.  A disassembler engine
-is close to completion.  The disassembler engine is designed for
-reverse engineering and speed.  Hopefully it will be fast enough to
-iterate over "c" programs and produce nasm source.  I'm hoping it
-will identify data areas by brute force itteration.
+Stephen
 
-In other areas the debugger Frank wrote has been a great help
-and the latest kdbg now runs without crashing.
-
-So... there is some activity in the assembly arena.  The problem
-that probably reduces interest in assembly is lack of entry tools.
-It is possible to solve many portability issues with tools and
-also reduce the learning curve for new programmers.  At present
-our tools are very limited when compared to "c" tools and some
-of the IDE programs for other languages.  I wrote a help system
-called AsmRef, but it only runs in x-terminals on x86 systems
-with kernel 2.4+.  That's pretty limiting.  Oh well...  
-
-I wonder what other programmers think the best path for
-assembly portabilty would be?  There are two approaches
-I know of:
-  
-  1. macros to translate kernel calls for each different platform
-  2. library calls to interface with the kernel and work with each
-      platform.
-
-The macro approach has some additional portability issues but
-has been implemented by linuxassembly.org.  HLA uses it's
-own unique approach and tries to include some structure to
-assembler.  What do assembly programmers want or prefer?
-
-jeff
-http://members.save-net.com/jko%40save-net.com/asm/
-http://sourceforge.net/projects/asmref
-http://sourceforge.net/projects/asmlib
-http://sourceforge.net/projects/asmmgr
-http://sourceforge.net/projects/asmedit
-http://groups.yahoo.com/group/DesktopLinuxAsm
-
-h
-
+--
+Stephen Pelc, stephen@mpeltd.demon.co.uk
+MicroProcessor Engineering Ltd - More Real, Less Time
+133 Hill Lane, Southampton SO15 5AF, England
+tel: +44 23 80 631441, fax: +44 23 80 339691
+web: http://www.mpeltd.demon.co.uk - free VFX Forth downloads
