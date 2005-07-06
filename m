@@ -1,29 +1,37 @@
-From: Konstantin Boldyshev <konst@linuxassembly.org>
-Subject: Re: TT6: High-quality custom logos and business identities
-Date: Wed, 06 Jul 2005 15:57:27 +0400
-Message-ID: <42CBC727.8060203@linuxassembly.org>
-References: <200506292204.j5TM4mLj024638@zeus2.kernel.org> <opss5nv9y85khrlj@sucks.airplane.fire>
+From: "Martin Fflores" <abebex17@hotmail.com>
+Subject: extended assembly
+Date: Wed, 06 Jul 2005 19:18:48 +0000
+Message-ID: <BAY14-F22DCF1C24E58500B44F404D0D90@phx.gbl>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <opss5nv9y85khrlj@sucks.airplane.fire>
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: "linux-assembly@vger.kernel.org" <linux-assembly@vger.kernel.org>
+Content-Type: text/plain; format=flowed; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: linux-assembly@vger.kernel.org
 
-Richard Cooper ?????:
+hi! everyone, i have a rare problems here, i dont know if i do somethign 
+wrong or the compiler have some problems, when i read a value from a port(a 
+byte) the first time it's retun to me a byte so i catch and use printf to 
+show this value, the secon time its return to me a integer value or a dont 
+know, let me give you a example:
 
-> Anyone know if the owner of linuxassembly.com has resurfaced yet? Oh, 
-> well, nevermind. I just typed it in and I see it's no longer there.
+char value=0;
+__asm__ __volalile__("cli;inb $0x60,%0;sti;":"=r"(value));
+printf("%x",value);// the first time usually return 1c
+// this is the second time
+__asm__ __volalile__("cli;inb $0x60,%0;sti;":"=r"(value));
+printf("%x",value);// this print in teh screen ffffffa ainteger value
 
-Perhaps you've meant linuxassembly.ORG?
-Well, I am here, still subscribed..
-Still hoping to release new asmutils..
-And still lacking time for this.. :(
+i'm expecting a ACK response for the keyboard ACK is in the ffffffa the 
+first byte buti cant never know ir caouse when i ask for ack it inst ack in 
+ffffffa and it is bigger than a byte why iot happend??????????????????''
 
---
-Regards,
-Konstantin.
+Take Care Folks.
 
+Martin Flores
+
+_________________________________________________________________
+Don't just search. Find. Check out the new MSN Search! 
+http://search.msn.com/
 
