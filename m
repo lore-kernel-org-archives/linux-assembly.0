@@ -1,56 +1,67 @@
-From: Frank Kotler <fbkotler@comcast.net>
-Subject: linuxassembly.org - asmutils
-Date: Wed, 06 Jul 2005 16:03:35 -0400
-Message-ID: <42CC3917.3020105@comcast.net>
-References: <200506292204.j5TM4mLj024638@zeus2.kernel.org> <opss5nv9y85khrlj@sucks.airplane.fire> <42CBC727.8060203@linuxassembly.org>
+From: Herbert Poetzl <herbert@13thfloor.at>
+Subject: Re: extended assembly
+Date: Thu, 7 Jul 2005 04:12:33 +0200
+Message-ID: <20050707021233.GA22487@MAIL.13thfloor.at>
+References: <BAY14-F22DCF1C24E58500B44F404D0D90@phx.gbl>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <42CBC727.8060203@linuxassembly.org>
+Content-Disposition: inline
+In-Reply-To: <BAY14-F22DCF1C24E58500B44F404D0D90@phx.gbl>
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: "linux-assembly@vger.kernel.org" <linux-assembly@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Martin Fflores <abebex17@hotmail.com>
+Cc: linux-assembly@vger.kernel.org
 
-Konstantin Boldyshev wrote:
-> Perhaps you've meant linuxassembly.ORG?
+On Wed, Jul 06, 2005 at 07:18:48PM +0000, Martin Fflores wrote:
+> hi! everyone, i have a rare problems here, i dont know if i do somethign 
+> wrong or the compiler have some problems, when i read a value from a port(a 
+> byte) the first time it's retun to me a byte so i catch and use printf to 
+> show this value, the secon time its return to me a integer value or a dont 
+> know, let me give you a example:
+> 
+> char value=0;
+> __asm__ __volalile__("cli;inb $0x60,%0;sti;":"=r"(value));
+> printf("%x",value);// the first time usually return 1c
+> // this is the second time
+> __asm__ __volalile__("cli;inb $0x60,%0;sti;":"=r"(value));
+> printf("%x",value);// this print in teh screen ffffffa ainteger value
+> 
+> i'm expecting a ACK response for the keyboard ACK is in the ffffffa the 
+> first byte buti cant never know ir caouse when i ask for ack it inst ack in 
+> ffffffa and it is bigger than a byte why iot happend??????????????????''
 
-What's the story with http://asm.sourceforge.net ? Just a mirror, or is 
-there some difference?
+man 3 printf
 
-...
-> Still hoping to release new asmutils..
+       o,u,x,X   The unsigned int argument is converted to unsigned 
+		     ~~~~~~~~~~~~~~~~~~~~~
+		 octal (o), unsigned decimal (u), or unsigned hexadecimal
+		 (x and X) notation. 
 
-Great! There are a couple bugs in 0.17...
+The length modifier
+       hh        A following integer conversion corresponds to a 
+		 signed char or unsigned char argument, or a
+              	 following n conversion corresponds to a pointer 
+		 to a signed char argument.
 
-Makefile - insists on buggy 0.98 to build. Deleting the obvious 
-offending lines fixes it. (we apologize for 0.98.37 - elf output was 
-badly broken... but 0.98??? Jesus, it won't even assemble its own "test" 
-directory!)
+the 'char' value is signed, and is implicitely converted
+to an int, which in turn is printed as unsigned hex 'x'
 
-truss.asm - "pause" is an instruction nowadays. Speak to Intel, not 
-Nasm's fault. I fixed it by changing to "$pause" (two places, IIRC), but 
-any change would fix it...
+ 0xfa (-5) -> 0xfffffffa
 
-Several of the utilities segfault on 2.6.10+ (this was first brought to 
-my attention on 2.6.11, but the patch appears to have been applied to 
-2.6.10 - still there in 2.6.12) This applies to those utilities with the 
-(only) code section set to "R X", but those with "RWX" still work okay. 
-I don't know if the proper fix is to make all code sections writeable 
-(last lines in Brian's "elf.inc") or to make sure every program made 
-this way has a "UDATASEG"...
+best,
+Herbert
 
-Call it a "kernel bug" if you like (I do), but I don't think it's going 
-to go away.
-
-What are the security implications of making the code section writeable? 
-Is this a "safe" thing to do?
-
-> And still lacking time for this.. :(
-
-So many bits,so little time... :) Huge thanks to you and others involved 
-for what you've done. It's a *tremendous* help!
-
-Best,
-Frank
-
+> Take Care Folks.
+> 
+> Martin Flores
+> 
+> _________________________________________________________________
+> Don't just search. Find. Check out the new MSN Search! 
+> http://search.msn.com/
+> 
+> -
+> To unsubscribe from this list: send the line "unsubscribe linux-assembly" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
