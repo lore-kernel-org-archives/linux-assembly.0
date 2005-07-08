@@ -1,28 +1,212 @@
-From: "Richard Cooper" <syloriza@xersedefixion.com>
-Subject: Re: TT6: High-quality custom logos and business identities
-Date: Fri, 08 Jul 2005 01:28:39 -0400
-Message-ID: <opstkxh1bp5khrlj@sucks.airplane.fire>
-References: <200506292204.j5TM4mLj024638@zeus2.kernel.org>  <opss5nv9y85khrlj@sucks.airplane.fire>  <42C34737.5070208@colannino.org> <20050701223155.GB3256@absinth.net>  <42C625FB.20303@comcast.net> <e1e1d5f4050702231541f0546@mail.gmail.com>
+From: "Nanakos Chrysostomos" <nanakos@wired-net.gr>
+Subject: x86 Endiannes and libc printf
+Date: Fri, 8 Jul 2005 22:05:17 +0300 (EEST)
+Message-ID: <42117.62.38.142.34.1120849517.squirrel@webmail.wired-net.gr>
+Reply-To: nanakos@wired-net.gr
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7BIT
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <e1e1d5f4050702231541f0546@mail.gmail.com>
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed	delsp=yes"
-To: "linux-assembly@vger.kernel.org" <linux-assembly@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: linux-assembly@vger.kernel.org
 
-> the funniest part is that there is not any URL of the web forum thing
-> in the whole email... (or Im so sleepy that I missed it.. )
+Hi all,
+i am searching for a few hours now the endianness in the x86
+environment,and i have the following
+snippets of code,which in some places i cant understand.Please help me!!!
 
-I didn't expect anyone to be interested, but if you want to have a look:
+endian.c
+---------
+#include <stdio.h>
+#include <fcntl.h>
+#include <sys/types.h>
 
-http://www.xersedefixion.com/forum/info.html
 
-There's also my linux assembly project:
+int main()
+{
+        char *filename= "endian.txt";
+        unsigned long buf;
+        char *k=(char *)&buf;
+        int fd;
 
-http://www.xersedefixion.com/softer/
+        fd = open("makis",O_RDONLY);
 
-And my assembly but not Linux project:
+        read(fd,&buf,4);
 
-http://www.xersedefixion.com/sarcasm/
+        printf("%.4s\n",&buf);
+        printf("%p\n",buf);
+        printf("&buf: %p %#x %p\n",&buf,*k,k);
+        return 0;
+}
+
+endian.txt
+----------
+DBCA
+
+
+#./read
+DCBA
+0x41424344
+&buf: 0xbffff8b0 0x44 0xbffff8b0
+#
+
+
+In the first printf everything is fine.In the second printf we see that
+the 0x44,0x43,0x42,0x41 byte-data is printed in the revserse order,while
+we can see
+that in memory it is in the right order after the read system call.Why
+this happens?Is it being internal in printf???
+
+
+I tried to explain that with similar approaches like unions, but the same
+happens.endian2.c
+---------
+#include <stdio.h>
+#include <unistd.h>
+
+int   main()
+{
+
+        union {
+                long   s;
+                char    c[sizeof(long)];
+        } un;
+
+        un.s = 0x41424344;
+        if (sizeof(short) == 2) {
+                if (un.c[0] == 0x41 && un.c[1] == 0x42)
+                        printf("big-endian\n");
+                else if (un.c[0] == 0x44 && un.c[1] == 0x43)
+                        printf("little-endian\n");
+                else
+                        printf("unknown\n");
+        } else
+                printf("sizeof(short) = %d\n", sizeof(short));
+
+
+        printf("%.4s\n",&(un.s));
+        printf("%p\n",(un.s));
+        _exit(0);
+
+}
+
+
+
+The same as above.Should i assume that an internal operation in printf is
+doing this???
+
+
+I also used the above assembly example,to see what
+happens.Memory-to-memory movements (with push & pop) dont inherit the
+little-endian way.Is this
+happens only from memory-to-register and the opposite????
+
+read.asm
+--------
+section .bss
+buf     resd    1
+
+section .data
+        pathname db "makis",0
+section .text
+
+global _start
+
+_start:
+
+;open
+mov eax,5
+mov ebx,pathname
+mov ecx,02
+int 0x80
+
+
+;read
+mov ebx,eax
+mov eax,3
+mov ecx,buf
+mov edx,4
+int 0x80
+
+;write
+mov eax,4
+mov ebx,1
+mov ecx,buf
+mov edx,4
+int 0x80
+
+;exit
+mov eax,1
+mov ebx,0
+int 0x80
+
+
+Everything works just fine.Can anynone knows how can i revserse the order
+of the data,from 0x44434241 to 0x41424344 into the stack?? Without using
+AND and OR.Can
+this be done????
+
+
+The last two examples is the output from gcc,one "fixed" from me to find
+out what is in the stack and the other is the default output from the
+first example.My example
+has been changed only in the printf call from the library,after the read
+call,which i suppose is the "black box" to the "problem" i cant
+understand...........read.s
+------
+        .file   "read.c"
+        .version        "01.01"
+gcc2_compiled.:
+                .section        .rodata
+.LC0:
+        .string "makis"
+.LC1:
+        .string "%#x\n"
+.text
+        .align 4
+.globl main
+        .type    main,@function
+main:
+        pushl   %ebp
+        movl    %esp, %ebp
+        subl    $24, %esp
+        movl    $.LC0, -4(%ebp)
+        subl    $8, %esp
+        pushl   $0
+        pushl   $.LC0
+        call    open
+
+        addl    $16, %esp
+        movl    %eax, %eax
+        movl    %eax, -12(%ebp)
+        subl    $4, %esp
+        pushl   $4
+        leal    -8(%ebp), %eax
+        pushl   %eax
+        pushl   -12(%ebp)
+        call    read
+
+---->Before it was the printf call which retrieves its arguments from the
+stack.Which as we can see its different for every conversion specifier..
+
+        movl    $4,%eax
+        movl    $1,%ebx
+        leal    -8(%ebp),%ecx
+        movl    $4,%edx
+        int     $0x80
+
+
+        movl    $1, %eax
+        movl    $0,%ebx
+        int $0x80
+.Lfe1:
+        .size    main,.Lfe1-main
+        .ident  "GCC: (GNU) 2.96 20000731 (Red Hat Linux 7.3 2.96-110)"
+
+
+
+Can someone please help me with that???
+
+Thanks in advance,Chris.
+
