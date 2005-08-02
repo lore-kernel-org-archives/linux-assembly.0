@@ -1,168 +1,61 @@
-From: TheReader06@comcast.net
-Subject: Re: Executing memory mapped files
-Date: Tue, 02 Aug 2005 18:11:30 +0000
-Message-ID: <080220051811.22540.42EFB751000E44690000580C2202888744C0CF9D0A0B0E0AAD0A08AB@comcast.net>
+From: a c <notawwal@yahoo.com>
+Subject: im news, heres why
+Date: Tue, 2 Aug 2005 16:31:31 -0700 (PDT)
+Message-ID: <20050802233131.99326.qmail@web34012.mail.mud.yahoo.com>
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-assembly-owner@vger.kernel.org>
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
-MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: STROEBEL NJ <stroebelnj@hotmail.com>, linux-assembly@vger.kernel.org
+To: linux-assembly@vger.kernel.org
 
-Here's a piece of a program I wrote to do that..  (So if it doesn't compile, that's why ;)
+i wanted to know about this, hopefully someone on here
+can look at this and decode it, its a packet,
+unfortunately i forgot to -s 0 on tcpdump before i saw
+it
+but ive seen it a few times before and this is as long
+as it gets
 
-Also note that it's a flat binary it runs, not an ELF or aout format executable..
+04:04:39.6808717 00:XX:aa:XX:aa:XX 0000592
+ 0x0000 4500 0240 7678 0000 4011 fd35 0000 0000
+ 0x0010 ffff ffff 0044 0043 022c f66a 0101 0600
+ 0x0020 7aa4 e836 000a 0000 0000 0000 0000 0000
+ 0x0030 0000 0000 0000 0000 0000 d0a4 0214 0000
+ 0x0040 0000 0000 0000 0000 0000 0000 0000 0000
+the corrosponding ascii translation, i dont trust
+the line wrap.
+E..@{x..@..5....
+.....D.C.,.j....
+z..6............
+................
+................
 
-test5.c:
-#include <fcntl.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sys/stat.h>
-#include <sys/types.h>
-#include <unistd.h>
-
-int
-main(int argc, char *argv[])
-{
-        int inf, infLen;
-        void *code;
-        void (*func)();
-
-        if (argc != 2)
-        {
-                printf("Usage: %s <input file>\n", argv[0]);
-                exit(-1);
-        }
-
-        if ( (inf = open(argv[1], O_RDONLY)) == -1)
-        {
-                printf("Failed to open '%s'..\n", argv[1]);
-                exit(-1);
-        }
-
-        infLen = lseek(inf, 0, SEEK_END);
-        lseek(inf, 0, SEEK_SET);
-
-        code = malloc(infLen);
-
-        if (read(inf, code, infLen) != infLen)
-        {
-                printf("Failed to read entire file..\n");
-                exit(-1);
-        }
-
-        close(inf);
-
-        printf("Executing code..\n");
-        fflush(stdout);
-        func = (void (*)()) code;
-        (*func)();
-
-        return (0);
-}
-
-Good luck,
-
-Joshua Roys
+okay so i have no idea what this is, and that bothers
+me a little bit, since it -seems- to accompany other
+symptoms of funny networking, eg lag, telnet clearing
+the screen, sometimes the telnet process forgets how
+to
+clean up after a backspace so to "a" becomes "_a" 
+the _ is the cursor.. thats probably a whole different
+issue for a whole different group, i just hope some
+hex
+master can look at that and go "that is <blah>" 
+it occurs right after i "modprobe ndiswrapper" but
+not every time. im not even sure why i care. im 
+running 2.6.9 kernel, slackware 10 distro, lots of 
+sloppy cross installations of everything, ndiswrapper 
+1.0 for a realtek net8180 chipped dlink wireless b
+adapter, in any case im looking forward to observing
+the mailing list chatter, if there is any, cause this
+stuff intrigues me and ill try to stay quiet and not
+pester you guys like i do most of the "programmers" i 
+know who mostly just have alot of library experience
+:) heh
 
 
-> 
-> Is it possible to load an executable binary (8k) into memory using mmap()
-> function ant then executing the binary program in memory.
-> 
-> I tried something like this in C and it only seemed to load the binary into
-> memory. I then tried the  exec family  to execute the binary but nothing
-> happened.Maybe in assmebler there is a better method ?
-> 
-> here is the source:
-> 
-> 
-> #include <unistd.h>
-> #include <stdio.h>
-> #include <ctype.h>
-> #include <fcntl.h>
-> #include <string.h>
-> #include <malloc.h>
-> #include <sys/mman.h>
-> #include <sys/stat.h>
-> #include <stdlib.h>
-> #include <signal.h>
-> #include </usr/include/sys/types.h>
-> #include </usr/include/sys/stat.h>
-> #include <arpa/inet.h>
-> #include <netdb.h>
-> #include <netinet/in.h>
-> #include <sys/types.h>
-> #include <sys/socket.h>
-> 
-> // gcc -o example1 example1.c
-> 
-> void err_quit(char *msg);
-> 
-> int main(int argc,char *argv[])
->   {
-> 
->     int fdin;
->     char *src,**dh;
->     struct stat statbuf;
->     off_t len;
-> 
-> 
->     if (( fdin = open("prog1",O_RDONLY)) < 0) //prog1 binary executable file
->       err_quit("open failed");
-> 
-> 
->     if ((fstat(fdin,&statbuf)) < 0)
->            err_quit("fstat failed");
-> 
->     len = statbuf.st_size;
-> 
->     if ((src = mmap(0, len,PROT_EXEC,MAP_SHARED,fdin,0)) == (void *)-1)
-> 
->               err_quit("mmap failed");
-> 
-> 
-> 
-> 
-> if (! fork())
->    {
->      int rt;
-> 
->   rt = execve(src,src,0);
-> sleep(2);
-> 
->    }
-> 
-> sleep(4);
-> close(fdin);
-> munmap(src,len);
-> exit(0);
-> 
->   }
-> 
-> 
-> void err_quit(char *msg)
-> 
-> {
->   perror(msg);
->   exit(EXIT_FAILURE);
-> 
-> 
-> }
-> 
-> 
-> Im using Fedora 3  ,PC: 1MB ram , 3.2 Ghz pentuim.
-> Any suggestions ?
-> 
-> stroebelnj@hotmail.com
-> 
-> _________________________________________________________________
-> Upgrade to MSN Hotmail Plus - your e-mail, your way! 
-> http://join.msn.com/?pgmarket=en-xe&DI=1054&XAPID=1816
-> 
-> -
-> To unsubscribe from this list: send the line "unsubscribe linux-assembly" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+		
+____________________________________________________
+Start your day with Yahoo! - make it your home page 
+http://www.yahoo.com/r/hs 
+ 
