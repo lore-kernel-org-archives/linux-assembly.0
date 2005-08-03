@@ -1,27 +1,29 @@
-From: Claudio Fontana <sick_soul@yahoo.it>
-Subject: Re: im news, heres why
-Date: Tue, 2 Aug 2005 17:40:52 -0700 (PDT)
-Message-ID: <20050803004052.81549.qmail@web26003.mail.ukl.yahoo.com>
-References: <20050802233131.99326.qmail@web34012.mail.mud.yahoo.com>
+From: HIToC <hitoc_mail@yahoo.it>
+Subject: Standard output
+Date: Wed, 3 Aug 2005 10:31:55 +0200
+Message-ID: <200508031031.55803.hitoc_mail@yahoo.it>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
+Content-Transfer-Encoding: 8BIT
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <20050802233131.99326.qmail@web34012.mail.mud.yahoo.com>
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: a c <notawwal@yahoo.com>
-Cc: linux-assembly <linux-assembly@vger.kernel.org>
+To: linux-assembly@vger.kernel.org
 
-sorry, just noticed I did crappy calculations.
-Port 0x43 is of course not 69, it is 67 which is most
-probably a dhcp service.
+Hello list!
+Normally, when I call the function sys_write on standard output, I
+write one ore more character on the screen in the position next
+to the last character printed.
+I am writing a program that wishes to clean the screen, to print a character
+in a fixed position no the screen (x, y) and to modify the characters and
+background colors.
+What funcionts I have to call in order to have a better controll of the
+standard output?
 
-Claudio
+Thanks a lot for every suggestion.
+-- 
+With regards,
 
 
-		
-____________________________________________________
-Start your day with Yahoo! - make it your home page 
-http://www.yahoo.com/r/hs 
- 
+					HIToC
+					hitoc_mail@yahoo.it
