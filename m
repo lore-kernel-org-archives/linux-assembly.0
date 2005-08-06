@@ -1,28 +1,72 @@
-From: Brian Raiter <breadbox@muppetlabs.com>
-Subject: Re: Executing memory mapped files
-Date: Thu, 4 Aug 2005 12:11:11 -0700
-Message-ID: <17138.26703.809921.895920@eidolon.muppetlabs.com>
-References: <MC6-F34jriLdElsBt8s003595b5@MC6-F34.hotmail.com>
-	<BAY7-F2808E06858B3CEE096030CDFC20@phx.gbl>
+From: Mohammad Badr <badrpayam@yahoo.com>
+Subject: I have a problem with kernel
+Date: Fri, 5 Aug 2005 22:09:10 -0700 (PDT)
+Message-ID: <20050806050910.53830.qmail@web60518.mail.yahoo.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <BAY7-F2808E06858B3CEE096030CDFC20@phx.gbl>
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 To: linux-assembly@vger.kernel.org
 
-> Is it possible to load an executable binary (8k) into memory using mmap()
-> function ant then executing the binary program in memory.
+Hi
 
-If by executable binary, you mean an ELF binary, then no, it wouldn't
-be easy. (Obviously, it's *possible*, because that's exactly what
-Linux does when you run a program.) You'd have to replicate all of the
-program-loading processes that the kernel does for you.
+I had added an assembly program to the networking
+section of kernel linux 2.2.16 without any problem.
+But when I add it to kerenel 2.4.1 I could build that
+kernel, but I faced with kernel panic when I boot
+system with new builded image. I use the following
+Make file to build It in the 2.4.1 kernel. 
 
-The answer is to just use an exec function to run the program file
-directly. There's no point in trying to mmap() it first (and in fact
-the kernel will undoubtedly use mmap in the process of loading it).
+/*--------------------------------*/
+L_TARGET := libtest.a
 
-b
+obj-$(CONFIG_TEST)		+= test.o
+
+override CFLAGS += -Wpointer-arith
+override CFLAGS += -Wbad-function-cast
+override CFLAGS += -DTERMIO
+
+
+#-----------------------------------------------------------------------------
+# Section 3 - Conversion routines from new style to
+old style for Rules.make
+
+#-----------------------------------------------------------------------------
+# Section 4 - Rules.make section
+include $(TOPDIR)/Rules.make
+#-----------------------------------------------------------------------------
+# Section 5
+
+$(obj-y):  $(TOPDIR)/include/linux/config.h\
+                       
+$(TOPDIR)/include/linux/autoconf.h
+
+clean:
+	-rm -f *.o
+tags:
+	ctags libtest.a
+
+tar:
+	tar -cvf /dev/f1 .
+
+test.o: test1.o test2.o test3.o 
+	$(LD) -r -o $@ test1.o test2.o test3.o 
+
+test3.o: test3.s
+	$(AS) -o $@ $<
+#-----------------------------------------------------------------------------
+As you can see test3.s is an assembly file.
+I guess this problem is related to this Makefile.
+Is this Make file true?
+How can I win over this problem?
+
+thanks
+
+
+		
+____________________________________________________
+Start your day with Yahoo! - make it your home page 
+http://www.yahoo.com/r/hs 
+ 
