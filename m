@@ -1,21 +1,23 @@
-From: Mohammad Badr <badrpayam@yahoo.com>
-Subject: I have a problem with kernel
-Date: Fri, 5 Aug 2005 22:09:10 -0700 (PDT)
-Message-ID: <20050806050910.53830.qmail@web60518.mail.yahoo.com>
+From: mhb <badrpayam@yahoo.com>
+Subject: I cannot build a new kernel image when I add a assembly module to It
+Date: Mon, 8 Aug 2005 06:21:00 -0700 (PDT)
+Message-ID: <20050808132100.19904.qmail@web60523.mail.yahoo.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7BIT
 Return-path: <linux-assembly-owner@vger.kernel.org>
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: linux-assembly@vger.kernel.org
+To: linux-newbie@vger.kernel.org
+Cc: linux-assembly <linux-assembly@vger.kernel.org>
 
 Hi
 
 I had added an assembly program to the networking
 section of kernel linux 2.2.16 without any problem.
 But when I add it to kerenel 2.4.1 I could build that
-kernel, but I faced with kernel panic when I boot
+kernel, but I faced with kernel panic error when I
+boot
 system with new builded image. I use the following
 Make file to build It in the 2.4.1 kernel. 
 
@@ -64,9 +66,7 @@ How can I win over this problem?
 
 thanks
 
-
-		
-____________________________________________________
-Start your day with Yahoo! - make it your home page 
-http://www.yahoo.com/r/hs 
- 
+__________________________________________________
+Do You Yahoo!?
+Tired of spam?  Yahoo! Mail has the best spam protection around 
+http://mail.yahoo.com 
