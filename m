@@ -1,55 +1,42 @@
-From: Frank Kotler <fbkotler@comcast.net>
-Subject: Re: Problems with OpenGL asm program.
-Date: Fri, 12 Aug 2005 15:31:12 -0400
-Message-ID: <42FCF900.7000609@comcast.net>
-References: <9b9a53ad050812100027b53687@mail.gmail.com>
+From: jeff <jko@bsn1.net>
+Subject: AsmIDE update
+Date: Fri, 12 Aug 2005 19:21:54 -0700
+Message-ID: <200508121921.55123.jko@bsn1.net>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <9b9a53ad050812100027b53687@mail.gmail.com>
+Content-Disposition: inline
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Lauri Pihlajakangas <lpihlajak@gmail.com>
+Content-Type: text/plain; charset="us-ascii"
+To: DesktopLinuxAsm@yahoogroups.com
 Cc: linux-assembly@vger.kernel.org
 
-Lauri Pihlajakangas wrote:
+The following packages have been updated:
 
-...
->     fild dword [esp+20] ;width
->     fild dword [esp+24] ;height
->     sub esp,8
->     fdiv st1, st0
->     fstp qword [esp] ; BUG?
+ AsmEdit - assembly editor
+ AsmREf - reference for x86 linux assembly
+ AsmLib - library of 270 functions
+ AsmMgr - file manager and IDE frontend
+ AsmFunc - minor functions to test crt and keyboard
+ AsmMenu - script menu program
 
-Looks like the "result" is in st1, and you store st0? Perhaps try "fdivp"?
+All programs are written in x86 assembler and can
+be found at:
 
-...
->     sub esp,32
->     fldz
->     fst qword [esp]
->     fst qword [esp]
->     fst qword [esp]
->     fstp qword [esp]
->         call glClearColor
->     add esp, 32
+ http://members.save-net.com/jko%40save-net.com/asm
+ http://sourceforge.net/projects/asmref
+ http://sourceforge.net/projects/asmedit
+ http://sourceforge.net/projects/asmlib
+ http://sourceforge.net/projects/asmmgr
 
-Here, you seem to be storing the result in the same place 4 times. 
-Probably want "fst qword [esp]"/"fst qword [esp + 8]"/"fst qword [esp + 
-16]", etc. ???
+This update includes about a 100 bug fixes
+ and some enhancements.  The disassembler
+ for generating source from executable files
+ is still in progress and a few months away.
 
-...
->     fild dword [esp+20] ;width
->     fild dword [esp+24] ;height
->     sub esp,8
->     fdiv st1, st0
->     fstp qword [esp] ; BUG?
+ The library is now adding some high level functions
+  to handle hash tables and browse directories.
 
-As above...
-
-I don't have a clue about GL, but those look "suspicious" to me... Hope 
-it helps.
-
-Best,
-Frank
+  jko at bsn1 dot com
 
