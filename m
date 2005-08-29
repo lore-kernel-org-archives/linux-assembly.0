@@ -1,34 +1,33 @@
-From: Fernando Ibanez <fibanez@access.k12.wv.us>
-Subject: Re: Graphics for Assembly Language Program
-Date: Mon, 29 Aug 2005 14:11:47 -0400
-Message-ID: <20050829141147.R21454@access.k12.wv.us>
-References: <0D544207876CDA428F17DD7EA448C192088AAF@bailey.DOMAIN.KSNINC.PVT>
+From: "Landon Blake" <lblake@ksninc.com>
+Subject: Using C Libraries From Assembly
+Date: Mon, 29 Aug 2005 12:13:50 -0700
+Message-ID: <0D544207876CDA428F17DD7EA448C192088AC0@bailey.DOMAIN.KSNINC.PVT>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 8BIT
 Return-path: <linux-assembly-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <0D544207876CDA428F17DD7EA448C192088AAF@bailey.DOMAIN.KSNINC.PVT>; from lblake@ksninc.com on Thu, Aug 25, 2005 at 12:59:49PM -0700
+Content-class: urn:content-classes:message
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
 To: linux-assembly@vger.kernel.org
 
-On Thu, Aug 25, 2005 at 12:59:49PM -0700, Landon Blake wrote:
-> I'm think about creating a simple computer language that I will write
-> with assembly language and I was curious about something.
-> Is it possible to access the X-Window System from assembly language? Is
-> there a way to call c functions from Assembly language? What is the
-> other alternatives to providing graphics functions to a computer
-> language written in assembly? Working directly with the graphics card
-> and keyboard/mouse sounds kind of nasty. Is that the other route? Has
-> anyone successfully used a graphics library like GTK from assembly?
+Linux Assembly Programmers,
 
-Hi, 
-Another option would be to use assembly to access SDL.  I know some 
-4K demos use this.  I believe you can get the source code of a
-4K demo called "Yellow Rose of Texas" where they use this technique.
-Just google for "4K demo yellow rose of texas"
+I had posted an earlier message about adding graphics to an assembly
+language program. After some research the past couple of days it seems
+that most available, open source graphics libraries provide a C API. I
+would like to add graphics capabilities to the simple programming
+language I want to write in assembly.
 
+So, my next question is this:
 
+Can you call C functions from a program written in assembly language?
+I've googled this subject, but was only able to find one paragraph that
+didn't seem to help much. Most information seems to deal with going the
+other direction, that is, calling assembly from C functions. However,
+I'm guessing that it is possible, since both languages end up as machine
+code at some point. Are there any resources that explain how to do this?
 
+Thanks for all the help.
 
+Landon
