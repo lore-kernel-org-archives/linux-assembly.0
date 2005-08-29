@@ -1,51 +1,88 @@
-From: Tim Hoolihan <thoolihan@yahoo.com>
+From: Stephen Ray <steve@mrmighty.net>
 Subject: Re: Using C Libraries From Assembly
-Date: Mon, 29 Aug 2005 15:32:14 -0400
-Message-ID: <431362BE.2080902@yahoo.com>
-References: <0D544207876CDA428F17DD7EA448C192088AC0@bailey.DOMAIN.KSNINC.PVT>
+Date: Mon, 29 Aug 2005 17:37:08 -0300
+Message-ID: <431371F4.2000604@mrmighty.net>
+References: <0D544207876CDA428F17DD7EA448C192088AC0@bailey.DOMAIN.KSNINC.PVT> <431362BE.2080902@yahoo.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <0D544207876CDA428F17DD7EA448C192088AC0@bailey.DOMAIN.KSNINC.PVT>
+In-Reply-To: <431362BE.2080902@yahoo.com>
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Landon Blake <lblake@ksninc.com>
-Cc: linux-assembly@vger.kernel.org
+To: Tim Hoolihan <thoolihan@yahoo.com>
+Cc: Landon Blake <lblake@ksninc.com>, linux-assembly@vger.kernel.org
 
-Try googling on "printf assembly".  I found a few good examples there.  
-I'm not sure what assembler or syntax style you're using, so it's 
-probably best to dig through the search results yourself. 
+If you can find a copy of Jeff Duntemann's "Assembly Language 
+Step-by-Step, 2nd Ed.", the second section deals with using assembly and 
+C together.  A lot of this stuff is covered in G. Adam Stanislav's 
+tutorial on using assembly and FreeBSD, available at 
+http://www.int80h.org/bsdasm/
+Pay careful attention to the bit on the calling convention, what 
+registers you have to save, setting up a stack frame, etc.  That's the 
+bulk of what you'll need to know.  The trickiest part seems to be 
+getting your assembler to produce an object file in the correct format. 
+  After you have an object file, you can link it all together with gcc.
 
--Tim
+A short example exerpted from Duntemann follows:
 
-Landon Blake wrote:
+; Build using these commands:
+;    nasm -f elf eatlinux.asm
+;    gcc eatlinux.o -o eatlinux
 
->Linux Assembly Programmers,
->
->I had posted an earlier message about adding graphics to an assembly
->language program. After some research the past couple of days it seems
->that most available, open source graphics libraries provide a C API. I
->would like to add graphics capabilities to the simple programming
->language I want to write in assembly.
->
->So, my next question is this:
->
->Can you call C functions from a program written in assembly language?
->I've googled this subject, but was only able to find one paragraph that
->didn't seem to help much. Most information seems to deal with going the
->other direction, that is, calling assembly from C functions. However,
->I'm guessing that it is possible, since both languages end up as machine
->code at some point. Are there any resources that explain how to do this?
->
->Thanks for all the help.
->
->Landon
->-
->To unsubscribe from this list: send the line "unsubscribe linux-assembly" in
->the body of a message to majordomo@vger.kernel.org
->More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
->  
->
+[SECTION .txt]
+
+extern puts
+global main          ;required so linker can find entry point
+
+main:
+     push ebp         ;Set up stack frame for debugger
+     mov ebp, esp
+     push ebx         ; Program must preserve ebp, ebx, esi, & edi
+     push esi
+     push edi
+     ;;; everything before this is boilerplate; use it for all ordinary 
+apps!
+
+     push dword eatmsg ; push a 32-bit pointer to the message on the stack
+     call puts         ; call the clib function for displaying strings
+     add esp, 4        ; clean stack by adjusting esp back 4 bytes
+
+     ;;; everything after this is boilerplate; use it for all ordinary apps!
+     pop edi          ; restore saved registers
+     pop esi
+     pop ebx
+     mov esp, ebp     ; destroy stack frame before returning
+     pop ebp
+     ret
+
+[SECTION .data]      ; section containing initialized data
+
+eatmsg:  db "Eat at Joe's!",10,0
+
+[SECTION .bss]       ; section containing uninitialized data
+
+If I recall correctly, underscores may have to be placed before function 
+names when coding for Windows.
+
+A few points to remember (from Duntemann):
+  - Functions have to preserve the contents of EBX, ESP, EBP, ESI and 
+EDI.  You usually do this by not using them, or saving them on the stack 
+and restoring them when done.
+  - C functions return their values in EAX if they're 32-bit, or EAX and 
+EDX, with the low bits in EAX and the high bits in EDX.  Anything else 
+is returned via a pointer in EAX
+  - you pass parameters to a c function by pushing them in reverse order 
+(right to left) onto the stack.
+  - C functions do not clean their parameters off the stack.  If you 
+call a C function and pass parameters onto the stack, you are 
+responsible for cleaning up afterwards.
+
+If you want to call C code, or have C code call your function, just 
+follow these rules.  With C code calling your functions, you will  have 
+to follow these rules scrupulously, and may have to experiment with 
+underscores preceding your function.  Once you get it figured out, 
+though, it's not that hard.
+
+Stephen
 
