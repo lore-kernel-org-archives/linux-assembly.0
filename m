@@ -1,88 +1,43 @@
-From: Stephen Ray <steve@mrmighty.net>
-Subject: Re: Using C Libraries From Assembly
-Date: Mon, 29 Aug 2005 17:37:08 -0300
-Message-ID: <431371F4.2000604@mrmighty.net>
-References: <0D544207876CDA428F17DD7EA448C192088AC0@bailey.DOMAIN.KSNINC.PVT> <431362BE.2080902@yahoo.com>
+From: "Richard Cooper" <peajay@funrestraints.com>
+Subject: Re: video sync timing + softer update
+Date: Mon, 29 Aug 2005 17:25:03 -0400
+Message-ID: <op.swagf1lrnro9m0@sucks.airplane.fire>
+References: <op.sv6lpibqnro9m0@sucks.airplane.fire>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <431362BE.2080902@yahoo.com>
+In-Reply-To: <op.sv6lpibqnro9m0@sucks.airplane.fire>
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Tim Hoolihan <thoolihan@yahoo.com>
-Cc: Landon Blake <lblake@ksninc.com>, linux-assembly@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed	delsp=yes"
+To: linux-assembly@vger.kernel.org
 
-If you can find a copy of Jeff Duntemann's "Assembly Language 
-Step-by-Step, 2nd Ed.", the second section deals with using assembly and 
-C together.  A lot of this stuff is covered in G. Adam Stanislav's 
-tutorial on using assembly and FreeBSD, available at 
-http://www.int80h.org/bsdasm/
-Pay careful attention to the bit on the calling convention, what 
-registers you have to save, setting up a stack frame, etc.  That's the 
-bulk of what you'll need to know.  The trickiest part seems to be 
-getting your assembler to produce an object file in the correct format. 
-  After you have an object file, you can link it all together with gcc.
+> Any ideas how I might sync to bit 3 of port 0x3DA, the video card's  
+> vertical sync signal?
 
-A short example exerpted from Duntemann follows:
+Well, I don't know if anyone cares, but since I asked the question here, I  
+figure it's appropriate to let everyone know what I came up with.
 
-; Build using these commands:
-;    nasm -f elf eatlinux.asm
-;    gcc eatlinux.o -o eatlinux
+As best I can tell, it's just not possible under Linux.  Everything that  
+does vertical refresh syncing in Linux does it with a CPU-time-eating busy  
+loop.  It seems it isn't possible to give up the CPU for a period of time  
+shorter than 10-20ms.  Since vertical retraces occur every 17ms, and 17 <  
+20, if you want to have the CPU when the next retrace occurs, you can't do  
+any kind of sleeping.  This is the case even under "realtime scheduling,"  
+which seems to be a misnomer for what would be better called "priority  
+scheduling."
 
-[SECTION .txt]
+Anyway, I also updated Softer so that it has that fun command that lets  
+you just give it video data and it displays it.  If you want it, you can  
+download it from the link at the bottom of this message board post:
 
-extern puts
-global main          ;required so linker can find entry point
+http://xerse.nfshost.com/funrestraints/post/000000000016.html
 
-main:
-     push ebp         ;Set up stack frame for debugger
-     mov ebp, esp
-     push ebx         ; Program must preserve ebp, ebx, esi, & edi
-     push esi
-     push edi
-     ;;; everything before this is boilerplate; use it for all ordinary 
-apps!
+It's basically version 125, but I made it a "preview" because I'm too  
+angry now to bother with putting it through the amount of testing I  
+usually do.  Seems to work just fine, though.
 
-     push dword eatmsg ; push a 32-bit pointer to the message on the stack
-     call puts         ; call the clib function for displaying strings
-     add esp, 4        ; clean stack by adjusting esp back 4 bytes
-
-     ;;; everything after this is boilerplate; use it for all ordinary apps!
-     pop edi          ; restore saved registers
-     pop esi
-     pop ebx
-     mov esp, ebp     ; destroy stack frame before returning
-     pop ebp
-     ret
-
-[SECTION .data]      ; section containing initialized data
-
-eatmsg:  db "Eat at Joe's!",10,0
-
-[SECTION .bss]       ; section containing uninitialized data
-
-If I recall correctly, underscores may have to be placed before function 
-names when coding for Windows.
-
-A few points to remember (from Duntemann):
-  - Functions have to preserve the contents of EBX, ESP, EBP, ESI and 
-EDI.  You usually do this by not using them, or saving them on the stack 
-and restoring them when done.
-  - C functions return their values in EAX if they're 32-bit, or EAX and 
-EDX, with the low bits in EAX and the high bits in EDX.  Anything else 
-is returned via a pointer in EAX
-  - you pass parameters to a c function by pushing them in reverse order 
-(right to left) onto the stack.
-  - C functions do not clean their parameters off the stack.  If you 
-call a C function and pass parameters onto the stack, you are 
-responsible for cleaning up afterwards.
-
-If you want to call C code, or have C code call your function, just 
-follow these rules.  With C code calling your functions, you will  have 
-to follow these rules scrupulously, and may have to experiment with 
-underscores preceding your function.  Once you get it figured out, 
-though, it's not that hard.
-
-Stephen
-
+The last couple of paragraphs in that message are about Softer, the rest  
+is just ranting.  You don't have to read the rants, but if you like  
+Softer, consider reading them as a way of supporting it's development.  Or  
+some nonsense like that.
