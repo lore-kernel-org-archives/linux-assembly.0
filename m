@@ -1,26 +1,34 @@
-From: "Richard Cooper" <peajay@funrestraints.com>
-Subject: video sync timing
-Date: Sat, 27 Aug 2005 15:28:20 -0400
-Message-ID: <op.sv6lpibqnro9m0@sucks.airplane.fire>
+From: Fernando Ibanez <fibanez@access.k12.wv.us>
+Subject: Re: Graphics for Assembly Language Program
+Date: Mon, 29 Aug 2005 14:11:47 -0400
+Message-ID: <20050829141147.R21454@access.k12.wv.us>
+References: <0D544207876CDA428F17DD7EA448C192088AAF@bailey.DOMAIN.KSNINC.PVT>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
 Return-path: <linux-assembly-owner@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <0D544207876CDA428F17DD7EA448C192088AAF@bailey.DOMAIN.KSNINC.PVT>; from lblake@ksninc.com on Thu, Aug 25, 2005 at 12:59:49PM -0700
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed	delsp=yes"
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: linux-assembly@vger.kernel.org
 
+On Thu, Aug 25, 2005 at 12:59:49PM -0700, Landon Blake wrote:
+> I'm think about creating a simple computer language that I will write
+> with assembly language and I was curious about something.
+> Is it possible to access the X-Window System from assembly language? Is
+> there a way to call c functions from Assembly language? What is the
+> other alternatives to providing graphics functions to a computer
+> language written in assembly? Working directly with the graphics card
+> and keyboard/mouse sounds kind of nasty. Is that the other route? Has
+> anyone successfully used a graphics library like GTK from assembly?
 
-Any ideas how I might sync to bit 3 of port 0x3DA, the video card's  
-vertical sync signal?
+Hi, 
+Another option would be to use assembly to access SDL.  I know some 
+4K demos use this.  I believe you can get the source code of a
+4K demo called "Yellow Rose of Texas" where they use this technique.
+Just google for "4K demo yellow rose of texas"
 
-Just watching the bit in a loop doesn't seem like a good idea, since the  
-CPU could be off doing something else, but as far as I know any timer  
-function I might use will only be accurate to 1/100 of a second, which  
-wouldn't be much better than watching the bit in a loop.
 
-Since things like DOOM run in Linux, I think there must be some way to do  
-it.  I've discovered that simutaneously changing the screen data and the  
-color palette without synchronization creates a flicker of a mess on the  
-screen, and DOOM doesn't do that in Linux, so I guess it must be  
-synchronizing somehow.
+
+
