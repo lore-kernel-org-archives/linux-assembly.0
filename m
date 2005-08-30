@@ -1,41 +1,48 @@
-From: Stephen Ray <steve@mrmighty.net>
-Subject: Re: video sync timing + softer update
-Date: Mon, 29 Aug 2005 23:54:09 -0300
-Message-ID: <4313CA51.5000902@mrmighty.net>
-References: <op.sv6lpibqnro9m0@sucks.airplane.fire> <op.swagf1lrnro9m0@sucks.airplane.fire>
+From: "Stephen Pelc" <stephen@mpeltd.demon.co.uk>
+Subject: Re: Using C Libraries From Assembly
+Date: Tue, 30 Aug 2005 10:17:49 +0100
+Message-ID: <4314324D.10853.4AFFDB1@localhost>
+References: <0D544207876CDA428F17DD7EA448C192088AC0@bailey.DOMAIN.KSNINC.PVT>
+Reply-To: Stephen Pelc <stephen@mpeltd.demon.co.uk>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <op.swagf1lrnro9m0@sucks.airplane.fire>
+In-reply-to: <0D544207876CDA428F17DD7EA448C192088AC0@bailey.DOMAIN.KSNINC.PVT>
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Richard Cooper <peajay@funrestraints.com>
-Cc: linux-assembly@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: linux-assembly@vger.kernel.org
 
-Richard Cooper wrote:
->> Any ideas how I might sync to bit 3 of port 0x3DA, the video card's  
->> vertical sync signal?
-> 
-> 
-> Well, I don't know if anyone cares, but since I asked the question here, 
-> I  figure it's appropriate to let everyone know what I came up with.
-> 
-> As best I can tell, it's just not possible under Linux.  Everything 
-> that  does vertical refresh syncing in Linux does it with a 
-> CPU-time-eating busy  loop.  It seems it isn't possible to give up the 
-> CPU for a period of time  shorter than 10-20ms.  Since vertical retraces 
-> occur every 17ms, and 17 <  20, if you want to have the CPU when the 
-> next retrace occurs, you can't do  any kind of sleeping.  This is the 
-> case even under "realtime scheduling,"  which seems to be a misnomer for 
-> what would be better called "priority  scheduling."
-> 
+From:           	"Landon Blake" <lblake@ksninc.com>
 
-What kernel series are you using?  Did you compile it yourself?  What is 
-HZ set at?  100? 250? 1000?  If it's a 2.6 kernel, did you try enabling 
-preemption?  With HZ at 100, it is impossible for the kernel to give you 
-  better than 10 ms resolution.  With HZ at 1000, it can achieve 1 ms 
-resolution (in theory).  What else is running on your machine?  These 
-questions could help answer whether it's possible.
+> Can you call C functions from a program written in assembly
+> language? I've googled this subject, but was only able to find
+> one paragraph that didn't seem to help much. Most information
+> seems to deal with going the other direction, that is, calling
+> assembly from C functions. However, I'm guessing that it is
+> possible, since both languages end up as machine code at some
+> point. Are there any resources that explain how to do this?
+
+We've been going through the same exercise porting one of our 
+products. I've kept all my notes in one place so that I can 
+publish them as "The Compiler Writer's Guide to Linux". The 
+current set of notes includes a complete program that calls 
+printf from the libc shared library.
+
+The notes are at
+  http://www.mpeforth.com/arena/cwgtLinux.txt
+
+At this stage I can't say that everything is 100%, but so far so 
+good. The next task is to set up signal handlers from assembly. 
+All feedback, criticism and help is welcome. The final book will 
+be available as a free PDF from our website. Printed copies with 
+an accompaying CD will also be available.
 
 Stephen
+
+--
+Stephen Pelc, stephen@mpeltd.demon.co.uk
+MicroProcessor Engineering Ltd - More Real, Less Time
+133 Hill Lane, Southampton SO15 5AF, England
+tel: +44 23 80 631441, fax: +44 23 80 339691
+web: http://www.mpeltd.demon.co.uk - free VFX Forth downloads
