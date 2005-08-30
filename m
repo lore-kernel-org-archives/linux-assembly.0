@@ -1,43 +1,62 @@
-From: "Richard Cooper" <peajay@funrestraints.com>
+From: Frank Kotler <fbkotler@comcast.net>
 Subject: Re: video sync timing + softer update
-Date: Mon, 29 Aug 2005 17:25:03 -0400
-Message-ID: <op.swagf1lrnro9m0@sucks.airplane.fire>
-References: <op.sv6lpibqnro9m0@sucks.airplane.fire>
+Date: Mon, 29 Aug 2005 21:40:47 -0400
+Message-ID: <4313B91F.4060206@comcast.net>
+References: <op.sv6lpibqnro9m0@sucks.airplane.fire> <op.swagf1lrnro9m0@sucks.airplane.fire>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <op.sv6lpibqnro9m0@sucks.airplane.fire>
+In-Reply-To: <op.swagf1lrnro9m0@sucks.airplane.fire>
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed	delsp=yes"
-To: linux-assembly@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: Richard Cooper <peajay@funrestraints.com>
+Cc: linux-assembly@vger.kernel.org
 
-> Any ideas how I might sync to bit 3 of port 0x3DA, the video card's  
-> vertical sync signal?
+Richard Cooper wrote:
 
-Well, I don't know if anyone cares, but since I asked the question here, I  
-figure it's appropriate to let everyone know what I came up with.
+>> Any ideas how I might sync to bit 3 of port 0x3DA, the video card's  
+>> vertical sync signal?
 
-As best I can tell, it's just not possible under Linux.  Everything that  
-does vertical refresh syncing in Linux does it with a CPU-time-eating busy  
-loop.  It seems it isn't possible to give up the CPU for a period of time  
-shorter than 10-20ms.  Since vertical retraces occur every 17ms, and 17 <  
-20, if you want to have the CPU when the next retrace occurs, you can't do  
-any kind of sleeping.  This is the case even under "realtime scheduling,"  
-which seems to be a misnomer for what would be better called "priority  
-scheduling."
+I took the liberty or reposting your question to news:alt.lang.asm - 
+more of a warzone than an asm forum, these days, but we were discussing 
+polling loops, and I thought somebody might have some ideas.
 
-Anyway, I also updated Softer so that it has that fun command that lets  
-you just give it video data and it displays it.  If you want it, you can  
-download it from the link at the bottom of this message board post:
+One response was "I don't bother doing that anymore, vga doesn't need 
+it." Would be nice if it were true, but your experience seems to differ.
 
-http://xerse.nfshost.com/funrestraints/post/000000000016.html
+Another poster (f0dder) posted a link to Kris Heidenstrom's PC timing 
+FAQ, and its info on "emulating a Vertical Retrace Interrupt". All dos 
+stuff, it wouldn't work on Linux as written, of course. But I thought 
+the principles might be useful. However, that's pretty much what you've 
+tried, without success. I didn't realize that the resolution on the 
+timers was so bad. Oh, well...
 
-It's basically version 125, but I made it a "preview" because I'm too  
-angry now to bother with putting it through the amount of testing I  
-usually do.  Seems to work just fine, though.
+I still think that this approach has as much promise as anything. If the 
+arithmetic doesn't work out... jeez, I'm really reluctant to say 
+anything's "impossible"...
 
-The last couple of paragraphs in that message are about Softer, the rest  
-is just ranting.  You don't have to read the rants, but if you like  
-Softer, consider reading them as a way of supporting it's development.  Or  
-some nonsense like that.
+...
+> http://xerse.nfshost.com/funrestraints/post/000000000016.html
+> 
+> It's basically version 125, but I made it a "preview" because I'm too  
+> angry now to bother with putting it through the amount of testing I  
+> usually do.  Seems to work just fine, though.
+
+Great. I haven't looked at 1.26pre yet - barely getting into 1.24 - but 
+it looks like a useful little tool, even if it *won't* synch. Making it 
+a command line option as you've done may be the best you can do.
+
+> The last couple of paragraphs in that message are about Softer, the 
+> rest  is just ranting.  You don't have to read the rants, but if you 
+> like  Softer, consider reading them as a way of supporting it's 
+> development.  Or  some nonsense like that.
+
+Okay, I've done my part :) Sorry to hear you're meeting with such 
+frustration. Look on the bright side: Softer's a *hell* of a lot better 
+than no graphics at all (which is what I'm used to). Thanks for sharing 
+it with us!
+
+Best,
+Frank
+
