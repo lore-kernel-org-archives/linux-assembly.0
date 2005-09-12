@@ -1,7 +1,7 @@
-From: Brian Raiter <breadbox@muppetlabs.com>
+From: James Colannino <james@colannino.org>
 Subject: Re: Question about GCC and stack
-Date: Mon, 12 Sep 2005 13:50:35 -0700
-Message-ID: <17189.59931.532740.834365@eidolon.muppetlabs.com>
+Date: Mon, 12 Sep 2005 16:13:32 -0700
+Message-ID: <43260B9C.90403@colannino.org>
 References: <587AEB894BD33797BF0431A1@[10.0.0.1]>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
@@ -9,17 +9,22 @@ Return-path: <linux-assembly-owner@vger.kernel.org>
 In-Reply-To: <587AEB894BD33797BF0431A1@[10.0.0.1]>
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
 To: linux-assembly@vger.kernel.org
 
-> The subl instruction is pointless, I dont know why it's inserted. It
-> could be just generic stub code that gcc always inserts for
-> allocating stack variables, but as in this case you dont use any, it
-> allocates $0 bytes...I'm sure someone will correct me if there's a
-> good reason for it :)
+Tavis Ormandy wrote:
 
-I expect that the instructions obtained by the original poster were
-created by gcc without optimization. Run gcc with -O2 or so would
-probably yield a simpler set of instructions.
+>Hope this helps
+>  
+>
 
-b
+That was very good information.  Thank you :)
+
+James
+
+-- 
+My blog: http://www.crazydrclaw.com/
+My homepage: http://james.colannino.org/
+
+"You can only find truth with logic if you have already found truth without it." --G. K. Chesterton
+
