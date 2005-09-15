@@ -1,110 +1,36 @@
-From: Claudio Fontana <sick_soul@yahoo.it>
+From: "Richard Cooper" <peajay@funrestraints.com>
 Subject: Re: How to Use the vm86 System Call
-Date: Thu, 15 Sep 2005 12:52:04 -0700 (PDT)
-Message-ID: <20050915195205.20599.qmail@web26002.mail.ukl.yahoo.com>
-References: <op.sw5ohxaknro9m0@winfuck>
+Date: Thu, 15 Sep 2005 16:48:18 -0400
+Message-ID: <op.sw5v2ltgnro9m0@winfuck>
+References: <20050915195205.20599.qmail@web26002.mail.ukl.yahoo.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7BIT
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <op.sw5ohxaknro9m0@winfuck>
+In-Reply-To: <20050915195205.20599.qmail@web26002.mail.ukl.yahoo.com>
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: Richard Cooper <peajay@funrestraints.com>
+Content-Type: text/plain; charset="us-ascii"; format="flowed	delsp=yes"
+To: Claudio Fontana <sick_soul@yahoo.it>
 Cc: linux-assembly@vger.kernel.org
 
-Hello,
+On Thu, 15 Sep 2005 15:52:04 -0400, Claudio Fontana <sick_soul@yahoo.it> wrote:
 
---- Richard Cooper <peajay@funrestraints.com> wrote:
+> (gdb) ptype struct vm86plus_info_struct
+> type = struct vm86plus_info_struct {
+>     long unsigned int force_return_for_pic : 1;
+>     long unsigned int vm86dbg_active : 1;
+>     long unsigned int vm86dbg_TFpendig : 1;
+>     long unsigned int unused : 28;
+>     long unsigned int is_vm86pus : 1;
+>     unsigned char vm86dbg_intxxtab[32];
+> }
 
-> 
-> Does anyone know how to make use of the vm86 system
-> call?
+Yes, that's about where I'm at.  The questions I have are along the lines of "what does is_vm86pus do?" and "how do I put all of this together into a working program?"
 
-I don't, but maybe I can provide some info.
+I don't think reading any source code is going to do me any good.  Typically, comments only cover what the program is doing, not the details of the system calls.  When was the last time you read a comment like "open() will open the file, the first operand is a pointer to a null terminated string, which is the file we want to open..."  Granted, I could figure out things like the file name, but the source is just going to set is_vm86pus to 1 or 0 and probably never mention what it does, forcing me to wonder if maybe I should be setting it the other way for what I'm doing.
 
-> The man page for it is pretty light on the
-> details, and the names of the fields of the
-> structures in the header file aren't very
-> explanatory.
+On the other hand, what else have I got to do?  (besides learn windows)  Assuming I can still get Linux to boot (lilo did a fun number on my windows drive and I haven't yet seen if the Linux one still works or not), I'll have a look and see if I can figure anything out.  I know that dosemu, svgalib, and X all use vm86, so maybe between the three of them I can at least figure out half of it.
 
-I hope this info can be of some use:
+> However, I would rather use SDL instead.
 
-sh-3.00$ gdb dosemu.bin
-(gdb) ptype struct vm86plus_struct
-
-type = struct vm86plus_struct {
-    struct vm86_regs regs;
-    long unsigned int flags;
-    long unsigned int screen_bitmap;
-    long unsigned int cpu_type;
-    struct revectored_struct int_revectored;
-    struct revectored_struct int21_revectored;
-    struct vm86plus_info_struct vm86plus;
-}
-
-(gdb) ptype struct vm86_regs
-
-type = struct vm86_regs {
-    long int ebx;
-    long int ecx;
-    long int edx;
-    long int esi;
-    long int edi;
-    long int ebp;
-    long int eax;
-    long int __null_ds;
-    long int __null_es;
-    long int __null_fs;
-    long int __null_gs;
-    long int orig_eax;
-    long int eip;
-    short unsigned int cs;
-    short unsigned int __csh;
-    long int eflags;
-    long int esp;
-    short unsigned int ss;
-    short unsigned int __ssh;
-    short unsigned int es;
-    short unsigned int __esh;
-    short unsigned int ds;
-    short unsigned int __dsh;
-    short unsigned int fs;
-    short unsigned int __fsh;
-    short unsigned int gs;
-    short unsigned int __gsh;
-}
-
-(gdb) ptype struct revectored_struct 
-type = struct revectored_struct {
-    long unsigned int __map[8];
-}
-
-(gdb) ptype struct vm86plus_info_struct 
-type = struct vm86plus_info_struct {
-    long unsigned int force_return_for_pic : 1;
-    long unsigned int vm86dbg_active : 1;
-    long unsigned int vm86dbg_TFpendig : 1;
-    long unsigned int unused : 28;
-    long unsigned int is_vm86pus : 1;
-    unsigned char vm86dbg_intxxtab[32];
-}
-(gdb) 
-
-
-You can study the dosemu source code for examples of
-use.
-
-However, I would rather use SDL instead.
-
-Bye,
-
-Claudio
-
-
-
-
-		
-__________________________________ 
-Yahoo! Mail - PC Magazine Editors' Choice 2005 
-http://mail.yahoo.com
+That would be the easy thing to do, but SDL just uses X or SVGAlib depending on where it's run under X or on a console, and so it won't get me anything that those two won't.  SVGAlib is just too unstable for me to want to use it, and only some of the X drivers support mode switching, the others require to you restart the X server to change modes, and if you're using the X framebuffer driver, you have to reboot Linux as well.  It used to be that you never had to reboot Linux for anything short of installing a new kernel, but the state of graphics support is changing that.  With this vm86 call I'm hoping to get things to where they should be, you decide you want a different mode and two seconds later you've got it, no restarts or reboots required.
