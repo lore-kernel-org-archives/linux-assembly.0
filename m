@@ -1,36 +1,49 @@
 From: "Richard Cooper" <peajay@funrestraints.com>
 Subject: Re: How to Use the vm86 System Call
-Date: Thu, 15 Sep 2005 16:48:18 -0400
-Message-ID: <op.sw5v2ltgnro9m0@winfuck>
-References: <20050915195205.20599.qmail@web26002.mail.ukl.yahoo.com>
+Date: Thu, 15 Sep 2005 18:07:10 -0400
+Message-ID: <op.sw5zp8fmnro9m0@sucks.airplane.fire>
+References: <20050915195205.20599.qmail@web26002.mail.ukl.yahoo.com> <op.sw5v2ltgnro9m0@winfuck>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7BIT
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <20050915195205.20599.qmail@web26002.mail.ukl.yahoo.com>
+In-Reply-To: <op.sw5v2ltgnro9m0@winfuck>
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed	delsp=yes"
-To: Claudio Fontana <sick_soul@yahoo.it>
-Cc: linux-assembly@vger.kernel.org
+To: linux-assembly@vger.kernel.org
 
-On Thu, 15 Sep 2005 15:52:04 -0400, Claudio Fontana <sick_soul@yahoo.it> wrote:
+On Thu, 15 Sep 2005 16:48:18 -0400, Richard Cooper  
+<peajay@funrestraints.com> wrote:
 
-> (gdb) ptype struct vm86plus_info_struct
-> type = struct vm86plus_info_struct {
->     long unsigned int force_return_for_pic : 1;
->     long unsigned int vm86dbg_active : 1;
->     long unsigned int vm86dbg_TFpendig : 1;
->     long unsigned int unused : 28;
->     long unsigned int is_vm86pus : 1;
->     unsigned char vm86dbg_intxxtab[32];
-> }
+> I'll have a look [at various source codes]and see if I can figure  
+> anything out.
 
-Yes, that's about where I'm at.  The questions I have are along the lines of "what does is_vm86pus do?" and "how do I put all of this together into a working program?"
+Damn, I wish I would have just done that right from the beginning...
 
-I don't think reading any source code is going to do me any good.  Typically, comments only cover what the program is doing, not the details of the system calls.  When was the last time you read a comment like "open() will open the file, the first operand is a pointer to a null terminated string, which is the file we want to open..."  Granted, I could figure out things like the file name, but the source is just going to set is_vm86pus to 1 or 0 and probably never mention what it does, forcing me to wonder if maybe I should be setting it the other way for what I'm doing.
+Turns out SVGAlib does all of the vm86 stuff through a file called  
+lrmi.c.  So I looked in lrmi.c and at the top is this comment about how  
+it's the "Linux Real Mode Interface" and some other stuff that makes it  
+sound an awful lot like public domain.
 
-On the other hand, what else have I got to do?  (besides learn windows)  Assuming I can still get Linux to boot (lilo did a fun number on my windows drive and I haven't yet seen if the Linux one still works or not), I'll have a look and see if I can figure anything out.  I know that dosemu, svgalib, and X all use vm86, so maybe between the three of them I can at least figure out half of it.
+So I went and found the "Linux Real Mode Interface" and downloaded it.
 
-> However, I would rather use SDL instead.
+It's just a few C files along with a makefile to make a little test  
+program.  It looks pretty nice, at least the test program compiled without  
+warnings and didn't require me to install any libraries, and as an added  
+surprise, worked without a problem.  (looks like all the test program does  
+is let you pick a VESA mode, then it sets it for five seconds, then  
+restores the old mode, but that's enough to say that it works)
 
-That would be the easy thing to do, but SDL just uses X or SVGAlib depending on where it's run under X or on a console, and so it won't get me anything that those two won't.  SVGAlib is just too unstable for me to want to use it, and only some of the X drivers support mode switching, the others require to you restart the X server to change modes, and if you're using the X framebuffer driver, you have to reboot Linux as well.  It used to be that you never had to reboot Linux for anything short of installing a new kernel, but the state of graphics support is changing that.  With this vm86 call I'm hoping to get things to where they should be, you decide you want a different mode and two seconds later you've got it, no restarts or reboots required.
+Since it's mostly compatible with public domain, I don't even have to try  
+to figure out how it works, I can just use it.  I'm not sure if the test  
+program does VBE 1.2 or not, but I'm sure I can figure that out on my own.
+
+I'd still like to know how that vm86 call works, but this should work just  
+fine for what I'm doing.
+
+It's so nice to be in Linux again...  Copy and paste doesn't work in  
+Windows.  (At least not with the middle mouse button, which is how I  
+usually do it.)
+
+Interestingly, I've learned that there're 357 people signed up to this  
+mailing list.  I had no idea.  I thought it was more like 20 or 30.
