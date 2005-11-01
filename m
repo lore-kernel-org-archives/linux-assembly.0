@@ -1,42 +1,29 @@
-From: Jan Wagemakers <janw@easynet.be>
-Subject: About a-linux (asmutils mini-distribution)
-Date: Fri, 28 Oct 2005 12:04:21 +0200
-Message-ID: <20051028100421.GA30103@qwerty.be>
+From: sabancia@itu.edu.tr
+Subject: (unknown)
+Date: Tue,  1 Nov 2005 02:58:14 +0200
+Message-ID: <20051101025814.f5vl0yjbflnkkcso@webmail.itu.edu.tr>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
+Subject: 
 Content-Disposition: inline
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
 To: linux-assembly@vger.kernel.org
 
-Hello,
+Hi everyone,
+I am a computer engineering student in Turkey. I came across your web site while
+I was searching how to generate Intel 80x86 assembly code of a C file by using
+gcc. I compiled my C code (a5.c) like this:
+gcc -S a5.c -o a5.s
+but the a5.s output file contains the assembly code in AT&T syntax.
 
-I have recently downloaded a-linux, the asmutils single-floppy
-mini-distribution <http://asm.sourceforge.net/asmutils.html>. And I must
-admit that I'm very impressed :-)
+I wanted to learn what I should do to get the code generated in Intel 80x86
+syntax, if it's possible.
 
-I have costumized this floppy (kernel that supports my network-card for
-example). And it works great on a 386sx 16Mhz 5MB with just a floppy,
-CDROM-drive, VGA-card and network-card. The asmutils httpd web-server
-can now without problems serve web-pages that are burned on a CD-ROM.
+Thanks in advance for your help.
+Best Regards..
 
-Thanks everybody for this great software!
-
-However, I have some questions ;-)
-
-- When I read the ChangeLog
-  <http://asm.sourceforge.net/asmutils/ChangeLog>, I see that there are
-  some new versions of some programs (20-Jan-2004). Which are not
-  released yet. Can I download them somewhere?
-- Is there somewhere a little tool available written is asm which I can
-  use to set the default gateway (route add default gateway)? At the
-  moment I use busybox for that <http://www.busybox.net/>.
-
-
--- 
-Met vriendelijke groetjes         - Jan Wagemakers -
-
-... I bet Einstein turned himself into all sorts of 
-    colors before he invented the light bulb.               --Homer Simpson
+----------------------------------------------------------------
+This message was sent using IMP, the Internet Messaging Program.
