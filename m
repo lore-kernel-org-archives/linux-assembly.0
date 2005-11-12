@@ -1,52 +1,37 @@
 From: Lorenzo <lollo_c@alice.it>
 Subject: Re: Very newbie question...
-Date: Sat, 12 Nov 2005 08:35:50 +0100
-Message-ID: <43759B56.200@alice.it>
-References: <437523A4.6080707@alice.it>	<000301c5e715$e7a90370$619f3b80@NMAPod505BTLR> <17269.16302.176560.847323@eidolon.muppetlabs.com>
+Date: Sat, 12 Nov 2005 08:35:01 +0100
+Message-ID: <43759B25.5030403@alice.it>
+References: <437523A4.6080707@alice.it> <200511120029.48097.zebarbuc@free.fr>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <17269.16302.176560.847323@eidolon.muppetlabs.com>
+In-Reply-To: <200511120029.48097.zebarbuc@free.fr>
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"
 To: linux-assembly@vger.kernel.org
 
-Ah ok... now i understand some more things :)
-
+When i back in office i try to use 64bit registers.
+At home i have a linux distribution (slackware, 32bit) installed over a 64bit hardware and i can't try (i think that i can't try but is possible that i don't know how :))
+For the gdb is the same thing, when back in office i try.
 Thx :)
 
 
 
-Brian Raiter wrote:
+Frederic Marmond wrote:
 
->As noted, you are confusing the function call method with the system
->call method, and doing a little of both. You need to decide on one or
->the other.
+>Hi,
+>in amd64, registers are different (64bits...) ;)
+>So, I think you'd better use the 64 bits name version
+>push rbp
+>mov rbp,rsp
+>...
 >
->If you want to make direct kernel system calls, then follow the code
->that was posted earlier. Alternately, if you wanted to use the POSIX
->functions, your code would look something like this:
+>What do you have as result in your case?
+>can you try it with gdb and step your prog?
 >
->EXTERN write, _exit
->
->; ...
->
->	push	len
->	push	hello
->	push	1
->	call	write
->	add	esp, 12
->	push	0
->	call	_exit
->
->b
->-
->To unsubscribe from this list: send the line "unsubscribe linux-assembly" in
->the body of a message to majordomo@vger.kernel.org
->More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
->
+>Fred
 >  
 >
 
