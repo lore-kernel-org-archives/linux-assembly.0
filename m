@@ -1,31 +1,37 @@
-From: Frank Kotler <fbkotler@comcast.net>
+From: Claudio Fontana <sick_soul@yahoo.it>
 Subject: Re: About a-linux (asmutils mini-distribution)
-Date: Sat, 12 Nov 2005 00:59:02 -0500
-Message-ID: <437584A6.4020508@comcast.net>
-References: <20051028100421.GA30103@qwerty.be>	 <20051111102313.GB9512@qwerty.be> <2375c9f90511111902m5fc3feaet@mail.gmail.com>
+Date: Fri, 11 Nov 2005 22:59:21 -0800 (PST)
+Message-ID: <20051112065921.52890.qmail@web26002.mail.ukl.yahoo.com>
+References: <2375c9f90511111902m5fc3feaet@mail.gmail.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
 In-Reply-To: <2375c9f90511111902m5fc3feaet@mail.gmail.com>
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: wang cong <xiyou.wangcong@gmail.com>
-Cc: linux-assembly@vger.kernel.org
+Cc: linux-assembly <linux-assembly@vger.kernel.org>
 
-wang cong wrote:
+
+--- wang cong <xiyou.wangcong@gmail.com> ha scritto: 
+
 > Hi,all!
-> Is there a book that introdnuces Linux assembly using AT&T grammar?
+> Is there a book that introdnuces Linux assembly
+> using AT&T grammar?
 > Thanks!
 
-Jonathan Bartlett's "Programming from the Ground Up":
+There's the Solaris x86 assembly language reference
+manual:
 
-http://www.cafepress.com/bartlettpublish.8640017
+google("solaris x86 assembler language reference
+manual");
 
-Or:
+CLaudio
 
-http://savannah.nongnu.org/download/pgubook/
 
-Best,
-Frank
 
+		
+___________________________________ 
+Yahoo! Messenger: chiamate gratuite in tutto il mondo 
+http://it.messenger.yahoo.com
