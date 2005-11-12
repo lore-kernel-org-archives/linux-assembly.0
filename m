@@ -1,78 +1,40 @@
-From: Frederic Marmond <zebarbuc@free.fr>
-Subject: Re: Very newbie question...
-Date: Sat, 12 Nov 2005 00:29:47 +0100
-Message-ID: <200511120029.48097.zebarbuc@free.fr>
+From: Brian Raiter <breadbox@muppetlabs.com>
+Subject: RE: Very newbie question...
+Date: Fri, 11 Nov 2005 17:04:46 -0800
+Message-ID: <17269.16302.176560.847323@eidolon.muppetlabs.com>
 References: <437523A4.6080707@alice.it>
+	<000301c5e715$e7a90370$619f3b80@NMAPod505BTLR>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <437523A4.6080707@alice.it>
-Content-Disposition: inline
+In-Reply-To: <000301c5e715$e7a90370$619f3b80@NMAPod505BTLR>
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
-To: Lorenzo <lollo_c@alice.it>
-Cc: linux-assembly@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: linux-assembly@vger.kernel.org
 
-Hi,
-in amd64, registers are different (64bits...) ;)
-So, I think you'd better use the 64 bits name version
-push rbp
-mov rbp,rsp
-=2E..
-
-What do you have as result in your case?
-can you try it with gdb and step your prog?
-
-=46red
-
-Le Samedi 12 Novembre 2005 00:05, Lorenzo a =E9crit=A0:
-> Hi,
->
 > i have some problems with my first linux/nasm asm program.
-> This is a simple "hello world" program but i can't see the "hello wor=
-ld"
-> on my screen and i don't find my error.
-> I work on 64bit amd system.
-> Someone can illuminate me? :)
->
->
-> Thx
->
-> -----------------------------------
->
-> section .text
->     global   _start
->
-> msg   db   'hello, world!',0xa
-> len   equ   $ - msg
->
-> _start:
->     push   ebp
->     mov   ebp,esp
->
->     push   len
->     push   msg
->     push   1
->     mov   ebx,esp
->     mov   eax,4
->     int   0x80
->
->     add   esp,12
->
->     mov   ebx,0
->     mov   eax,1
->     int   0x80
-> -
-> To unsubscribe from this list: send the line "unsubscribe linux-assem=
-bly"
-> in the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> This is a simple "hello world" program but i can't see the "hello
+> world" on my screen and i don't find my error.
 
---=20
-=46rederic Marmond
--
-To unsubscribe from this list: send the line "unsubscribe linux-assembl=
-y" in
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+As noted, you are confusing the function call method with the system
+call method, and doing a little of both. You need to decide on one or
+the other.
+
+If you want to make direct kernel system calls, then follow the code
+that was posted earlier. Alternately, if you wanted to use the POSIX
+functions, your code would look something like this:
+
+EXTERN write, _exit
+
+; ...
+
+	push	len
+	push	hello
+	push	1
+	call	write
+	add	esp, 12
+	push	0
+	call	_exit
+
+b
