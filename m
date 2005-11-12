@@ -1,62 +1,52 @@
 From: Lorenzo <lollo_c@alice.it>
 Subject: Re: Very newbie question...
-Date: Sat, 12 Nov 2005 08:34:22 +0100
-Message-ID: <43759AFE.8000904@alice.it>
-References: <000301c5e715$e7a90370$619f3b80@NMAPod505BTLR>
+Date: Sat, 12 Nov 2005 08:35:50 +0100
+Message-ID: <43759B56.200@alice.it>
+References: <437523A4.6080707@alice.it>	<000301c5e715$e7a90370$619f3b80@NMAPod505BTLR> <17269.16302.176560.847323@eidolon.muppetlabs.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <000301c5e715$e7a90370$619f3b80@NMAPod505BTLR>
+In-Reply-To: <17269.16302.176560.847323@eidolon.muppetlabs.com>
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"
 To: linux-assembly@vger.kernel.org
 
-I have tried to do a program like yours and all is ok.
-The "Hello World" work well but i don't want to use this method.
-In the same page,
+Ah ok... now i understand some more things :)
 
-http://asm.sourceforge.net/articles/linasm.html, there is another thing:
-
-" Syscalls whos number of args is greater than five still expect the
-syscall number to be in %eax, but the args are arranged in memory and the
-pointer to the first arg is stored in %ebx."
-
-I know that "Hello World" is composed of less then five args but i want to know both methods (put all in eax,ebx,ecx,edx,esi,edi registers or put the syscall in eax, push the others and put the pointer to the stack in ebx).
 Thx :)
 
 
 
-John Rodriguez wrote:
+Brian Raiter wrote:
 
->I am still newbie myself, but one thing that I noticed is that you pass some
->parameters via registers and others via the stack pointer.
+>As noted, you are confusing the function call method with the system
+>call method, and doing a little of both. You need to decide on one or
+>the other.
 >
->The write sys call takes 3 param (as you prob already know), the file
->descriptor (1 = stdout), the pointer to the buffer, and its size.
+>If you want to make direct kernel system calls, then follow the code
+>that was posted earlier. Alternately, if you wanted to use the POSIX
+>functions, your code would look something like this:
 >
->The write sys call itself is syscall 4.
+>EXTERN write, _exit
 >
->According to http://asm.sourceforge.net/articles/linasm.html
->"For all syscalls, the syscall number goes in %eax. For syscalls that have
->less than six args, the args go in %ebx,%ecx,%edx,%esi,%edi in order. The
->return value of the syscall is stored in %eax."
+>; ...
 >
->Here is my own example that I wrote about a year ago.
+>	push	len
+>	push	hello
+>	push	1
+>	call	write
+>	add	esp, 12
+>	push	0
+>	call	_exit
 >
->section .data
->hello   db  'Hello, World!', 0Ah
->len     equ $-hello
+>b
+>-
+>To unsubscribe from this list: send the line "unsubscribe linux-assembly" in
+>the body of a message to majordomo@vger.kernel.org
+>More majordomo info at  http://vger.kernel.org/majordomo-info.html
 >
->section .text
->global  _start
->_start:
->mov     edx, len
->mov     ecx, hello
->mov     ebx, 1
->mov     eax, 4
->int     80h
->mov     ebx, 0
->mov     eax, 1
->int     80h
 >
+>  
+>
+
