@@ -1,47 +1,30 @@
-From: Karthik Ravikanti <karthik_ravikanti@students.iiit.net>
+From: joy merwin monteiro <joy.merwin@gmail.com>
 Subject: Re: packed bits question
-Date: Wed, 16 Nov 2005 13:53:35 +0530 (IST)
-Message-ID: <Pine.LNX.4.61.0511161352340.32268@students.iiit.net>
+Date: Wed, 16 Nov 2005 21:50:11 +0530
+Message-ID: <4b0d6e0d0511160820i688ddaa6y1290df9fe20b49f@mail.gmail.com>
 References: <38657.67.182.183.189.1132118461.squirrel@mail.luethy.net>
+Reply-To: joy_mm@ieee.org
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-assembly-owner@vger.kernel.org>
 In-Reply-To: <38657.67.182.183.189.1132118461.squirrel@mail.luethy.net>
+Content-Disposition: inline
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: TEXT/PLAIN; charset="us-ascii"; format="flowed"
-Content-Transfer-Encoding: 7bit
-To: chris@luethy.net
+Content-Type: text/plain; charset="us-ascii"
+To: "chris@luethy.net" <chris@luethy.net>
 Cc: linux-assembly@vger.kernel.org
 
+Hi,
 
+as Robert said, you could do the assembly equivalent of this macro:
 
+#define GET_BIT(ptr,bitnum)  ptr[(bitnum>>3)]>>(7-(bitnum%8))
 
->        Basically, how can I easily work with something as bastardly as a
-> 14-bit, no-packing data pairs?
+Joy
 
-Did you really mean to use *bastardly*? Or was it supposed to be 
-dastardly?
-
-Just curious,
-
-Luck,
-Karthik
-
->
-> Thanks for all your help,
-> Chris Thielen
->
-> -
-> To unsubscribe from this list: send the line "unsubscribe linux-assembly" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
-
--- 
-R.Karthik,
-200330022,
-B.Tech,E.C.E.,
-IIIT,HYD.
-
--------------------------------------------------------
-Let there be Sound!
+--
+Girls are like slugs.... You know they are around for a reason, but
+you cant imagine what.
+                                                                      
+                               -- Calvin
