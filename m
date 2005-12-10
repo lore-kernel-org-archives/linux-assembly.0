@@ -1,35 +1,27 @@
-From: Ricardo Nabinger Sanchez <rnsanchez@terra.com.br>
-Subject: Re: sys_fork
-Date: Wed, 30 Nov 2005 08:26:51 -0200
-Message-ID: <20051130082651.46bfd034.rnsanchez@terra.com.br>
-References: <20051126192634.43926.qmail@web26006.mail.ukl.yahoo.com>
-	<200511281110.51363.hitoc_mail@yahoo.it>
-	<20051128172541.d35e0496.rnsanchez@terra.com.br>
-	<200511291857.40019.hitoc_mail@yahoo.it>
-	<20051129222013.305cd393.rnsanchez@terra.com.br>
-	<op.s01b2vwizyondc@localhost.localdomain>
+From: "Landon Blake" <lblake@ksninc.com>
+Subject: Newbie wants to learn Assembly Language
+Date: Fri, 9 Dec 2005 16:54:19 -0800
+Message-ID: <0D544207876CDA428F17DD7EA448C192088C2F@bailey.DOMAIN.KSNINC.PVT>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8BIT
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <op.s01b2vwizyondc@localhost.localdomain>
+Content-class: urn:content-classes:message
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 To: linux-assembly@vger.kernel.org
 
-Quoting  "Robert Plantz" <plantz@sonoma.edu>
-Sent on  Tue, 29 Nov 2005 20:00:21 -0800
+I've been lurking on the list for a while, and I finally decided to sit
+down and learn assembly language.
 
-> I haven't seen the second edition
-> of Stevens, but the descriptions say that signal coverage has been  
-> expanded.
+So I wanted to ask for some tips on how to get started. I think I will
+be using NASM as my assembler, and working through the book "Programming
+From The Ground Up".
 
-if you mean W. Richard Stevens, the second edition is up-to-date.  and it's
-very nice, the new authors made an excellent job.
+Does this sound like a good plan of attack? Will NASM and the book make
+since together, or should I try another text?
 
--- 
-Ricardo Nabinger Sanchez
-GNU/Linux #140696 [http://counter.li.org]
-Slackware Linux + FreeBSD
+Is there anything else that will help me get started?
 
-  Left to themselves, things tend to go from bad to worse.
+Landon
+
