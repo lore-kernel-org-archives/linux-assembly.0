@@ -1,33 +1,32 @@
-From: Ricardo Nabinger Sanchez <rnsanchez@terra.com.br>
-Subject: Re: FW: Machine Code
-Date: Mon, 12 Dec 2005 23:31:41 -0200
-Message-ID: <20051212233141.5267e343.rnsanchez@terra.com.br>
-References: <0D544207876CDA428F17DD7EA448C192088C38@bailey.DOMAIN.KSNINC.PVT>
+From: Niel A <amerei@gmail.com>
+Subject: newbie
+Date: Fri, 23 Dec 2005 16:50:14 +0000
+Message-ID: <20051223165014.3a1db406.amerei@gmail.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <0D544207876CDA428F17DD7EA448C192088C38@bailey.DOMAIN.KSNINC.PVT>
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 To: linux-assembly@vger.kernel.org
 
-Quoting  "Landon Blake" <lblake@ksninc.com>
-Sent on  Mon, 12 Dec 2005 11:55:06 -0800
+hello all!
 
-> I'm just wondering if it is possible to write a machine code file
-> directly without the need for an assembler.
+i'm taking linux assembly as a hobby for christmas and i found your great site. the tutorials have been much helpful.
 
-yes, you want to look at these:
+anyway, i meant to ask something.. 
 
-	http://www.cag.lcs.mit.edu/dynamorio/
-	http://www.cag.lcs.mit.edu/rio/
+section .data
+	string: db "hi!",10
 
-regards.
+and i wanna capitalize the small letter 'h'.
 
--- 
-Ricardo Nabinger Sanchez
-GNU/Linux #140696 [http://counter.li.org]
-Slackware Linux + FreeBSD
+at first i used
+	mov di, string ; but di is 16 bits and ld complains
 
-  Left to themselves, things tend to go from bad to worse.
+so i eventually started using the 32 bit ones to do the capitalisation operation. but for some reason, i lose all other letters, including the linefeed.
+
+please point me to the right direction.
+
+merry christmas,
+- niel
