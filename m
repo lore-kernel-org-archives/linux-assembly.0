@@ -1,24 +1,34 @@
-From: Niel A <amerei@gmail.com>
-Subject: Re: newbie
-Date: Sat, 24 Dec 2005 23:16:46 +0000
-Message-ID: <20051224231646.7a1d905e.amerei@gmail.com>
-References: <20051223165014.3a1db406.amerei@gmail.com>
-	<43ABC9E0.3010409@comcast.net>
+From: Ricardo Nabinger Sanchez <rnsanchez@terra.com.br>
+Subject: Re: hello again :D
+Date: Sat, 7 Jan 2006 01:15:13 -0200
+Message-ID: <20060107011513.b8135cf9.rnsanchez@terra.com.br>
+References: <20060107110622.65f5623a.amerei@gmail.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <43ABC9E0.3010409@comcast.net>
+In-Reply-To: <20060107110622.65f5623a.amerei@gmail.com>
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Frank Kotler <fbkotler@comcast.net>
-Cc: linux-assembly@vger.kernel.org
+To: linux-assembly@vger.kernel.org
 
-thanks for you help and clarifications!
+Quoting  Niel A <amerei@gmail.com>
+Sent on  Sat, 7 Jan 2006 11:06:22 +0000
 
-my learning continues! looking forward to more posts....
+> first, what am i trying to do? i'm trying to replace an instruction with
+> a nop.
 
-again, merry christmas. and thank you.
+IIRC, you can't change anything in .text section while running, as it
+(AFAIK) will be marked r-xp (read, execute, p I don't know what is).
+writing to it would then segfault.
 
-tidings,
- - niel
+anyone confirm/disagree?
+
+Regards, and happy new year too (Niel and all of you). :)
+
+-- 
+Ricardo Nabinger Sanchez
+GNU/Linux #140696 [http://counter.li.org]
+Slackware Linux + FreeBSD
+
+  Left to themselves, things tend to go from bad to worse.
