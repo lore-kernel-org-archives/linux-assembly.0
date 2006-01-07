@@ -1,7 +1,7 @@
 From: Ricardo Nabinger Sanchez <rnsanchez@terra.com.br>
 Subject: Re: hello again :D
-Date: Sat, 7 Jan 2006 01:15:13 -0200
-Message-ID: <20060107011513.b8135cf9.rnsanchez@terra.com.br>
+Date: Sat, 7 Jan 2006 01:17:38 -0200
+Message-ID: <20060107011738.938c4239.rnsanchez@terra.com.br>
 References: <20060107110622.65f5623a.amerei@gmail.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
@@ -15,16 +15,18 @@ To: linux-assembly@vger.kernel.org
 Quoting  Niel A <amerei@gmail.com>
 Sent on  Sat, 7 Jan 2006 11:06:22 +0000
 
-> first, what am i trying to do? i'm trying to replace an instruction with
-> a nop.
+> _start:
+>         xor ebx, ebx
+>         mov byte [t1], 0x90
+> 
+> t1:     
+>         inc ebx	; try to skip this so exit(0) instead of exit(1);
 
-IIRC, you can't change anything in .text section while running, as it
-(AFAIK) will be marked r-xp (read, execute, p I don't know what is).
-writing to it would then segfault.
+also: this translates into a single byte?  otherwise you'd need to
+overwrite whatever bytes this produces.
 
-anyone confirm/disagree?
-
-Regards, and happy new year too (Niel and all of you). :)
+but again, I believe you cannot modify executable pages (at least not in
+such manner) :)
 
 -- 
 Ricardo Nabinger Sanchez
