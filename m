@@ -1,74 +1,70 @@
-From: Frank Kotler <fbkotler@comcast.net>
+From: Hendrik Visage <hvjunk@gmail.com>
 Subject: Re: hello again :D
-Date: Sun, 08 Jan 2006 11:19:56 -0500
-Message-ID: <43C13BAC.6020504@comcast.net>
-References: <20060107110622.65f5623a.amerei@gmail.com>	<4b0d6e0d0601061940v6184e250xdb2c209f308ad969@mail.gmail.com>	<43BF4AF4.2010104@comcast.net>	<20060108051726.74a33bc3.amerei@gmail.com>	<43C06DB3.1070000@comcast.net> <20060108132150.0c5ea4b4.amerei@gmail.com>
+Date: Thu, 12 Jan 2006 11:52:07 +0200
+Message-ID: <d93f04c70601120152t53631e03q6d21f6f7d5948508@mail.gmail.com>
+References: <20060107110622.65f5623a.amerei@gmail.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <20060108132150.0c5ea4b4.amerei@gmail.com>
+In-Reply-To: <20060107110622.65f5623a.amerei@gmail.com>
+Content-Disposition: inline
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
+Content-Type: text/plain; charset="us-ascii"
 To: Niel A <amerei@gmail.com>
-Cc: "linux-assembly@vger.kernel.org" <linux-assembly@vger.kernel.org>
+Cc: linux-assembly@vger.kernel.org
 
-Niel A wrote:
-> wow! thanks! i think i understand it now a little! actually, i re-read your email a couple of times, then resorted to whipping up something in c before finally seeing some light.
-> 
-> -----------------------------------------
-> 	sub esp, move_end - move_me
-> 	and esp, -8
-> -----------------------------------------
-> 
-> you allocated space on the stack
+On 1/7/06, Niel A <amerei@gmail.com> wrote:
 
-By subtracting something from esp.
+> first, what am i trying to do? i'm trying to replace an instruction with a nop.
 
-> but fall back on the next lowest 8 byte boundary. but that would mean that the stack is now a little short on space for the size of the function that you wanna copy on it right?
+As mentioned by others "caveat emptor" (Buyer beware :) changing stuff
+in the "text" or "code" segments aren't always guaranteed as it should be
+static/read-only to prevent malicious code injections etc. etc. (Read
+stack smashing and all those insecure coding pratices :()
 
-No, that gives us a little extra!
-                                          (low 8 bits)
-Suppose the stack starts at   0xBFFFF780 ...10000000
-subtract 9 bytes for our code 0xBFFFF777 ...01110111
-                            (and -8)      ...11111000
-                                          ------------
-and esp, -8 (0xFFFFFFF8)      0xBFFFF770 ...01110000
+Anycase back to the code in question:
 
-So we've got a full 16 bytes "reserved".
+> _start:
+>         xor ebx, ebx
+>         mov byte [t1], 0x90
+> t1:
+>         inc ebx ; try to skip this so exit(0) instead of exit(1);
+>bye:
+>       xor eax, eax
+>       inc eax
+>       int 80h<snip>
 
-> is this ok?  i'm so sorry. *gomen*. still a bit blurry. perhaps i'm just thinking about it so much.
+> i figured that since an "inc" is 1 byte, mov byte [t1], 90h will do the trick. if the nop was succesful, the proggie would have returned a zero exit status instead of one.
 
-I've been known to confuse myself by thinking too much about the fact 
-that the stack "grows down". I can get to thinking that my whole memory 
-is "upside down". It isn't, of course, the stack uses pefectly ordinary 
-memory. The stack *pointer*, esp, moves "downward" (smaller value) when 
-we add something to the stack with a push or call. This is called the 
-"top" of stack... Previous values on the stack remain at the same 
-address (of course), but with respect to esp, they're at a bigger 
-*negative* offset as we add more to the stack.
+Okay, let's assume for one moment that the .text/code segment is writable.
 
-How do we diagram/envision memory? With high numbers at the top, I 
-suppose, and zero at the bottom. This way, the stack "grows down", but 
-the "top of stack" is at the bottom. Another natural way would be 0, 1, 
-2, 3 with zero at the top. This is the way our source code reads... 
-instructions at the top go into lower memory, and as we read "down" 
-instructions are going into higher addresses. In this orientation, "top 
-of stack" is at the top, but the stack grows "upward"... as it works 
-into lower addresses. No wonder we're confused!
+In the modern CPUs it would run fine in the debuggers, but without the debugger
+it'll mostly allways exit(1). Why? It's called the instruction
+pipeline, prefetch queue etc. :)
 
-I'm not sure that helps... or otherwise. Observing C output may help. 
-Stepping through your code in a debugger might be better. I like ald 
-(available at SourceForge) better than gdb. Actually, I use an older 
-version of ald - reminds me more of DEBUG (how's *that* for faint 
-praise? :) For debugging, use the "-g" switch for Nasm, and *don't* use 
-the "-s" switch to ld. It helps a *lot* if you start off with a "nop" 
-(right after "_start:") - gives gdb someplace to set a breakpoint, so 
-you can step through your code from the beginning. Seems to matter less 
-with ald.
+An old test between the 8086/80186 and the 8088/80188 was to to modify
+a byte 5 or 6 bytes ahead and check the results. On the 8086/80186
+with a 6byte pre-fetch
+that byte would already be in the queue before the change to the memory location
+thus the old instruction will get executed. On the 8088/80188, however, with a
+4byte prefetch queue, those byte would be changed in RAM/memory by the
+time the instruction is fetched, thus the new instruction will get executed.
 
-Hang in there!
+This might be exasparated by the newer CPUs that does several instructions
+per clock tick like the SPARC CPUs. ie. the SuperSPARCs did three instructions
+(given certain rules) at once, the UltraSPARC version 1 (they are now
+past 4) can do four instructions (given the rules) to be executed at
+once. I do recall the
+Xeons and Athlons also having multiple instructions per clock tick as
+they also have multiple processing units on board.
 
-Best,
-Frank
+Thus, if you want to dynamically change code, do it in a function that
+you'll call after the
+change as to try and clear the prefetch (and also the predictive
+branching) queues
 
+
+
+--
+Hendrik Visage
