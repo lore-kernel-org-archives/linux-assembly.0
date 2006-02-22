@@ -1,31 +1,35 @@
-From: Jan Wagemakers <janw@easynet.be>
-Subject: Re: asmutils 0.18 released
-Date: Tue, 21 Feb 2006 17:00:28 +0100
-Message-ID: <20060221160028.GA21894@qwerty.be>
-References: <opss5nv9y85khrlj@sucks.airplane.fire> <42CBC727.8060203@linuxassembly.org> <42CC3917.3020105@comcast.net> <42CD8095.8000109@linuxassembly.org> <43E98F15.8090808@linuxassembly.org> <43E9EAB5.2030405@comcast.net> <43EA6F13.3070000@linuxassembly.org> <43ED3518.6070206@comcast.net> <43F0B684.9030705@linuxassembly.org> <43FB349E.4090100@linuxassembly.org>
+From: Maciej Hrebien <m_hrebien@wp.pl>
+Subject: SIMD question
+Date: Wed, 22 Feb 2006 19:20:20 +0100
+Message-ID: <43FCAB64.5090406@wp.pl>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <43FB349E.4090100@linuxassembly.org>
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
 To: linux-assembly@vger.kernel.org
 
-Konstantin Boldyshev <konst@linuxassembly.org> schreef:
+Hello everybody!
 
-> asmutils 0.18 are available from http://linuassembly.org/asmutils.html
+I have quite big commercial software and the producer tells me that they 
+did heavy SIMD optimisations to get maximum speed in solving a given 
+problem. Of course i don't have the source code but the soft runs in 
+GNU/Linux enviroment (x86 architecture).
 
-That should be <http://linuxassembly.org/asmutils.html> ;-)
+I did some experiments on smaller problems and i suspect that this 
+procuder's SIMD optimisations is a one big lie - the code can run much 
+faster. There are some SIMD instructions when i disassemble this 
+~250-meg binaries but analysing it is a quite frustrating job.
 
-Great!, I'll take a look at it this weekend. 
+My question is: is there a way (without touching the kernel as yet) to 
+trace in a given period of time the CPU so that i will be noticed when 
+SIMD instructions are being executed? Or maybe setting debugging traps 
+in all SIMD occuring places is the only way?
 
-Thanks!
+PS Thanks to Konstantin we have new asmutils :) Feel free, you - the 
+reader of this message, to improve my parts of code which were written 
+many many days ago so even beautifullization is warmly welcome ;)
 
-
--- 
-Met vriendelijke groetjes         - Jan Wagemakers -
-
-... I'm normally not a praying man, 
-    but if you're up there, please save me Superman.       --Homer Simpson
+Best regards,
+Maciek
