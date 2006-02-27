@@ -1,29 +1,27 @@
-From: Brian Raiter <breadbox@muppetlabs.com>
-Subject: Re: nasm -f bin / Elf format
-Date: Wed, 22 Feb 2006 16:32:44 -0800
-Message-ID: <17405.684.517571.20396@eidolon.muppetlabs.com>
-References: <200602222126.57346.thiago.silva@kdemail.net>
+From: HIToC <hitoc_mail@yahoo.it>
+Subject: Newbie at asmutils
+Date: Mon, 27 Feb 2006 16:07:16 +0100
+Message-ID: <200602262006.14200.hitoc_mail@yahoo.it>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8BIT
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <200602222126.57346.thiago.silva@kdemail.net>
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 To: linux-assembly@vger.kernel.org
 
-> Working gradualy, I tried to modify some data in a .data section,
-> and got a segmentation fault.
+Hello list!
+I have downloaded 0.18, and I was very impressed about it...
+My simply question is: how to compile a piece of code written using
+the layout of asmutils with nasm?
 
-You probably didn't set your the writable flag for the program section
-that includes .data. If you created your program section header table
-manually, make sure that p_flags (the second-to-last field) includes
-the writable flag (4 = readable, 2 = writable, 1 = executable).
+Thanks
+HIToC
 
-> Is that because there isn't a section header table with an entry
-> indicating that the .data section is writable?
 
-No, the section header table is not used when loading/executing ELF
-binaries.
+-- 
+With regards,
 
-b
+
+					HIToC
+					hitoc_mail@yahoo.it
