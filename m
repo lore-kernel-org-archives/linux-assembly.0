@@ -1,46 +1,59 @@
-From: Ricardo Nabinger Sanchez <rnsanchez@terra.com.br>
-Subject: Re: grub thing
-Date: Wed, 1 Mar 2006 10:34:11 -0300
-Message-ID: <20060301103411.10ac083e.rnsanchez@terra.com.br>
-References: <200602222126.57346.thiago.silva@kdemail.net>
-	<20060301071033.0c9eb1d4.amerei@gmail.com>
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+From: glburt@comcast.net
+Subject: redirection
+Date: Wed, 01 Mar 2006 13:37:40 +0000
+Message-ID: <030120061337.10844.4405A3A4000D752C00002A5C22073000339B9D9A0D0409@comcast.net>
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <20060301071033.0c9eb1d4.amerei@gmail.com>
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
+MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: linux-assembly@vger.kernel.org
 
-Quoting  Aleph One <amerei@gmail.com>
-Sent on  Wed, 1 Mar 2006 07:10:33 +0000
+I have the following program:
 
-> i'm looking at a disassembly of grub's stage 1. and i wanna know why it
-> need's to CLI before setting up the environment?? i tried to interpret it
-> line by line and this is what i have so far
+	SECTION .data		; data section
+msg1:	db "Hello World -- 1",10,0 ; the string to print, 10=cr
+msg:	db "Hello World",10	; the string to print, 10=cr
+len:	equ $-msg		; "$" means "here"
+				; len is a value, not an address
 
-I'm not an expert, but interruptions must be disabled.  I believe grub
-doesn't install interrupt handlers, and thus a single interrupt would lock
-the machine (as the appropriate handler would likely point to garbage).
+	SECTION .text		; code section
+        global main		; make label available to linker 
+        extern printf
+main:				; standard  gcc  entry point
+	
+	mov	edx,len		; arg3, length of string to print
+	mov	ecx,msg		; arg2, pointer to string
+	mov	ebx,1		; arg1, where to write, screen
+	mov	eax,4		; write command to int 80 hex
+	int	0x80		; interrupt 80 hex, call kernel
+	
+        push    msg1
+        call    printf
+        add	esp, 4
 
-would the BIOS (or similar in other architectures) give the processor to
-the bootloader with interrupts disabled already?
+        mov	ebx,0		; exit code, 0=normal
+	mov	eax,1		; exit command to kernel
+	int	0x80		; interrupt 80 hex, call kernel
 
-> also, since the origin is at 0000:7c00h i figured that must imply that
-> "mov sp, 0x2000" means that the stack starts at 0x7c00+0x2000 = 9c000
-> right?
 
-I guess not.  to get what you described, I would do:
+When I assembled/linked it, I used:
 
-	mov sp, 0x2000
-	add sp, 0x7c00
+nasm -f elf burtp1.asm
+gcc burtp1.o
 
-from your disassembly, I'd expect SP to be 0x2000, counting from 0x0000.
+when i ran it, I got two lines of output.:
 
--- 
-Ricardo Nabinger Sanchez
-GNU/Linux #140696 [http://counter.li.org]
-Slackware Linux + FreeBSD
+[burt@linux2 ~]$ ./a.out
+Hello World
+Hello World -- 1
 
-  Left to themselves, things tend to go from bad to worse.
+
+When I redirected it, I got:
+
+[burt@linux2 ~]$ ./a.out > foo
+[burt@linux2 ~]$ cat foo
+Hello World
+
+Why was the output from using printf not redirected?
