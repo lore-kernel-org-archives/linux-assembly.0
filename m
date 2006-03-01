@@ -1,101 +1,53 @@
 From: Marcin =?utf-8?q?Ko=C5=9Bcielnicki?= <markosc@interia.pl>
-Subject: Re: redirection
-Date: Wed, 1 Mar 2006 15:48:18 +0100
-Message-ID: <200603011548.18539.markosc@interia.pl>
-References: <030120061337.10844.4405A3A4000D752C00002A5C22073000339B9D9A0D0409@comcast.net>
+Subject: Re: grub thing
+Date: Wed, 1 Mar 2006 15:42:50 +0100
+Message-ID: <200603011542.51608.markosc@interia.pl>
+References: <200602222126.57346.thiago.silva@kdemail.net> <20060301071033.0c9eb1d4.amerei@gmail.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <030120061337.10844.4405A3A4000D752C00002A5C22073000339B9D9A0D0409@comcast.net>
+In-Reply-To: <20060301071033.0c9eb1d4.amerei@gmail.com>
 Content-Disposition: inline
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="windows-1252"
+Content-Type: text/plain; charset="us-ascii"
 To: linux-assembly@vger.kernel.org
 
-> I have the following program:
->
-> 	SECTION .data		; data section
-> msg1:	db "Hello World -- 1",10,0 ; the string to print, 10=3Dcr
-> msg:	db "Hello World",10	; the string to print, 10=3Dcr
-> len:	equ $-msg		; "$" means "here"
-> 				; len is a value, not an address
->
-> 	SECTION .text		; code section
->         global main		; make label available to linker
->         extern printf
-> main:				; standard  gcc  entry point
->
-> 	mov	edx,len		; arg3, length of string to print
-> 	mov	ecx,msg		; arg2, pointer to string
-> 	mov	ebx,1		; arg1, where to write, screen
-> 	mov	eax,4		; write command to int 80 hex
-> 	int	0x80		; interrupt 80 hex, call kernel
->
->         push    msg1
->         call    printf
->         add	esp, 4
->
->         mov	ebx,0		; exit code, 0=3Dnormal
-> 	mov	eax,1		; exit command to kernel
-> 	int	0x80		; interrupt 80 hex, call kernel
->
->
-> When I assembled/linked it, I used:
->
-> nasm -f elf burtp1.asm
-> gcc burtp1.o
->
-> when i ran it, I got two lines of output.:
->
-> [burt@linux2 ~]$ ./a.out
-> Hello World
-> Hello World -- 1
->
->
-> When I redirected it, I got:
->
-> [burt@linux2 ~]$ ./a.out > foo
-> [burt@linux2 ~]$ cat foo
-> Hello World
->
-> Why was the output from using printf not redirected?
+> i'm looking at a disassembly of grub's stage 1. and i wanna know why it
+> need's to CLI before setting up the environment??
 
-It's because printf buffers output when it goes to file.
+It's because it sets the stack address -- otherwise, interrupt could occur 
+between mov to ss and mov to sp, which would use invalid stack address and be 
+lethal.
 
-In c program, it cannot do any wrong, since library exit() function flu=
-shes=20
-all buffers before actually exitting.
+Also, it has NOTHING to do with lack of interrupt handlers -- BIOS has 
+handlers for all interrupts needed for bootstrap, and the others are 
+disabled. No bad thing can happen. In fact, it re-enables interrupts right 
+after setting the stack (sti)
 
-However, you exit with direct kernel syscall. It's REALLY bad idea, as =
-it=20
-terminates the process immediately, not allowing anything to run before=
- it=20
-happens -- including the flush-buffers-on-exit thingie.
+> i tried to interpret it 
+> line by line and this is what i have so far
+>
+>  00007C4A  FA			cli			; disable interrupt
+>  00007C4B  80CA80		or dl,0x80          ; correct boot drive byte
+>  00007C4E  EA537C0000	jmp 0x0:0x7c53	; jmp to next inst
+>  00007C53  31C0		xor ax,ax           ; zero ax
+>  00007C55  8ED8		mov ds,ax		; zero data segment
+>  00007C57  8ED0		mov ss,ax		; zero stack segment
+>  00007C59  BC0020		mov sp,0x2000	; 8 kilobytes
+>  00007C5C  FB			sti			; enable interrupt
+>
+> also, since the origin is at 0000:7c00h i figured that must imply that "mov
+> sp, 0x2000" means that the stack starts at 0x7c00+0x2000 = 9c000 right?
 
-If you're not using libc, direct syscall is alright. However, if you us=
-e libc,=20
-you have to use the whole framework, or something's bound to break=20
-eventually. Will people never learn?
+No.
 
-To make it do the Right Thing=E2=84=A2, change this:
+>  00007C57  8ED0		mov ss,ax		; zero stack segment
+>  00007C59  BC0020		mov sp,0x2000	; 8 kilobytes
 
->         mov	ebx,0		; exit code, 0=3Dnormal
-> 	mov	eax,1		; exit command to kernel
-> 	int	0x80		; interrupt 80 hex, call kernel
-
-to this:
-
-push dword 0 ;exit code
-call exit
-
-Should work now.
+Here, ss==0 and sp==0x2000. Stack starts at ss*0x10+sp == 0x0*0x10+0x2000 == 
+0x2000. Also, remember it grows down.
 
 ----------------------------------------------------------------------
 Kliknij po wiecej! >>> http://link.interia.pl/f18ed
 
--
-To unsubscribe from this list: send the line "unsubscribe linux-assembl=
-y" in
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
