@@ -1,57 +1,38 @@
-From: Aleph One <amerei@gmail.com>
-Subject: Re: grub thing
-Date: Thu, 2 Mar 2006 06:49:55 +0000
-Message-ID: <20060302064955.7de89dd0.amerei@gmail.com>
-References: <200602222126.57346.thiago.silva@kdemail.net>
-	<20060301071033.0c9eb1d4.amerei@gmail.com>
-	<20060301103411.10ac083e.rnsanchez@terra.com.br>
+From: "Martin Fflores" <abebex17@hotmail.com>
+Subject: PS/2 Mouse
+Date: Thu, 09 Mar 2006 22:42:04 +0000
+Message-ID: <BAY14-F23AC99099DE8349B422488D0EC0@phx.gbl>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <20060301103411.10ac083e.rnsanchez@terra.com.br>
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: Ricardo Nabinger Sanchez <rnsanchez@terra.com.br>
-Cc: linux-assembly@vger.kernel.org
+Content-Type: text/plain; format=flowed; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: linux-assembly@vger.kernel.org
 
-On Wed, 1 Mar 2006 10:34:11 -0300
-Ricardo Nabinger Sanchez <rnsanchez@terra.com.br> wrote:
+im just beginner, and im trying to make a PS/2 mouseInterface; my problem 
+now is this
+int EnabledDataReporting()
+	{
+          DiseableKeyBoard();
+          do
+          {
+          WriteMouse();
+          asm("outb %%al,$0x60;": :"a"(EnabledDataReport));
+          }while(!IsCommandAcepted());
+    /*      asm("outb %%al,$0x60;"::"a"(0xf4));//forzar datareporting*/
+          EnabledKeyBoard();
+          return TRUE;
+       };
+as you see i most to demand with the line between /* */, if i dont include 
+this line , my mouse just stop  to sending signals(or what ever it sends :D  
+) EnabledDataReport is 0xf4 but when i include the line 9
+everything does fine,so my question is what i making wrong??? why if i put 
+0xf4 instead ENabledDAtaReport it work.
 
-~Quoting  Aleph One <amerei@gmail.com>
-~Sent on  Wed, 1 Mar 2006 07:10:33 +0000
-~
-~> i'm looking at a disassembly of grub's stage 1. and i wanna know why it
-~> need's to CLI before setting up the environment?? i tried to interpret it
-~> line by line and this is what i have so far
-~
-~I'm not an expert, but interruptions must be disabled.  I believe grub
-~doesn't install interrupt handlers, and thus a single interrupt would lock
-~the machine (as the appropriate handler would likely point to garbage).
-~
-~would the BIOS (or similar in other architectures) give the processor to
-~the bootloader with interrupts disabled already?
-~
-~> also, since the origin is at 0000:7c00h i figured that must imply that
-~> "mov sp, 0x2000" means that the stack starts at 0x7c00+0x2000 = 9c000
-~> right?
-~
-~I guess not.  to get what you described, I would do:
-~
-~	mov sp, 0x2000
-~	add sp, 0x7c00
-~
-~from your disassembly, I'd expect SP to be 0x2000, counting from 0x0000.
+Take Folks
 
-groovy! thanks for clarifying this to me. i kinda got messed up thinking about relating the stack with the 7c000 start address :(
+_________________________________________________________________
+Express yourself instantly with MSN Messenger! Download today it's FREE! 
+http://messenger.msn.click-url.com/go/onm00200471ave/direct/01/
 
-~-- 
-~Ricardo Nabinger Sanchez
-~GNU/Linux #140696 [http://counter.li.org]
-~Slackware Linux + FreeBSD
-~
-~  Left to themselves, things tend to go from bad to worse.
-~-
-~To unsubscribe from this list: send the line "unsubscribe linux-assembly" in
-~the body of a message to majordomo@vger.kernel.org
-~More majordomo info at  http://vger.kernel.org/majordomo-info.html
