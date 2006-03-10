@@ -1,50 +1,51 @@
-From: leslie.polzer@gmx.net
+From: Frank Kotler <fbkotler@comcast.net>
 Subject: Re: hla
-Date: Fri, 10 Mar 2006 21:32:59 +0100
-Message-ID: <20060310203259.GA7399@wintermute>
-References: <20060310201855.23619.qmail@web31913.mail.mud.yahoo.com>
+Date: Fri, 10 Mar 2006 18:16:06 -0500
+Message-ID: <441208B6.9070808@comcast.net>
+References: <20060310201855.23619.qmail@web31913.mail.mud.yahoo.com> <20060310203259.GA7399@wintermute>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="Qxx1br4bt0+wmkIi"
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <20060310201855.23619.qmail@web31913.mail.mud.yahoo.com>
+In-Reply-To: <20060310203259.GA7399@wintermute>
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
-To: Tim Hoolihan <thoolihan@yahoo.com>
-Cc: linux-assembly@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: linux-assembly@vger.kernel.org
 
+leslie.polzer@gmx.net wrote:
+> On Fri, Mar 10, 2006 at 12:18:55PM -0800, Tim Hoolihan wrote:
+> 
+>>I posted some info on my sight about hla, and was curious if anyone
+>>on here has tried it? I've used mainly gas and nasm, but this seems a
+>>convenient way to use them.
+> 
+> HLA is an educational tool used in the book "The Art Of Assembly".
+>   I don't think anyone uses it in serious production.
 
---Qxx1br4bt0+wmkIi
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+What assemblers do folks use for "serious production"?
 
-On Fri, Mar 10, 2006 at 12:18:55PM -0800, Tim Hoolihan wrote:
+While HLA *is* designed as an educational tool, it's pretty "powerful", 
+and would be suitable for "serious production" if you wanted to.
 
-> I posted some info on my sight about hla, and was curious if anyone
-> on here has tried it? I've used mainly gas and nasm, but this seems a
-> convenient way to use them.
-HLA is an educational tool used in the book "The Art Of Assembly".
-  I don't think anyone uses it in serious production.
-  Besides, IMHO it's quite ugly :D
+>   Besides, IMHO it's quite ugly :D
 
-    Leslie
+Well... beauty is in the eye of the beholder! I wholeheartedly agree, 
+though! :)
 
---=20
-gpg --keyserver pgp.mit.edu --recv-keys 0x52D70289
-http://nic-nac-project.de/~skypher/
+Regarding Tim's correction to the install doc: Good point! That's new - 
+the last version wanted you to be in /usr. This one wants /. Best to 
+check. I don't think Randy's got the "packaging" for Linux down pat. I 
+add version numbers when I download 'em, for example...
 
---Qxx1br4bt0+wmkIi
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+I haven't used HLA much. I don't crave the kind of "power" it offers, 
+and... okay, it's ugly. Since it will produce code that will run on 
+*either* Windows or Linux, I think it's an "interesting" tool/toy. It's 
+the HLA Standard Library that allows it, of course. Ported to Windows 
+and Linux, with more OSen planned. We can call the C library, of course, 
+but some people might prefer a library written in asm (HLA, to be sure, 
+but recognizably asm). Call it, or read it to find out how things might 
+be done - I do more of the latter. :)
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.2.1 (GNU/Linux)
+Best,
+Frank
 
-iD8DBQFEEeJ6n/ep3VLXAokRAkmpAJ9JjT9rwQYl6Pm/+M/nTaDGU+byxACdEFKt
-HjiWSlfwavQJ/3IqeJvSWE0=
-=tgos
------END PGP SIGNATURE-----
-
---Qxx1br4bt0+wmkIi--
