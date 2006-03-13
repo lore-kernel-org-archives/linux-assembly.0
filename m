@@ -1,51 +1,24 @@
-From: Frank Kotler <fbkotler@comcast.net>
-Subject: Re: hla
-Date: Fri, 10 Mar 2006 18:16:06 -0500
-Message-ID: <441208B6.9070808@comcast.net>
-References: <20060310201855.23619.qmail@web31913.mail.mud.yahoo.com> <20060310203259.GA7399@wintermute>
+From: "ALberto Andres" <betorumbero@hotmail.com>
+Subject: Writing Linux Device drivers with NASM
+Date: Mon, 13 Mar 2006 16:45:53 +0100
+Message-ID: <BAY102-F10A22842764940C4627CBAA3E00@phx.gbl>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <20060310203259.GA7399@wintermute>
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
+Content-Type: text/plain; charset="iso-8859-1"; format="flowed"
+Content-Transfer-Encoding: quoted-printable
 To: linux-assembly@vger.kernel.org
 
-leslie.polzer@gmx.net wrote:
-> On Fri, Mar 10, 2006 at 12:18:55PM -0800, Tim Hoolihan wrote:
-> 
->>I posted some info on my sight about hla, and was curious if anyone
->>on here has tried it? I've used mainly gas and nasm, but this seems a
->>convenient way to use them.
-> 
-> HLA is an educational tool used in the book "The Art Of Assembly".
->   I don't think anyone uses it in serious production.
+Hi everybody, I'm writing a guide about device drivers in assembly under=20
+linux. I'm using NASM.  If anybody is interested here is the URL:
 
-What assemblers do folks use for "serious production"?
+http://albertoandreotti.5000megs.com/
 
-While HLA *is* designed as an educational tool, it's pretty "powerful", 
-and would be suitable for "serious production" if you wanted to.
+Bye!!
 
->   Besides, IMHO it's quite ugly :D
-
-Well... beauty is in the eye of the beholder! I wholeheartedly agree, 
-though! :)
-
-Regarding Tim's correction to the install doc: Good point! That's new - 
-the last version wanted you to be in /usr. This one wants /. Best to 
-check. I don't think Randy's got the "packaging" for Linux down pat. I 
-add version numbers when I download 'em, for example...
-
-I haven't used HLA much. I don't crave the kind of "power" it offers, 
-and... okay, it's ugly. Since it will produce code that will run on 
-*either* Windows or Linux, I think it's an "interesting" tool/toy. It's 
-the HLA Standard Library that allows it, of course. Ported to Windows 
-and Linux, with more OSen planned. We can call the C library, of course, 
-but some people might prefer a library written in asm (HLA, to be sure, 
-but recognizably asm). Call it, or read it to find out how things might 
-be done - I do more of the latter. :)
-
-Best,
-Frank
+_________________________________________________________________
+Un amor, una aventura, compa=F1=EDa para un viaje. Reg=EDstrate gratis en M=
+SN Amor=20
+& Amistad. http://match.msn.es/match/mt.cfm?pg=3Dchannel&tcid=3D162349
 
