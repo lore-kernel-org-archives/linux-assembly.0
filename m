@@ -1,32 +1,23 @@
-From: jeff <jko@bsn1.net>
-Subject: AsmIDE update
-Date: Tue, 14 Mar 2006 00:49:58 +0000
-Message-ID: <200603140049.58657.jko@bsn1.net>
+From: Deepak Pandey <deepak.pandey@wipro.com>
+Subject: Unable To Jump To Undefined Symbol
+Date: Tue, 14 Mar 2006 19:16:30 +0530
+Message-ID: <4416C936.2010403@wipro.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-Content-Disposition: inline
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
 To: linux-assembly@vger.kernel.org
 
-Hi all,
-
-The AsmIDE project has released a snapshot of current progress.
-changes include:
-
-  *  AsmNano, a new editor
-  *  AsmLib expanded to over 300 functions
-  *  HOWTO's added for many areas
-  *  as usual numerous bugs were fixed.
-
- http://members.save-net.com/jko%40save-net.com/asm/
-
-AsmIDE is a collection of programs to assist with assembler development on X86 
-Linux platforms.
-
- all the best, jeff
-
-
-
+Hi,
+  I got a compilation problem saying UNABLE TO JUMP TO UNDEFIND SYMBOL 
+while compiling a code in which I tried to jump to a symbol(symbol_name) 
+from a different file by an assembly instruction (j symbol_name).However 
+I also declared the symbol as global(.globl symbol_name) but still it 
+didnot worked.
+The Symbol was defined as follows:
+         LEAF(symbol_name)
+     /*some assembly instructions*/
+     END(symbol_name)
+Thanks in Advance.
