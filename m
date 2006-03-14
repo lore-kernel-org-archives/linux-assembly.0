@@ -1,58 +1,42 @@
-From: leslie.polzer@gmx.net
+From: "joy merwin monteiro" <joy.merwin@gmail.com>
 Subject: Re: Unable To Jump To Undefined Symbol
-Date: Tue, 14 Mar 2006 16:27:00 +0100
-Message-ID: <20060314152700.GA13315@wintermute>
+Date: Tue, 14 Mar 2006 21:56:39 +0530
+Message-ID: <4b0d6e0d0603140826q16d0f83vafd0d3dc659b85ee@mail.gmail.com>
 References: <4416C936.2010403@wipro.com>
+Reply-To: joy_mm@ieee.org
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="rwEMma7ioTxnRzrJ"
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-assembly-owner@vger.kernel.org>
-Content-Disposition: inline
 In-Reply-To: <4416C936.2010403@wipro.com>
+Content-Disposition: inline
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
 To: Deepak Pandey <deepak.pandey@wipro.com>
 Cc: linux-assembly@vger.kernel.org
 
+yup, as leslie pointed out, you need an EXTRN directive so that
+undefined refernces are handled by the linker. and what is LEAF, END ???
 
---rwEMma7ioTxnRzrJ
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Tue, Mar 14, 2006 at 07:16:30PM +0530, Deepak Pandey wrote:
-
-> Hi, I got a compilation problem saying UNABLE TO JUMP TO UNDEFIND
-> SYMBOL while compiling a code in which I tried to jump to a
-> symbol(symbol_name) from a different file by an assembly instruction
-> (j symbol_name).However I also declared the symbol as global(.globl
-> symbol_name) but still it didnot worked.
-You need to tell the assembler in the file which references the symbol
-that it's out there.  Use extern, EXTRN or whatever directive your
-assembler supports for this purpose.
-
+On 3/14/06, Deepak Pandey <deepak.pandey@wipro.com> wrote:
+> Hi,
+>   I got a compilation problem saying UNABLE TO JUMP TO UNDEFIND SYMBOL
+> while compiling a code in which I tried to jump to a symbol(symbol_name)
+> from a different file by an assembly instruction (j symbol_name).However
+> I also declared the symbol as global(.globl symbol_name) but still it
+> didnot worked.
 > The Symbol was defined as follows:
-> LEAF(symbol_name)
->       /*some assembly instructions*/
-> END(symbol_name)
-What assembler uses these syntactic constructs?
+>          LEAF(symbol_name)
+>      /*some assembly instructions*/
+>      END(symbol_name)
+> Thanks in Advance.
+> -
+> To unsubscribe from this list: send the line "unsubscribe linux-assembly" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>
 
-  Leslie
 
---=20
-gpg --keyserver pgp.mit.edu --recv-keys 0x52D70289
-http://nic-nac-project.de/~skypher/
-
---rwEMma7ioTxnRzrJ
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.2.1 (GNU/Linux)
-
-iD8DBQFEFuDEn/ep3VLXAokRAoWFAJ0cryETUBtR+jRSUq/uWUMuvKpfJACgqrv8
-FS3hm08o/zHSS48p3mLwor8=
-=Kn3b
------END PGP SIGNATURE-----
-
---rwEMma7ioTxnRzrJ--
+--
+The person who cannot reason is a fool, one who won't reason is a bigot,
+one who dare not reason is a slave.
