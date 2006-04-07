@@ -1,42 +1,32 @@
-From: "joy merwin monteiro" <joy.merwin@gmail.com>
-Subject: Re: Unable To Jump To Undefined Symbol
-Date: Tue, 14 Mar 2006 21:56:39 +0530
-Message-ID: <4b0d6e0d0603140826q16d0f83vafd0d3dc659b85ee@mail.gmail.com>
-References: <4416C936.2010403@wipro.com>
-Reply-To: joy_mm@ieee.org
+From: Thiago Silva <thiago.silva@kdemail.net>
+Subject: nasm / code distance
+Date: Fri, 07 Apr 2006 18:47:32 +0000
+Message-ID: <200604071847.32559.thiago.silva@kdemail.net>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7BIT
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <4416C936.2010403@wipro.com>
-Content-Disposition: inline
+Content-disposition: inline
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: Deepak Pandey <deepak.pandey@wipro.com>
-Cc: linux-assembly@vger.kernel.org
+To: linux-assembly@vger.kernel.org
 
-yup, as leslie pointed out, you need an EXTRN directive so that
-undefined refernces are handled by the linker. and what is LEAF, END ???
+Hello,
+I'm having some troubles with an asm application.
 
-On 3/14/06, Deepak Pandey <deepak.pandey@wipro.com> wrote:
-> Hi,
->   I got a compilation problem saying UNABLE TO JUMP TO UNDEFIND SYMBOL
-> while compiling a code in which I tried to jump to a symbol(symbol_name)
-> from a different file by an assembly instruction (j symbol_name).However
-> I also declared the symbol as global(.globl symbol_name) but still it
-> didnot worked.
-> The Symbol was defined as follows:
->          LEAF(symbol_name)
->      /*some assembly instructions*/
->      END(symbol_name)
-> Thanks in Advance.
-> -
-> To unsubscribe from this list: send the line "unsubscribe linux-assembly" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
+The first problem is about the "short jump".
+I get those messages "error: short jump is out of range" when using nasm on my 
+sources. Researching, I found that people answer this by saying "use -O1".
+Now, is this the appropriated way to deal with this problem?
 
+Second, I've been getting some strange (?) segfaults...
+Using valgrind, I found that there were 3 invalid reads on memory.
+Those reads uses data in the .data section. Now, moving the problematic 
+function to the beginning of the file, close to the entry point and other 
+sections, valgrind didn't complain and I got no segfaults.
 
---
-The person who cannot reason is a fool, one who won't reason is a bigot,
-one who dare not reason is a slave.
+I'm obviously missing something, so...can anyone help?
+
+Thanks in advance,
+-- 
++Thiago Silva
