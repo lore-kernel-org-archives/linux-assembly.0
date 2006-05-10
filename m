@@ -1,17 +1,60 @@
-From: Frank Kotler <fbkotler@comcast.net>
-Subject: Re: please help me
-Date: Tue, 09 May 2006 12:17:31 -0400
-Message-ID: <4460C09B.70107@comcast.net>
-References: <000101c6734a$573086d0$c41e1ec7@TuThuyHa>
+From: "httu" <httu@tma.com.vn>
+Subject: RE: please help me
+Date: Wed, 10 May 2006 21:05:32 +0700
+Message-ID: <000001c6743a$ce133bd0$c41e1ec7@TuThuyHa>
+References: <4460C09B.70107@comcast.net>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <000101c6734a$573086d0$c41e1ec7@TuThuyHa>
+In-Reply-To: <4460C09B.70107@comcast.net>
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: httu <httu@tma.com.vn>
-Cc: "linux-assembly@vger.kernel.org" <linux-assembly@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: 'Frank Kotler' <fbkotler@comcast.net>
+Cc: linux-assembly@vger.kernel.org
+
+Hi Frank,
+
+I am aware of segment assumption problem but I am still trapped :(
+
+I think the wrong installation of address of interrupt_handler cause the CPU
+to jump to the wrong place and the code at that place make the floppy
+drive's motor to run forever. When I install the right address of
+interrupt_handler, the floppy drive is turned off right the way.
+
+Thank you for your aware of STACK_SIZE. Now, I understand why my CPU runs so
+slow!!!
+I have changed it to match memory alignment of 4 and it run as it should.
+
+I realize the potential bug when changing %ss, %sp that way. I am a new
+assembly programmer.
+Please correct me any points or programming style. Thanks a lot :)
+
+
+>Hope it helped. I haven't tested your code - what's the command-line to 
+>as? "-oformat=binary"? (I'm a Nasm user).
+Yes, the command-line to is "-oformat=binary"
+
+By the way, please give me any links to websites or books, articles,
+documents etc. that talk about the memory organization, memory map or memory
+status (I don't know the correct term) right after the bios finishes POST
+and tries to load boot sector. Or just give me the correct key words to
+search them.
+
+Do you have any good documents, books, etc. talking about the whole BIOS
+API? Free or commercial ones are ok :)
+
+Best regards,
+
+Tuha.
+
+
+-----Original Message-----
+From: Frank Kotler [mailto:fbkotler@comcast.net] 
+Sent: Tuesday, May 09, 2006 11:18 PM
+To: httu
+Cc: linux-assembly@vger.kernel.org
+Subject: Re: please help me
 
 Hi Tuha,
 
