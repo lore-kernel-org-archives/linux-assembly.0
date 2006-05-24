@@ -1,47 +1,60 @@
-From: Noprianto <opennopri@yahoo.com>
-Subject: chdir on linux does not work
-Date: Tue, 23 May 2006 19:49:29 -0700 (PDT)
-Message-ID: <20060524024929.99396.qmail@web50504.mail.yahoo.com>
+From: Timo Lindfors <lindi@kurp.hut.fi>
+Subject: Re: chdir on linux does not work
+Date: Wed, 24 May 2006 07:26:14 +0300
+Message-ID: <20060524042614.GA18142@kurp.hut.fi>
+References: <20060524024929.99396.qmail@web50504.mail.yahoo.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="liOOAslEiF7prFVr"
 Return-path: <linux-assembly-owner@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <20060524024929.99396.qmail@web50504.mail.yahoo.com>
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: linux-assembly@vger.kernel.org
-
-Dear All,
-
-Anyone can tell me why this chdir code doesnot work on
-linux ?
-
--> from what i read, chdir is system call number 12
+To: Noprianto <opennopri@yahoo.com>
+Cc: linux-assembly@vger.kernel.org
 
 
-section .text
-        global _start
+--liOOAslEiF7prFVr
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-_start:
-        mov eax, 12
-        mov ebx, dir
-        int 80h
+Hi,
 
+On Tue, May 23, 2006 at 07:49:29PM -0700, Noprianto wrote:
+> -> from what i read, chdir is system call number 12
 
-        mov eax, 1
-        mov ebx, 0
-        int 80h
+Yep, but better use something like
 
+%define __NR_chdir               12
 
+to make code more readable. Also, your example works just fine here:
 
-section .data
-dir:    db      '/bin'
+$ nasm a.asm -f elf
+$ gcc a.o -o a -nostdlib
+$ strace ./a
+execve("./a", ["./a"], [/* 30 vars */]) = 0
+chdir("/bin")                           = 0
+_exit(0)                                = ?
 
+Remember that chdir affects only the process that calls chdir. You
+can't e.g. write a replacement for shell's builtin "cd" command that
+way.
 
+best regards,
+Timo Lindfors
 
-Thanks,
-Pri
+--liOOAslEiF7prFVr
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
 
-__________________________________________________
-Do You Yahoo!?
-Tired of spam?  Yahoo! Mail has the best spam protection around 
-http://mail.yahoo.com 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQFEc+BmQwOiFKptEGsRAi8WAKCsLs/lhDRnntWAorQy/RmIQLKPsACeN5oY
+W2xjjWL580Y4IbqG5Ks5hi4=
+=hndJ
+-----END PGP SIGNATURE-----
+
+--liOOAslEiF7prFVr--
