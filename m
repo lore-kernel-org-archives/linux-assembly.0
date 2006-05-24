@@ -1,37 +1,31 @@
-From: Frank Kotler <fbkotler@comcast.net>
+From: Brian Raiter <breadbox@muppetlabs.com>
 Subject: Re: chdir on linux does not work
-Date: Wed, 24 May 2006 02:49:24 -0400
-Message-ID: <447401F4.4020603@comcast.net>
-References: <20060524024929.99396.qmail@web50504.mail.yahoo.com> <20060524042614.GA18142@kurp.hut.fi>
+Date: Wed, 24 May 2006 00:15:19 -0700
+Message-ID: <17524.2055.728735.900869@eidolon.muppetlabs.com>
+References: <20060524024929.99396.qmail@web50504.mail.yahoo.com>
+	<20060524042614.GA18142@kurp.hut.fi>
+	<447401F4.4020603@comcast.net>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <20060524042614.GA18142@kurp.hut.fi>
+In-Reply-To: <447401F4.4020603@comcast.net>
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: linux-assembly@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: Frank Kotler <fbkotler@comcast.net>
+Cc: linux-assembly@vger.kernel.org
 
-Timo Lindfors wrote:
+> Adding a call to sys_getcwd (__NR_ 183) (why is this man 3, not man
+> 2 ???)
 
-...
-> Remember that chdir affects only the process that calls chdir.
+Good question, actually. I don't know.
 
-I thought Noprianto's problem was the lack of a terminating zero after 
-"/bin"... didn't help, but I still think it's a bug waiting to byte. 
-Adding a call to sys_getcwd (__NR_ 183) (why is this man 3, not man 2 
-???) proves that, sure enough, it *does* work... but we change back on 
-exit... as you say...
+>> You can't e.g. write a replacement for shell's builtin "cd"
+>> command that way.
+> 
+> Okay, how *would* we do that?
 
-> You
-> can't e.g. write a replacement for shell's builtin "cd" command that
-> way.
+It is simply not possible. Like setenv, cd absolutely must be a shell
+builtin.
 
-Okay, how *would* we do that? I know! I'll check "asmutils"! Hmmm... no 
-chdir in asmutils... This is apparently harder than it looks!
-
-Good Question!
-
-Best,
-Frank
-
+b
