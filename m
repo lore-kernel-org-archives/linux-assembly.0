@@ -1,60 +1,27 @@
-From: Timo Lindfors <lindi@kurp.hut.fi>
+From: Brian Raiter <breadbox@muppetlabs.com>
 Subject: Re: chdir on linux does not work
-Date: Wed, 24 May 2006 07:26:14 +0300
-Message-ID: <20060524042614.GA18142@kurp.hut.fi>
+Date: Tue, 23 May 2006 23:18:29 -0700
+Message-ID: <17523.64181.553724.79208@eidolon.muppetlabs.com>
 References: <20060524024929.99396.qmail@web50504.mail.yahoo.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="liOOAslEiF7prFVr"
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-Content-Disposition: inline
 In-Reply-To: <20060524024929.99396.qmail@web50504.mail.yahoo.com>
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
-To: Noprianto <opennopri@yahoo.com>
-Cc: linux-assembly@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: linux-assembly@vger.kernel.org
 
+> Anyone can tell me why this chdir code doesnot work on
+> linux ?
 
---liOOAslEiF7prFVr
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+> section .data
+> dir:    db      '/bin'
 
-Hi,
+You forgot to NUL-terminate your string. A dangerous mistake, as it
+can become a Heisenbug. You were lucky it failed to work for you. Use
+this instead:
 
-On Tue, May 23, 2006 at 07:49:29PM -0700, Noprianto wrote:
-> -> from what i read, chdir is system call number 12
+dir:	db	'/bin', 0
 
-Yep, but better use something like
-
-%define __NR_chdir               12
-
-to make code more readable. Also, your example works just fine here:
-
-$ nasm a.asm -f elf
-$ gcc a.o -o a -nostdlib
-$ strace ./a
-execve("./a", ["./a"], [/* 30 vars */]) = 0
-chdir("/bin")                           = 0
-_exit(0)                                = ?
-
-Remember that chdir affects only the process that calls chdir. You
-can't e.g. write a replacement for shell's builtin "cd" command that
-way.
-
-best regards,
-Timo Lindfors
-
---liOOAslEiF7prFVr
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFEc+BmQwOiFKptEGsRAi8WAKCsLs/lhDRnntWAorQy/RmIQLKPsACeN5oY
-W2xjjWL580Y4IbqG5Ks5hi4=
-=hndJ
------END PGP SIGNATURE-----
-
---liOOAslEiF7prFVr--
+b
