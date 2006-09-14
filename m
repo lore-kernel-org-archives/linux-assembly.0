@@ -1,43 +1,84 @@
-From: mikeos@inbox.ru
-Subject: Re: Bin and other short question
-Date: Tue, 12 Sep 2006 00:06:16 +0400
-Message-ID: <20060911200616.GA4401@arch>
-References: <20060911193726.1821.qmail@web50309.mail.yahoo.com>
+From: Henio Paszczak <blurrpp@yahoo.com>
+Subject: hint?
+Date: Thu, 14 Sep 2006 12:58:52 -0700 (PDT)
+Message-ID: <20060914195852.88791.qmail@web50313.mail.yahoo.com>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-assembly-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <20060911193726.1821.qmail@web50309.mail.yahoo.com>
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
 To: linux-assembly@vger.kernel.org
 
-On Mon, Sep 11, 2006 at 12:37:26PM -0700, Henio Paszczak wrote:
-> Hi.
-> I wont to create bin file with using gas haw can i do
-> it. 
-> ( fir example in nasm its enough to compile with -f
-> bin
-> nasm -f bin -o * *.asm )
-> 
-> Scund question is about closing and opening sections.
-> If forexample i want to change some thing in section i
-> have to create it with "w" index ... is it posible to
-> change this state inside section ? for example wfter
-> writing what i want to change i wont to close it ...
-> just for case ( interupt 125 do something like this ,
-> when i used it in .text section it didn'y made any
-> changes i mean if i try to write sometning iside i
-> recived segmentation error)
-> 
-> Lukas
+Hi.
+I've read hint in some magazine that if you are not
+using the same registers in following lines new
+procesor ( my is quite old PIII(coppermine)600Mhz )
+can make commands syumyltaniously ie:
 
-You can create bin file such way:
+mov %eax,%ebx
+mov %ecx,%edx
 
-as -o test.o test.s
-ld --oformat binary --omagic -Ttext 0x0 -o test test.o
+can be does allmost in the same time. i've check it by
+using extremly simple example:
 
-Where option -Ttext sets start of text section,
-for other linker's options - man ld
+movl $3,%ebx
+movl $3,%edx
+movl $0b111111111111111111111111111,%ecx
 
+loop:
+sall $2,%eax
+orl  %ebx,%eax
+sall $2,%edi
+orl  %edx,%edi
+   loop loop
+
+it works ( agains theorem from magazine ) faster then
+
+movl $3,%ebx
+movl $3,%edx
+movl $0b111111111111111111111111111,%ecx
+
+loop:
+sall $2,%eax
+sall $2,%edi
+orl  %ebx,%eax
+orl  %edx,%edi
+   loop loop
+
+so what is real answer ?
+Secund i'he allways trying not to use moemory becouse
+its extremly slow .
+
+nut again if i exchange walue between registers with
+using temporary memory:
+
+movl %eax,temp
+movl %ebx,%eax,
+movl temp,%ebx
+
+it works faster than:
+
+movl %eax,%edx
+movl %ebx,%eax,
+movl %edx,%ebx
+
+WHY? maybe linux is doing something in the mean time
+... ?
+
+amaizing hink is that 
+
+xchgl %eax,%ebx
+
+works slowest :) WHY ?
+
+I realy need time in my programs thats why i'm looking
+for any optimalization...
+
+Lukas
+ 
+
+__________________________________________________
+Do You Yahoo!?
+Tired of spam?  Yahoo! Mail has the best spam protection around 
+http://mail.yahoo.com 
