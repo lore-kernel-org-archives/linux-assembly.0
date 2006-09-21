@@ -1,33 +1,60 @@
-From: Robert Plantz <plantz@sonoma.edu>
-Subject: Re: hint?
-Date: Thu, 14 Sep 2006 16:19:09 -0700
-Message-ID: <4509E36D.3040701@sonoma.edu>
-References: <20060914195852.88791.qmail@web50313.mail.yahoo.com>
+From: Henio Paszczak <blurrpp@yahoo.com>
+Subject: Re:hinit?
+Date: Thu, 21 Sep 2006 10:59:59 -0700 (PDT)
+Message-ID: <20060921175959.94340.qmail@web50301.mail.yahoo.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <20060914195852.88791.qmail@web50313.mail.yahoo.com>
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Henio Paszczak <blurrpp@yahoo.com>, linux-assembly@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: linux-assembly@vger.kernel.org
 
-Boy, do I feel stupid. I've been writing assembly language
-using the gnu assembler for seven years and have even
-written a textbook about it. Although it is not the subject
-of this question, the example given:
+Thank You for answer ( sorry but i couldn't write
+earlier ). It explain me many things but i steel
+receive the same results:
 
-Henio Paszczak wrote:
->   -----------
-> movl $3,%ebx
-> movl $3,%edx
-> movl $0b111111111111111111111111111,%ecx
+1)Program which  uses the same registers one by one
+works 
+4% faster then when it uses different.
+
+> Second I've always trying not to use memory because
+> its extremely slow .
 >
->   ----------
-is the first time I learned that you can specify literals
-in binary. I always thought that you had to use the
-C syntax and express bit patterns in hexadecimal or
-octal.
+> nut again if i exchange value between registers with
+> using temporary memory:
+>
+> movl %eax,temp
+> movl %ebx,%eax,
+> movl temp,%ebx
+>
+> it works faster than:
+>
+> movl %eax,%edx
+> movl %ebx,%eax,
+> movl %edx,%ebx
+>
+> WHY? maybe linux is doing something in the mean time
+> ... ?
 
-On the plus side, I'm still eager to learn things.  :-)
+>Where did you get that result? On my machine, the
+>version using memory 
+>is 1.5x 
+>slower than register-only, as expected.
 
+I received this by 'time' command. It shows that
+program using only registers is about 16% slower then
+exchanging with memory. "Program" moves values 2^29
+times.( is there any way to check duration of program
+with less then 0.001s accuracy ? any clock in bios ? )
+
+Any way i'm steel looking for some hints that could
+make my programs work faster :).
+
+Lukas
+
+
+__________________________________________________
+Do You Yahoo!?
+Tired of spam?  Yahoo! Mail has the best spam protection around 
+http://mail.yahoo.com 
