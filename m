@@ -1,73 +1,45 @@
-From: Ed Reed <ed.reed@aesec.com>
-Subject: Question about entry.S RESTORE_REGS macro
-Date: Mon, 25 Sep 2006 12:26:38 -0400
-Message-ID: <4518033E.7080903@aesec.com>
+From: Henio Paszczak <blurrpp@yahoo.com>
+Subject: Re: Re:hinit?
+Date: Mon, 25 Sep 2006 12:23:13 -0700 (PDT)
+Message-ID: <20060925192313.86130.qmail@web50301.mail.yahoo.com>
+References: <1158870718.5334.30.camel@localhost>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-assembly-owner@vger.kernel.org>
+In-Reply-To: <1158870718.5334.30.camel@localhost>
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: linux-assembly@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: Robert Plantz <plantz@sonoma.edu>, linux-assembly@vger.kernel.org
 
-I'm looking at the entry / exit routines to the kernel in 
-arch/i386/kernel/entry.S, and at the entry conditions for 
-ret_from_fork() that is also defined there....
+Thank You for answer.
+Usually when I'm taking time duration of program i
+take average of about 20 running one by one ( i don;t
+count first one ).
+Any way it was said here that for example XCHG
+function is not under developing now. Where could I
+find list of such function ( i don't wont to check
+each one of them ;) ).
+Any way I've "lost" some time to check other very
+often used functions and i noticed that for example
+some times 'loop loop1' is slower then:
+loop1: 
+.
+.
+.
+decl %ecx
+jnz loop1
 
-And looking at the assembler macro defined at the top of the file, 
-RESTORE_REGS, I'm trying to figure out what the ELF section stuff is 
-doing there - have you a clue, or a pointer you give me as to whom to 
-ask?  I don't THINK it's relevant to my current efforts, but I'd like to 
-understand what's going on.
+but of course system is so complex that i should check
+every part of it to receive ( or not ) answer why.
+Now I'm going to buy Pentium D 805 and for sure i
+would like to learn how to use multi core system in
+'as' and I'm really pleased that I've found this
+forum.
 
-code:
+Lukas
 
-#define SAVE_ALL \
-       cld; \
-       pushl %es; \
-       pushl %ds; \
-       pushl %eax; \
-       pushl %ebp; \
-       pushl %edi; \
-       pushl %esi; \
-       pushl %edx; \
-       pushl %ecx; \
-       pushl %ebx; \
-       movl $(__USER_DS), %edx; \
-       movl %edx, %ds; \
-       movl %edx, %es;
-
-#define RESTORE_INT_REGS \
-       popl %ebx;      \
-       popl %ecx;      \
-       popl %edx;      \
-       popl %esi;      \
-       popl %edi;      \
-       popl %ebp;      \
-       popl %eax
-
-#define RESTORE_REGS    \
-       RESTORE_INT_REGS; \
-1:      popl %ds;       \
-2:      popl %es;       \
-.section .fixup,"ax";   \
-3:      movl $0,(%esp); \
-       jmp 1b;         \
-4:      movl $0,(%esp); \
-       jmp 2b;         \
-.previous;              \
-.section __ex_table,"a";\
-       .align 4;       \
-       .long 1b,3b;    \
-       .long 2b,4b;    \
-.previous
-
-
-The SAVE_ALL and RESTORE_INT_REGS seem pretty straight forward, but in 
-RESTORE_REGS, are the two section entries and labels creating relocation 
-entries for the popl %ds and %es instructions?
-
-Newbie question, I suppose, but that's the only think I can see that 
-would make sense, and don't know who else to ask.
-
-
+__________________________________________________
+Do You Yahoo!?
+Tired of spam?  Yahoo! Mail has the best spam protection around 
+http://mail.yahoo.com 
