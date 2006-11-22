@@ -1,29 +1,39 @@
-From: Jean-Yves Lamoureux <jylam@lnxscene.org>
+From: "A D" <a_d_249@hotmail.com>
 Subject: Re: GAS colorr pixel problem
-Date: Wed, 22 Nov 2006 20:49:44 +0100
-Message-ID: <4564A9D8.3010906@lnxscene.org>
-References: <BAY22-F21A1B6BB16CDD02A834E41F5E30@phx.gbl>	 <1164224036.5255.47.camel@ubuntu> <d9def9db0611221144l4a14d680w78f3252aba4b0afb@mail.gmail.com>
+Date: Wed, 22 Nov 2006 15:35:01 -0500
+Message-ID: <BAY22-F1312B3F9C90FB3DE9D1F8EF5E30@phx.gbl>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <d9def9db0611221144l4a14d680w78f3252aba4b0afb@mail.gmail.com>
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Markus Rechberger <mrechberger@gmail.com>
-Cc: Robert Plantz <plantz@sonoma.edu>, A D <a_d_249@hotmail.com>, linux-assembly@vger.kernel.org
+Content-Type: text/plain; format=flowed; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: linux-assembly@vger.kernel.org
 
-Markus Rechberger wrote:
-> jobs are just more rare in that area but they exist. 
+>Jean-Yves Lamoureux wrote:
+>gas is just an assembler. You can do whatever you want with an assembler, 
+>as every >single executed bit on your processor is the output of an 
+>assembler (ok purists, I just  > simplified).
+>"Filling a rectangle" means nothing. You have to draw something that will 
+>be >interpreted as a bunch of pixels having the sahpe of a rectangle. You 
+>can do that in >ascii (libcaca for example, http://libcaca.zoy.org ), or in 
+>graphic mode (SVGAlib, old as >hell but works on most PC cards, without X), 
+>X11 (which itself has dozen of low (xlib) >and high (sdl, ptc, gtk, qt, 
+>whatever) level libraries to do that).
 
-Real-time stuff, kernel development, heavy graphical proggies, and 
-everything that can be a bit system-related, security (anti-copy 
-protections, exploits, etc), reverse engeenering, etc etc. There is a 
-load of these, that's just hidden into the flood of java and .NET job 
-offers. That's quite cool, asm-aware people can get (well) paid for 
-doing (sometimes) interresting work ;)
+>I suggest you to learn how to call C-like functions (pushing arguments, 
+>calling function), >how to work with memory (lea, syscalls, brk, etc), then 
+>to use something like SDL for >example, which does most of the work for 
+>you.
 
--- 
-Jean-Yves Lamoureux
-Software Developper
+Thanks to all for your input. I guess it would be really difficult to color 
+pixels in assembly language. Can anyone tell me what steps are involved in 
+that(color pixels in assembly)? Just for my knowledge. Thanks.
+
+--STeve
+
+_________________________________________________________________
+Buy, Load, Play. The new Sympatico / MSN Music Store works seamlessly with 
+Windows Media Player. Just Click PLAY. 
+http://musicstore.sympatico.msn.ca/content/viewer.aspx?cid=SMS_Sept192006
 
