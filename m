@@ -1,37 +1,29 @@
-From: "Markus Rechberger" <mrechberger@gmail.com>
+From: Jean-Yves Lamoureux <jylam@lnxscene.org>
 Subject: Re: GAS colorr pixel problem
-Date: Wed, 22 Nov 2006 20:44:28 +0100
-Message-ID: <d9def9db0611221144l4a14d680w78f3252aba4b0afb@mail.gmail.com>
-References: <BAY22-F21A1B6BB16CDD02A834E41F5E30@phx.gbl>
-	 <1164224036.5255.47.camel@ubuntu>
+Date: Wed, 22 Nov 2006 20:49:44 +0100
+Message-ID: <4564A9D8.3010906@lnxscene.org>
+References: <BAY22-F21A1B6BB16CDD02A834E41F5E30@phx.gbl>	 <1164224036.5255.47.camel@ubuntu> <d9def9db0611221144l4a14d680w78f3252aba4b0afb@mail.gmail.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <1164224036.5255.47.camel@ubuntu>
-Content-Disposition: inline
+In-Reply-To: <d9def9db0611221144l4a14d680w78f3252aba4b0afb@mail.gmail.com>
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: Robert Plantz <plantz@sonoma.edu>
-Cc: A D <a_d_249@hotmail.com>, linux-assembly@vger.kernel.org
+To: Markus Rechberger <mrechberger@gmail.com>
+Cc: Robert Plantz <plantz@sonoma.edu>, A D <a_d_249@hotmail.com>, linux-assembly@vger.kernel.org
 
-On 11/22/06, Robert Plantz <plantz@sonoma.edu> wrote:
-> Given that everything ultimately resolves to assembly
-> language (try the -S gcc option when compiling), yes,
-> you can do graphics on the monitor.
->
-> On the other hand, I've been an assembly language programmer
-> for 30 years, and I would not even consider doing this
-> in assembly language. In my view, the main reason for
-> learning assembly language these days is to gain an
-> understanding of how computers actually work.
->
+Markus Rechberger wrote:
+> jobs are just more rare in that area but they exist. 
 
-depends, if you apply at Intel or AMD you might need it.. AMD is
-looking for people at the moment who have indepth knowledge about
-kernel development and who also know about ASM...
+Real-time stuff, kernel development, heavy graphical proggies, and 
+everything that can be a bit system-related, security (anti-copy 
+protections, exploits, etc), reverse engeenering, etc etc. There is a 
+load of these, that's just hidden into the flood of java and .NET job 
+offers. That's quite cool, asm-aware people can get (well) paid for 
+doing (sometimes) interresting work ;)
 
-jobs are just more rare in that area but they exist.
+-- 
+Jean-Yves Lamoureux
+Software Developper
 
-cheers,
-Markus
