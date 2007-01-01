@@ -1,41 +1,54 @@
 From: Claudio Fontana <sick_soul@yahoo.it>
-Subject: Re: AsmIDE release
-Date: Sun, 31 Dec 2006 18:42:10 -0800 (PST)
-Message-ID: <98987.86105.qm@web26002.mail.ukl.yahoo.com>
-References: <200612291808.00604.jko@bsn1.net>
+Subject: Re: GAS colorr pixel problem
+Date: Sun, 31 Dec 2006 18:36:41 -0800 (PST)
+Message-ID: <604042.9933.qm@web26005.mail.ukl.yahoo.com>
+References: <d93f04c70612311043m566927f5n37123b480668837c@mail.gmail.com>
 Mime-Version: 1.0
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <200612291808.00604.jko@bsn1.net>
+In-Reply-To: <d93f04c70612311043m566927f5n37123b480668837c@mail.gmail.com>
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: jeff <jko@bsn1.net>
+To: Hendrik Visage <hvjunk@gmail.com>
 Cc: linux-assembly@vger.kernel.org
 
-Hello Jeff,
 
---- jeff <jko@bsn1.net> wrote:
+Hello,
 
->  http://members.save-net.com/jko%40save-net.com/asm/
-> 
+--- Hendrik Visage <hvjunk@gmail.com> wrote:
 
-I'd like to point out a broken link from the opinion
-page:
+> I believe you'll
+> find code snippets etc. on using it inside Linux in
+> both SVGAlib and X, but
+> sometimes the "problem" might be that you'll need to
+> do a realmode BIOS call
+> (yuck) to get things initialized... correct me if
+> I'm wrong here...
 
-http://members.save-net.com/jko%40save-net.com/asm/opinion.htm
+Source code of SVGAlib shows how it is done.
 
-to the following address:
+>  SDL:
+> I'm sometimes surprised on how long this has
+> survived!! 
 
-http://members.save-net.com/jko%40save-net.com/asm/op_forecast.htm
+I am not. SDL is likely to stay.
+OpenGL is not a replacement for SDL, they are
+different things.
+You can use both, and typically this is what happens
+for graphic-intensive 3D games (for example
+Neverwinter Nights, or UT-200x).
 
-Or maybe you mean that the future for assembly is
-nowhere to be found ? ;)
+> However, X consists of a protocol (There is/was an
+> O'Reilly book out
+> in a series of X that described that protocol fairly
+> in depth...) 
+
+http://www.sbin.org/doc/Xlib/
 
 Happy new year,
 
 Claudio
-
 
 
 __________________________________________________
