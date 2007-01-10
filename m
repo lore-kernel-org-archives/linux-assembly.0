@@ -1,57 +1,36 @@
-From: Claudio Fontana <sick_soul@yahoo.it>
-Subject: Re: GAS colorr pixel problem
-Date: Sun, 31 Dec 2006 18:36:41 -0800 (PST)
-Message-ID: <604042.9933.qm@web26005.mail.ukl.yahoo.com>
-References: <d93f04c70612311043m566927f5n37123b480668837c@mail.gmail.com>
+From: Henio Paszczak <blurrpp@yahoo.com>
+Subject: literature for programming graphic card
+Date: Wed, 10 Jan 2007 09:23:21 -0800 (PST)
+Message-ID: <268310.40796.qm@web50301.mail.yahoo.com>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <d93f04c70612311043m566927f5n37123b480668837c@mail.gmail.com>
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Hendrik Visage <hvjunk@gmail.com>
-Cc: linux-assembly@vger.kernel.org
+To: linux-assembly@vger.kernel.org
+
+Hi.
+I'm looking for some good sources how to program
+graphics card in Linux does any body something like
+this :) ?
+
+By the way i want to ask two others question.
+
+First, I have Intel GMA 950 graphics card and i want
+to use SVGATextMode for it .. but i have no idea what
+chipset to use.
+
+Second, for three days I've Pentium D processor and,
+again , I'm looking for literature about programming
+two core, there is a lot of stuff in Internet but
+maybe some of You know something really good.
+
+Lukas
 
 
-Hello,
-
---- Hendrik Visage <hvjunk@gmail.com> wrote:
-
-> I believe you'll
-> find code snippets etc. on using it inside Linux in
-> both SVGAlib and X, but
-> sometimes the "problem" might be that you'll need to
-> do a realmode BIOS call
-> (yuck) to get things initialized... correct me if
-> I'm wrong here...
-
-Source code of SVGAlib shows how it is done.
-
->  SDL:
-> I'm sometimes surprised on how long this has
-> survived!! 
-
-I am not. SDL is likely to stay.
-OpenGL is not a replacement for SDL, they are
-different things.
-You can use both, and typically this is what happens
-for graphic-intensive 3D games (for example
-Neverwinter Nights, or UT-200x).
-
-> However, X consists of a protocol (There is/was an
-> O'Reilly book out
-> in a series of X that described that protocol fairly
-> in depth...) 
-
-http://www.sbin.org/doc/Xlib/
-
-Happy new year,
-
-Claudio
-
-
-__________________________________________________
-Do You Yahoo!?
-Poco spazio e tanto spam? Yahoo! Mail ti protegge dallo spam e ti da tanto spazio gratuito per i tuoi file e i messaggi 
-http://mail.yahoo.it 
+ 
+____________________________________________________________________________________
+Cheap talk?
+Check out Yahoo! Messenger's low PC-to-Phone call rates.
+http://voice.yahoo.com
