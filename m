@@ -1,12 +1,10 @@
 From: "Hendrik Visage" <hvjunk@gmail.com>
-Subject: Re: literature for programming graphic card
-Date: Sat, 13 Jan 2007 11:23:10 +0200
-Message-ID: <d93f04c70701130123i472901adpb0f1817fd3d8000@mail.gmail.com>
-References: <268310.40796.qm@web50301.mail.yahoo.com>
+Subject: CPU cores...
+Date: Mon, 15 Jan 2007 19:06:12 +0200
+Message-ID: <d93f04c70701150906k2ea921e4ub5bbfad462fedbf3@mail.gmail.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <268310.40796.qm@web50301.mail.yahoo.com>
 Content-Disposition: inline
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
@@ -14,29 +12,52 @@ Content-Type: text/plain; charset="us-ascii"; format="flowed"
 To: Henio Paszczak <blurrpp@yahoo.com>
 Cc: linux-assembly@vger.kernel.org
 
-On 1/10/07, Henio Paszczak <blurrpp@yahoo.com> wrote:
-> Hi.
-> I'm looking for some good sources how to program
-> graphics card in Linux does any body something like
-> this :) ?
+On 1/14/07, Henio Paszczak <blurrpp@yahoo.com> wrote:
 
-Source code would be the Xorg drivers and svgalib ;^P
-(See previous thread related to programming graphics,
-drawing lines etc.)
+> Thanks .. but i want to turn secund core alive, and i
+> don't know how. For example how to write program for
+> two cores .. first core is summing integers from memry
+> locations mem0-mem1, second core does the same but
+> with memory location (mem1+1)-mem2 ... , how to load
+> %eip register in second core and start it , and so one
+> .. :)
+> Lukas
 
+Well yeah....
 
-> Second, for three days I've Pentium D processor and,
-> again , I'm looking for literature about programming
-> two core, there is a lot of stuff in Internet but
-> maybe some of You know something really good.
+I'm going to explain from the Linux perspective AFAIK, and you
+can check the dmesg etc. output to confirm these.
 
-Refer to any text on SMP, threading, etc.
-It's the same things just now you have two cpus on the same
-silicon wafer enclosed and with pins added instead of one.
+When the kernel starts up, it will startup on (typically) CPU0 core0, ie. the
+first available CPU/core, as the BIOS etc. does that initialization, and since
+it is single threaded only, only a single cpu/core is "active" at that stage.
 
-At least in Linux/Solaris you shouldn't have issues as long as you do the right
-things to create the threads/processes that'll be distributed by the OS
-over the available CPUs/cores.
+The kernel then checks the ACPI (MPI??) and related information to
+see how many CPUs etc and then also checks the CPUs to see their
+capabilities. Once done (and SMP/HT/etc. is enabled in the kernel) the
+kernel will fire up and activae all those CPUs and their cores.
+
+Check /proc/cpuinfo for the info the kernel knows about.
+
+Then it's simple scheduling algorithms that the kernel makes decisions to decide
+which CPU/core gets which process that available to execute.
+
+So, your program  can't normally decide on which
+CPU/core what gets executed as it's a decision done by the kernel, and
+the kernel
+will also decide for how long your process will be on that specific CPU/core.
+
+Thus fore multi CPU and/or multi-core systems, the most generic (and
+usefull way)
+is to make use of threads/multiple processes and make use of kernel
+synchronization
+methods to sync between the seperate threads/processes.
+
+Okay, there are ways (given the Linux kernel supports it like the
+Solaris kernel does)
+that you could request the kernel to keep your process/thread on a
+specific CPU/cpuset
+for reasons related to better utilization of cache data etc.
 
 -- 
 Hendrik Visage
