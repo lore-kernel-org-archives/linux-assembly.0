@@ -1,78 +1,106 @@
-From: Joshua Roys <TheReader06@comcast.net>
-Subject: [Fwd: Re: Reading user input related question]
-Date: Wed, 21 Feb 2007 22:30:06 -0500
-Message-ID: <45DD0E3E.5030105@comcast.net>
+From: "Alok kataria" <alokkataria1@gmail.com>
+Subject: "Error: suffix or operands invalid for `push'" on 64bit boxes
+Date: Thu, 22 Feb 2007 17:20:23 +0530
+Message-ID: <35f686220702220350sa328106v6ad9f4a5e42f1dd7@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------030308040004010202020302"
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=IzZm+HadH1TeLaVoKhDoGaSjjDgM5+4khgyLX7ZeF4K3JaEOyrHvUda48DVHv8s0GuPxtnczTKLbqSjwGcDH5wN4tVqjrpXCBLfcq9KkrXRgpRqYzWXTt3f21O14TRs1AJfUAot10OxlZi8xFsHgPom40X+2mmx7R2ZQXVz2goM=
+Content-Disposition: inline
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
-To: linux-assembly@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: gcc@gcc.gnu.org, linux-assembly@vger.kernel.org
 
-This is a multi-part message in MIME format.
---------------030308040004010202020302
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Hi,
 
-Oops.  Forgot to 'reply all.'  Here's a copy for the list.
+I was trying some inline assembly with  gcc.
 
-Charles O'Neil wrote:
-> Hi! I am a newbie to gas and I want to know whether it is possible to
-> read input
-> from keyboard(after the enter key is pressed) using read syscall but
-> not using c function? if yes how this can be accomplished?
-> 
-> Thanks.
+Running the assembly program on 64 bit system ( with 64bit gcc
+version) gives errors of the form
 
-Yep.  I use nasm, but here's what I've got.
+/tmp/cc28kO9v.s: Assembler messages:
+/tmp/cc28kO9v.s:57: Error: suffix or operands invalid for `push'
 
-You're welcome!
+But the same thing on 32bit runs perfectly fine.
 
-Joshua Roys
+Here is the detailed report.
+-----------------------------------------------------
+Following is the program that i tried :
+
+/* The important part is the temp function */
 
 
---------------030308040004010202020302
-Content-Type: text/plain;
- name="test1.asm"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline;
- filename="test1.asm"
+#include <stdio.h>
 
-section .bss
-c	resb	1
+int f1 (int a)
+{
+        return a+5;
+}
 
-section .text
-	global _start
-
-_start:
-
-read_again:
-	mov	eax, 3		; sys_read for read() in eax.
-	mov	ebx, 0		; int    fd           in ebx. STDIN_FILENO = 0 in unistd.h
-	mov	ecx, c		; void * buf          in ecx
-	mov	edx, 1		; size_t count        in edx
-	int	80h		; syscall
-
-	test	eax, eax
-	jz	eof		; jump if zero (EOF)
-	js	error		; jump if signed
-
-	mov	edx, eax	; number of bytes read returned in eax, save in edx (should be 1)
-	mov	eax, 4		; sys_write for write() in eax.
-	mov	ebx, 1		; int         fd        in ebx. STDOUT_FILENO = 1 in unistd.h
-				; const void *buf       in ecx. still set from above.
-				; size_t      count     in edx.
-	int	80h		; syscall
-
-	jmp	read_again
-
-eof: ; we know eax is 0 (EOF), which is the success exit value..  so just use `error' to exit
-error:
-	mov	ebx, eax	; errno returned in eax, save in ebx
-	mov	eax, 1		; sys_exit for exit()
-				; errno in ebx
-	int	80h		; syscall
+void f2 (int lock, int a)
+{
+        printf("\nans = %d\n", lock + a);
+}
 
 
---------------030308040004010202020302--
+#define temp(lock) \
+        asm volatile (  " push $0\n\t" \
+                        " call f1\n\t" \
+                        " push %0\n\t" \
+                        " push %%eax\n\t" \
+                        " call f2\n\t" \
+                        " pop %%eax\n\t" \
+                        " pop %%eax\n\t" \
+                        " pop %%eax": : "r" (lock) : "memory", "%eax");
+
+
+int main ()
+{
+        int lock = 10;
+        temp (lock);
+        return 0;
+}
+----------------------------------------------------------------------------
+This compiles and works fine on a 32 bit system having
+
+$ gcc --version
+gcc (GCC) 4.1.1 20061011 (Red Hat 4.1.1-30)
+Copyright (C) 2006 Free Software Foundation, Inc.
+
+------------------------------------------------------------------------
+
+But running it on a 64 bit system gives me following errors
+
+$ gcc temp.c
+/tmp/cc28kO9v.s: Assembler messages:
+/tmp/cc28kO9v.s:57: Error: suffix or operands invalid for `push'
+/tmp/cc28kO9v.s:58: Error: suffix or operands invalid for `push'
+/tmp/cc28kO9v.s:60: Error: suffix or operands invalid for `pop'
+/tmp/cc28kO9v.s:61: Error: suffix or operands invalid for `pop'
+/tmp/cc28kO9v.s:62: Error: suffix or operands invalid for `pop'
+
+Gcc version on this box is
+$ gcc --version
+gcc (GCC) 4.1.0 (SUSE Linux)
+Copyright (C) 2006 Free Software Foundation, Inc.
+
+$ file `which gcc`
+/usr/bin/gcc: ELF 64-bit LSB executable, AMD x86-64, version 1 (SYSV),
+for GNU/Linux 2.6.4, dynamically linked (uses shared libs), for
+GNU/Linux 2.6.4, stripped
+
+I tried compiling this on a EM64t as well as on Opteron boxes and see
+the same problem.
+
+Is this a GCC problem, or anything wrong with my program.
+
+Please let me know,
+
+Thanks & Regards,
+Alok
+
+P.S. Please keep me cc'ed as i am not part of this list.
