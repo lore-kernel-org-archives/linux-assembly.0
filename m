@@ -1,90 +1,37 @@
-From: Andrew Haley <aph@redhat.com>
+From: "Richard Guenther" <richard.guenther@gmail.com>
 Subject: Re: "Error: suffix or operands invalid for `push'" on 64bit boxes
-Date: Thu, 22 Feb 2007 12:17:18 +0000
-Message-ID: <17885.35278.556527.153990@zebedee.pink>
+Date: Thu, 22 Feb 2007 13:23:51 +0100
+Message-ID: <84fc9c000702220423k22066ea1vcc629b74851ae931@mail.gmail.com>
 References: <35f686220702220350sa328106v6ad9f4a5e42f1dd7@mail.gmail.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-Return-path: <gcc-help-return-26820-gcc-help=m.gmane.org@gcc.gnu.org>
+Return-path: <gcc-return-134705-gcc=m.gmane.org@gcc.gnu.org>
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;         d=gmail.com; s=beta;         h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;         b=R1uKe/WT8N4LjTjb9fsWs+RXZNISJJKaPu4l+QsfKPoIhw1ksTcGIcIQPHy0BQYYnCF90kQmXsY1MK5dnzw84YIq4TcVbMoXOgbw74c6h7L2lvmZHCCqOoFkWfET8xJCkrmV+oQwQOWn4NLYv4m+sAcCin+MufCa+QfqrjTMero=
 In-Reply-To: <35f686220702220350sa328106v6ad9f4a5e42f1dd7@mail.gmail.com>
+Content-Disposition: inline
 List-Id: <linux-assembly.vger.kernel.org>
-List-Unsubscribe: <mailto:gcc-help-unsubscribe-gcc-help=m.gmane.org@gcc.gnu.org>
-List-Archive: <http://gcc.gnu.org/ml/gcc-help/>
-List-Post: <mailto:gcc-help@gcc.gnu.org>
-List-Help: <mailto:gcc-help-help@gcc.gnu.org>
-Sender: gcc-help-owner@gcc.gnu.org
-Content-Type: text/plain; charset="us-ascii"
+List-Unsubscribe: <mailto:gcc-unsubscribe-gcc=m.gmane.org@gcc.gnu.org>
+List-Archive: <http://gcc.gnu.org/ml/gcc/>
+List-Post: <mailto:gcc@gcc.gnu.org>
+List-Help: <http://gcc.gnu.org/ml/>
+Sender: gcc-owner@gcc.gnu.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
 To: Alok kataria <alokkataria1@gmail.com>
-Cc: gcc-help@gcc.gnu.org, linux-assembly@vger.kernel.org
+Cc: gcc@gcc.gnu.org, linux-assembly@vger.kernel.org
 
-[ redirect to gcc-help.  Not appropriate for gcc ]
+On 2/22/07, Alok kataria <alokkataria1@gmail.com> wrote:
+> Hi,
+>
+> I was trying some inline assembly with  gcc.
+>
+> Running the assembly program on 64 bit system ( with 64bit gcc
+> version) gives errors of the form
+>
+> /tmp/cc28kO9v.s: Assembler messages:
+> /tmp/cc28kO9v.s:57: Error: suffix or operands invalid for `push'
 
-Alok kataria writes:
- > Hi,
- > 
- > I was trying some inline assembly with  gcc.
- > 
- > Running the assembly program on 64 bit system ( with 64bit gcc
- > version) gives errors of the form
- > 
- > /tmp/cc28kO9v.s: Assembler messages:
- > /tmp/cc28kO9v.s:57: Error: suffix or operands invalid for `push'
- > 
- > But the same thing on 32bit runs perfectly fine.
- > 
- > Here is the detailed report.
- > -----------------------------------------------------
- > Following is the program that i tried :
- > 
- > /* The important part is the temp function */
- > 
- > 
- > #include <stdio.h>
- > 
- > int f1 (int a)
- > {
- >         return a+5;
- > }
- > 
- > void f2 (int lock, int a)
- > {
- >         printf("\nans = %d\n", lock + a);
- > }
- > 
- > 
- > #define temp(lock) \
- >         asm volatile (  " push $0\n\t" \
- >                         " call f1\n\t" \
- >                         " push %0\n\t" \
- >                         " push %%eax\n\t" \
- >                         " call f2\n\t" \
- >                         " pop %%eax\n\t" \
- >                         " pop %%eax\n\t" \
- >                         " pop %%eax": : "r" (lock) : "memory", "%eax");
- > 
- > 
- > int main ()
- > {
- >         int lock = 10;
- >         temp (lock);
- >         return 0;
- > }
+This is off topic here, please use gcc-help@gcc.gnu.org for this kind
+of questions.
+Your assembly statements are not valid 64bit asm but only work on 32bit.
 
-> I tried compiling this on a EM64t as well as on Opteron boxes and see
- > the same problem.
- > 
- > Is this a GCC problem, or anything wrong with my program.
-
-x86-64 has a different assembly langauge and a different ABI.
-
-On x86-64 your program should be written more like
-
-        xorl    %%edi, %%edi
-        call    f1
-        movl    %0, %%edi
-        movl    %%eax, %%esi
-        call    f2
- 
-with clobbers where appropriate.
-
-Andrew.
+Richard.
