@@ -1,41 +1,60 @@
-From: Robert Plantz <plantz@sonoma.edu>
-Subject: Re: cltq.
-Date: Wed, 14 Mar 2007 18:01:34 -0700
-Message-ID: <1173920494.5641.3.camel@ubuntu>
-References: <a3399010703141717s6e9568f8qe8ecdae35206a79e@mail.gmail.com>
+From: Henio Paszczak <blurrpp@yahoo.com>
+Subject: self modyfing code and GDT
+Date: Sun, 18 Mar 2007 04:41:21 -0700 (PDT)
+Message-ID: <739235.52208.qm@web50310.mail.re2.yahoo.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <a3399010703141717s6e9568f8qe8ecdae35206a79e@mail.gmail.com>
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: ninjaboy <n0b0dyn1nj4@gmail.com>
-Cc: linux-assembly@vger.kernel.org
+To: linux-assembly@vger.kernel.org
 
-I do not see this in my manual. So a google search turned up:
-http://gcc.gnu.org/ml/gcc/2007-01/msg00613.html, which says it's the
-same as the cdqe instruction.
+Hi.
+1) I want to write self modyfing code. I'm using 125
+finction (sys_mprotect )
 
-Perhaps I can anticipate your next question. cdqe converts the
-doubleword in eax to a quadword in rax with the same numerical value.
+.section .text
+    
+.global _start
+_start:
+	nop
+	movl $125,%eax
+	movl $smc_address,%ebx
+	movl $4096,%ecx
+	movl $7,%edx
+	int $0x80
+
+	orl  %eax, %eax
+	jnz .error	# if something wrong
+
+	movl $0xaabbccdd,smc_address
+
+	movl $0x0000000000,%eax
+.equ smc_address, .-4
+
+	# eax==0xaabbccdd
+
+ .error:
+	movl $1,%eax
+	movl $0,%ebx
+	int $0x80
+
+but it doesn't work ( %eax=0 ). 
+Is there any other way by changing segment descriptor
+in GDT ?, and how to do this ( i have no rights to
+write it ).
+
+2) How to read 8-bytes of segment descriptor, how to
+get current segment selector and the same question
+about task-state segment ( selector is easy to obtain
+by 'str' instruction )
+Thank You in advice for help
+Lukas
 
 
-On Thu, 2007-03-15 at 01:17 +0100, ninjaboy wrote:
-> hello,
-> what does cltq do?
-> 
-> 0x0000000000400500 <my_m+4>:    movl   $0x0,0xfffffffffffffffc(%rbp)
-> 0x0000000000400507 <my_m+11>:   jmp    0x40051b <my_m+31>
-> 0x0000000000400509 <my_m+13>:   mov    0xfffffffffffffffc(%rbp),%eax
-> 0x000000000040050c <my_m+16>:   mov    $0x4004e8,%edx
-> 0x0000000000400511 <my_m+21>:   cltq
-> 0x0000000000400513 <my_m+23>:   mov    %rdx,0xffffffffffffffa0(%rbp,%rax,8)
-> 0x0000000000400518 <my_m+28>:   incl   0xfffffffffffffffc(%rbp)
-> 0x000000000040051b <my_m+31>:   cmpl   $0xc,0xfffffffffffffffc(%rbp)
-> 0x000000000040051f <my_m+35>:   jle    0x400509 <my_m+13>
-> 
-> what compares?
-> Thanks in advance,
-
-
+ 
+____________________________________________________________________________________
+Finding fabulous fares is fun.  
+Let Yahoo! FareChase search your favorite travel sites to find flight and hotel bargains.
+http://farechase.yahoo.com/promo-generic-14795097
