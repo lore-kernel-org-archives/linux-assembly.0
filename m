@@ -1,30 +1,17 @@
-From: "A D" <a_d_249@hotmail.com>
-Subject: Re: Question regarding EIP instruction pointer
-Date: Fri, 30 Mar 2007 10:29:48 -0400
-Message-ID: <BAY133-F973CAE742E785B38E9E08F5630@phx.gbl>
-References: <20070330135823.GA5129@wintermute.farpoint>
+From: Reggie Cushing <reggie.cushing@um.edu.mt>
+Subject: Assembly $0f
+Date: Fri, 30 Mar 2007 16:43:10 +0200
+Message-ID: <460D21FE.50909@um.edu.mt>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <20070330135823.GA5129@wintermute.farpoint>
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; format=flowed; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: leslie.polzer@gmx.net
-Cc: linux-assembly@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: linux-assembly@vger.kernel.org
 
-leslie.polzer wrote:
->In order to execute the current instruction, the CPU must determine its
->format, which also means finding out how many bytes the command takes.
->
->Next command is at eip+sizeof(command).  Of course, this only holds for
->subsequent execution, branching is another thing.
+Hi All - what does $0f actually stand for in such and expression movl 
+$0f , %eax
 
-Thanks for your insight. You mentioned the process is different for 
-branching.                     Is it possible to explain a little(I'm a bit 
-curious)?
-
-_________________________________________________________________
-Your Space. Your Friends. Your Stories. Share your world with Windows Live 
-Spaces. http://spaces.live.com/?mkt=en-ca
-
+Regards
+R.
