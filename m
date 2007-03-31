@@ -1,29 +1,21 @@
-From: Brian Raiter <breadbox@muppetlabs.com>
+From: "A D" <a_d_249@hotmail.com>
 Subject: Re: Question regarding EIP instruction pointer
-Date: Fri, 30 Mar 2007 09:55:52 -0800
-Message-ID: <17933.20264.343127.500858@eidolon.muppetlabs.com>
-References: <BAY133-F35089BE38C90DC5E52C15CF5630@phx.gbl>
+Date: Fri, 30 Mar 2007 23:24:51 -0400
+Message-ID: <BAY133-F5FA3A7753138C04327E81F5620@phx.gbl>
+References: <873AB473-8332-49C7-9612-FF6357FCD5CD@ticino.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <BAY133-F35089BE38C90DC5E52C15CF5630@phx.gbl>
+In-Reply-To: <873AB473-8332-49C7-9612-FF6357FCD5CD@ticino.com>
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; format=flowed; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: linux-assembly@vger.kernel.org
 
-> I know that EIP register is the instruction pointer. But how does it
-> know how many bytes it needs to increment to the next instruction?
+Thank to you all for taking time to answer my question. I really appreciate 
+it. I got my answer from all of your replies. Again thanks.
 
-It doesn't "know", per se. The processor simply decodes the current
-instruction. As the instruction is unpacked, it fetches bytes from
-memory as they are called for. When it's done, the EIP register will
-be pointing at the next instruction.
+_________________________________________________________________
+RealLiveMoms: Share your experience with Real Live Moms just like you 
+http://www.reallivemoms.ca/
 
-Of course, the above description is only notional. With the highly
-parallel processing that goes on in the Pentium family of processors,
-there is special circuitry whose job it is to pull instructions out of
-memory ahead of time and prepare them for decoding. This circuitry
-knows just enough about each instruction to work out how long it is.
-
-b
