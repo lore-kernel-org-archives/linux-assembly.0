@@ -1,58 +1,46 @@
-From: "A D" <a_d_249@hotmail.com>
-Subject: Re: why overflow flag being set?
-Date: Fri, 20 Apr 2007 13:04:02 -0400
-Message-ID: <BAY133-F49FF3CABD01881240286AF5560@phx.gbl>
-References: <1177087941.4688.28.camel@localhost>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: [PATCH 2.6.21.1] i386: save registers before intra-privilege
+ syscall
+Date: Thu, 17 May 2007 15:16:42 -0700
+Message-ID: <464CD44A.5000307@zytor.com>
+References: <20070517220638.GA6532@localhost.localdomain>
 Mime-Version: 1.0
-Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <1177087941.4688.28.camel@localhost>
-Sender: linux-assembly-owner@vger.kernel.org
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1761323AbXEQWRM@vger.kernel.org>
+In-Reply-To: <20070517220638.GA6532@localhost.localdomain>
+Sender: linux-kernel-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; format=flowed; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: plantz@sonoma.edu
-Cc: linux-assembly@vger.kernel.org
+Content-Type: text/plain; charset="windows-1252"
+To: Philipp Kohlbecher <pk031698@uni-greifswald.de>
+Cc: Dave Jones <davej@codemonkey.org.uk>, Arnd Bergmann <arnd@arndb.de>, linux-kernel@vger.kernel.org, linux-assembly@vger.kernel.org
 
->Robert Plantz wrote:
->The range of 8-bit, signed number is -128 -> +127. There is no +128. But
->there is (unsigned) 128. Unfortunately, the assembler doesn't know this.
->When you wrote movb $128, %bl, it blindly used the bit pattern 0x80 for
->128, which is the bit pattern for (signed) -128. The bit pattern for 127
->is 0x7f.
->
->The addb instruction sets both the carry flag and the overflow flag
->according to the results of the addition. In 8-bit addition (in hex):
->       0x80 + 0x0a = 0x8a      CF = 0   OF = 0
->       0x7f + 0x0a = 0x89      CF = 0   OF = 1
->
->In signed decimal this is
->       -128 + 10 = -118   ==> correct arithmetic
->        127 + 10 = -119   ==> incorrect arithmetic
->
->If your program were using unsigned values, the range of 8-bit numbers
->is 0 -> 255.
->In unsigned decimal this is
->        128 + 10 = 138   ==> correct arithmetic
->        127 + 10 = 137   ==> correct arithmetic
->
->The bit patterns (expressed in hex here) are the same. If your program
->is treating them as signed values, you should test the overflow flag. If
->they are being treated as unsigned, look at the carry flag.
->
->This illustrates the importance of using the "unsigned" keyword in C/C++
->where appropriate. Assembly language has no concept of "type." You have
->to take care of that in your code.
->
->Good news: You can do whatever the hardware is capable of in assembly
->language.
->
->Bad news: You have to do it.
+Philipp Kohlbecher wrote:
+> From: Philipp Kohlbecher <pk031698@uni-greifswald.de>
+>=20
+> The kernel_execve function issues a software interrupt (int 0x80) to =
+make
+> a system call to sys_execve. This function expects to find the stack =
+segment
+> and stack pointer of the function that issued the system call in the =
+pt_regs
+> struct. The syscall entry code that sets up this struct expects the s=
+tack
+> segment and the stack pointer of the issuing function already on the =
+stack.
+> But the Intel processor saves these registers only if a stack-switch =
+occurs,
+> i.e. for inter-privilege interrupts and exceptions (cf. Intel Softwar=
+e
+> Developer=E2=80=99s Manual, Vol. 3A, p. 5-17,
+> http://www.intel.com/design/processor/manuals/253668.pdf).
+> For an intra-privilege interrupt like the one issued in kernel_execve=
+, these
+> registers must be saved manually.
+>=20
 
+Could you describe the failure scenario this causes?  I'm trying to
+understand how something that fundamental would have possibly slipped b=
+y
+testing?
 
-
-Thanks for the comprehensive explanation. That answers my question.
-
-_________________________________________________________________
-Find the best places on campus to get take out, study & unwind 
-http://www.liveu.ca/explore.aspx
-
+	-hpa
