@@ -1,32 +1,33 @@
-From: "Saurabh Rawat" <rsaurabh@ti.com>
-Subject: Re: USB
-Date: Thu, 7 Jun 2007 15:35:45 +0300 (EAT)
-Message-ID: <44260.192.168.10.89.1181219745.squirrel@dbdmail.itg.ti.com>
-References: <eoOiOX4L.1181217177.5114330.makita@blava.net>
+From: "A D" <a_d_249@hotmail.com>
+Subject: Re: Segment override and lldt instruction
+Date: Sun, 10 Jun 2007 20:33:03 -0400
+Message-ID: <BAY133-F2621988146A83572C34FFBF51A0@phx.gbl>
+References: <d93f04c70706041652k3be549bs8140489a8abbe0b6@mail.gmail.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <eoOiOX4L.1181217177.5114330.makita@blava.net>
+In-Reply-To: <d93f04c70706041652k3be549bs8140489a8abbe0b6@mail.gmail.com>
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: makita@blava.net
+Content-Type: text/plain; format=flowed; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: hvjunk@gmail.com, fbkotler@verizon.net
 Cc: linux-assembly@vger.kernel.org
 
-> join www.forums.microchip.com
-under analog ang PIC interfaces you will find a lot of good links, suggestions
-and peoples.
-Regards
-Saurabh
-> Hi,
-> i want to know somthing abou USB device programing. Which book or links
-> do you advice my?
+>>Frank Kotler wrote:
+>>In "Linux assembly", there is no reason you'd *want* to use a segment
+>>override, or alter a segment register.
 >
-> Thanks
-> -
-> To unsubscribe from this list: send the line "unsubscribe linux-assembly" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
+>Hendrik Visage wrote:
+>Not while your program and/or data space  fits in 4GB of memory space ;)
 
+So please correct my understanding if i'm wrong: it is not possible
+or necessary to override segment register in protected mode but one can do
+the same thing in real mode. right? So if answer is yes, and if more than 
+4GB
+of memory space is needed for a program how will segmentation register go
+beyond 4gig without override?
+
+_________________________________________________________________
+Windows Live Hotmail. Even hotter than before. Get a better look now. 
+www.newhotmail.ca?icid=WLHMENCA148
 
