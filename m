@@ -1,37 +1,27 @@
-From: A D <a_d_249@hotmail.com>
-Subject: Problem:Embed C code in GAS language file
-Date: Thu, 13 Sep 2007 08:09:33 -0400
-Message-ID: <BAY133-W8664E2A629FE17C826D19F5C30@phx.gbl>
+From: "Jack Andrews" <effbiae@gmail.com>
+Subject: getting at raw command line
+Date: Thu, 13 Sep 2007 22:18:50 +1000
+Message-ID: <2cf50a010709130518m78231c2fla98997a3a7b5c9fc@mail.gmail.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7BIT
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=ykEd3SDOt+6F51b71lPUcWvPg6XfCDbPZ97dhIJe34Y=;
+        b=XEKbyLsf2oO/BS7iikb5K1x3m6M8e+gBrVBM6XGBzvqjzlMwOG8UdeJkfPDDJ1rvzaIJRCDgAi0vSLT8CvKyDc2aXj5HOBsORG9VC8ytt77t5BujfF0Hif27bHb+4cIc7iLB2zKZZufQOLl8ch6rso35ITXQdmJv9/Q9iSBjE+8=
+Content-Disposition: inline
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 To: linux-assembly@vger.kernel.org
 
+hi there,
 
-I saw Gnu C code embedded in gnu assembly file. I've a simple code like below:
+is there a way to get the raw text that eventually gets cooked to
+argc/argv?  is there any portable way?
 
-.section .data
-int i = 1;
-
-.section .text
-.globl main
-main:
-   nop
-   movl $2, i
-   movl $1, %eax
-   movl $0, %ebx
-   int  $0x80
+ta,
 
 
-But when i try to compile with gcc -c i get the message:
-
-test1.s: Assembler messages:
-test1.s:2: Error: invalid character '=' in operand 1
-
-Am i missing something obvious? Thanks.
-_________________________________________________________________
-Explore the seven wonders of the world
-http://search.msn.com/results.aspx?q=7+wonders+world&mkt=en-US&form=QBRE
+jack
