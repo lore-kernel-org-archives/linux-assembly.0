@@ -1,27 +1,47 @@
-From: "Jack Andrews" <effbiae@gmail.com>
-Subject: getting at raw command line
-Date: Thu, 13 Sep 2007 22:18:50 +1000
-Message-ID: <2cf50a010709130518m78231c2fla98997a3a7b5c9fc@mail.gmail.com>
+From: Lukas <blurrpp@yahoo.com>
+Subject: Re: getting at raw command line
+Date: Thu, 13 Sep 2007 06:50:22 -0700 (PDT)
+Message-ID: <422014.8649.qm@web50303.mail.re2.yahoo.com>
+References: <2cf50a010709130518m78231c2fla98997a3a7b5c9fc@mail.gmail.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-assembly-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=ykEd3SDOt+6F51b71lPUcWvPg6XfCDbPZ97dhIJe34Y=;
-        b=XEKbyLsf2oO/BS7iikb5K1x3m6M8e+gBrVBM6XGBzvqjzlMwOG8UdeJkfPDDJ1rvzaIJRCDgAi0vSLT8CvKyDc2aXj5HOBsORG9VC8ytt77t5BujfF0Hif27bHb+4cIc7iLB2zKZZufQOLl8ch6rso35ITXQdmJv9/Q9iSBjE+8=
-Content-Disposition: inline
+In-Reply-To: <2cf50a010709130518m78231c2fla98997a3a7b5c9fc@mail.gmail.com>
 Sender: linux-assembly-owner@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 To: linux-assembly@vger.kernel.org
 
-hi there,
+I don't know if i understand your question ... every
+command line arguments you pass to program in Linux,
+are left on the stack ( actualy they are pointers to
+asciz strings )
 
-is there a way to get the raw text that eventually gets cooked to
-argc/argv?  is there any portable way?
+Lukas
 
-ta,
+--- Jack Andrews <effbiae@gmail.com> wrote:
+
+> hi there,
+> 
+> is there a way to get the raw text that eventually
+> gets cooked to
+> argc/argv?  is there any portable way?
+> 
+> ta,
+> 
+> 
+> jack
+> -
+> To unsubscribe from this list: send the line
+> "unsubscribe linux-assembly" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at 
+> http://vger.kernel.org/majordomo-info.html
+> 
 
 
-jack
+
+       
+____________________________________________________________________________________
+Boardwalk for $500? In 2007? Ha! Play Monopoly Here and Now (it's updated for today's economy) at Yahoo! Games.
+http://get.games.yahoo.com/proddesc?gamekey=monopolyherenow  
