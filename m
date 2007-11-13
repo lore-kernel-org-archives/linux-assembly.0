@@ -1,7 +1,7 @@
-From: Lope De Vega <lope.vega@yahoo.com>
-Subject: what is faster offsets or pointers?
-Date: Tue, 23 Oct 2007 08:05:58 -0700 (PDT)
-Message-ID: <924619.21958.qm@web45503.mail.sp1.yahoo.com>
+From: Liam Prange <oasisbhrnw99@yahoo.com>
+Subject: Trouble Creating File
+Date: Tue, 13 Nov 2007 04:58:04 -0800 (PST)
+Message-ID: <394554.37517.qm@web45114.mail.sp1.yahoo.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7BIT
 Return-path: <linux-assembly-owner@vger.kernel.org>
@@ -10,24 +10,44 @@ List-Id: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 To: linux-assembly@vger.kernel.org
 
-Hello,
+Hi all,
 
-If having a memory block (a contigous region) so it
-can also be treated as a vector, what would be faster?
+I am new to assembly language and I am having trouble
+writing a program that creates a file.  The file does
+get created, however, the program always causes a
+segmentation fault.  The program is called "test" and
+you give the name of the file you wish to create as an
+argument, like so:  ./test create.txt
 
-  * accesing parts of such a region through
-scale/base/index (offsets)
+..section .data
+..section .bss
+..lcomm BUFFER, 500
+..section .text
+..globl _start
+_start:
+  
+  movl %esp, %ebp  #setup for referencing the stack
+  
+  #Open/Create the file we are writing to
+  movl $5, %eax
+  movl 8( %ebp ), %ebx
+  movl $03101, %ecx
+  movl $0666, %edx
+  int $0x80
+  movl ( %eax ), %ebx    #save the fd
 
-  * by using pointers.
+  #close the file
+  movl $6, %eax
+  int $0x80
 
-My bet is that offsets perform better.
+Can anyone help me out as to why I am getting the
+segmentation fault?
 
-Regards,
+Robert
 
 
-
-__________________________________________________
-Do You Yahoo!?
-Tired of spam?  Yahoo! Mail has the best spam protection around 
-http://mail.yahoo.com 
+      ____________________________________________________________________________________
+Get easy, one-click access to your favorites. 
+Make Yahoo! your homepage.
+http://www.yahoo.com/r/hs 
 
