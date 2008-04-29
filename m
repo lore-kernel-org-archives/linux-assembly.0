@@ -1,7 +1,7 @@
 From: Bodo Giannone <Bodo@Giannone.de>
 Subject: init.asm - 0.03 (19-Jun-2002) - asmutils 0.18
-Date: Tue, 29 Apr 2008 17:36:13 +0200
-Message-ID: <4817406D.5000605@Giannone.de>
+Date: Tue, 29 Apr 2008 18:08:34 +0200
+Message-ID: <48174802.1040104@Giannone.de>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
