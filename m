@@ -1,36 +1,39 @@
-From: Steffen Solyga <solyga@absinth.net>
-Subject: Re: Help finding ARGC
-Date: Tue, 27 Nov 2007 22:12:47 +0100
-Message-ID: <20071127211247.GB4634@absinth.net>
-References: <320520.11054.qm@web45102.mail.sp1.yahoo.com> <3a8eab9b0711150156u71d15753u39ce9d8332de64e0@mail.gmail.com>
+From: Bodo Giannone <Bodo@Giannone.de>
+Subject: init.asm - 0.03 (19-Jun-2002) - asmutils 0.18
+Date: Tue, 29 Apr 2008 17:36:13 +0200
+Message-ID: <4817406D.5000605@Giannone.de>
 Mime-Version: 1.0
-Return-path: <linux-assembly-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <3a8eab9b0711150156u71d15753u39ce9d8332de64e0@mail.gmail.com>
-Sender: linux-assembly-owner@vger.kernel.org
-List-Id: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: linux assembly <linux-assembly@vger.kernel.org>
-Cc: Mike Osipov <mike.osipov@gmail.com>
+Return-path: <linux-assembly-owner@vger.kernel.org>
+Sender: linux-assembly-owner@vger.kernel.org
+List-ID: <linux-assembly.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: linux-assembly@vger.kernel.org
 
-maybe you want to have a look at this one
-http://linux.xulin.de/asm/cmdline/
+Hello,
 
-Citing Mike Osipov (Thursday, 2007/11/15 12:56)...
+I am the maintainer of BG-Tiny Linux Bootdisk.
 
-> in the beginning of execution %esp point to argc value
-> get it: movl (%esp), %eax
-> or: popl %eax
-> Now %eax contains argc value
-> -
-> To unsubscribe from this list: send the line "unsubscribe linux-assembly" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+The tiny init version included in asmutils-0.18 (init.asm 0.03,
+19-Jun-2002) is exactly what I was looking for to integrate into BG-Tiny
+Linux Bootdisk. Unfortunately I am havging some problems I cannot
+resolve myself due to lacking assembler skills.
 
--- 
-------------------------------------
-Steffen Solyga
-mail: solyga@absinth.net
-www : http://www.absinth.net/solyga/
-------------------------------------
+I want to start /bin/sh on tty1-4 without using getty or login.
+Unfortunately directly after booting I get the following error message:
+"can't access tty, job control turned off". This could mean that init
+does not activate the ttys completely. Is there a possibility to change
+that?
+
+The sh I am using is ash from BusyBox 1.3.2. If I try to use sh.asm from
+asmutils-0.18 I only get a segfault.
+
+I am using linux kernel 2.4.36.2 and uClibc 0.9.27 (linked statically).
+
+It would be great if someone had a suggestion.
+
+Many thanks in andvance.
+
+Greetings,
+
+Bodo Giannone
