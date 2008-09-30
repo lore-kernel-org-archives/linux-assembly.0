@@ -1,123 +1,62 @@
-From: Frederic Marmond <fmdp@free.fr>
-Subject: Re: questions about linux termios
-Date: Mon, 14 Jul 2008 20:38:36 +0200
-Message-ID: <200807142038.36967.fmdp@free.fr>
-References: <d6b7c4190807140808p718c7ea9je4269e2f64304d04@mail.gmail.com>
+From: Kircsi Tibor <tkircsi@gmail.com>
+Subject: Current break round up
+Date: Tue, 30 Sep 2008 21:26:24 +0200
+Message-ID: <1222802784.8421.10.camel@kirilla-desktop>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Return-path: <linux-console-owner@vger.kernel.org>
-In-Reply-To: <d6b7c4190807140808p718c7ea9je4269e2f64304d04@mail.gmail.com>
-Content-Disposition: inline
-Sender: linux-console-owner@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+Return-path: <linux-assembly-owner@vger.kernel.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:subject:from:to:content-type
+         :date:message-id:mime-version:x-mailer:content-transfer-encoding;
+        bh=kvwFAsKni2KZF2dY7lOzCvjB2J7+KJJzdeR2yNSiENc=;
+        b=ufjXoBfUFpc4wk01Plc+sRWjrfokAWUUvstNDSmPYmQdfWCU5JLu+gy9HrHk6LdV+K
+         4o7VmIluIj3wCEF60z6zzrUkd6WnfHtL0rrCoMQX9J4Qjhmw9a4OgaO5lmujL/q7qcMV
+         EXpAI6L1Ss5/UNf59OKcQYzK0M8T31CodyQFs=
+Sender: linux-assembly-owner@vger.kernel.org
 List-ID: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
-To: pei lin <telent998@gmail.com>
-Cc: linux-console@vger.kernel.org, linux-assembly@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+To: linux-assembly@vger.kernel.org
 
-Hi,=20
-first question:
-/dev/tty is the CURRENT terminal, wherever you are, and tty0 is the fir=
-st one.
-So, echo "foobar" > /dev/tty will always display "foobar" on your curre=
-nt=20
-terminal.
-second question: no time right now, maybe latter...
+Hi,
 
-=46red
+Sorry for my english. I started learn assembly again after 15 years.
+Now, I'm learning about memory management and sys_brk system call. I've
+created a really simple program, which try to extend the heap size. I've
+read, when sys_brk is called with the new break address(last usable
+address of the heap or data segment), it will be rounded up to the next
+nearest page, but it didn't. Am I misundestand somthing?
 
-Le Monday 14 July 2008 =E0 17:08, pei lin a =E9crit=A0:
-> Hi,buddy
->   I am puzzled by the linux termios.
->    First Question about /dev/tty0 and /dev/tty,this two devices is
-> the same one?
->    When i am in X terminal,as /dev/pts/0 , i do "echo hello >
-> /dev/pts/0 and echo hello > /dev/tty ", they return the same like tha=
-t
-> "hello" on the screen .This means /dev/tty ->/dev/pts/0? But "echo
-> hello > /dev/tty0",there is nothing on the screen.And when i go to
-> Init 3 mode ,like /dev/tty1,when i do "echo hello > /dev/tty1 and ech=
-o
-> hello > .dev/tty and echo hello > /dev/tty0" ,They return the same al=
-l
-> print hello on the screen.Do they all point to the /dev/tty1?
->
->    The second Question is that i write a small program to get
-> keyboard input like below.When i run it in X terminal ,when i press
-> keyboard it can return but can not get the press and release event.An=
-d
-> in the console,like tty1,it doesn't work .i don't know why.
->
-> file : get_keyboard.c
->
-> #include <stdio.h>
-> #include <linux/keyboard.h>
-> #include <sys/ioctl.h>
-> #include <fcntl.h>
-> #include <linux/kd.h>
-> #include <termios.h>
-> #include <unistd.h>
-> int main()
-> {
->        int fd,len,i;
->        struct kbentry entry;
->        unsigned char buf[64];
->        struct termios  ts,old_ts;
->        char * path;
->        path =3D ttyname(0);
->        printf("%s!\n",path);
->        fd =3D open(path, O_RDONLY|O_NOCTTY);
->        if(fd < 0){
->                printf("open the device error!\n");
->        }
->
->        printf("fd --- %d!\n",fd);
->
->        if (ioctl( fd, KDSKBMODE, K_RAW ) < 0) {
->                        printf("set mode wrong!\n");
->        }
->
->
->        tcgetattr( fd, &old_ts );
->
->
->           ts =3D old_ts;
->     ts.c_cc[VTIME] =3D 0;
->     ts.c_cc[VMIN] =3D 1;
->     ts.c_lflag &=3D ~(ICANON|ECHO|ISIG);
->     ts.c_iflag =3D 0;
->     tcsetattr( fd, TCSAFLUSH, &ts );
->
->     tcsetpgrp( fd, getpgrp() );
->
->
->           entry.kb_table =3D K_NORMTAB;
->     entry.kb_value =3D 0;
->
->        while(1){
->                len=3Dread(fd,buf,64);
->        printf("len =3D=3D=3D=3D=3D=3D=3D=3D=3D %d!\n",len);
->                for(i =3D0; i < len;i++){
->                        entry.kb_index =3D buf[i];
->                        if(ioctl(fd,KDGKBENT,&entry)){
->                        printf("struct entry :%d %d
-> %d\n",entry.kb_table,entry.kb_index,entry.kb_value);
->                        if('2' =3D=3D entry.kb_index){
->                                tcsetattr( fd, TCSAFLUSH, &old_ts );
->                                exit(0);
->                           }
->                        }
->                                      }
->                }
-> }
-> --
-> To unsubscribe from this list: send the line "unsubscribe linux-assem=
-bly"
-> in the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+# meminf.s
+# 2008.09.25.
+# PURPOSE: Test current_break address round up at sys_brk call
+
+.include "../sharedlibs/linux.s"
+
+.section .text
+        .globl  _start
+_start:
+        movl    %esp, %ebp
+
+        movl    $0, %ebx                # %ebx = 0, get the current
+curret_break
+        movl    $SYS_BRK, %eax
+        int     $INT                    # %eax = address of
+current_break
+
+        addl    $0x1002, %eax           # add 4098 to current
+current_break
+        movl    %eax, %ebx              # %ebx = the address of the new
+current_break
+        movl    $SYS_BRK, %eax
+        int     $INT
+
+        movl    $0, %ebx                # set the return value of the
+program
+        movl    $SYS_EXIT, %eax
+        int     $INT
+
+regards,
+Kiri
 
 
---
-To unsubscribe from this list: send the line "unsubscribe linux-console=
-" in
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
