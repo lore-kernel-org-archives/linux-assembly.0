@@ -1,62 +1,52 @@
-From: Kircsi Tibor <tkircsi@gmail.com>
-Subject: Current break round up
-Date: Tue, 30 Sep 2008 21:26:24 +0200
-Message-ID: <1222802784.8421.10.camel@kirilla-desktop>
+From: "Tibor Kircsi" <tkircsi@gmail.com>
+Subject: Re: Current break round up
+Date: Wed, 1 Oct 2008 16:40:42 +0200
+Message-ID: <c12f7eca0810010740q2836fe8fi9142a1aad59cbbd@mail.gmail.com>
+References: <1222802784.8421.10.camel@kirilla-desktop>
+	 <48E37E93.3080101@verizon.net>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:subject:from:to:content-type
-         :date:message-id:mime-version:x-mailer:content-transfer-encoding;
-        bh=kvwFAsKni2KZF2dY7lOzCvjB2J7+KJJzdeR2yNSiENc=;
-        b=ufjXoBfUFpc4wk01Plc+sRWjrfokAWUUvstNDSmPYmQdfWCU5JLu+gy9HrHk6LdV+K
-         4o7VmIluIj3wCEF60z6zzrUkd6WnfHtL0rrCoMQX9J4Qjhmw9a4OgaO5lmujL/q7qcMV
-         EXpAI6L1Ss5/UNf59OKcQYzK0M8T31CodyQFs=
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=fxcWiu+m90mKPcVl2VtKaPPHK2tY1UrJRs8VxKhS2os=;
+        b=d9+u7p5F7q8nJPH2xbCYjnphEAkSipoYBd9rq4e0k2a5g56Xgfo8oaRaAJ0Wi+EmLa
+         UAAdC7R/5Y9LZdGA8um6LIlWe/oFgzIrw6zNGydoFONG4REJ2t5IHlzMaVpa95Iej8y+
+         S15rgLEXS8UoVrOS6K0G2+OBUBQIsi70tYvbE=
+In-Reply-To: <48E37E93.3080101@verizon.net>
+Content-Disposition: inline
 Sender: linux-assembly-owner@vger.kernel.org
 List-ID: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: linux-assembly@vger.kernel.org
+To: Frank Kotler <fbkotler@verizon.net>
+Cc: linux-assembly@vger.kernel.org
 
 Hi,
 
-Sorry for my english. I started learn assembly again after 15 years.
-Now, I'm learning about memory management and sys_brk system call. I've
-created a really simple program, which try to extend the heap size. I've
-read, when sys_brk is called with the new break address(last usable
-address of the heap or data segment), it will be rounded up to the next
-nearest page, but it didn't. Am I misundestand somthing?
-
-# meminf.s
-# 2008.09.25.
-# PURPOSE: Test current_break address round up at sys_brk call
-
-.include "../sharedlibs/linux.s"
-
-.section .text
-        .globl  _start
-_start:
-        movl    %esp, %ebp
-
-        movl    $0, %ebx                # %ebx = 0, get the current
-curret_break
-        movl    $SYS_BRK, %eax
-        int     $INT                    # %eax = address of
-current_break
-
-        addl    $0x1002, %eax           # add 4098 to current
-current_break
-        movl    %eax, %ebx              # %ebx = the address of the new
-current_break
-        movl    $SYS_BRK, %eax
-        int     $INT
-
-        movl    $0, %ebx                # set the return value of the
-program
-        movl    $SYS_EXIT, %eax
-        int     $INT
+You're right! I tested it and I could write and read above the current
+break after I call brk. I'll will test the page border too. Thanks.
 
 regards,
-Kiri
+Tibor
 
-
+On Wed, Oct 1, 2008 at 3:43 PM, Frank Kotler <fbkotler@verizon.net> wrote:
+>
+> Kircsi Tibor wrote:
+>>
+>> Hi,
+>>
+>> Sorry for my english. I started learn assembly again after 15 years.
+>> Now, I'm learning about memory management and sys_brk system call. I've
+>> created a really simple program, which try to extend the heap size. I've
+>> read, when sys_brk is called with the new break address(last usable
+>> address of the heap or data segment), it will be rounded up to the next
+>> nearest page, but it didn't. Am I misundestand somthing?
+>
+> I've noticed this. Seems to be related to kernel version (2.4.33.3 here). May be a "bug"? I think you can access memory up to the top of the page (what you/we would "expect" brk to return). I don't know what to make of it.
+>
+> Best,
+> Frank
+>
