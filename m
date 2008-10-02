@@ -1,120 +1,170 @@
-From: "Tibor Kircsi" <tkircsi@gmail.com>
-Subject: Re: Current break round up
-Date: Thu, 2 Oct 2008 09:27:07 +0200
-Message-ID: <c12f7eca0810020027y39937992oa5c39242597668eb@mail.gmail.com>
-References: <1222802784.8421.10.camel@kirilla-desktop>
-	 <48E37E93.3080101@verizon.net>
-	 <61990392562924881677723846250054653396-Webmail2@me.com>
-	 <48E3BFF0.6060900@verizon.net>
-	 <1222887805.9248.15.camel@kirilla-desktop>
-	 <48E3DD31.5030300@verizon.net>
+From: Frank Kotler <fbkotler@verizon.net>
+Subject: Nasm 2.05rc1 released
+Date: Thu, 02 Oct 2008 14:41:20 -0400
+Message-ID: <48E515D0.1010500@verizon.net>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=yhqZLVntV3sbIWHd6doHBaSyejIWJjTDu44bendBd/g=;
-        b=W4tkg+atf1uB61yDArq9gWLXTPYmArCppXdK/10Ihme+Dyh4aJ0Hi/paz3dQbMEtqv
-         yTxkEKvqAvh3AelYvHxFWYr4zk+uXpZo6jDFb8TyVkGeV4eB3G1A9iqFIsG9mUkVI3Z2
-         dyLmU9MkGK1lgpaj+0hNSGRDqFqs4+YrFAYis=
-In-Reply-To: <48E3DD31.5030300@verizon.net>
-Content-Disposition: inline
 Sender: linux-assembly-owner@vger.kernel.org
 List-ID: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: Frank Kotler <fbkotler@verizon.net>
-Cc: linux-assembly@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: linux-assembly@vger.kernel.org
 
-Hi Frank,
+Nasm 2.05rc1 is available at SourceForge.
 
-Thanks. I think, I understand. But, It is a question yet, it is a bug
-or by design, that sys_brk doesn't round up current break to page
-boundary. I'll try and inspect how sys_mmap works.
+<http://sourceforge.net/project/showfiles.php?group_id=6208>
 
-Thanks for your suggestion.
+Alternate (new!!!) address:
 
-regards,
-Tibor
+http://www.nasm.us/
 
-On Wed, Oct 1, 2008 at 10:27 PM, Frank Kotler <fbkotler@verizon.net> wrote:
-> Kircsi Tibor wrote:
->>
->> Hi,
->>
->> I may have misunderstood what you wrote, but I took a probe: (debugged
->> with cgdb)
->>
->> .include "../sharedlibs/linux.s"
->>
->> .section .text
->>        .globl  _start
->> _start:
->>        movl    %esp, %ebp
->>
->>        # 1st brk call
->>        movl    $0, %ebx                # %ebx = 0, get the current
->> curret_break
->>        movl    $SYS_BRK, %eax
->>        int     $INT                    # %eax = address of
->> current_break
->>
->>        # 2nd brk call
->>        addl    $0x1002, %eax           # add 4098 to current
->> current_break
->>        movl    %eax, %ebx              # %ebx = the address of the new
->> current_break
->>        movl    $SYS_BRK, %eax
->>        int     $INT
->>
->>        # 3rd brk call
->>        movl    $0, %ebx
->>        movl    $SYS_BRK, %eax
->>        int     $INT
->>
->>        # 4th brk call
->>        movl    $SYS_BRK, %eax
->>        int     $INT
->>
->>        # 5th brk call
->>        movl    $SYS_BRK, %eax
->>        int     $INT
->>
->>        # sys_exit
->>        movl    $0, %ebx                # set the return value of the
->> program
->>        movl    $SYS_EXIT, %eax
->>        int     $INT
->>
->> addresses:
->> 1st - 0x8049000 it's OK, because linux loads programs into the 0x8048000
->> virtual address space, so this is the first page
->> 2nd - 0x804a002 not aligned to 0x804b000
->> 3rd - 0x804a002 same
->> 4th - same
->> 5th - same
->>
->> That's ok, after the 2nd brk I just always ask for the current break
->> with %ebx = 0. So, it seems unaligned return after the 4th call too.
->
-> Hi Tibor,
-> (sorry I called you "Kircsi")
-> I didn't mean that sys_brk aligned itself "automatically" by repeated calls.
-> I ASSume that, unseen in the "strace" output, %ebx is being aligned "by
-> hand" to a page boundary before that last sys_brk.
->
->>> Randall Hyde wrote:
->
-> BTW, Randy, I ASSumed that you intended to reply to the list. Ya gotta hit
-> "reply all" or it goes just to the sender...
->
-> I don't disagree that sys_mmap (or sys_mmap2?) is a better bet for
-> allocating memory, but it isn't much use for "exploring" sys_brk...
->
-> Best,
-> Frank
->
->
->
+I failed to get 2.04rc2 through 2.04rc6 up at SourceForge, and as a 
+result of not enough testing, 2.04 turned out to *not* be a "candidate" 
+after all. :(
+
+We hope our users will help us test this "release candidate" so it 
+doesn't happen again! Partial changelog follows. (this is now Appendix C 
+in the Nasm Manual)
+
+Best,
+Frank
+
+  C.1.1 Version 2.05
+
+        (*) Fix redundant REX.W prefix on `JMP reg64'.
+
+        (*) Make the behaviour of `-O0' match NASM 0.98 legacy behavior. See
+            section 2.1.22.
+
+        (*) `-w-user' can be used to suppress the output of `%warning'
+            directives. See section 2.1.24.
+
+        (*) Fix bug where `ALIGN' would issue a full alignment datum instead
+            of zero bytes.
+
+        (*) Fix offsets in list files.
+
+        (*) Fix `%include' inside multi-line macros or loops.
+
+  C.1.2 Version 2.04
+
+        (*) Sanitize macro handing in the `%error' directive.
+
+        (*) New `%warning' directive to issue user-controlled warnings.
+
+        (*) `%error' directives are now deferred to the final assembly
+            phase.
+
+        (*) New `%fatal' directive to immediately terminate assembly.
+
+        (*) New `%strcat' directive to join quoted strings together.
+
+        (*) New `%use' macro directive to support standard macro directives.
+            See section 4.6.4.
+
+        (*) Excess default parameters to `%macro' now issues a warning by
+            default. See section 4.3.
+
+        (*) Fix `%ifn' and `%elifn'.
+
+        (*) Fix nested `%else' clauses.
+
+        (*) Correct the handling of nested `%rep's.
+
+        (*) New `%unmacro' directive to undeclare a multi-line macro. See
+            section 4.3.10.
+
+        (*) Builtin macro `__PASS__' which expands to the current assembly
+            pass. See section 4.11.9.
+
+        (*) `__utf16__' and `__utf32__' operators to generate UTF-16 and
+            UTF-32 strings. See section 3.4.5.
+
+        (*) Fix bug in case-insensitive matching when compiled on platforms
+            that don't use the `configure' script. Of the official release
+            binaries, that only affected the OS/2 binary.
+
+        (*) Support for x87 packed BCD constants. See section 3.4.7.
+
+        (*) Correct the `LTR' and `SLDT' instructions in 64-bit mode.
+
+        (*) Fix unnecessary REX.W prefix on indirect jumps in 64-bit mode.
+
+        (*) Add AVX versions of the AES instructions (`VAES'...).
+
+        (*) Fix the 256-bit FMA instructions.
+
+        (*) Add 256-bit AVX stores per the latest AVX spec.
+
+        (*) VIA XCRYPT instructions can now be written either with or
+            without `REP', apparently different versions of the VIA spec
+            wrote them differently.
+
+        (*) Add missing 64-bit `MOVNTI' instruction.
+
+        (*) Fix the operand size of `VMREAD' and `VMWRITE'.
+
+        (*) Numerous bug fixes, especially to the AES, AVX and VTX
+            instructions.
+
+        (*) The optimizer now always runs until it converges. It also runs
+            even when disabled, but doesn't optimize. This allows most
+            forward references to be resolved properly.
+
+  C.1.3 Version 2.03.01
+
+        (*) Fix buffer overflow in the listing module.
+
+        (*) Fix the handling of hexadecimal escape codes in `...` strings.
+
+        (*) The Postscript/PDF documentation has been reformatted.
+
+        (*) The `-F' option now implies `-g'.
+
+  C.1.4 Version 2.03
+
+        (*) Add support for Intel AVX, CLMUL and FMA instructions, including
+            YMM registers.
+
+        (*) `dy', `resy' and `yword' for 32-byte operands.
+
+        (*) Fix some SSE5 instructions.
+
+        (*) Intel `INVEPT', `INVVPID' and `MOVBE' instructions.
+
+        (*) Fix checking for critical expressions when the optimizer is
+            enabled.
+
+        (*) Support the DWARF debugging format for ELF targets.
+
+        (*) Fix optimizations of signed bytes.
+
+        (*) Fix operation on bigendian machines.
+
+        (*) Fix buffer overflow in the preprocessor.
+
+        (*) `SAFESEH' support for Win32, `IMAGEREL' for Win64 (SEH).
+
+        (*) `%?' and `%??' to refer to the name of a macro itself. In
+            particular, `%idefine keyword $%?' can be used to make a keyword
+            "disappear".
+
+        (*) New options for dependency generation: `-MD', `-MF', `-MP',
+            `-MT', `-MQ'.
+
+        (*) New preprocessor directives `%pathsearch' and `%depend'; INCBIN
+            reimplemented as a macro.
+
+        (*) `%include' now resolves macros in a sane manner.
+
+        (*) `%substr' can now be used to get other than one-character
+            substrings.
+
+        (*) New type of character/string constants, using backquotes
+            (``...`'), which support C-style escape sequences.
+
+        (*) `%defstr' and `%idefstr' to stringize macro definitions before
+            creation.
+
+        (*) Fix forward references used in `EQU' statements.
+
