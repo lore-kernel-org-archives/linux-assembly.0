@@ -1,72 +1,53 @@
-From: Frederic Marmond <fmarmond@gmail.com>
+From: Robert Plantz <plantz@sonoma.edu>
 Subject: Re: Passing parameters to assembler functions in 'C' 64 style.
-Date: Thu, 4 Dec 2008 21:55:30 +0100
-Message-ID: <200812042155.30433.fmarmond@gmail.com>
+Date: Thu, 04 Dec 2008 12:54:18 -0800
+Message-ID: <1228424058.5690.31.camel@bob-desktop>
 References: <5360.11799.qm@web50303.mail.re2.yahoo.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-assembly-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=2/r/2cGotEHc2puSi9rq2jzRt2FGHJxYMpSb9nJcm1s=;
-        b=XoGTlF2/CEsXTu+TVbU3/dgw7YG+uhNgrW9dNoip/CChfrplzlFlGiLzm4ZHNX9TjJ
-         0uOUUAokbONltKlvrs6DFhTKJudCjkaVccHqoTiM+P9uDayCF2ru0xCOLGU6iH23qFqh
-         k3bkYHZ9Wt2LWB7Te4fWDdBp4Yw2R1NTiyPQI=
 In-Reply-To: <5360.11799.qm@web50303.mail.re2.yahoo.com>
-Content-Disposition: inline
 Sender: linux-assembly-owner@vger.kernel.org
 List-ID: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="iso-8859-1"
 To: blurrpp@yahoo.com
 Cc: linux-assembly@vger.kernel.org
 
-Hi Luke,
+You need the AMD64 Application Binary Interface (v0.99) available at
 
-maybe this document may answer your question:
-http://www.x86-64.org/documentation/abi.pdf
+http://www.x86-64.org/documentation.html
 
-Have a particular look to section 3.2
+In particular, see Figure 3.4 on page 21.
 
-=46red
+Pay attention to the use of rax. The default for floating point in
+x88-64 is the SSE unit. If a function will accept floating point
+arguments (for example, printf) the number of floating point arguments
+must be placed in eax. Write a C program that calls printf and use the
+-S option to see the assembly language.
 
-Le Thursday 04 December 2008 =E0 21:20, =A3ukasz a =E9crit :
-> Hi.
+A good way to see what the compiler is doing to C code is to use the
+following options:
+$ gcc -O0 -g -Wa,-adhls -fno-asynchronous-unwind-tables \
+> myProg.c > myProg.lst
+
+(I added the "\" here to avoid confusing word wrapping.)
+
+Bob
+
+On Thu, 2008-12-04 at 12:20 -0800, =C2=A3ukasz wrote:
+> Hi.=20
 > I started to write assembler functions for C on 64-bit arch. On 32-bi=
-t
-> arch. every parameters ware put on stack, now is different, what can =
-be
-> easyly seen reading source program. For example if im passing one (in=
-t *)
-> parameter, adress (&int) is kept in %rdi register, and so one if u ar=
-e
-> passing more parameters. Ofcurse is not dificult to use it if u know =
-but is
-> there any key according to which parameters are stored?. I've made so=
-me
-> "experiments" with different numbers and kind parameters, but the "ke=
-y"
-> must be described somewhere.
->
+t arch. every parameters ware put on stack, now is different, what can =
+be easyly seen reading source program. For example if im passing one =20
+> (int *) parameter, adress (&int) is kept in %rdi register, and so one=
+ if u are passing more parameters. Ofcurse is not dificult to use it if=
+ u know but is there any key according to which parameters are stored?.=
+ I've made some "experiments" with different numbers and kind parameter=
+s, but the "key" must be described somewhere.
+>=20
 > Luke
->
->
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe linux-assem=
-bly"
-> in the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
 
 
---=20
-DeepSee project, few links:
-web: http://www.sand-labs.org/deepsee
-blog: http://fmarmond.blogspot.com/search/label/DeepSee
-twitt: http://twitter.com/fmarmond
-IRC: #deepsee on freenode
 --
 To unsubscribe from this list: send the line "unsubscribe linux-assembl=
 y" in
