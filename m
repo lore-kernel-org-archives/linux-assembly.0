@@ -1,62 +1,60 @@
-From: =?iso-8859-1?Q?=A3ukasz?= <blurrpp@yahoo.com>
-Subject: Re: Passing parameters to assembler functions in 'C' 64 style.
-Date: Thu, 4 Dec 2008 13:22:42 -0800 (PST)
-Message-ID: <957934.50030.qm@web50312.mail.re2.yahoo.com>
-References: <5360.11799.qm@web50303.mail.re2.yahoo.com>
-Reply-To: blurrpp@yahoo.com
+From: jeff <linuxasm@gmail.com>
+Subject: XasmTools Announcement
+Date: Sat, 13 Dec 2008 11:54:35 -0700
+Message-ID: <200812131054.35662.linuxasm@gmail.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <5360.11799.qm@web50303.mail.re2.yahoo.com>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:mime-version:content-disposition:message-id:content-type
+         :content-transfer-encoding;
+        bh=Fq1kv096nfTeJqPSkJ74dgVvNGnIqDDTkrfczkz0eoI=;
+        b=fxnqogOWhOH20hloQFIoqsIpiqxNckOMdktY1C1HVuGZiFViTRvZYaUD4pb87l6CaH
+         WV9nmjkgFJzNDGlGLAG1Tzumt3T374MSRLZpcF5CN9+p5hba4WDoEH8Avq1Rb+O8F3EW
+         TNUXnPFXJQlrQ4+kJNZcZZVc18Egt3LqITCR4=
+Content-Disposition: inline
 Sender: linux-assembly-owner@vger.kernel.org
 List-ID: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
+Content-Type: text/plain; charset="us-ascii"
 To: linux-assembly@vger.kernel.org
 
 
-Thank You for answers. It helps a lot ( of course i chacked what gcc is=
- doing with -S option, but i haven't enough time to chack what compiler=
- would do witch ex. 1000 parameters of different kinds( if there exist =
-some body who would wants to create such function, without using for ex=
-=2E struc ;)), so i guess that there must be a 'key'). Any way thanks t=
-o U i have some clue.
-
-Luke
-
---- On Thu, 12/4/08, =A3ukasz <blurrpp@yahoo.com> wrote:
-
-> From: =A3ukasz <blurrpp@yahoo.com>
-> Subject: Passing parameters to assembler functions in 'C' 64 style.
-> To: linux-assembly@vger.kernel.org
-> Date: Thursday, December 4, 2008, 9:20 PM
-> Hi.=20
-> I started to write assembler functions for C on 64-bit
-> arch. On 32-bit arch. every parameters ware put on stack,
-> now is different, what can be easyly seen reading source
-> program. For example if im passing one =20
-> (int *) parameter, adress (&int) is kept in %rdi
-> register, and so one if u are passing more parameters.
-> Ofcurse is not dificult to use it if u know but is there any
-> key according to which parameters are stored?. I've made
-> some "experiments" with different numbers and kind
-> parameters, but the "key" must be described
-> somewhere.
->=20
-> Luke
->=20
->=20
->      =20
-> --
-> To unsubscribe from this list: send the line
-> "unsubscribe linux-assembly" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at=20
-> http://vger.kernel.org/majordomo-info.html
+Announce: XasmTools
+  XasmTools http://linuxasmtools.net/x web site has completed its
+  first testing milestone.  All programs are still beta, but
+  improving.
 
 
-     =20
---
-To unsubscribe from this list: send the line "unsubscribe linux-assembl=
-y" in
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Site Description:
+  XasmTools is devoted to 32-bit Linux assembler programming
+  for the X server.
+
+  This site is a few months old and growing, more reference
+  material is planned.
+
+Programs Available:
+
+    asmbug-0.9.57.tar.gz - debugger for x/terminal programs
+    asmlibx-0.9.46.tar.gz - library for x server communication
+    tracex-0.9.03.tar.gz - tool to trace x xerver calls
+    xhelper-0.9.07.tar.gz - desktop automation tool
+
+
+Web Site Contents:
+  The web site is organized as follows:
+  
+  whats new 
+  programs
+  libraries
+  downloads
+  tutor
+  about
+  links
+
+
+Links:
+  http://LinuxAsmTools.net/x
+  http://DesktopLinuxAsm@yahoogroups.com
+
