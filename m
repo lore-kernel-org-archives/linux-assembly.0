@@ -1,68 +1,59 @@
-From: ramregar <ram@ramregar.com>
-Subject: correct use of mfence
-Date: Fri, 27 Feb 2009 15:07:01 -0800 (PST)
-Message-ID: <22256244.post@talk.nabble.com>
+From: jeff <linuxasm@gmail.com>
+Subject: LinuxAsmTools Announcement
+Date: Sat, 7 Mar 2009 12:15:22 -0800
+Message-ID: <200903071215.23043.linuxasm@gmail.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:mime-version:content-disposition:message-id:content-type
+         :content-transfer-encoding;
+        bh=1cG4jdyoMEk501f+Pu0vUk8b4cFcXjVrEhqL0+LYTPc=;
+        b=lyM13nQbgLsOZHyrDYxpbGbdkNUSaGZ1qV6aRBTJFpexnNHUYq0liEZFk9mgG839Ci
+         vpcDjuEO5wz2/roarL83d80s41sQh3gEO9XGgmZiR3tp9SH47CiHwkN6E5gFownAvth/
+         Upw8d9fncfPw3sIyMQaHnDdO4TBC0Tw6AT/wQ=
+Content-Disposition: inline
 Sender: linux-assembly-owner@vger.kernel.org
 List-ID: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 To: linux-assembly@vger.kernel.org
 
+Announcement
+------------
 
-Hi,
+The http://LinuxAsmTools.net web site now has
+two new releases:
 
-I am writting atomic inc/dec/cas operations in assembly.
+ AsmIDE - IDE (integrated development Environmnet)
+ AsmLib_tutor - tutorial for library AsmLib
 
-increment64(__int64* value, int val)
-{
-         __int64* temp = &val;
-            _asm
-          {
-    push    edi
-    push    ebx
-                mov edi, pValue
-                mov eax, [edi]
-                mov edx, [edi+4]
-           again:
-                mov ecx, edx
-                mov ebx, eax
-                add ebx, 1
-                adc ecx, 0
-                mfence
-                lock cmpxchg8b [edi]
-                mfence
-                jnz again
-                mov eax, temp
-                mov [eax], ebx
-                mov [eax+4], ecx
-                pop     ebx
-                pop     edi
-           }
-}
+AsmIDE includes a editor,debugger,reference,library,
+and compile assistant.  When a new source file is
+created, it provides a template to edit.  It has
+support for as,nasm,yasm, and fasm.  
 
-Requirement is that it should work on single and multi-core
-hardwares.
+The old development IDE's are still available
+as follows:
+  AsmFile - file manager for assembler coders
+  AsmMgr - older file manager for assembler coders
+  AsmEdit - Editor for assembler coding
 
-1. Use of mfence is not clear to me. So I temporarily put mfence
-before and after cmpxchg8b. I am looking for correct use of mfence
-opcode in this context. I would like to know how many lines mfence
-serializes before its use.
-MFENCE:
-This serializing operation guarantees that every load and store
-instruction that precedes in program order the MFENCE instruction is
-globally visible before any load or store instruction that follows the
-MFENCE instruction is globally visible
+AsmLib_tutor is a new tutorial for AsmLib. the
+tutorial includes example programs and descriptions.
+The library (AsmLib) has grown to over 800 functions
+and needed a tutorial.
 
-2. If i use mfence then also i need to use lock opcode before
-cmpxchg8b?
+Also, most utilities at http://LinuxAsmTools.net have
+been updated.  AsmLib library now has about 800
+functions, and the AsmFile (file manager) has been
+extended.  Most utilities have bug fixes.
 
-What is the correct use of mfence in above assembly code.
 
-Thanks,
-Ram
--- 
-View this message in context: http://www.nabble.com/correct-use-of-mfence-tp22256244p22256244.html
-Sent from the linux-assembly mailing list archive at Nabble.com.
+
+
+Links:
+  http://LinuxAsmTools.net
+  http://DesktopLinuxAsm@yahoogroups.com
 
