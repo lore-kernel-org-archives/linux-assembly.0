@@ -1,25 +1,25 @@
 From: =?utf-8?B?wqN1a2Fzeg==?= <blurrpp@yahoo.com>
 Subject: Re: Appendix: multithreating HOWTO ? :)
-Date: Sun, 23 Aug 2009 09:17:59 -0700 (PDT)
-Message-ID: <203349.81852.qm@web50309.mail.re2.yahoo.com>
+Date: Sun, 23 Aug 2009 12:13:26 -0700 (PDT)
+Message-ID: <807013.28805.qm@web50302.mail.re2.yahoo.com>
 References: <2c04dc350908230823uf1eb9a0t34bbcf611fa2e5b1@mail.gmail.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-assembly-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s1024; t=1251044279; bh=FeNeuR/+9S0ONnBM277VsHnht40RXRF33CtuYcWfSKU=; h=Message-ID:X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding; b=mbFpy27Jm45K5lXEjrJD78udLRf/uBOVhpIVX6P1zz2md21EGYqXNlTR9kot2REd67RMpG0wcOIASVr5nLOGI7n6JuK7lfzWD4s5h9kNVkr4yhCKvcBiUxMhTgRb3X0rN4tts2GpV6rfMiIfU/C1uXoq8S2IzK9n2Ztks4yePCI=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s1024; t=1251054806; bh=LnSEInCdt9Vu3S+KTjFw/orvXrn/D/g40JU5SRW1tgY=; h=Message-ID:X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding; b=vDsHCQw+au1ja+wUyRW7zWjl80+F1oRu7ldQTGNS2N4PdwGXnwVQ0IUnA0qBfKSkb/k3yc1CtGkbI0oExL9Tb8D69csvcp6frdWUEKN+Ru/joV44J16s42lplIeQyCJ4UjyBdK05gKDdHw2D3hCb6OzTPV0ubrQAYx/RX72rjQU=
 In-Reply-To: <2c04dc350908230823uf1eb9a0t34bbcf611fa2e5b1@mail.gmail.com>
 Sender: linux-assembly-owner@vger.kernel.org
 List-ID: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="utf-8"
 To: linux-assembly@vger.kernel.org
 
-thanks for answer, im experiment with system clone ( actualy fork i fou=
-nd in many manuals ) but i dont understand Frakns last sentence
-"Well, they *told* us not to do it that way. :)", to program multiproce=
-ses with fork ? Any way is there any way to make share memory for proce=
-ses ?
+more info for example.
 
-Lukas
+http://stackoverflow.com/questions/807506/threads-vs-processes-in-linux
+
+as u see with litle work i can create process (fork) from thread (clone=
+), i have to make some changes in systme tables etc. now need to read l=
+ittle more kernel sys call source.
 
 --- On Sun, 8/23/09, Claudio Fontana <claudio.fontana@gmail.com> wrote:
 
@@ -65,12 +65,6 @@ Lukas
 > I am still on good old 32bit. On 64 bit system call numbers
 > are indeed
 > completely different.
-> --
-> To unsubscribe from this list: send the line "unsubscribe
-> linux-assembly" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at=C2=A0 http://vger.kernel.org/majordomo-info.ht=
-ml
 >=20
 
 
