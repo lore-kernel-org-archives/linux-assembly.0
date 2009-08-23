@@ -1,74 +1,66 @@
-From: =?utf-8?B?wqN1a2Fzeg==?= <blurrpp@yahoo.com>
+From: Frank Kotler <fbkotler@zytor.com>
 Subject: Re: Appendix: multithreating HOWTO ? :)
-Date: Sun, 23 Aug 2009 12:13:26 -0700 (PDT)
-Message-ID: <807013.28805.qm@web50302.mail.re2.yahoo.com>
-References: <2c04dc350908230823uf1eb9a0t34bbcf611fa2e5b1@mail.gmail.com>
+Date: Sun, 23 Aug 2009 15:18:48 -0400
+Message-ID: <4A919618.5020107@zytor.com>
+References: <203349.81852.qm@web50309.mail.re2.yahoo.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Return-path: <linux-assembly-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s1024; t=1251054806; bh=LnSEInCdt9Vu3S+KTjFw/orvXrn/D/g40JU5SRW1tgY=; h=Message-ID:X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding; b=vDsHCQw+au1ja+wUyRW7zWjl80+F1oRu7ldQTGNS2N4PdwGXnwVQ0IUnA0qBfKSkb/k3yc1CtGkbI0oExL9Tb8D69csvcp6frdWUEKN+Ru/joV44J16s42lplIeQyCJ4UjyBdK05gKDdHw2D3hCb6OzTPV0ubrQAYx/RX72rjQU=
-In-Reply-To: <2c04dc350908230823uf1eb9a0t34bbcf611fa2e5b1@mail.gmail.com>
+In-Reply-To: <203349.81852.qm@web50309.mail.re2.yahoo.com>
 Sender: linux-assembly-owner@vger.kernel.org
 List-ID: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="utf-8"
-To: linux-assembly@vger.kernel.org
+Content-Type: text/plain; charset="iso-8859-1"; format="flowed"
+To: =?ISO-8859-1?Q?=A3ukasz?= <blurrpp@yahoo.com>
+Cc: linux-assembly@vger.kernel.org
 
-more info for example.
+=A3ukasz wrote:
+> thanks for answer, im experiment with system clone ( actualy fork i f=
+ound in many manuals ) but i dont understand Frakns last sentence
+> "Well, they *told* us not to do it that way. :)", to program multipro=
+ceses with fork ? Any way is there any way to make share memory for pro=
+ceses ?
 
-http://stackoverflow.com/questions/807506/threads-vs-processes-in-linux
+Just a "joke". I meant, using the int 80h (or syscall) interface. We're=
+=20
+"supposed" to use the C interface.
 
-as u see with litle work i can create process (fork) from thread (clone=
-), i have to make some changes in systme tables etc. now need to read l=
-ittle more kernel sys call source.
+Like Claudio, I'm a "32-bit guy" - and I don't know how to do=20
+multithreading even on 32-bit. But I think if you're going to use 64-bi=
+t=20
+registers, you'll have to use 64-bit sys_call numbers, put the=20
+parameters in regs compatible with the 64-bit ABI, and use "syscall"=20
+instead of "int 0x80". I don't think what you're doing will work, but=20
+I'm not equipped to try it.
 
---- On Sun, 8/23/09, Claudio Fontana <claudio.fontana@gmail.com> wrote:
+You can share memory between processes by memmapping a region and=20
+flagging it MAP_SHARED (sys_fork or even separate executables). I=20
+*think* for threads, you'd want sys_clone, and all memory would be=20
+shared(?). I think your issue is going to be keeping your threads from=20
+read/writing the same memory at the same time. I'm a "single CPU guy",=20
+too, but I think multi-CPU is going to be "even worse".
 
-> From: Claudio Fontana <claudio.fontana@gmail.com>
-> Subject: Re: Appendix: multithreating HOWTO ? :)
-> To: "Frank Kotler" <fbkotler@zytor.com>
-> Cc: "=C2=A3ukasz" <blurrpp@yahoo.com>, linux-assembly@vger.kernel.org
-> Date: Sunday, August 23, 2009, 5:23 PM
-> On Sun, Aug 23, 2009 at 5:04 PM,
-> Frank Kotler<fbkotler@zytor.com>
-> wrote:
-> > Claudio Fontana wrote:
-> >>
-> >> =C5=81ukasz wrote:
-> >>>
-> >>> in appendix i want to just precize problem.
-> Broblem is how to write,
-> >>> create etc, shared memory for parent and child
-> proceses, where they could
-> >>> for example exchange wariables
-> >>
-> >> You are using fork. Fork is used to create new
-> processes.
-> >> You probably want clone instead, to create new
-> threads and specify
-> >> which resources to share between the two threads.
-> >>
-> >> man 2 clone
-> >>
-> >> sys_clone is 120 (0x78).
-> >
-> > Is that a 64-bit sys_call number? I thought they'd
-> changed that on us.
-> > AFAIK, __NR_clone is 56 these days... and "syscall"
-> replaces int 0x80. A
-> > real "curve ball" to asm programmers! Well, they
-> *told* us not to do it that
-> > way. :)
-> >
-> > Best,
-> > Frank
->=20
-> I am still on good old 32bit. On 64 bit system call numbers
-> are indeed
-> completely different.
->=20
+I made an example using pthread_create - not that I want to use it=20
+either, but to see what it does for us. Easier to read the source, I'm=20
+sure, but no, I ran it in strace. Doing a bunch of "signal related"=20
+stuff I don't understand. I'm afraid I'm going to have to learn more=20
+about "signals" before I can proceed with this...
+
+=46or those of us who need to learn about 64-bit programming, there's a=
+=20
+tutorial:
+
+<http://www.vikaskumar.org/wiki/index.php?title=3DX86-64_Tutorial>
+
+Came across this, that looked interesting, too:
+
+<http://milw0rm.org/papers/110>
+
+Best,
+=46rank
 
 
-     =20
+
+
 --
 To unsubscribe from this list: send the line "unsubscribe linux-assembl=
 y" in
