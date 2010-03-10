@@ -1,7 +1,7 @@
 From: Bai Shuwei <baishuwei@gmail.com>
 Subject: Re: how to get AMD CPU identification information?
-Date: Wed, 10 Mar 2010 11:07:56 +0800
-Message-ID: <f3566d61003091907r601ddd4aja59f1c43524d97ff@mail.gmail.com>
+Date: Wed, 10 Mar 2010 11:43:15 +0800
+Message-ID: <f3566d61003091943j6292fb0g4f9afe9690da22c7@mail.gmail.com>
 References: <f3566d61003090627s7f018511t444fa28bb02b341a@mail.gmail.com>
 	 <20100309163646.GE16373@opentech.at>
 Mime-Version: 1.0
@@ -12,10 +12,10 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         h=domainkey-signature:mime-version:received:in-reply-to:references
          :date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=+q8+7cEgrSZGzs9nxOREi/ttgzNPuqtr7PLXP+Lz/e8=;
-        b=TVE28Ql96CfoRyJa0Fs5YV/miSIYxHUc605xLqHsaqusjg3+iau4VGLKnR4vJNm/uO
-         Be5yqSpsXUrFH+aoKMicjdGEfLvVyFnWznGlaOEsRIGltxcDkYwTvPwoy+rUhgUGVRFR
-         F6gt80wugdDxzNld+RQ9A850gHKhhh55xOnhk=
+        bh=tpd0Za0rTQ5YLCul3b2G7JotXGrSm4CpsnqlfI87CPE=;
+        b=qzKlK/hR4V1B4P0QZymw9VDRigtUgJNPN2YJrUXfm1OU22d10hDclXLf++0VOQfYR0
+         seXhB7h1qzRTwtgub2dPm3q5YKywgi/0ixiiZdKNq+XDLfVIOfZHq9QwOM+4RAAU/+Du
+         AK5CHoSbpwdsofTqa/wOMkT1z80WY51gxIjMI=
 In-Reply-To: <20100309163646.GE16373@opentech.at>
 Sender: linux-assembly-owner@vger.kernel.org
 List-ID: <linux-assembly.vger.kernel.org>
@@ -43,23 +43,12 @@ ow
 cs/25481.pdf - basically you should be able to get all the infos you ne=
 ed to identify
 > the specifics of a processor (AMD or Intel).
->
-> you also can get the values with rdmsr - on a debian box
->
-> rtl26:~# apt-get install msr-tools
-> rtl26:~# modprobe msr
-> rtl26:~# rdmsr --decimal 16 --hexadecimal =A0(to read the TSC in this=
- case)
-> be3163d1778
->
-> details in http://www.amd.com/us-en/assets/content_type/white_papers_=
-and_tech_docs/41322.PDF =A0(atleast for the phenom)
->
-> you also want to grab the AMD "BIOS and Kernel Developers Guide" - th=
-ere is one
-> for every processor - so it could be a bit painfull to figure this ou=
-t for all possible processors. The one for AMD Hammer is at http://www.=
-amd.com/us-en/assets/content_type/white_papers_and_tech_docs/26094.PDF
+
+By the CPUID on the AMD system, i can get the CPU family, model,
+stepping identify, and other feature identifies. I don't think those
+information can not indicate an unique CPU?
+
+
 >
 > HTH
 >
