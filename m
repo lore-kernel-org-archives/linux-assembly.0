@@ -1,59 +1,56 @@
-From: "Satendra..." <satendra.pratap@gmail.com>
-Subject: Re Linux MIPS DSP-ASE Instructions usage
-Date: Sun, 12 Dec 2010 18:13:32 +0530
-Message-ID: <AANLkTimDL8OgTUsCAFn1xZ0EM+eAZ4aENGdZPqswLKpT@mail.gmail.com>
-References: <AANLkTin1JTDQF7CApgiykQEwKBbeL_E_O77AapbZX+q-@mail.gmail.com>
+From: Nicolas Bock <nicolasbock@gmail.com>
+Subject: 4x4 single-precision matrix product with SSE
+Date: Fri, 11 Mar 2011 15:49:52 -0700
+Message-ID: <4D7AA710.2030303@gmail.com>
 Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enig96A66F67627C959FAF83C75C"
 Return-path: <linux-assembly-owner@vger.kernel.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=C6NZztZUkDrX8MoVFq9vcvYdjr6NdW+pKq6gZbGPNj8=;
-        b=xdFzTJ3Z31dRPYpRM140H1m4qbaqIwfIBSzLRRJHKzYPxal6NsjtaLOnqgnX6LXrD8
-         6B4zd2LoSh2+Bt4++mQbncuj4ulCCHSVeLFiO2fp/jds9pZhqOabVaI6ShSbd8qGnEnI
-         TXw7TA7ZVrTjqKcn6Y4KAP0uEgCPc/ClBCHdI=
-In-Reply-To: <AANLkTin1JTDQF7CApgiykQEwKBbeL_E_O77AapbZX+q-@mail.gmail.com>
+        h=domainkey-signature:message-id:date:from:user-agent:mime-version:to
+         :subject:x-enigmail-version:content-type;
+        bh=toLl+BVkO3Opr4O6kax3kbzjTELagksFlJCex5bBypQ=;
+        b=mNfzaF4rjDdRjcUCCoT/iSjLFMNMQWkSLQeTRKK7n5uClvQz+wYRpVop9diN1tb6Wl
+         fWtCOB1ImMqHV5m6W+oL5RnMkpcqob7iSc0tvdqhygbHHjbSuxMtRd8bYnZYLcJqRsdN
+         z3CDh4Vk0ToNnVA2rM80F79cZOXXcjqFMfnNY=
 Sender: linux-assembly-owner@vger.kernel.org
 List-ID: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
 To: linux-assembly@vger.kernel.org
-Cc: das.asutosh@gmail.com
 
-Hi ,
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enig96A66F67627C959FAF83C75C
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
 
-We are trying to use the MIPS-DSP-ASE instructions to extract bits
-from a bit-stream.
-The version is MIPS-32 rev 1. (Little Endian)
-The problem is that, the extp and its variants extract the bits from
-left-most i.e. MSB.
-So each time we have to load to the accumulator, we have to reverse
-the stream and then load,
-and extract and then reverse. This in-turn is reducing the perfomance
-rather than increasing it.
+Hello list,
 
-For instance,
-Stream -> 111011011
-extract 3-bits in C code => 011 (x = (unsigned) stream& ((1<<3 )-1) )
-Load this stream to accumulator and extract 3 bits => 111
+I am writing an assembly function that multiplies 2 4x4 single precision
+matrices. I wrote 2 versions, one using SSE the other using SSE4.1. What
+surprised me is that the SSE4.1 version fails to beat the SSE version,
+it is in fact slightly slower.
 
-====
-Now reverse the stream and load to accumulator => 110110111
-extract 3 bits from accumulator => 110
-Now reverse the extracted bits =>011
+Is this the right place to ask for help? If anyone is interested I can
+post some code which would maybe clarify the situation a bit.
 
-So we have to reverse the stream before loading to the accumulator and
-reverse it again after extracting from
-accumulator which reduces the performance drastically.
-we guess the MIPS engineers would definitely have thought about it but
-we are unable to figure out a way to use these
-instructions without reversing the bit-streams.
+If this is not the right place, please ignore me...
 
-Please can you let us know a way to use these instructions without reversing.
+nick
 
-Here is the link to the patent:-
-http://www.google.com/patents/about?id=RcGhAAAAEBAJ&dq=Microprocessor+instructions+for+efficient+bit+stream+extractions
 
-Thanks,
-Satendra
+--------------enig96A66F67627C959FAF83C75C
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.17 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iEYEARECAAYFAk16pxAACgkQf15tZKyRylKs5QCg+IcsUYRO+idK8D37FNbnWp3d
+tLIAn3eXnHMjHJtLNjTd1hZVNMr4TLj6
+=bhE6
+-----END PGP SIGNATURE-----
+
+--------------enig96A66F67627C959FAF83C75C--
