@@ -1,14 +1,14 @@
 From: Chen Gang <gang.chen@asianux.com>
 Subject: [Question] X86 Disassembler Engine Patches -- 3 questions
-Date: Fri, 07 Sep 2012 15:44:36 +0800
-Message-ID: <5049A5E4.10902@asianux.com>
+Date: Fri, 07 Sep 2012 15:32:20 +0800
+Message-ID: <5049A304.3070007@asianux.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
 Sender: linux-assembly-owner@vger.kernel.org
 List-ID: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: linux-assembly@vger.kernel.org, linux-kernel@vger.kernel.org
+To: linux-assembly@vger.kernel.org
 
 Hi linux-assembly@vger.kernel.org
 
