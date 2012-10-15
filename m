@@ -1,42 +1,41 @@
-From: Chen Gang <gang.chen@asianux.com>
-Subject: [Question] X86 Disassembler Engine Patches -- 3 questions
-Date: Fri, 07 Sep 2012 15:32:20 +0800
-Message-ID: <5049A304.3070007@asianux.com>
+From: "Yangfei (Felix)" <felix.yang@huawei.com>
+Subject: Hardcoded instruction causes certain features to fail on ARM
+ platfrom due to endianness
+Date: Mon, 15 Oct 2012 03:46:47 +0000
+Message-ID: <DA41BE1DDCA941489001C7FBD7A8820E3CB407A4@szxeml549-mbx.china.huawei.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Return-path: <linux-assembly-owner@vger.kernel.org>
-Sender: linux-assembly-owner@vger.kernel.org
-List-ID: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-To: linux-assembly@vger.kernel.org
+Content-Transfer-Encoding: 8BIT
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Content-Language: zh-CN
+Sender: linux-kernel-owner@vger.kernel.org
+List-ID: <linux-assembly.vger.kernel.org>
+To: "linux-assembly@vger.kernel.org" <linux-assembly@vger.kernel.org>
+Cc: "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
 
-Hi linux-assembly@vger.kernel.org
+Hi all,
 
-Question 1:
+    I found that hardcoded instruction in inline asm can cause certains certain features fail to work on ARM platform due to endianness.
+    As an example, consider the following code snippet of platform_do_lowpower function from arch/arm/mach-realview/hotplug.c:
+                / *
+                 * here's the WFI
+                 */
+                asm(".word      0xe320f003\n"
+                    :
+                    :
+                    : "memory", "cc");
 
-Is it suitable to integrate the x86(_32, _64) disassembler engine into
-the stable kernel version which I have downloaded (kernel-3.5.0).
-(I often use KDB, but for integrated KDB, it does not support
-disassemble command)
+    The instruction generated from this inline asm will not work on big-endian ARM platform, such as ARM BE-8 format. Instead, an exception will be generated.
 
+    Here the code should be:
+                / *
+                 * here's the WFI
+                 */
+                asm("WFI\n"
+                    :
+                    :
+                    : "memory", "cc");
 
-Question 2:
-
-If integration is suitable, where can I get the relative patches (I will
-check source code too, when I get patch).
-
-
-Question 3:
-
-Will the x86 disassembler engine feature be integrated into the new
-kernel version, in the future ?
-
-
-
-thanks.
-
--- 
-Chen Gang
-
-Asianux Corporation
-
+    Seems the kernel doesn't support ARM BE-8 well. I don't know why this problem happens.
+    Can anyone tell me who owns this part? I can prepare a patch then. 
+    Thanks.
