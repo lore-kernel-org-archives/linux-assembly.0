@@ -1,189 +1,136 @@
-From: Dave Martin <dave.martin@linaro.org>
-Subject: Re: [PATCH] Re: Hardcoded instruction causes certain features to
- fail on ARM platfrom due to endianness
-Date: Tue, 16 Oct 2012 18:25:15 +0100
-Message-ID: <20121016172515.GD26075@linaro.org>
-References: <DA41BE1DDCA941489001C7FBD7A8820E3CB407A4@szxeml549-mbx.china.huawei.com>
- <20603.47887.262025.941051@pilspetsen.it.uu.se>
- <CAKw8HL154a=K9O7CzPFZ-EqtT+BxYU-uRHodtutdRfYmNpWVww@mail.gmail.com>
- <20121016124956.GC26075@linaro.org>
- <CAKw8HL3shtbi0Kk-7ZWO9KhtBVU+Vj_Zunh52GDOGJTZSvt6Gg@mail.gmail.com>
+From: Fei Yang <yangfei.kernel@gmail.com>
+Subject: Re: [RFC PATCH v2] Hardcoded instruction causes cpu-hotplug fail on
+ be8 big-endian ARM platfrom
+Date: Wed, 17 Oct 2012 20:00:51 +0800
+Message-ID: <CAKw8HL3+=4JXTQ+nphM5XjN_yaVUy55fzytGX=83P+P2n=qvnw@mail.gmail.com>
 Mime-Version: 1.0
-Return-path: <linux-assembly-owner@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <CAKw8HL3shtbi0Kk-7ZWO9KhtBVU+Vj_Zunh52GDOGJTZSvt6Gg@mail.gmail.com>
-Sender: linux-assembly-owner@vger.kernel.org
+Return-path: <linux-hotplug-owner@vger.kernel.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:cc:content-type;
+        bh=x/TYLpQYQAQrLpEBshIfM65pCBnVaVgAQXCiMwXGkRM=;
+        b=khXOwC9xvunKeGaEYvci1UCc2CfDCbXgbErRW7CzQlf/oDwa0HaZisLkY1l+TSz/ty
+         Y1QRDwlrL6dQH6cMzszYJWEK4QDZkh1lBYkphNaE7SdaqYD926k4jNdDEvGeQuuZlHsk
+         ovgbZx/PXxU64/XUAA9lGL7YFqr103hafNaBv+MbdanVtddOIjJE9b600R3Uo7cCvx2d
+         1lK9bMAiu27+u2COQYZcOS78HAWd8e4MnmVv5a9o1cp18E5y1DVg9IjrbLoEDA1N6Eae
+         OnisKD9M+uprC2emr3MKLrmAvQZ7AqPxpW5RVrkZUVUmcKHPdfyJAus7oidoKqEX2fgu
+         uvnQ==
+Sender: linux-hotplug-owner@vger.kernel.org
 List-ID: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Fei Yang <yangfei.kernel@gmail.com>
-Cc: Mikael Pettersson <mikpe@it.uu.se>, linux@arm.linux.org.uk, lethal@linux-sh.org, magnus.damm@gmail.com, kgene.kim@samsung.com, linux-arm-kernel@lists.infradead.org, "linux-assembly@vger.kernel.org" <linux-assembly@vger.kernel.org>, linux-hotplug@vger.kernel.org, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, "Yangfei (Felix)" <felix.yang@huawei.com>
+To: Dave Martin <dave.martin@linaro.org>, linux@arm.linux.org.uk, lethal@linux-sh.org, magnus.damm@gmail.com, kgene.kim@samsung.com, linux-arm-kernel@lists.infradead.org
+Cc: Mikael Pettersson <mikpe@it.uu.se>, "linux-assembly@vger.kernel.org" <linux-assembly@vger.kernel.org>, linux-hotplug@vger.kernel.org, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, "Yangfei (Felix)" <felix.yang@huawei.com>
 
-On Wed, Oct 17, 2012 at 12:33:54AM +0800, Fei Yang wrote:
-> 2012/10/16 Dave Martin <dave.martin@linaro.org>:
-> > On Mon, Oct 15, 2012 at 11:33:08PM +0800, Fei Yang wrote:
-> >> 2012/10/15 Mikael Pettersson <mikpe@it.uu.se>:
-> >> > Yangfei (Felix) writes:
-> >> >  > Hi all,
-> >> >  >
-> >> >  >     I found that hardcoded instruction in inline asm can cause certains certain features fail to work on ARM platform due to endianness.
-> >> >  >     As an example, consider the following code snippet of platform_do_lowpower function from arch/arm/mach-realview/hotplug.c:
-> >> >  >                 / *
-> >> >  >                  * here's the WFI
-> >> >  >                  */
-> >> >  >                 asm(".word      0xe320f003\n"
-> >> >  >                     :
-> >> >  >                     :
-> >> >  >                     : "memory", "cc");
-> >> >  >
-> >> >  >     The instruction generated from this inline asm will not work on big-endian ARM platform, such as ARM BE-8 format. Instead, an exception will be generated.
-> >> >  >
-> >> >  >     Here the code should be:
-> >> >  >                 / *
-> >> >  >                  * here's the WFI
-> >> >  >                  */
-> >> >  >                 asm("WFI\n"
-> >> >  >                     :
-> >> >  >                     :
-> >> >  >                     : "memory", "cc");
-> >> >  >
-> >> >  >     Seems the kernel doesn't support ARM BE-8 well. I don't know why this problem happens.
-> >> >  >     Can anyone tell me who owns this part? I can prepare a patch then.
-> >> >  >     Thanks.
-> >> >
-> >> > Questions regarding the ARM kernel should go to the linux-arm-kernel mailing list
-> >> > (see the MAINTAINERS file), with an optional cc: to the regular LKML.
-> >> >
-> >> > BE-8 is, if I recall correctly, ARMv7's broken format where code and data have
-> >> > different endianess.  GAS supports an ".inst" directive which is like ".word"
-> >> > except the data is assumed to be code.  This matters for disassembly, and may
-> >> > also be required for BE-8.
-> >> >
-> >> > That is, just s/.word/.inst/g above and report back if that works or not.
-> >> > --
-> >> > To unsubscribe from this list: send the line "unsubscribe linux-kernel" in
-> >> > the body of a message to majordomo@vger.kernel.org
-> >> > More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> >> > Please read the FAQ at  http://www.tux.org/lkml/
-> >> >
-> >> >
-> >>
-> >> Hi Mikael,
-> >>
-> >> Thanks for the reply. I modified the code as suggested and rebuilt the
-> >> kernel, cpu-hotplug feature now works on big-endian(BE-8) ARM
-> >> platform.
-> >> Since the ARM core can be configured by system software to work in
-> >> big-endian mode, it's necessary to fix this problem. And here is a
-> >> small patch :
-> >>
-> >> diff -urN linux-3.6.2/arch/arm/mach-exynos/hotplug.c
-> >> linux/arch/arm/mach-exynos/hotplug.c
-> >> --- linux-3.6.2/arch/arm/mach-exynos/hotplug.c        2012-10-13
-> >> 04:50:59.000000000 +0800
-> >> +++ linux/arch/arm/mach-exynos/hotplug.c      2012-10-15 23:05:44.000000000 +0800
-> >> @@ -72,7 +72,7 @@
-> >>               /*
-> >>                * here's the WFI
-> >>                */
-> >> -             asm(".word      0xe320f003\n"
-> >> +             asm(".inst      0xe320f003\n"
-> >
-> > The cleanest fix would simply be to build these files with appropriate
-> > modified CFLAGS (-march=armv6k or -march=armv7-a), and use the proper
-> > "wfi" mnemonic.
-> >
-> > Failing that, you could use the facilities in <asm/opcodes.h> to
-> > declare a wrapper macro for injecting this opcode (see
-> > <asm/opcodes-virt.h> for an example).  However, putting custom
-> > opcodes into the assembler should only be done if it's really
-> > necessary.  Nowadays, I think we can consider tools which don't
-> > understand the WFI mnemonic to be obsolete, at least for platforms
-> > which only build for v7 and above.
-> >
-> > The relevant board maintainers would need to sign off on such a
-> > change, so we don't end up breaking their builds.
-> >
-> > If any of these boards needs to build for v6K, the custom opcode might
-> > be worth it -- some people might just possibly be relying on older tools
-> > for such platforms.
-> >
-> > Cheers
-> > ---Dave
-> >
-> >>                   :
-> >>                   :
-> >>                   : "memory", "cc");
-> >> diff -urN linux-3.6.2/arch/arm/mach-realview/hotplug.c
-> >> linux/arch/arm/mach-realview/hotplug.c
-> >> --- linux-3.6.2/arch/arm/mach-realview/hotplug.c      2012-10-13
-> >> 04:50:59.000000000 +0800
-> >> +++ linux/arch/arm/mach-realview/hotplug.c    2012-10-15 23:05:00.000000000 +0800
-> >> @@ -66,7 +66,7 @@
-> >>               /*
-> >>                * here's the WFI
-> >>                */
-> >> -             asm(".word      0xe320f003\n"
-> >> +             asm(".inst      0xe320f003\n"
-> >>                   :
-> >>                   :
-> >>                   : "memory", "cc");
-> >> diff -urN linux-3.6.2/arch/arm/mach-shmobile/hotplug.c
-> >> linux/arch/arm/mach-shmobile/hotplug.c
-> >> --- linux-3.6.2/arch/arm/mach-shmobile/hotplug.c      2012-10-13
-> >> 04:50:59.000000000 +0800
-> >> +++ linux/arch/arm/mach-shmobile/hotplug.c    2012-10-15 23:05:25.000000000 +0800
-> >> @@ -53,7 +53,7 @@
-> >>               /*
-> >>                * here's the WFI
-> >>                */
-> >> -             asm(".word      0xe320f003\n"
-> >> +             asm(".inst      0xe320f003\n"
-> >>                   :
-> >>                   :
-> >>                   : "memory", "cc");
-> >>
-> >> _______________________________________________
-> >> linux-arm-kernel mailing list
-> >> linux-arm-kernel@lists.infradead.org
-> >> http://lists.infradead.org/mailman/listinfo/linux-arm-kernel
-> 
-> Thanks for the suggestions. The ".inst" directive here may also bring
-> us trouble if some older tools is used.
-> In that situation, "wfi" mnemonic will not be recognized either. If we
-> cannot suppose that newer tools is used, then how can we determine the
-> endianness during the preprocessor/compile phase? Any ideas?
+<cut>
 
-The endianness is controlled by the build-time configuration of the
-kernel.  A single kernel image cannot be bi-endian.
+> Not handling the Thumb case is a definite bug for any file which may
+> run on v7, since the kernel could be built in Thumb for that case.
+> For example, the existing code is mach-realview/hotplug.c is broken
+> when building an SMP Thumb-2 kernel for the Realview PBX-A9.
+>
+> Cheers
+> ---Dave
 
-The __inst_*() macros in <asm/opcodes.h> take care of this based on which
-CONFIG_CPU_ENDIAN_* option is selected by the board in the kernel config.
-For compatibility with old tools, this is done instead of using the
-".inst" directive.
+Thanks for pointing this out. I think we just cannot make any
+assumption about the versions of the tools used. Based on this, I have
+made a v2 of the patch against linux-3.7-rc1. I am not touching the
+CFLAGS in the patch as I am not familiar with the three ARM boards
+here.
+Can the respective board maintainers
+(mach-exynos/mach-realveiw/mach-shmobile) give any comments about v2
+of the patch?
 
-> BTW: I found this bug on my ARM V7-A Cortex-A9 board and the processor
-> is configured to work in big-endian mode at boot stage (word and
-> halfword data is interpreted as big-endian, but instruction is still
-> little-endian) . The kernel is ported from arch/arm/mach-realview. And
-> I think these boards(mach-realview/mach-shmobile/mach-exynos) should
-> have the similar problems. ARM arch is Bi-endian since versions 3 and
-> above.
+Thanks.
+---Fei
 
-I believe that shmobile and exynos are v7-only, so it may be better to
-just use "wfi" and override the CFLAGS for those files.  As you can
-see, those were just created by copy-pasting the code from mach-realview.
+v2: Define opcode of the ARM "WFI" instruction in the right way.
 
-realview itself can be used with ARMv6 based core-tiles, so there may be
-an argument for a custom opcode in this case:
+Signed-off-by: Fei Yang<yangfei.kernel@gmail.com>
 
-#include <asm/opcodes.h>
-#define __WFI __inst_arm_thumb16(0xE320F003, 0xBF30)
+diff -urN linux-3.7-rc1/arch/arm/mach-exynos/hotplug.c
+linux/arch/arm/mach-exynos/hotplug.c
+--- linux-3.7-rc1/arch/arm/mach-exynos/hotplug.c	2012-10-15
+05:41:04.000000000 +0800
++++ linux/arch/arm/mach-exynos/hotplug.c	2012-10-17 19:25:49.000000000 +0800
+@@ -18,11 +18,17 @@
+ #include <asm/cacheflush.h>
+ #include <asm/cp15.h>
+ #include <asm/smp_plat.h>
++#include <asm/opcodes.h>
 
-Not handling the Thumb case is a definite bug for any file which may
-run on v7, since the kernel could be built in Thumb for that case.
-For example, the existing code is mach-realview/hotplug.c is broken
-when building an SMP Thumb-2 kernel for the Realview PBX-A9.
+ #include <mach/regs-pmu.h>
 
-Cheers
----Dave
+ #include "common.h"
+
++/*
++ * Define opcode of the WFI instruction.
++ */
++#define __WFI __inst_arm_thumb16(0xe320f003, 0xbf30)
++
+ static inline void cpu_enter_lowpower(void)
+ {
+ 	unsigned int v;
+@@ -72,7 +78,7 @@
+ 		/*
+ 		 * here's the WFI
+ 		 */
+-		asm(".word	0xe320f003\n"
++		asm(__WFI
+ 		    :
+ 		    :
+ 		    : "memory", "cc");
+diff -urN linux-3.7-rc1/arch/arm/mach-realview/hotplug.c
+linux/arch/arm/mach-realview/hotplug.c
+--- linux-3.7-rc1/arch/arm/mach-realview/hotplug.c	2012-10-15
+05:41:04.000000000 +0800
++++ linux/arch/arm/mach-realview/hotplug.c	2012-10-17 19:25:20.000000000 +0800
+@@ -15,6 +15,12 @@
+ #include <asm/cacheflush.h>
+ #include <asm/cp15.h>
+ #include <asm/smp_plat.h>
++#include <asm/opcodes.h>
++
++/*
++ * Define opcode of the WFI instruction.
++ */
++#define __WFI __inst_arm_thumb16(0xe320f003, 0xbf30)
+
+ static inline void cpu_enter_lowpower(void)
+ {
+@@ -64,7 +70,7 @@
+ 		/*
+ 		 * here's the WFI
+ 		 */
+-		asm(".word	0xe320f003\n"
++		asm(__WFI
+ 		    :
+ 		    :
+ 		    : "memory", "cc");
+diff -urN linux-3.7-rc1/arch/arm/mach-shmobile/hotplug.c
+linux/arch/arm/mach-shmobile/hotplug.c
+--- linux-3.7-rc1/arch/arm/mach-shmobile/hotplug.c	2012-10-15
+05:41:04.000000000 +0800
++++ linux/arch/arm/mach-shmobile/hotplug.c	2012-10-17 19:25:34.000000000 +0800
+@@ -20,6 +20,12 @@
+ #include <mach/emev2.h>
+ #include <asm/cacheflush.h>
+ #include <asm/mach-types.h>
++#include <asm/opcodes.h>
++
++/*
++ * Define opcode of the WFI instruction.
++ */
++#define __WFI __inst_arm_thumb16(0xe320f003, 0xbf30)
+
+ static cpumask_t dead_cpus;
+
+@@ -39,7 +45,7 @@
+ 		/*
+ 		 * here's the WFI
+ 		 */
+-		asm(".word	0xe320f003\n"
++		asm(__WFI
+ 		    :
+ 		    :
+ 		    : "memory", "cc");
