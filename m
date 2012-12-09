@@ -1,152 +1,55 @@
-From: Fei Yang <yangfei.kernel@gmail.com>
-Subject: Re: [RFC PATCH v2] ARM hardcoded instruction causes cpu-hotplug fail
- to work on big-endian platfrom
-Date: Mon, 22 Oct 2012 19:01:00 +0800
-Message-ID: <CAKw8HL3UuPSUf3_W-JX7rmQxbwhkHQCdOyTgrT0N5oa2_HCL0g@mail.gmail.com>
+From: Cojocaru Alexandru <xojoc@gmx.com>
+Subject: [PATCH] asmutils-0.18 (basename.asm): bugfixes
+Date: Sun, 9 Dec 2012 13:46:54 +0100
+Message-ID: <20121209134654.4c61df709319a9c2b2d229a7@gmx.com>
+Reply-To: xojoc@gmx.com
 Mime-Version: 1.0
-Return-path: <linux-hotplug-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type;
-        bh=xvn2k8D7Kq3fTcIk5s8/RM2DefPWNTQFO6aMtukUQGA=;
-        b=uCskr2+tY6qprGYxJ80fAFYip5vAue/W5/NraS9oO6VfjWg5ziUSrNE1WZYE15UZQI
-         PYkowdnfmiB4jdIldVaYtjHBxNv+EA1buExtH02ssaGGGnCzl+ki8/l2UA04qqpuAeS0
-         7ggEF+mMQb80EXjWKPHEXnj3en0XTLu/vEP3y4L4o1v47wTff6ysPVMfR8aXdQUDuO0g
-         B92tKXWSBQ91MUhsh87XhUdJUZ+QYCWb4rBkERBfdchbTBrSpkYG57zEek5sNlK/xbXS
-         UpSiQV3I/svbgpOdX7J8b60Xp8TTy2dsq+NEEwrDwHPGbPJS9kIXNKbLgUb/1SPjARo4
-         olAQ==
-Sender: linux-hotplug-owner@vger.kernel.org
+Content-Type: multipart/mixed;
+ boundary="Multipart=_Sun__9_Dec_2012_13_46_54_+0100_9HGc/.emt0jkklcT"
+Return-path: <linux-assembly-owner@vger.kernel.org>
+Sender: linux-assembly-owner@vger.kernel.org
 List-ID: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+To: linux-assembly@vger.kernel.org
+
+This is a multi-part message in MIME format.
+
+--Multipart=_Sun__9_Dec_2012_13_46_54_+0100_9HGc/.emt0jkklcT
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-To: Dave Martin <dave.martin@linaro.org>, linux@arm.linux.org.uk, lethal@linux-sh.org, magnus.damm@gmail.com, kgene.kim@samsung.com, linux-arm-kernel@lists.infradead.org
-Cc: Mikael Pettersson <mikpe@it.uu.se>, "linux-assembly@vger.kernel.org" <linux-assembly@vger.kernel.org>, linux-hotplug@vger.kernel.org, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, yangfei.kernel@gmail.com, "Yangfei (Felix)" <felix.yang@huawei.com>
 
-2012/10/17 Fei Yang <yangfei.kernel@gmail.com>:
-> <cut>
->
->> Not handling the Thumb case is a definite bug for any file which may
->> run on v7, since the kernel could be built in Thumb for that case.
->> For example, the existing code is mach-realview/hotplug.c is broken
->> when building an SMP Thumb-2 kernel for the Realview PBX-A9.
->>
->> Cheers
->> ---Dave
->
-> Thanks for pointing this out. I think we just cannot make any
-> assumption about the versions of the tools used. Based on this, I have
-> made a v2 of the patch against linux-3.7-rc1. I am not touching the
-> CFLAGS in the patch as I am not familiar with the three ARM boards
-> here.
-> Can the respective board maintainers
-> (mach-exynos/mach-realveiw/mach-shmobile) give any comments about v2
-> of the patch?
->
-> Thanks.
-> ---Fei
->
-> v2: Define opcode of the ARM "WFI" instruction in the right way.
->
-> Signed-off-by: Fei Yang<yangfei.kernel@gmail.com>
->
-> diff -urN linux-3.7-rc1/arch/arm/mach-exynos/hotplug.c
-> linux/arch/arm/mach-exynos/hotplug.c
-> --- linux-3.7-rc1/arch/arm/mach-exynos/hotplug.c        2012-10-15
-> 05:41:04.000000000 +0800
-> +++ linux/arch/arm/mach-exynos/hotplug.c        2012-10-17 19:25:49.000000000 +0800
-> @@ -18,11 +18,17 @@
->  #include <asm/cacheflush.h>
->  #include <asm/cp15.h>
->  #include <asm/smp_plat.h>
-> +#include <asm/opcodes.h>
->
->  #include <mach/regs-pmu.h>
->
->  #include "common.h"
->
-> +/*
-> + * Define opcode of the WFI instruction.
-> + */
-> +#define __WFI __inst_arm_thumb16(0xe320f003, 0xbf30)
-> +
->  static inline void cpu_enter_lowpower(void)
->  {
->         unsigned int v;
-> @@ -72,7 +78,7 @@
->                 /*
->                  * here's the WFI
->                  */
-> -               asm(".word      0xe320f003\n"
-> +               asm(__WFI
->                     :
->                     :
->                     : "memory", "cc");
-> diff -urN linux-3.7-rc1/arch/arm/mach-realview/hotplug.c
-> linux/arch/arm/mach-realview/hotplug.c
-> --- linux-3.7-rc1/arch/arm/mach-realview/hotplug.c      2012-10-15
-> 05:41:04.000000000 +0800
-> +++ linux/arch/arm/mach-realview/hotplug.c      2012-10-17 19:25:20.000000000 +0800
-> @@ -15,6 +15,12 @@
->  #include <asm/cacheflush.h>
->  #include <asm/cp15.h>
->  #include <asm/smp_plat.h>
-> +#include <asm/opcodes.h>
-> +
-> +/*
-> + * Define opcode of the WFI instruction.
-> + */
-> +#define __WFI __inst_arm_thumb16(0xe320f003, 0xbf30)
->
->  static inline void cpu_enter_lowpower(void)
->  {
-> @@ -64,7 +70,7 @@
->                 /*
->                  * here's the WFI
->                  */
-> -               asm(".word      0xe320f003\n"
-> +               asm(__WFI
->                     :
->                     :
->                     : "memory", "cc");
-> diff -urN linux-3.7-rc1/arch/arm/mach-shmobile/hotplug.c
-> linux/arch/arm/mach-shmobile/hotplug.c
-> --- linux-3.7-rc1/arch/arm/mach-shmobile/hotplug.c      2012-10-15
-> 05:41:04.000000000 +0800
-> +++ linux/arch/arm/mach-shmobile/hotplug.c      2012-10-17 19:25:34.000000000 +0800
-> @@ -20,6 +20,12 @@
->  #include <mach/emev2.h>
->  #include <asm/cacheflush.h>
->  #include <asm/mach-types.h>
-> +#include <asm/opcodes.h>
-> +
-> +/*
-> + * Define opcode of the WFI instruction.
-> + */
-> +#define __WFI __inst_arm_thumb16(0xe320f003, 0xbf30)
->
->  static cpumask_t dead_cpus;
->
-> @@ -39,7 +45,7 @@
->                 /*
->                  * here's the WFI
->                  */
-> -               asm(".word      0xe320f003\n"
-> +               asm(__WFI
->                     :
->                     :
->                     : "memory", "cc");
-> --
-> To unsubscribe from this list: send the line "unsubscribe linux-kernel" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> Please read the FAQ at  http://www.tux.org/lkml/
->
->
+Bugfixes for asmutils-0.18 (basename.asm):
+$ basename ''  # causes segfault.
+$ basename '/' # causes segfault.
 
-Hi,
+Best regards,
+Cojocaru Alexandru
 
-    Any comments on this patch? It is posted last week. Please let me
-know if I missed anything.
-    Thanks.
+--Multipart=_Sun__9_Dec_2012_13_46_54_+0100_9HGc/.emt0jkklcT
+Content-Type: application/octet-stream;
+ name="basename-bugfixes.patch"
+Content-Disposition: attachment;
+ filename="basename-bugfixes.patch"
+Content-Transfer-Encoding: base64
 
-    ---Fei
+MTdhMTgKPiA7MC4wNTsgMDktRGVjLTIwMTIgICAgICBidWdmaXhlcwoyNiwyN2MyNywyOAo8IAlw
+b3AJZWF4CjwgCW1vdgllZGksZWF4CQk7ZWRpIGhvbGRzIGFyZ3VtZW50IGNvdW50Ci0tLQo+IAlw
+b3AJZWN4Cj4gCW1vdgllZGksZWN4CQk7ZWRpIGhvbGRzIGFyZ3VtZW50IGNvdW50CjMzLDM1YzM0
+LDM2CjwgCXBvcAllYXgJCTtza2lwIG91ciBuYW1lCjwgCXBvcAllYXgJCTt0aGUgcGF0aAo8IAlt
+b3YJZWJ4LGVheAkJO21hcmsgdGhlIGJlZ2lubmluZyBvZiBwYXRoCi0tLQo+IAlwb3AJZWN4CQk7
+c2tpcCBvdXIgbmFtZQo+IAlwb3AJZWN4CQk7dGhlIHBhdGgKPiAJbW92CWVieCxlY3gJCTttYXJr
+IHRoZSBiZWdpbm5pbmcgb2YgcGF0aAozN2MzOAo8IAljbXAJYnl0ZSBbZWF4XSxFT0wKLS0tCj4g
+CWNtcAlieXRlIFtlY3hdLEVPTAo0MCw0MWM0MSw0Mgo8IAlpbmMJZWF4CjwgCWNtcAlieXRlIFtl
+YXhdLEVPTAotLS0KPiAJaW5jCWVjeAo+IAljbXAJYnl0ZSBbZWN4XSxFT0wKNDNjNDQKPCAJbW92
+CWVkeCxlYXgJCTttYXJrIHRoZSBlbmQKLS0tCj4gCW1vdgllZHgsZWN4CQk7bWFyayB0aGUgZW5k
+CjQ1LDQ3YzQ2LDQ4CjwgCWRlYwllYXgKPCAJY21wCWVheCxlYngKPCAJam5sCS5lbXB0eQotLS0K
+PiAJZGVjCWVjeAo+IAljbXAJZWN4LGVieAo+IAlqZwkuZW1wdHkKNTFjNTIKPCAJY21wCWJ5dGUg
+W2VheF0sJy8nCi0tLQo+IAljbXAJYnl0ZSBbZWN4XSwnLycKNTMsNTRjNTQsNTUKPCAJaW5jCWVh
+eAo8IAltb3YJZWR4LGVheAotLS0KPiAJbW92CWVkeCxlY3gKPiAJaW5jCWVkeAo1Niw1OWM1Nyw2
+MAo8IAlkZWMJZWF4CjwgCWNtcAlieXRlIFtlYXhdLCcvJwo8IAlqZQkuZW5kbG9vcHR3b2luY2Vh
+eAo8IAljbXAJZWF4LGVieAotLS0KPiAJZGVjCWVjeAo+IAljbXAJYnl0ZSBbZWN4XSwnLycKPiAJ
+amUJLmVuZGxvb3B0d29pbmNlY3gKPiAJY21wCWVjeCxlYngKNzksODBjODAsODEKPCAuZW5kbG9v
+cHR3b2luY2VheDoKPCAJaW5jCWVheAotLS0KPiAuZW5kbG9vcHR3b2luY2VjeDoKPiAJaW5jCWVj
+eAo4Myw4NGM4NAo8IAltb3YJZWN4LGVheAo8IAlzdWIJZWR4LGVheAotLS0KPiAJc3ViCWVkeCxl
+Y3gKOTFjOTEKPCAgIAotLS0KPiAK
+
+--Multipart=_Sun__9_Dec_2012_13_46_54_+0100_9HGc/.emt0jkklcT--
