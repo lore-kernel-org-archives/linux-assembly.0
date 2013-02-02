@@ -1,55 +1,34 @@
-From: Cojocaru Alexandru <xojoc@gmx.com>
-Subject: [PATCH] asmutils-0.18 (basename.asm): bugfixes
-Date: Sun, 9 Dec 2012 13:46:54 +0100
-Message-ID: <20121209134654.4c61df709319a9c2b2d229a7@gmx.com>
-Reply-To: xojoc@gmx.com
+From: horseriver <horserivers@gmail.com>
+Subject: Disassembly  of  00000
+Date: Sat, 2 Feb 2013 12:53:39 +0800
+Message-ID: <20130202045339.GD2391@debian.localdomain>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="Multipart=_Sun__9_Dec_2012_13_46_54_+0100_9HGc/.emt0jkklcT"
 Return-path: <linux-assembly-owner@vger.kernel.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=x-received:date:from:to:subject:message-id:mime-version
+         :content-type:content-disposition:user-agent;
+        bh=AMZ2iIFtHLl6f+LZtPuDAy5NPNapaAaPnhnEfpzF/l4=;
+        b=CmK/i0P7/CRuHYORuQIb7Uc3MxSNoEtX+Zyk/60fPI9pvZuUeoaB1JX8Mg0KWEIs2x
+         o0cei7iyUgoOAyTnyzpam46VqcOAOMwH5gQLrBwb8pxTZy0GZD6q8TeOWe7Ha5MV4RQi
+         1TgXd+HEeAZe2BdyXFpMI8ay5theKd7pY5TJoUaiUcV26hImOLcxLtYeXEWrBhQU9pxC
+         KyahOvsCfGgZkbxhjxmE7YdX7lGhd0pEDj+SNBSnXHq3t/ZVwMrW3kobfCm0fQ3rYBAp
+         MQX3E4PrbjM8I/+4pVEKAMzx7PpPtuFtm0W0R0TTPmAp7dgrY9dkCHOXX8Bq3JCHXKkK
+         kKKQ==
+Content-Disposition: inline
 Sender: linux-assembly-owner@vger.kernel.org
 List-ID: <linux-assembly.vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: linux-assembly@vger.kernel.org
 
-This is a multi-part message in MIME format.
+hi:)
 
---Multipart=_Sun__9_Dec_2012_13_46_54_+0100_9HGc/.emt0jkklcT
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+   I have a question about disassemblly utility .
+   If I fill an elf's text section with some random data,then 
+   how does the disas command work for these data?
+   Is there occasion that several sequence of bytes can not be translated
+   into legal instructions?
 
-Bugfixes for asmutils-0.18 (basename.asm):
-$ basename ''  # causes segfault.
-$ basename '/' # causes segfault.
-
-Best regards,
-Cojocaru Alexandru
-
---Multipart=_Sun__9_Dec_2012_13_46_54_+0100_9HGc/.emt0jkklcT
-Content-Type: application/octet-stream;
- name="basename-bugfixes.patch"
-Content-Disposition: attachment;
- filename="basename-bugfixes.patch"
-Content-Transfer-Encoding: base64
-
-MTdhMTgKPiA7MC4wNTsgMDktRGVjLTIwMTIgICAgICBidWdmaXhlcwoyNiwyN2MyNywyOAo8IAlw
-b3AJZWF4CjwgCW1vdgllZGksZWF4CQk7ZWRpIGhvbGRzIGFyZ3VtZW50IGNvdW50Ci0tLQo+IAlw
-b3AJZWN4Cj4gCW1vdgllZGksZWN4CQk7ZWRpIGhvbGRzIGFyZ3VtZW50IGNvdW50CjMzLDM1YzM0
-LDM2CjwgCXBvcAllYXgJCTtza2lwIG91ciBuYW1lCjwgCXBvcAllYXgJCTt0aGUgcGF0aAo8IAlt
-b3YJZWJ4LGVheAkJO21hcmsgdGhlIGJlZ2lubmluZyBvZiBwYXRoCi0tLQo+IAlwb3AJZWN4CQk7
-c2tpcCBvdXIgbmFtZQo+IAlwb3AJZWN4CQk7dGhlIHBhdGgKPiAJbW92CWVieCxlY3gJCTttYXJr
-IHRoZSBiZWdpbm5pbmcgb2YgcGF0aAozN2MzOAo8IAljbXAJYnl0ZSBbZWF4XSxFT0wKLS0tCj4g
-CWNtcAlieXRlIFtlY3hdLEVPTAo0MCw0MWM0MSw0Mgo8IAlpbmMJZWF4CjwgCWNtcAlieXRlIFtl
-YXhdLEVPTAotLS0KPiAJaW5jCWVjeAo+IAljbXAJYnl0ZSBbZWN4XSxFT0wKNDNjNDQKPCAJbW92
-CWVkeCxlYXgJCTttYXJrIHRoZSBlbmQKLS0tCj4gCW1vdgllZHgsZWN4CQk7bWFyayB0aGUgZW5k
-CjQ1LDQ3YzQ2LDQ4CjwgCWRlYwllYXgKPCAJY21wCWVheCxlYngKPCAJam5sCS5lbXB0eQotLS0K
-PiAJZGVjCWVjeAo+IAljbXAJZWN4LGVieAo+IAlqZwkuZW1wdHkKNTFjNTIKPCAJY21wCWJ5dGUg
-W2VheF0sJy8nCi0tLQo+IAljbXAJYnl0ZSBbZWN4XSwnLycKNTMsNTRjNTQsNTUKPCAJaW5jCWVh
-eAo8IAltb3YJZWR4LGVheAotLS0KPiAJbW92CWVkeCxlY3gKPiAJaW5jCWVkeAo1Niw1OWM1Nyw2
-MAo8IAlkZWMJZWF4CjwgCWNtcAlieXRlIFtlYXhdLCcvJwo8IAlqZQkuZW5kbG9vcHR3b2luY2Vh
-eAo8IAljbXAJZWF4LGVieAotLS0KPiAJZGVjCWVjeAo+IAljbXAJYnl0ZSBbZWN4XSwnLycKPiAJ
-amUJLmVuZGxvb3B0d29pbmNlY3gKPiAJY21wCWVjeCxlYngKNzksODBjODAsODEKPCAuZW5kbG9v
-cHR3b2luY2VheDoKPCAJaW5jCWVheAotLS0KPiAuZW5kbG9vcHR3b2luY2VjeDoKPiAJaW5jCWVj
-eAo4Myw4NGM4NAo8IAltb3YJZWN4LGVheAo8IAlzdWIJZWR4LGVheAotLS0KPiAJc3ViCWVkeCxl
-Y3gKOTFjOTEKPCAgIAotLS0KPiAK
-
---Multipart=_Sun__9_Dec_2012_13_46_54_+0100_9HGc/.emt0jkklcT--
+thanks!
+   
