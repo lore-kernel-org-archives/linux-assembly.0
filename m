@@ -1,35 +1,38 @@
-From: horseriver <horserivers@gmail.com>
-Subject: mov instruction
-Date: Thu, 7 Feb 2013 11:57:14 +0800
-Message-ID: <20130207035714.GC2669@debian.localdomain>
+From: Hendrik Visage <hvjunk@gmail.com>
+Subject: Re: mov instruction
+Date: Thu, 7 Feb 2013 15:57:37 +0200
+Message-ID: <CADtGFv=CY+wFMRgzsrp3wcspMEhUYnCKSpQz6vfHJYhTUbVXBQ@mail.gmail.com>
+References: <20130207035714.GC2669@debian.localdomain>
 Mime-Version: 1.0
 Return-path: <linux-assembly-owner@vger.kernel.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=x-received:date:from:to:subject:message-id:mime-version
-         :content-type:content-disposition:user-agent;
-        bh=nm9wdmwtsfcolGh/0c3VSdkl8AmRNGWzcriSVHBRRWY=;
-        b=0WzrP+wG4OAllw5KTy5xF4Qsw2u8AiMMRiCJ1Ephi073dDofdwj1pvuaMsY3hrx+Io
-         J6FXQICVVCgdHJBA4/CkhI0Tk1hObSrl205ufVDYetAYXuCoIDwrhGmeopdz6qMP+k4E
-         0uuT9XW1sEzZg0Ru4GzDYiTtasKIaqK8JmP+eU/BADui9SJBgsMkQLdVzSJq69hfDbHi
-         Yla97d+VtIx+YC57GV4u4GGsh3AGBmquPtKKNHc40Nci8GOrn4uiSaxShfI7GujEGZBb
-         hKMyLjLdRo/nKDt9YdKf202Ki2nQ5GQbNZbQOSHUbcMBdSEeXXCczBB5VZgpJWVXuDX9
-         EvXw==
-Content-Disposition: inline
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=A6oN58JkC0MjVCcZzFtv7+hWPEvESSF6lAj7J8ooreo=;
+        b=0c1qShNEoZICBJ9whR9Ps2NgXpaRoT5etXILmTw+WBarPBqcH71BJhZi6lkuiIJa59
+         wR/0oUZ4LETDVYVxoXXApuHEjDzc7trssg+y4ojIpl235YW2MGa/3j0KrunyBfUnV/GF
+         pP7oQO0I4L/yTv/IygDvLu7ae70m3A9xU8LRB+XzZFFq6Bu8nstpa11PzIYrisj4KtpM
+         MUjiU6x2/Mh4kmKONLfIw0flZfUejZ36h/UM02nmBhqMlNi2uuAwRuwlYzyMF7YDO6kX
+         y8SYmVqle/rDaO2BpcOnKclogfEjyEcr+0gX7tbGrTqWCdMu+H7f3eJvLOSJeEuQGiuY
+         Z3UA==
+In-Reply-To: <20130207035714.GC2669@debian.localdomain>
 Sender: linux-assembly-owner@vger.kernel.org
 List-ID: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: linux-assembly@vger.kernel.org
+To: horseriver <horserivers@gmail.com>
+Cc: linux-assembly@vger.kernel.org
 
-hi:)
- 
-  Is here a suitable place to post topics about hardware technology?
+On Thu, Feb 7, 2013 at 5:57 AM, horseriver <horserivers@gmail.com> wrote:
+> hi:)
+>
+>   Is here a suitable place to post topics about hardware technology?
+>
+>   I am curious about how mov work.
+>   Why it can not move data from a mem adress to another adress  in one instruction.
+>   in this form : mov (eax), (ebx)
 
-  I am curious about how mov work.
-  Why it can not move data from a mem adress to another adress  in one instruction.
-  in this form : mov (eax), (ebx)
-
-
-thanks!
-  
+That is what the (rep) movs(b/w) etc. operation(s) are designed for
+these "string copy" operations. the old 8086 had those running between
+es:di and ds:si as the registers for this.
