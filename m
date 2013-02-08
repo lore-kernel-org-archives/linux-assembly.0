@@ -1,31 +1,28 @@
-From: horseriver <horserivers@gmail.com>
-Subject: Re: mov instruction
-Date: Thu, 7 Feb 2013 12:32:57 +0800
-Message-ID: <20130207043257.GD2669@debian.localdomain>
+From: Robert Plantz <plantz@sonoma.edu>
+Subject: RE: mov instruction
+Date: Fri, 8 Feb 2013 20:30:42 +0000
+Message-ID: <6E3CF6FDA48EC747AAAE0EAEDF16EFF802C63F18@coronet.solar.sonoma.edu>
 References: <20130207035714.GC2669@debian.localdomain>
- <CADtGFv=CY+wFMRgzsrp3wcspMEhUYnCKSpQz6vfHJYhTUbVXBQ@mail.gmail.com>
+ <CADtGFv=CY+wFMRgzsrp3wcspMEhUYnCKSpQz6vfHJYhTUbVXBQ@mail.gmail.com>,<20130207043257.GD2669@debian.localdomain>
 Mime-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
 Return-path: <linux-assembly-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=x-received:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=MNSbQzOsw2L6fSeurN2NG6am/OI9m0MiHpEL4mGMClI=;
-        b=nD4/NaXt0Ic6vI2Z09x/ywKyYv50LSF8TqxcKZaLjSOreQ5SyiJpEv177LXCf+w58F
-         2oNoOPycO/U1ZsUwprbYbB5LzhOtX1WHeR/6BSclqMWmo+79XrDxNUAhXk7H4bMLx/pw
-         +EHSkqsbCP6RNxoi81f4POLDQmURqXGsy+yN1D/JGBvE9fTcBGWouONtrJoBMj4/S4K2
-         1nMPNHdWBJBpGgwS/uR0+tvQmsZVkerUht5D2UaicbpQfgK4DyDY+RU7tVkEPGcitvRN
-         iFtFLYc7v3jdJZTlIx0v2DwGM9pbLUFwTDkcdpub1efrhdITfgCflbQGOBdX7lU9tZuN
-         yoiw==
-Content-Disposition: inline
-In-Reply-To: <CADtGFv=CY+wFMRgzsrp3wcspMEhUYnCKSpQz6vfHJYhTUbVXBQ@mail.gmail.com>
+In-Reply-To: <20130207043257.GD2669@debian.localdomain>
+Content-Language: en-US
 Sender: linux-assembly-owner@vger.kernel.org
 List-ID: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Hendrik Visage <hvjunk@gmail.com>
+To: horseriver <horserivers@gmail.com>, Hendrik Visage <hvjunk@gmail.com>
+Cc: "linux-assembly@vger.kernel.org" <linux-assembly@vger.kernel.org>
+
+
+
+________________________________________
+From: linux-assembly-owner@vger.kernel.org [linux-assembly-owner@vger.kernel.org] on behalf of horseriver [horserivers@gmail.com]
+Sent: Wednesday, February 06, 2013 8:32 PM
+To: Hendrik Visage
 Cc: linux-assembly@vger.kernel.org
+Subject: Re: mov instruction
 
 On Thu, Feb 07, 2013 at 03:57:37PM +0200, Hendrik Visage wrote:
 > On Thu, Feb 7, 2013 at 5:57 AM, horseriver <horserivers@gmail.com> wrote:
@@ -36,11 +33,18 @@ On Thu, Feb 07, 2013 at 03:57:37PM +0200, Hendrik Visage wrote:
 > >   I am curious about how mov work.
 > >   Why it can not move data from a mem adress to another adress  in one instruction.
 > >   in this form : mov (eax), (ebx)
-> 
+>
 > That is what the (rep) movs(b/w) etc. operation(s) are designed for
 > these "string copy" operations. the old 8086 had those running between
 > es:di and ds:si as the registers for this.
   Yeah! I remember that.
   But why this can not work : mov (eax), (ebx)  ?  just curious .
 
-thanks!
+Because the x86 architecture will not allow you to move (or do arithmetic) from memory to memory. You can only move to/from a register from/to memory. For example,
+
+mov (eax), ecx
+mov ecx, (ebx)
+
+(assuming AT&T syntax)
+
+--Bob
