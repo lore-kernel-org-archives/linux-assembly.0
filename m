@@ -1,22 +1,22 @@
 From: Sofiane Akermoun <akersof@gmail.com>
-Subject: Re: .word _XY_
-Date: Fri, 15 Feb 2013 02:21:06 +0100
-Message-ID: <CAN0_x-Lj_sDKiH5nrGctsuKOfR9-Ohd=kxtdYmvV_msXqP3Zdw@mail.gmail.com>
-References: <20130212071510.GA5460@debian.localdomain>
+Subject: Re: varibles define
+Date: Fri, 15 Feb 2013 02:21:51 +0100
+Message-ID: <CAN0_x-+7VX83L19-oFXXut-YFQOFjCiUv4-QdnGVp+OrJavNaw@mail.gmail.com>
+References: <20130213043445.GA20051@debian.localdomain>
 Mime-Version: 1.0
 Return-path: <linux-assembly-owner@vger.kernel.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:x-received:in-reply-to:references:date:message-id
          :subject:from:to:cc:content-type;
-        bh=ehMzjSV87h7NN4MXfU21PATMjIxO0iucQGI6yKHUzMM=;
-        b=ndfYNZlF//+hHEIxD5uzXKaCdHi0oP6hClwb339WbrcT7Oas6ldzCc9naCINuPDzmg
-         ZMKa9RJU197g/G5ybNFSglXsLAZfrNR9iDYluLL+Qyf9vVEdzfHL7KVEur5lt0LF2GL2
-         NpHtvNCFKffO0D+wV8qcJo2QnOW6zoaHqWnFXH1lTirM4GZwH3Iw617VYf8TnDD9UWPV
-         /tKNATmb1sj1nTPKiosVEPouPc7FDbW0VwcBZlEJmp5tinh2rtbq+vX5Qf2Z1pTNKKjS
-         3+KoqNME19DCTeR8BcbITk41z7yYlKkS+rM5iqNR7n2eYLLz8sLpx2KvRd+eNx9XuO8v
-         YY1A==
-In-Reply-To: <20130212071510.GA5460@debian.localdomain>
+        bh=WWWTucDL9pOX5BmvFT3DW9/iuV9+zYu5MV9dAeRIlTo=;
+        b=Qgs7CE+CUQFAoqFW5cnnsAfIos7NURy9qSHLVY+enj7ZY6xCXiPq88waq7jetBicsF
+         GP+BpOk1EWZygE42qWpjRfU7ch5vVbSxUzrRR0cW0t8s9+6tND5SR4Vzww1dcg3Yt6mL
+         csZKImgktNlYh4yKZrd2eqOE52CeQFwth5ox5bbi/yS7CulwhvG2Xey2l7M29Dgsxb7H
+         Ts2/YvjDt+t77q5agKjN08r6qcOQsMKo1w1S1YX9jVvnIDTGqSYf+UvHWkzg3+k/lOtZ
+         KhC6kotT24bDj9OIVG4y/iGYi+XvGHSfI6js3Feos+HLY5vts5zuDZQKmAqyXv6pufwv
+         6DNg==
+In-Reply-To: <20130213043445.GA20051@debian.localdomain>
 Sender: linux-assembly-owner@vger.kernel.org
 List-ID: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
@@ -24,18 +24,43 @@ Content-Transfer-Encoding: 7bit
 To: horseriver <horserivers@gmail.com>
 Cc: linux-assembly@vger.kernel.org
 
-This is related to your assembler macro syntax
+Definition in .text will stay in .text at the same position you defined it.
+Of course when the code is executed the cpu doesn't know at all that
+he is reading a string for example or an executable code
 
-_XY_ is an unitialized variable of 16 bits.
+You can do this:
 
-2013/2/12 horseriver <horserivers@gmail.com>:
+...execution flow started...
+jmp lb1:                                    // jump to avoid the cpu
+to interpret the variable definition as code
+mystrind db "hello world!", 0h      // definition of a variable here
+lb1:
+....execution flow continues here
+
+else the best is to store you data after the exit of the program
+
+Never do something like this below:
+
+some instruction
+some instruction
+mystring db "Hello world!", 0h  // definition here
+some instruction
+
+In the example above the hexa version of "hello world!",0h will be
+read and executed by the cpu and it is not what we want
+
+regards,
+
+Sofiane Akermoun
+sofiane.akermoun@datalabsecurity.com
+akersof@gmail.com
+
+2013/2/13 horseriver <horserivers@gmail.com>:
 > hi:)
 >
->   this define : .word _xy_
+>    If define a byte in .text. then ,does this byte located into .data section in object file?
 >
->   what is this define meaning?
->   what is the  value of _xy_ ?
->   thanks!
+> thanks!
 > --
 > To unsubscribe from this list: send the line "unsubscribe linux-assembly" in
 > the body of a message to majordomo@vger.kernel.org
