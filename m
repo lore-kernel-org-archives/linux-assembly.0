@@ -1,70 +1,114 @@
-From: Sofiane Akermoun <akersof@gmail.com>
-Subject: Re: how does ld.so call ELF's entry?
-Date: Sun, 7 Apr 2013 09:47:59 +0200
-Message-ID: <CAN0_x-K9fZHzN1yk1C0W7-LBwCnmOHhDG8n4TmDXTaVEBRWVDQ@mail.gmail.com>
-References: <20130407021921.GA9462@debian.localdomain>
-	<CAN0_x-Je1=2mtN8tY2mvBa-X7_P0dBoG9KRh0P63uW91eE5H2Q@mail.gmail.com>
-	<20130407033913.GB9617@debian.localdomain>
-	<6107E321-5746-4245-8C42-0C4E589BEE4A@ymail.com>
-	<20130407034554.GC9617@debian.localdomain>
-	<CAN0_x-J_7VOhzezQhWBZNAPfbREtoOkk3yMcS3kLzL5XFD5cwg@mail.gmail.com>
-	<20130407045207.GE9617@debian.localdomain>
-	<CAN0_x-JR2EAnN3_NZX72qRQ1DmT5-Gmd3aYw6Sw5R5_twyEiKg@mail.gmail.com>
-	<20130407065658.GF9617@debian.localdomain>
+From: Blake McBride <blake@arahant.com>
+Subject: Need help doing a jmp rather than a call
+Date: Fri, 8 Nov 2013 21:02:54 -0600
+Message-ID: <l5k8kk$9kd$1@ger.gmane.org>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7BIT
 Return-path: <linux-assembly-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:x-received:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=7xhnhGKOvM3RgIMX51HNxnwgsDWPSAEI9B27m0d11qg=;
-        b=M6jymEI7CvZdI8TgsQSfo6GTh3QKiUbzQG1SCB9JiXa4+WTjU+dxjcjhyLe8RQ5QSE
-         F/KuxjchpIRz0189cwVHCx2/CMUNC2q5TIneOAsSVTe3yEmmhzC7WJrZb6TtYliQOQNV
-         8bZ7PC9qaKb44MLEyoAWnVtOw+PtdE0ZuskFsOuH0dNc+yjU3IF7puZqNKEAhTvbSy7q
-         6WKy09oXktecd+SXFWK8pVw98W7M9z8tbrAZxCkWK5OwRuwdUfiV/QO109POuy6qGTNB
-         qyPN1xYMClzkZdoXA+fsphhPT04sWO8sfYltTJDXB4n1ZK5SyjCr24YMH1/z5kLDRV5w
-         R3Rg==
-In-Reply-To: <20130407065658.GF9617@debian.localdomain>
 Sender: linux-assembly-owner@vger.kernel.org
 List-ID: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: ishare <june.tune.sea@gmail.com>
-Cc: linux-assembly@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: linux-assembly@vger.kernel.org
 
-I don't know what you are doing. if you are writing your proper
-assembler, or whatever. But the standard tools are gdb, printing on
-screen information like addresses. if it is kernel related then kdb
-and an emulator like bochs, qemu or virtualbox to avoid kernel
-freezing in performing remote debugging.
+I am trying to get a simple piece of x64 assembly working on 64 bit 
+linux and a Mac.  I am using GCC.
 
-Although it is interesting, without asm code not sure it is the best
-place to talk about inner operating system mechanism.
+Let's say I have 4 (C language) functions.  Function fun1 calls fun2, 
+fun2 calls fun3, and fun3 calls fun4.  I need fun 4 to operate and run 
+as if it was called directly from fun1.  So, fun4 should see the 
+arguments passed to fun2, and when fun4 returns it should return 
+diretly to fun1 as if it was called by fun1.
 
-regards.
-
-Sofiane Akermoun
-akersof@gmail.com
-
-2013/4/7 ishare <june.tune.sea@gmail.com>:
->
->   yeah!
->
->   I have found the work is done through create_elf_tables() function.
->
->   at early time kernel copy args to bprm structure , then copy it to user stack.
->
->   I am dealing with one problem .
->
->   When kernel execute "/bin/sh" , it load ld.so successfully , but without jumping
->   to the elf's entry point ,it exit ,which cause  kernel panic .
->
->   how can I debug for this problem ? how to catch more information for resolving it?
->
->   thanks!
+Basically, this is an OO language that uses fun2 to calculate what fun4 
+is.  fun3 is used to manipulate the stack so that when fun4 starts up 
+it thinks it was called directly from fun1.  fin1, fun2, and fun4 are 
+plain C code.  fun3 performs the magic.  I have been doing this easily 
+on many different 32 bit machines for years but I haven't been able to 
+get it going on 64 bit machines.
 
 
+Typically fun3 would:
 
--- 
-Sofiane AKERMOUN
-akersof@gmail.com
+    1. create a new stack frame
+    2.  call fun3
+    3.  pop local call frame
+    4.  return
+
+What I need fun3 to do is:
+
+    1.  either pop its stack frame or don't create one
+    2.  pop the stack frame from fun2
+    3.  jump to fun4
+
+Then fun4 will start executing as if it was called from fun1.  I have 
+sample (errant) C code for the entire process.  It will all work fine 
+if fun3 (_jumpToMethod) is rewritten in assembler.
+
+(What I did in the past was compile the C code for _jumpToMethod into 
+assembly code, modify the code, and then use that assembly code.)
+
+Here is the C code for fun1, fun2, and fun3:
+
+#include <stdio.h>
+
+char	*obj = "Some object pointer";
+
+char	*GenObj = "Some Generic Object Pointer";
+
+typedef	int	(*ofun)();
+
+
+int	Method(char *self, int a, int b, int c)  /*  fun4  */
+{
+	printf("Method reached with args %s %d %d %d\n", self, a, b, c);
+	return a + b + c;
+}
+
+ofun	FindMethod(char *obj, char *gen)
+{
+	return Method;
+}
+
+GenericFunction(char *self, ...)  /*  fun2  */
+{
+	_jumpToMethod( FindMethod(self, GenObj) );
+}
+
+main(void)  /* fun1  */
+{
+	printf("Method is at %lx\n", (long unsigned int) &Method);
+	/* both calls to Method should look alike to Method  */
+	int	r = Method(obj, 1, 2, 3);
+	printf("Value returned from GenericFunction = %d\n", r);
+	r = GenericFunction(obj, 1, 2, 3);
+	printf("Value returned from GenericFunction = %d\n", r);
+	return 0;
+}
+
+
+-----------------------------------------------------------------
+
+Here is the C code for _jumpToMethod (fun3)
+
+
+void	_jumpToMethod(void (*function) (/* ??? */))
+{
+
+/* 	pop_this_stack_frame;	*/
+
+/* 	pop previous (generics) stack frame  */
+
+ 	(*function)();	/*  must be changed to jump instruction   */
+ }
+
+
+
+I think this would be easy for someone who knows this assembly 
+language.  I have spent about 5 hurs on it and I am lost as I can be.  
+Your help is greatly appreciated!
+
+Thanks!
+
+Blake McBride
+
+
