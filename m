@@ -1,27 +1,26 @@
-From: "eric lin" <fsshl@luxmail.com>
-Subject: simple hello.asm (NASM) not compile in x64, plz help
-Date: Fri, 28 Nov 2014 20:35:37 -0800
-Message-ID: <20141128203537.80F63DB6@m0005299.ppops.net>
-Reply-To: <fsshl@luxmail.com>
+From: Brian Raiter <breadbox@muppetlabs.com>
+Subject: Re: simple hello.asm (NASM) not compile in x64, plz help
+Date: Fri, 28 Nov 2014 21:26:56 -0800
+Message-ID: <21625.22816.280077.588423@eidolon.muppetlabs.com>
+References: <20141128203537.80F63DB6@m0005299.ppops.net>
 Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
+In-Reply-To: <20141128203537.80F63DB6@m0005299.ppops.net>
 Sender: linux-assembly-owner@vger.kernel.org
 List-ID: <linux-assembly.vger.kernel.org>
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
 To: linux-assembly@vger.kernel.org
+Cc: fsshl@luxmail.com
 
-hello:
-I copied a simple hello.asm  (NASM) assembly program from 
-www.tldp.org/HOWTO/html_single/Assembly-HOWTO/
-try to compile and run on my linux 64(ubuntu14.04), but I got errors:
+> 
+> ld -s -o heworl heworl.o 
+> ld:i386 architecture of input file *.o is incompatible with i386:x86-64 output
 
--------------------------------------
+You told nasm to create a 32-bit .o file. Tell nasm to create a 64-bit
+.o file instead. Use "-f elf64" instead of "-f elf32".
 
-ld -s -o heworl heworl.o 
-ld:i386 architecture of input file *.o is incompatible with i386:x86-64 output
--------------------------------------------------
-please help,(how to make it compile and run on my 64 platform rather than ask me switch to 32 bit platform),thanks a lot ina dvance, eric
+The command "nasm -hf" will display all the valid output formats that
+nasm supports.
 
-_____________________________________________________________
-Luxmail.com
+b
