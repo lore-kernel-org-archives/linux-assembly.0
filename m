@@ -1,174 +1,195 @@
-From: David Laight <David.Laight@ACULAB.COM>
-Subject: RE: [PATCH v2] hwmon: (dell-smm) Improve assembly code
-Date: Sun, 20 Feb 2022 12:20:13 +0000
-Message-ID: <d66ab183f32c49b2b901b432d284edc5@AcuMS.aculab.com>
+From: Guenter Roeck <linux@roeck-us.net>
+Subject: Re: [PATCH v2] hwmon: (dell-smm) Improve assembly code
+Date: Sun, 20 Feb 2022 07:30:01 -0800
+Message-ID: <7d387f96-1561-2eec-43e2-b971ff79d734@roeck-us.net>
 References: <20220219211011.16600-1-W_Armin@gmx.de>
+ <d66ab183f32c49b2b901b432d284edc5@AcuMS.aculab.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 8BIT
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-In-Reply-To: <20220219211011.16600-1-W_Armin@gmx.de>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=sender:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=v9yDxdXjwfjcEmcv6Q/zczMsjG6fgA4wk/0Tx7xP4sI=;
+        b=VTR+1+ba8QimGg/EB+ymwC2T9QsjGhjmRL6ovuUPN6kP0SriqXjo+4hPkFKzZ77HoZ
+         szTVyzhp8ly4R5KMheLHsUtEpwyn49rKDEE1qS5BhDcGbaXgpBQZdFxF6pFcw4EXZE3D
+         CdaWZllJIgMu0vVdidOmWzqlyxry/CZMcLVHDw0XvDOd/08WA0BHHXW9V+c6KejzNNUz
+         jzfCcmUtADW272OqxkUkVNzSzzYDKg6iGVmXSHrs+0Na87vi6Yti3FvwArZ0VSW1C737
+         5tfODeTf98+O6Uv8fFXA0P+2XROJFZubNsCxmBX5T36QFfwXJT+Lp5OgPL6w71sf6HJ3
+         4EGQ==
+Sender: Guenter Roeck <groeck7@gmail.com>
 Content-Language: en-US
+In-Reply-To: <d66ab183f32c49b2b901b432d284edc5@AcuMS.aculab.com>
 List-ID: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-To: 'Armin Wolf' <W_Armin@gmx.de>, "pali@kernel.org" <pali@kernel.org>
-Cc: "jdelvare@suse.com" <jdelvare@suse.com>, "linux@roeck-us.net" <linux@roeck-us.net>, "linux-hwmon@vger.kernel.org" <linux-hwmon@vger.kernel.org>, "linux-assembly@vger.kernel.org" <linux-assembly@vger.kernel.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+To: David Laight <David.Laight@ACULAB.COM>, 'Armin Wolf' <W_Armin@gmx.de>, "pali@kernel.org" <pali@kernel.org>
+Cc: "jdelvare@suse.com" <jdelvare@suse.com>, "linux-hwmon@vger.kernel.org" <linux-hwmon@vger.kernel.org>, "linux-assembly@vger.kernel.org" <linux-assembly@vger.kernel.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
 
-From: Armin Wolf
-> Sent: 19 February 2022 21:10
+On 2/20/22 04:20, David Laight wrote:
+> From: Armin Wolf
+>> Sent: 19 February 2022 21:10
+>>
+>> The new assembly code works on both 32 bit and 64 bit
+>> cpus and allows for more compiler optimisations by not
+>> requiring smm_regs to be packed. Also since the
+>> SMM handler seems to modify the carry flag, the new
+>> code informs the compiler that the flags register
+>> needs to be saved/restored. Since clang runs out of
+>> registers on 32 bit x86 when using CC_OUT, we need
+>> to execute "setc" ourself.
 > 
-> The new assembly code works on both 32 bit and 64 bit
-> cpus and allows for more compiler optimisations by not
-> requiring smm_regs to be packed. Also since the
-> SMM handler seems to modify the carry flag, the new
-> code informs the compiler that the flags register
-> needs to be saved/restored. Since clang runs out of
-> registers on 32 bit x86 when using CC_OUT, we need
-> to execute "setc" ourself.
-
-You always need to save anything from the flags register
-inside the asm block - it is never valit afterwards.
-
-> Also modify the debug message so we can still see
-> the result (eax) when the carry flag was set.
+> You always need to save anything from the flags register
+> inside the asm block - it is never valit afterwards.
 > 
-> Tested with 32 bit and 64 bit kernels on a Dell Inspiron 3505.
+
+Does that matter here ? I thought setcc is used to get the carry flag.
+
+Guenter
+
+>> Also modify the debug message so we can still see
+>> the result (eax) when the carry flag was set.
+>>
+>> Tested with 32 bit and 64 bit kernels on a Dell Inspiron 3505.
+>>
+>> Signed-off-by: Armin Wolf <W_Armin@gmx.de>
+>> ---
+>> Changes in v2:
+>> - fix clang running out of registers on 32 bit x86
+>> - modify debug message
+>> ---
+>>   drivers/hwmon/dell-smm-hwmon.c | 85 ++++++++++------------------------
+>>   1 file changed, 25 insertions(+), 60 deletions(-)
+>>
+>> diff --git a/drivers/hwmon/dell-smm-hwmon.c b/drivers/hwmon/dell-smm-hwmon.c
+>> index c5939e68586d..f1538a46bfc9 100644
+>> --- a/drivers/hwmon/dell-smm-hwmon.c
+>> +++ b/drivers/hwmon/dell-smm-hwmon.c
+>> @@ -119,7 +119,7 @@ struct smm_regs {
+>>   	unsigned int edx;
+>>   	unsigned int esi;
+>>   	unsigned int edi;
+>> -} __packed;
+>> +};
+>>
+>>   static const char * const temp_labels[] = {
+>>   	"CPU",
+>> @@ -165,73 +165,38 @@ static int i8k_smm_func(void *par)
+>>   	int eax = regs->eax;
+>>   	int ebx = regs->ebx;
+>>   	long long duration;
+>> -	int rc;
+>> +	bool carry;
 > 
-> Signed-off-by: Armin Wolf <W_Armin@gmx.de>
-> ---
-> Changes in v2:
-> - fix clang running out of registers on 32 bit x86
-> - modify debug message
-> ---
->  drivers/hwmon/dell-smm-hwmon.c | 85 ++++++++++------------------------
->  1 file changed, 25 insertions(+), 60 deletions(-)
+> I'd use an explicit 'unsigned char' not bool.
+> Matches the type of the 'setcc' instriction.
 > 
-> diff --git a/drivers/hwmon/dell-smm-hwmon.c b/drivers/hwmon/dell-smm-hwmon.c
-> index c5939e68586d..f1538a46bfc9 100644
-> --- a/drivers/hwmon/dell-smm-hwmon.c
-> +++ b/drivers/hwmon/dell-smm-hwmon.c
-> @@ -119,7 +119,7 @@ struct smm_regs {
->  	unsigned int edx;
->  	unsigned int esi;
->  	unsigned int edi;
-> -} __packed;
-> +};
+>>   	/* SMM requires CPU 0 */
+>>   	if (smp_processor_id() != 0)
+>>   		return -EBUSY;
+>>
+>> -#if defined(CONFIG_X86_64)
+>> -	asm volatile("pushq %%rax\n\t"
+>> -		"movl 0(%%rax),%%edx\n\t"
+>> -		"pushq %%rdx\n\t"
+>> -		"movl 4(%%rax),%%ebx\n\t"
+>> -		"movl 8(%%rax),%%ecx\n\t"
+>> -		"movl 12(%%rax),%%edx\n\t"
+>> -		"movl 16(%%rax),%%esi\n\t"
+>> -		"movl 20(%%rax),%%edi\n\t"
+>> -		"popq %%rax\n\t"
+>> -		"out %%al,$0xb2\n\t"
+>> -		"out %%al,$0x84\n\t"
+>> -		"xchgq %%rax,(%%rsp)\n\t"
+>> -		"movl %%ebx,4(%%rax)\n\t"
+>> -		"movl %%ecx,8(%%rax)\n\t"
+>> -		"movl %%edx,12(%%rax)\n\t"
+>> -		"movl %%esi,16(%%rax)\n\t"
+>> -		"movl %%edi,20(%%rax)\n\t"
+>> -		"popq %%rdx\n\t"
+>> -		"movl %%edx,0(%%rax)\n\t"
+>> -		"pushfq\n\t"
+>> -		"popq %%rax\n\t"
+>> -		"andl $1,%%eax\n"
+>> -		: "=a"(rc)
+>> -		:    "a"(regs)
+>> -		:    "%ebx", "%ecx", "%edx", "%esi", "%edi", "memory");
+>> -#else
+>> -	asm volatile("pushl %%eax\n\t"
+>> -	    "movl 0(%%eax),%%edx\n\t"
+>> -	    "push %%edx\n\t"
+>> -	    "movl 4(%%eax),%%ebx\n\t"
+>> -	    "movl 8(%%eax),%%ecx\n\t"
+>> -	    "movl 12(%%eax),%%edx\n\t"
+>> -	    "movl 16(%%eax),%%esi\n\t"
+>> -	    "movl 20(%%eax),%%edi\n\t"
+>> -	    "popl %%eax\n\t"
+>> -	    "out %%al,$0xb2\n\t"
+>> -	    "out %%al,$0x84\n\t"
+>> -	    "xchgl %%eax,(%%esp)\n\t"
+>> -	    "movl %%ebx,4(%%eax)\n\t"
+>> -	    "movl %%ecx,8(%%eax)\n\t"
+>> -	    "movl %%edx,12(%%eax)\n\t"
+>> -	    "movl %%esi,16(%%eax)\n\t"
+>> -	    "movl %%edi,20(%%eax)\n\t"
+>> -	    "popl %%edx\n\t"
+>> -	    "movl %%edx,0(%%eax)\n\t"
+>> -	    "lahf\n\t"
+>> -	    "shrl $8,%%eax\n\t"
+>> -	    "andl $1,%%eax\n"
+>> -	    : "=a"(rc)
+>> -	    :    "a"(regs)
+>> -	    :    "%ebx", "%ecx", "%edx", "%esi", "%edi", "memory");
+>> -#endif
+>> -	if (rc != 0 || (regs->eax & 0xffff) == 0xffff || regs->eax == eax)
+>> -		rc = -EINVAL;
+>> +	asm volatile("out %%al,$0xb2\n\t"
+>> +		     "out %%al,$0x84\n\t"
+>> +		     "setc %0\n"
+>> +		     : "=mr" (carry),
+>> +		       "=a" (regs->eax),
+>> +		       "=b" (regs->ebx),
+>> +		       "=c" (regs->ecx),
+>> +		       "=d" (regs->edx),
+>> +		       "=S" (regs->esi),
+>> +		       "=D" (regs->edi)
+>> +		     : "a" (regs->eax),
+>> +		       "b" (regs->ebx),
+>> +		       "c" (regs->ecx),
+>> +		       "d" (regs->edx),
+>> +		       "S" (regs->esi),
+>> +		       "D" (regs->edi)
 > 
->  static const char * const temp_labels[] = {
->  	"CPU",
-> @@ -165,73 +165,38 @@ static int i8k_smm_func(void *par)
->  	int eax = regs->eax;
->  	int ebx = regs->ebx;
->  	long long duration;
-> -	int rc;
-> +	bool carry;
-
-I'd use an explicit 'unsigned char' not bool.
-Matches the type of the 'setcc' instriction.
-
->  	/* SMM requires CPU 0 */
->  	if (smp_processor_id() != 0)
->  		return -EBUSY;
+> If you use "+a" (etc) for the output registers you don't
+> need to respecify them as input registers.
 > 
-> -#if defined(CONFIG_X86_64)
-> -	asm volatile("pushq %%rax\n\t"
-> -		"movl 0(%%rax),%%edx\n\t"
-> -		"pushq %%rdx\n\t"
-> -		"movl 4(%%rax),%%ebx\n\t"
-> -		"movl 8(%%rax),%%ecx\n\t"
-> -		"movl 12(%%rax),%%edx\n\t"
-> -		"movl 16(%%rax),%%esi\n\t"
-> -		"movl 20(%%rax),%%edi\n\t"
-> -		"popq %%rax\n\t"
-> -		"out %%al,$0xb2\n\t"
-> -		"out %%al,$0x84\n\t"
-> -		"xchgq %%rax,(%%rsp)\n\t"
-> -		"movl %%ebx,4(%%rax)\n\t"
-> -		"movl %%ecx,8(%%rax)\n\t"
-> -		"movl %%edx,12(%%rax)\n\t"
-> -		"movl %%esi,16(%%rax)\n\t"
-> -		"movl %%edi,20(%%rax)\n\t"
-> -		"popq %%rdx\n\t"
-> -		"movl %%edx,0(%%rax)\n\t"
-> -		"pushfq\n\t"
-> -		"popq %%rax\n\t"
-> -		"andl $1,%%eax\n"
-> -		: "=a"(rc)
-> -		:    "a"(regs)
-> -		:    "%ebx", "%ecx", "%edx", "%esi", "%edi", "memory");
-> -#else
-> -	asm volatile("pushl %%eax\n\t"
-> -	    "movl 0(%%eax),%%edx\n\t"
-> -	    "push %%edx\n\t"
-> -	    "movl 4(%%eax),%%ebx\n\t"
-> -	    "movl 8(%%eax),%%ecx\n\t"
-> -	    "movl 12(%%eax),%%edx\n\t"
-> -	    "movl 16(%%eax),%%esi\n\t"
-> -	    "movl 20(%%eax),%%edi\n\t"
-> -	    "popl %%eax\n\t"
-> -	    "out %%al,$0xb2\n\t"
-> -	    "out %%al,$0x84\n\t"
-> -	    "xchgl %%eax,(%%esp)\n\t"
-> -	    "movl %%ebx,4(%%eax)\n\t"
-> -	    "movl %%ecx,8(%%eax)\n\t"
-> -	    "movl %%edx,12(%%eax)\n\t"
-> -	    "movl %%esi,16(%%eax)\n\t"
-> -	    "movl %%edi,20(%%eax)\n\t"
-> -	    "popl %%edx\n\t"
-> -	    "movl %%edx,0(%%eax)\n\t"
-> -	    "lahf\n\t"
-> -	    "shrl $8,%%eax\n\t"
-> -	    "andl $1,%%eax\n"
-> -	    : "=a"(rc)
-> -	    :    "a"(regs)
-> -	    :    "%ebx", "%ecx", "%edx", "%esi", "%edi", "memory");
-> -#endif
-> -	if (rc != 0 || (regs->eax & 0xffff) == 0xffff || regs->eax == eax)
-> -		rc = -EINVAL;
-> +	asm volatile("out %%al,$0xb2\n\t"
-> +		     "out %%al,$0x84\n\t"
-> +		     "setc %0\n"
-> +		     : "=mr" (carry),
-> +		       "=a" (regs->eax),
-> +		       "=b" (regs->ebx),
-> +		       "=c" (regs->ecx),
-> +		       "=d" (regs->edx),
-> +		       "=S" (regs->esi),
-> +		       "=D" (regs->edi)
-> +		     : "a" (regs->eax),
-> +		       "b" (regs->ebx),
-> +		       "c" (regs->ecx),
-> +		       "d" (regs->edx),
-> +		       "S" (regs->esi),
-> +		       "D" (regs->edi)
-
-If you use "+a" (etc) for the output registers you don't
-need to respecify them as input registers.
-
-> +		     : "cc");
-
-No need to specify "cc", it is always assumed clobbered.
-
-	David
-
+>> +		     : "cc");
 > 
->  	duration = ktime_us_delta(ktime_get(), calltime);
-> -	pr_debug("smm(0x%.4x 0x%.4x) = 0x%.4x  (took %7lld usecs)\n", eax, ebx,
-> -		 (rc ? 0xffff : regs->eax & 0xffff), duration);
-> +	pr_debug("smm(0x%.4x 0x%.4x) = 0x%.4x carry: %d (took %7lld usecs)\n",
-> +		 eax, ebx, regs->eax & 0xffff, carry, duration);
+> No need to specify "cc", it is always assumed clobbered.
 > 
-> -	return rc;
-> +	if (carry || (regs->eax & 0xffff) == 0xffff || regs->eax == eax)
-> +		return -EINVAL;
-> +
-> +	return 0;
->  }
+> 	David
 > 
->  /*
-> --
-> 2.30.2
-
--
-Registered Address Lakeside, Bramley Road, Mount Farm, Milton Keynes, MK1 1PT, UK
-Registration No: 1397386 (Wales)
+>>
+>>   	duration = ktime_us_delta(ktime_get(), calltime);
+>> -	pr_debug("smm(0x%.4x 0x%.4x) = 0x%.4x  (took %7lld usecs)\n", eax, ebx,
+>> -		 (rc ? 0xffff : regs->eax & 0xffff), duration);
+>> +	pr_debug("smm(0x%.4x 0x%.4x) = 0x%.4x carry: %d (took %7lld usecs)\n",
+>> +		 eax, ebx, regs->eax & 0xffff, carry, duration);
+>>
+>> -	return rc;
+>> +	if (carry || (regs->eax & 0xffff) == 0xffff || regs->eax == eax)
+>> +		return -EINVAL;
+>> +
+>> +	return 0;
+>>   }
+>>
+>>   /*
+>> --
+>> 2.30.2
+> 
+> -
+> Registered Address Lakeside, Bramley Road, Mount Farm, Milton Keynes, MK1 1PT, UK
+> Registration No: 1397386 (Wales)
+> 
 
