@@ -1,60 +1,175 @@
 From: Guenter Roeck <linux@roeck-us.net>
 Subject: Re: [PATCH v4] hwmon: (dell-smm) Improve assembly code
-Date: Wed, 23 Feb 2022 16:45:27 -0800
-Message-ID: <e0c0eac9-a66a-fc35-0864-2ca1ba7cb32f@roeck-us.net>
+Date: Wed, 2 Mar 2022 10:07:39 -0800
+Message-ID: <20220302180739.GA2523230@roeck-us.net>
 References: <20220220190851.17965-1-W_Armin@gmx.de>
- <20220222165432.GA255373@roeck-us.net> <20220222175150.qs32v4outislnqj6@pali>
- <b3cecea1376f4080929f47da2529685c@AcuMS.aculab.com>
- <4b5ca065-06a4-c1ff-ed16-3bbb038ee6e0@gmx.de>
- <63a04993864f4c08923ed753d83cdf37@AcuMS.aculab.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Return-path: <linux-hwmon-owner@vger.kernel.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=sender:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=oLxhe1+/q/ffytS2x1bnbij1SrGOn3CdIxFKv6xoCNQ=;
-        b=T1Pc4B23cN3s1FGEyr9jrL0b8gag+JUNzErCsCXYOhNTaC9lMQqhiVTDrXqC4kcDz5
-         4GBMrIYL7Oez63vIGGSOU70kgfUEkiQknd2HqL2t+N5Ohdln0utp/KlJrvhl3Fa6GBN0
-         bXyabAAVmmb/lusrMmTE/7s5MPg2a0nVzjeQ8lFHlDtm/rMXUSXXdHYL9PJWGDwEFc8Q
-         gMeg9uCvhL9izTnstMr83iWz8QKqjZuYYdZ0Vj/t9PB/vqMMjO2t+9w9mL5DHIM+lXpi
-         7RlG8RwYAdWVYIa7GH8QBsQuVeq6TKZYoWcEFiEucaDJB7l8XuAN21bWA0fpIxEUIqDD
-         kCgA==
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=J/s4xqCRoWiFmWXpzdAOAxlkHW471J5Hy/uYDHz0d/w=;
+        b=JGo4WaorBbqcjTp++mSkoEhTIVI9A4GY6eRo+ydHC3Ijjg633y9/PwTqXe9nGmy4eY
+         ZAYBWBwJ75GuA3NvGRfKn1gMonZO5Z5mFWIYvPSSZy+/d1Pl2gKyKKV5w/lhS3Sz8mPG
+         jyjjswc6Q6C5jqcQO274YdbbAKy2cDPN5ve5dC44/Vn7KPNsXTP5mcQKXH6qoyzu0+eT
+         TYlwuONO+bkgqqDSgeTs4d8JJQToUUk3+rt3z+pT6E5TewVGmGX+H1/AP7fPat+hAAzv
+         kxwNPLOo/O3N5C/7hGGiB7bqD9c3TEHT3iQUOXsyBj1WyFhIgMSDXIz97B+4aY+zTXE3
+         D7oQ==
 Sender: Guenter Roeck <groeck7@gmail.com>
-Content-Language: en-US
-In-Reply-To: <63a04993864f4c08923ed753d83cdf37@AcuMS.aculab.com>
+Content-Disposition: inline
+In-Reply-To: <20220220190851.17965-1-W_Armin@gmx.de>
 List-ID: <linux-assembly.vger.kernel.org>
-Content-Type: text/plain; charset="us-ascii"; format="flowed"
-To: David Laight <David.Laight@ACULAB.COM>, 'Armin Wolf' <W_Armin@gmx.de>, =?UTF-8?B?J1BhbGkgUm9ow6FyJw==?= <pali@kernel.org>
-Cc: "jdelvare@suse.com" <jdelvare@suse.com>, "linux-hwmon@vger.kernel.org" <linux-hwmon@vger.kernel.org>, "linux-assembly@vger.kernel.org" <linux-assembly@vger.kernel.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Armin Wolf <W_Armin@gmx.de>
+Cc: pali@kernel.org, jdelvare@suse.com, David.Laight@ACULAB.COM, linux-hwmon@vger.kernel.org, linux-assembly@vger.kernel.org, linux-kernel@vger.kernel.org
 
-On 2/23/22 14:35, David Laight wrote:
-> From: Armin Wolf
->> Sent: 23 February 2022 21:39
-> ...
->>> As far as this patch goes I think I'd add a 'stc' (set carry)
->>> instruction before the first 'outb'.
->>> Then if the 'something magic happens here' doesn't happen (because
->>> you aren't on the right kind of motherboard) the action fails.
->>>
->>> 	David
->>
->> We already check for such scenarios by checking if eax changed.
->> I would not set the carry flag before doing a SMM call since im
->> not sure if the firmware code always clears the carry flag when
->> the call was successful.
->> If for example the firmware code only sets the carry flag on
->> error and otherwise ignores the carry flag, we might create some
->> false negatives when a successful SMM call leaves the carry flag set.
+On Sun, Feb 20, 2022 at 08:08:51PM +0100, Armin Wolf wrote:
+> The new assembly code works on both 32 bit and 64 bit
+> cpus and allows for more compiler optimisations.
+> Since clang runs out of registers on 32 bit x86 when
+> using CC_OUT, we need to execute "setc" ourself.
+> Also modify the debug message so we can still see
+> the result (eax) when the carry flag was set.
 > 
-> If you are worried about that you should be clearing carry on entry.
+> Tested with 32 bit and 64 bit kernels on a Dell Inspiron 3505.
 > 
+> Signed-off-by: Armin Wolf <W_Armin@gmx.de>
 
-I agree, but now we have an argument for clearing carry (because the
-SMM code might not do it) and for setting carry (because the SMM code
-might not execute). I don't know which way to go, if any, but that
-would be a functional change and should be submitted as separate patch.
+I still did not get any Reviewed-by: or Tested-by: tags for this patch.
+There was a suggested change (to either set or clear the carry flag
+before executing the out instructions) but that would actually change
+the behavior of the code and should be implemented as separate patch
+to make it easy to revert without impact on this patch if needed.
+
+Unless someone steps up, that leaves this patch (unfortunately) in limbo.
 
 Guenter
+
+
+
+> ---
+> Changes in v4:
+> - reword commit message
+> 
+> Changes in v3:
+> - make carry an unsigned char
+> - use "+a", ... for output registers
+> - drop "cc" from clobbered list
+> 
+> Changes in v2:
+> - fix clang running out of registers on 32 bit x86
+> - modify debug message
+> ---
+>  drivers/hwmon/dell-smm-hwmon.c | 78 ++++++++--------------------------
+>  1 file changed, 18 insertions(+), 60 deletions(-)
+> 
+> --
+> 2.30.2
+> 
+> diff --git a/drivers/hwmon/dell-smm-hwmon.c b/drivers/hwmon/dell-smm-hwmon.c
+> index c5939e68586d..38d23a8e83f2 100644
+> --- a/drivers/hwmon/dell-smm-hwmon.c
+> +++ b/drivers/hwmon/dell-smm-hwmon.c
+> @@ -119,7 +119,7 @@ struct smm_regs {
+>  	unsigned int edx;
+>  	unsigned int esi;
+>  	unsigned int edi;
+> -} __packed;
+> +};
+> 
+>  static const char * const temp_labels[] = {
+>  	"CPU",
+> @@ -164,74 +164,32 @@ static int i8k_smm_func(void *par)
+>  	struct smm_regs *regs = par;
+>  	int eax = regs->eax;
+>  	int ebx = regs->ebx;
+> +	unsigned char carry;
+>  	long long duration;
+> -	int rc;
+> 
+>  	/* SMM requires CPU 0 */
+>  	if (smp_processor_id() != 0)
+>  		return -EBUSY;
+> 
+> -#if defined(CONFIG_X86_64)
+> -	asm volatile("pushq %%rax\n\t"
+> -		"movl 0(%%rax),%%edx\n\t"
+> -		"pushq %%rdx\n\t"
+> -		"movl 4(%%rax),%%ebx\n\t"
+> -		"movl 8(%%rax),%%ecx\n\t"
+> -		"movl 12(%%rax),%%edx\n\t"
+> -		"movl 16(%%rax),%%esi\n\t"
+> -		"movl 20(%%rax),%%edi\n\t"
+> -		"popq %%rax\n\t"
+> -		"out %%al,$0xb2\n\t"
+> -		"out %%al,$0x84\n\t"
+> -		"xchgq %%rax,(%%rsp)\n\t"
+> -		"movl %%ebx,4(%%rax)\n\t"
+> -		"movl %%ecx,8(%%rax)\n\t"
+> -		"movl %%edx,12(%%rax)\n\t"
+> -		"movl %%esi,16(%%rax)\n\t"
+> -		"movl %%edi,20(%%rax)\n\t"
+> -		"popq %%rdx\n\t"
+> -		"movl %%edx,0(%%rax)\n\t"
+> -		"pushfq\n\t"
+> -		"popq %%rax\n\t"
+> -		"andl $1,%%eax\n"
+> -		: "=a"(rc)
+> -		:    "a"(regs)
+> -		:    "%ebx", "%ecx", "%edx", "%esi", "%edi", "memory");
+> -#else
+> -	asm volatile("pushl %%eax\n\t"
+> -	    "movl 0(%%eax),%%edx\n\t"
+> -	    "push %%edx\n\t"
+> -	    "movl 4(%%eax),%%ebx\n\t"
+> -	    "movl 8(%%eax),%%ecx\n\t"
+> -	    "movl 12(%%eax),%%edx\n\t"
+> -	    "movl 16(%%eax),%%esi\n\t"
+> -	    "movl 20(%%eax),%%edi\n\t"
+> -	    "popl %%eax\n\t"
+> -	    "out %%al,$0xb2\n\t"
+> -	    "out %%al,$0x84\n\t"
+> -	    "xchgl %%eax,(%%esp)\n\t"
+> -	    "movl %%ebx,4(%%eax)\n\t"
+> -	    "movl %%ecx,8(%%eax)\n\t"
+> -	    "movl %%edx,12(%%eax)\n\t"
+> -	    "movl %%esi,16(%%eax)\n\t"
+> -	    "movl %%edi,20(%%eax)\n\t"
+> -	    "popl %%edx\n\t"
+> -	    "movl %%edx,0(%%eax)\n\t"
+> -	    "lahf\n\t"
+> -	    "shrl $8,%%eax\n\t"
+> -	    "andl $1,%%eax\n"
+> -	    : "=a"(rc)
+> -	    :    "a"(regs)
+> -	    :    "%ebx", "%ecx", "%edx", "%esi", "%edi", "memory");
+> -#endif
+> -	if (rc != 0 || (regs->eax & 0xffff) == 0xffff || regs->eax == eax)
+> -		rc = -EINVAL;
+> +	asm volatile("out %%al,$0xb2\n\t"
+> +		     "out %%al,$0x84\n\t"
+> +		     "setc %0\n"
+> +		     : "=mr" (carry),
+> +		       "+a" (regs->eax),
+> +		       "+b" (regs->ebx),
+> +		       "+c" (regs->ecx),
+> +		       "+d" (regs->edx),
+> +		       "+S" (regs->esi),
+> +		       "+D" (regs->edi));
+> 
+>  	duration = ktime_us_delta(ktime_get(), calltime);
+> -	pr_debug("smm(0x%.4x 0x%.4x) = 0x%.4x  (took %7lld usecs)\n", eax, ebx,
+> -		 (rc ? 0xffff : regs->eax & 0xffff), duration);
+> +	pr_debug("smm(0x%.4x 0x%.4x) = 0x%.4x carry: %d (took %7lld usecs)\n",
+> +		 eax, ebx, regs->eax & 0xffff, carry, duration);
+> 
+> -	return rc;
+> +	if (carry || (regs->eax & 0xffff) == 0xffff || regs->eax == eax)
+> +		return -EINVAL;
+> +
+> +	return 0;
+>  }
+> 
+>  /*
