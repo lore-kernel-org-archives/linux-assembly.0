@@ -1,21 +1,21 @@
 From: Guenter Roeck <linux@roeck-us.net>
 Subject: Re: [PATCH v4] hwmon: (dell-smm) Improve assembly code
-Date: Wed, 2 Mar 2022 10:07:39 -0800
-Message-ID: <20220302180739.GA2523230@roeck-us.net>
+Date: Mon, 20 Jun 2022 08:21:10 -0700
+Message-ID: <20220620152110.GA2763893@roeck-us.net>
 References: <20220220190851.17965-1-W_Armin@gmx.de>
 Mime-Version: 1.0
-Return-path: <linux-hwmon-owner@vger.kernel.org>
+Return-path: <linux-assembly-owner@vger.kernel.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=sender:date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=J/s4xqCRoWiFmWXpzdAOAxlkHW471J5Hy/uYDHz0d/w=;
-        b=JGo4WaorBbqcjTp++mSkoEhTIVI9A4GY6eRo+ydHC3Ijjg633y9/PwTqXe9nGmy4eY
-         ZAYBWBwJ75GuA3NvGRfKn1gMonZO5Z5mFWIYvPSSZy+/d1Pl2gKyKKV5w/lhS3Sz8mPG
-         jyjjswc6Q6C5jqcQO274YdbbAKy2cDPN5ve5dC44/Vn7KPNsXTP5mcQKXH6qoyzu0+eT
-         TYlwuONO+bkgqqDSgeTs4d8JJQToUUk3+rt3z+pT6E5TewVGmGX+H1/AP7fPat+hAAzv
-         kxwNPLOo/O3N5C/7hGGiB7bqD9c3TEHT3iQUOXsyBj1WyFhIgMSDXIz97B+4aY+zTXE3
-         D7oQ==
+        bh=IVYCXgnk9I7FC9XCv36dSAgZtCs0Nch6WzYcIDnwYsc=;
+        b=RGfB4iFgqijRsYxkMmPAp6Yy4zjX/O7WbXtzqQdUPXydPm9cYv4xITbvAd9SwDB7gS
+         PtMxaK/hw3sAopmIi1S1oFi+kN4MrAP40DuTtgH9Wo0cGjOYA6uLaUDJZiO9TIKnNRIE
+         BOLzTNseGQuQNJjpSoI5yC1yyqIaVT1+sd5JtwC/+N+yYKSTh/5rjwzYmkYlIXcBuVmO
+         KK5V5nQAbahIBCrh5DZ4V8XpIfcs5TWADS6jmpJ495GNJSbvsgl2hs7mYsufsnEJbgZu
+         Lr7gqmH2preednhNn9U7bv1Nc24QnsCQcequaCZ9rfIrnA8fzqTCm+bruiI6IzJgZoWb
+         1pAw==
 Sender: Guenter Roeck <groeck7@gmail.com>
 Content-Disposition: inline
 In-Reply-To: <20220220190851.17965-1-W_Armin@gmx.de>
@@ -37,17 +37,13 @@ On Sun, Feb 20, 2022 at 08:08:51PM +0100, Armin Wolf wrote:
 > 
 > Signed-off-by: Armin Wolf <W_Armin@gmx.de>
 
-I still did not get any Reviewed-by: or Tested-by: tags for this patch.
-There was a suggested change (to either set or clear the carry flag
-before executing the out instructions) but that would actually change
-the behavior of the code and should be implemented as separate patch
-to make it easy to revert without impact on this patch if needed.
-
-Unless someone steps up, that leaves this patch (unfortunately) in limbo.
+I still have this patch hanging around, with no one willing to tell
+me if there are real problems with it. Given that, I decided to just
+go ahead and apply it to linux-next. If there turns out to be problems,
+we'll see it soon enough and can always revert it. If not, the change
+was worth it, so let's just accept the risk.
 
 Guenter
-
-
 
 > ---
 > Changes in v4:
