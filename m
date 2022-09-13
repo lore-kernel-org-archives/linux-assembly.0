@@ -1,36 +1,23 @@
-From: liu hang <jwegoni@outlook.com>
-Subject: Need Help: Why there are two  local labels "1:" in
- arch/x86/boot/header.S
-Date: Tue, 13 Sep 2022 03:57:48 +0000
-Message-ID: <SYBP282MB02504399F3DCE931EA88A613AB479@SYBP282MB0250.AUSP282.PROD.OUTLOOK.COM>
+From: Brian Raiter <breadbox@muppetlabs.com>
+Subject: Re: Need Help: Why there are two  local labels "1:" in arch/x86/boot/header.S
+Date: Mon, 12 Sep 2022 21:16:04 -0700
+Message-ID: <25376.1028.158994.494072@eidolon.muppetlabs.com>
+References: <SYBP282MB02504399F3DCE931EA88A613AB479@SYBP282MB0250.AUSP282.PROD.OUTLOOK.COM>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Content-Transfer-Encoding: 7bit
 Return-path: <linux-assembly-owner@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=D1DLWVEK68bFhM2ai/0eZ92hvM09T6RgK1XwvNoKsik=;
- b=ntaEAInXOe23F+SuC3eJLCX/3jwYaQIToo22gfaM2MlWe0GjIoaztMXYrWqsBwvQfiPMc0Wm/dFo7eNaJw4EpcErQN/Va9LtCSDXISbSo/A876Nk65JPTyiriKd7EuziIVatUNYZooyDCX/f/ygzSoV3wlXIYkJEMNH2ONooCpVoQxOt8Nt0VZMRcBKRzaPMKjktzd+n6MqDBFgeu/YUmTAFPYEDDZPXEIXeR7B089dpbxEDbX225pwN/GdJzah2no3HWK/wNF8icyOSfPM84DWd+cxlOBFORr1juHK5JBmPOZfqvxLOuWlbNTLmNxVu29ue4B6b5g0vSNF6cvhHqg==
-Content-Language: zh-CN
+In-Reply-To: <SYBP282MB02504399F3DCE931EA88A613AB479@SYBP282MB0250.AUSP282.PROD.OUTLOOK.COM>
 List-ID: <linux-assembly.vger.kernel.org>
-To: "linux-assembly@vger.kernel.org" <linux-assembly@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+To: liu hang <jwegoni@outlook.com>
+Cc: "linux-assembly@vger.kernel.org" <linux-assembly@vger.kernel.org>
 
-VGhlIGFjdHVhbCBwb2ludCBvZiBsaW51eCBrZXJuZWwgc3RhcnRzIGZyb20gX3N0YXJ0LCB3aGlj
-aCBpcyA1MTJieXRlIG9mZnNldCBmcm9tIDB4N2MwMAoKwqAgwqAg4oCC4oCCLmdsb2Js4oCC4oCC
-4oCC4oCC4oCC4oCCX3N0YXJ0CsKgIMKgIF9zdGFydDoKwqAgwqAg4oCC4oCC4oCC4oCC4oCC4oCC
-4oCC4oCCIyBFeHBsaWNpdGx5IGVudGVyIHRoaXMgYXMgYnl0ZXMsIG9yIHRoZSBhc3NlbWJsZXIK
-wqAgwqAg4oCC4oCC4oCC4oCC4oCC4oCC4oCC4oCCIyB0cmllcyB0byBnZW5lcmF0ZSBhIDMtYnl0
-ZSBqdW1wIGhlcmUsIHdoaWNoIGNhdXNlcwrCoCDCoCDigILigILigILigILigILigILigILigIIj
-IGV2ZXJ5dGhpbmcgZWxzZSB0byBwdXNoIG9mZiB0byB0aGUgd3Jvbmcgb2Zmc2V0LgrCoCDCoCDi
-gILigILigILigILigILigILigILigIIuYnl0ZeKAgjB4ZWLigILigILigILigILigILigILigILi
-gIIjIHNob3J0ICgyLWJ5dGUpIGp1bXAKwqAgwqAg4oCC4oCC4oCC4oCC4oCC4oCC4oCC4oCCLmJ5
-dGXigIJzdGFydF9vZl9zZXR1cC0xZgoKYW5kIGl0IGp1bXBzIHRvIHN0YXJ0X29mX3NldHVwLTFm
-IMKgLCAxZiDCoHN0YW5kcyBmb3IgbG9jYWwgbGFibGUgMTogYnV0IHRoZXJlIGFyZSB0d28gbG9j
-YWwgbGFiZWxzIDE6IMKgaW4ga2VybmVsIDUuMTkgaGVhZGVyLlMKI2xpbmUgMzA1CsKgIMKgIDE6
-CgrCoCDCoCDigILigIIjIFBhcnQgMiBvZiB0aGUgaGVhZGVyLCBmcm9tIHRoZSBvbGQgc2V0dXAu
-UwoKI2xpbmUgNjA5CsKgIMKgIDE64oCC4oCC4oCC4oCC4oCC4oCCYWRkd+KAguKAgiRTVEFDS19T
-SVpFLCAlZHggCsKgIMKgIOKAguKAgmpuY+KAguKAguKAgjJmCsKgIMKgIOKAguKAgnhvcnfigILi
-gIIlZHgsICVkeOKAguKAguKAguKAgiMgUHJldmVudCB3cmFwYXJvdW5kCgpjb3VsZCBhbnlvbmUg
-cGxlYXNlIGhlbHAgbWUgdW5kZXJzdGFuZCBob3cgdGhlIGFzc2VtYmxlciBrbm93cyB0byBqdW1w
-IHdoZXJlIChJIGtub3cgaXQganVtcHMgdG8gbGluZSAzMDUgYnV0IHdoeT8p
+> and it jumps to start_of_setup-1f, 1f stands for local lable 1:
+> but there are two local labels 1: in kernel 5.19 header.S
+
+The "1f" syntax refers to the first line labeled "1" that appears next
+-- the "f" stands for "forwards". A "1b" would reference the first "1"
+going "backwards". Under this system, there are no requirements that
+labels be unique; each reference just refers to the nearest label.
+
+b
