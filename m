@@ -1,103 +1,111 @@
-Received: from smtp-fw-80006.amazon.com (smtp-fw-80006.amazon.com [99.78.197.217])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A788A7E6;
-	Tue,  2 Apr 2024 02:30:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=99.78.197.217
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A6B7215A482;
+	Tue,  2 Apr 2024 16:48:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712025040; cv=none; b=Vdx6e9uxaSrPz6YJ27DJ1YUv2KWjNsoXqspR3cAWm/krsBkgC1Jm18zRQR8Uhbv7G4Zn3RNNQhMrJszX/lRDMps7qZNmrB7qEDOuO81z2GR303lom6tk4eAoMTmL/0gOyNrOIHdGify/9/TaN+4im6W62AYpoVNrdbjftbvDPaE=
+	t=1712076536; cv=none; b=YQMm4ZsLccOgmEfzNOW9bd7ENJ8gr5kCg2bR7P2gqKnooJm2RRRbeLk+Mz4bhDbEQuWJtMAEoUKdqmsc2q8obf97iDGx4UEqPsIn+xXBT9mb+femz2mnTNpnOzeUPZi5kbTAHB/UWjCvngbyj2pFmLPeJuLmX+6ljNmzH4AAUoo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712025040; c=relaxed/simple;
-	bh=PpSXo1QhcMevwm7I+K7iRFo96h88oIV/8+9o9/wUcnU=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=nV5gSzlyiCxLTPW78rXLDGTTNT09MgeiynIkgDCoAFnHBKvbCRnolYxdO26C7CUouGk3C2kVoyuO2vq9kTfcdy1w9C4xUJpSPXShFGSSw2jrdt+68VP41/MCOmxsZR3cLTEXU3qRs46jpUvsIkTPBKYbr7EkfrcP5d/6rfUQkSs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.com; spf=pass smtp.mailfrom=amazon.com; dkim=pass (1024-bit key) header.d=amazon.com header.i=@amazon.com header.b=h1uzAWgw; arc=none smtp.client-ip=99.78.197.217
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=amazon.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amazon.com header.i=@amazon.com header.b="h1uzAWgw"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
-  t=1712025039; x=1743561039;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:content-id:content-transfer-encoding:
-   mime-version;
-  bh=PpSXo1QhcMevwm7I+K7iRFo96h88oIV/8+9o9/wUcnU=;
-  b=h1uzAWgwI7ITpOhT1CRD4wRPpUbXcgkHo67+ubu1QKQHgMiWTMjBtnxM
-   Y2dOnwtdyoTycs2mj/ikSs+6sutqF/WoAlbuAEkBf3UoE+2YkD546Amca
-   EI61fL54lysqTAWIxOqK6vzbhqMKrN/4/5cQizBPZXCX07906zIkheJ59
-   M=;
-X-IronPort-AV: E=Sophos;i="6.07,173,1708387200"; 
-   d="scan'208";a="284455721"
-Received: from pdx4-co-svc-p1-lb2-vlan3.amazon.com (HELO smtpout.prod.us-west-2.prod.farcaster.email.amazon.dev) ([10.25.36.214])
-  by smtp-border-fw-80006.pdx80.corp.amazon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Apr 2024 02:30:33 +0000
-Received: from EX19MTAUWC002.ant.amazon.com [10.0.38.20:38275]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.56.234:2525] with esmtp (Farcaster)
- id b76e8157-aec4-494c-8c62-9b3ebbe5bb57; Tue, 2 Apr 2024 02:30:24 +0000 (UTC)
-X-Farcaster-Flow-ID: b76e8157-aec4-494c-8c62-9b3ebbe5bb57
-Received: from EX19D002UWA002.ant.amazon.com (10.13.138.246) by
- EX19MTAUWC002.ant.amazon.com (10.250.64.143) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1258.28; Tue, 2 Apr 2024 02:30:24 +0000
-Received: from EX19D001UWA003.ant.amazon.com (10.13.138.211) by
- EX19D002UWA002.ant.amazon.com (10.13.138.246) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.28;
- Tue, 2 Apr 2024 02:30:24 +0000
-Received: from EX19D001UWA003.ant.amazon.com ([fe80::256a:26de:3ee6:48a2]) by
- EX19D001UWA003.ant.amazon.com ([fe80::256a:26de:3ee6:48a2%7]) with mapi id
- 15.02.1258.028; Tue, 2 Apr 2024 02:30:24 +0000
-From: "Okanovic, Haris" <harisokn@amazon.com>
-To: "linux-pm@vger.kernel.org" <linux-pm@vger.kernel.org>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"linux-assembly@vger.kernel.org" <linux-assembly@vger.kernel.org>
-CC: "peterz@infradead.org" <peterz@infradead.org>, "Saidi, Ali"
-	<alisaidi@amazon.com>, "Blake, Geoff" <blakgeof@amazon.com>, "Silver, Brian"
-	<silverbr@amazon.com>
-Subject: Re: [PATCH 3/3] arm64: cpuidle: Add arm_poll_idle
-Thread-Topic: [PATCH 3/3] arm64: cpuidle: Add arm_poll_idle
-Thread-Index: AQHahJ/D8+a2/m+FEk+Q2bqBNHXo/LFUQbcA
-Date: Tue, 2 Apr 2024 02:30:23 +0000
-Message-ID: <738769693c52ed23e35850325ee414ab131a06ea.camel@amazon.com>
+	s=arc-20240116; t=1712076536; c=relaxed/simple;
+	bh=H4NbtFoqyo/GMJxvalTUhJ8tEsp+AaFSnlTfV6/ANRE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=kNkEQnozOAE4tEg3IxMDfQplkeQyCmdb6aCGnQUELQ0zhqtZ4HLGU5BPjzepBvyGFYA/dvJiDISVUFqqqgHoF952RjCIhNt+0bhXEdlbHE8+1+q7uJP7B5ey02CEQNyZ6CXs9p7+S+cENK1WHyNE/nY5uayh4kHgjoCm93Babl4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 6DDD51007;
+	Tue,  2 Apr 2024 09:49:25 -0700 (PDT)
+Received: from FVFF77S0Q05N (unknown [10.57.16.234])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 0A0AE3F7B4;
+	Tue,  2 Apr 2024 09:48:52 -0700 (PDT)
+Date: Tue, 2 Apr 2024 17:48:46 +0100
+From: Mark Rutland <mark.rutland@arm.com>
+To: Haris Okanovic <harisokn@amazon.com>
+Cc: linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+	linux-assembly@vger.kernel.org, peterz@infradead.org
+Subject: Re: [PATCH 2/3] arm64: add __READ_ONCE_EX()
+Message-ID: <Zgw27hoEwKxAkyjh@FVFF77S0Q05N>
 References: <20240402014706.3969151-1-harisokn@amazon.com>
-	 <20240402014706.3969151-3-harisokn@amazon.com>
-In-Reply-To: <20240402014706.3969151-3-harisokn@amazon.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <A5B816E60B1093468C4B39A6876BD3EC@amazon.com>
-Content-Transfer-Encoding: base64
+ <20240402014706.3969151-2-harisokn@amazon.com>
 Precedence: bulk
 X-Mailing-List: linux-assembly@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
 List-Subscribe: <mailto:linux-assembly+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-assembly+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240402014706.3969151-2-harisokn@amazon.com>
 
-T24gTW9uLCAyMDI0LTA0LTAxIGF0IDIwOjQ3IC0wNTAwLCBIYXJpcyBPa2Fub3ZpYyB3cm90ZToK
-PiArc3RhdGljIGludCBfX2NwdWlkbGUgYXJtX2lkbGVfd2ZlX3BvbGwoc3RydWN0IGNwdWlkbGVf
-ZGV2aWNlICpkZXYsCj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgc3RydWN0IGNwdWlkbGVfZHJpdmVyICpkcnYsIGludCBpZHgp
-Cj4gK3sKPiArwqDCoMKgwqDCoMKgwqB1NjQgdGltZV9zdGFydCwgdGltZV9saW1pdDsKPiArCj4g
-K8KgwqDCoMKgwqDCoMKgdGltZV9zdGFydCA9IGxvY2FsX2Nsb2NrKCk7Cj4gK8KgwqDCoMKgwqDC
-oMKgZGV2LT5wb2xsX3RpbWVfbGltaXQgPSBmYWxzZTsKPiArCj4gK8KgwqDCoMKgwqDCoMKgbG9j
-YWxfaXJxX2VuYWJsZSgpOwoKUmUgdGhpcyBjb21tZW50IGZyb20gUGV0ZXIgWmlqbHN0cmEgWzFd
-LCBzaG91bGQgSSB1c2UKcmF3X2xvY2FsX2lycV9lbmFibGUoKSBpbnN0ZWFkPyBJIHNlZSBleGFt
-cGxlcyBvZiBib3RoIHVuZGVyCmRyaXZlcnMvY3B1aWRsZS8uCgpbMV0KaHR0cHM6Ly9lbGl4aXIu
-Ym9vdGxpbi5jb20vbGludXgvdjYuOS1yYzIvc291cmNlL2luY2x1ZGUvbGludXgvY3B1aWRsZS5o
-I0wxMTkKCj4gKwo+ICvCoMKgwqDCoMKgwqDCoGlmIChjdXJyZW50X3NldF9wb2xsaW5nX2FuZF90
-ZXN0KCkpCj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoGdvdG8gZW5kOwo+ICsKPiAr
-wqDCoMKgwqDCoMKgwqB0aW1lX2xpbWl0ID0gY3B1aWRsZV9wb2xsX3RpbWUoZHJ2LCBkZXYpOwo+
-ICsKPiArwqDCoMKgwqDCoMKgwqBkbyB7Cj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oC8vIGV4Y2x1c2l2ZSByZWFkIGFybXMgdGhlIG1vbml0b3IgZm9yIHdmZQo+ICvCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqBpZiAoX19SRUFEX09OQ0VfRVgoY3VycmVudF90aHJlYWRfaW5m
-bygpLT5mbGFncykgJgo+IF9USUZfTkVFRF9SRVNDSEVEKQo+ICvCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgZ290byBlbmQ7Cj4gKwo+ICvCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqAvLyBtYXkgZXhpdCBwcmVtYXR1cmVseSwgc2VlIEFSTV9BUkNIX1RJ
-TUVSX0VWVFNUUkVBTQo+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqB3ZmUoKTsKPiAr
-wqDCoMKgwqDCoMKgwqB9IHdoaWxlIChsb2NhbF9jbG9jaygpIC0gdGltZV9zdGFydCA8IHRpbWVf
-bGltaXQpOwo+ICsKPiArwqDCoMKgwqDCoMKgwqBkZXYtPnBvbGxfdGltZV9saW1pdCA9IHRydWU7
-Cj4gKwo+ICtlbmQ6Cj4gK8KgwqDCoMKgwqDCoMKgY3VycmVudF9jbHJfcG9sbGluZygpOwo+ICvC
-oMKgwqDCoMKgwqDCoHJldHVybiBpZHg7Cj4gK30KPiArCgpUaGFua3MsCkhhcmlzIE9rYW5vdmlj
-Cgo=
+On Mon, Apr 01, 2024 at 08:47:05PM -0500, Haris Okanovic wrote:
+> Perform an exclusive load, which atomically loads a word and arms the
+> execusive monitor to enable wfe() polling of an address.
+> 
+> Adding this macro in preparation for an arm64 cpuidle driver which
+> supports a wfe() based polling state.
+> 
+> https://developer.arm.com/documentation/dht0008/a/arm-synchronization-primitives/exclusive-accesses/exclusive-monitors
+> 
+> Signed-off-by: Haris Okanovic <harisokn@amazon.com>
+> ---
+>  arch/arm64/include/asm/readex.h | 46 +++++++++++++++++++++++++++++++++
+>  1 file changed, 46 insertions(+)
+>  create mode 100644 arch/arm64/include/asm/readex.h
+> 
+> diff --git a/arch/arm64/include/asm/readex.h b/arch/arm64/include/asm/readex.h
+> new file mode 100644
+> index 000000000000..51963c3107e1
+> --- /dev/null
+> +++ b/arch/arm64/include/asm/readex.h
+> @@ -0,0 +1,46 @@
+> +/* SPDX-License-Identifier: GPL-2.0 */
+> +/*
+> + * Based on arch/arm64/include/asm/rwonce.h
+> + *
+> + * Copyright (C) 2020 Google LLC.
+> + * Copyright (C) 2024 Amazon.com, Inc. or its affiliates.
+> + */
+> +
+> +#ifndef __ASM_READEX_H
+> +#define __ASM_READEX_H
+> +
+> +#define __LOAD_EX(sfx, regs...) "ldaxr" #sfx "\t" #regs
+> +
+> +#define __READ_ONCE_EX(x)						\
+> +({									\
+> +	typeof(&(x)) __x = &(x);					\
+> +	int atomic = 1;							\
+> +	union { __unqual_scalar_typeof(*__x) __val; char __c[1]; } __u;	\
+> +	switch (sizeof(x)) {						\
+> +	case 1:								\
+> +		asm volatile(__LOAD_EX(b, %w0, %1)			\
+> +			: "=r" (*(__u8 *)__u.__c)			\
+> +			: "Q" (*__x) : "memory");			\
+> +		break;							\
+> +	case 2:								\
+> +		asm volatile(__LOAD_EX(h, %w0, %1)			\
+> +			: "=r" (*(__u16 *)__u.__c)			\
+> +			: "Q" (*__x) : "memory");			\
+> +		break;							\
+> +	case 4:								\
+> +		asm volatile(__LOAD_EX(, %w0, %1)			\
+> +			: "=r" (*(__u32 *)__u.__c)			\
+> +			: "Q" (*__x) : "memory");			\
+> +		break;							\
+> +	case 8:								\
+> +		asm volatile(__LOAD_EX(, %0, %1)			\
+> +			: "=r" (*(__u64 *)__u.__c)			\
+> +			: "Q" (*__x) : "memory");			\
+> +		break;							\
+> +	default:							\
+> +		atomic = 0;						\
+> +	}								\
+> +	atomic ? (typeof(*__x))__u.__val : (*(volatile typeof(__x))__x);\
+> +})
+
+Why can't you use the existing smp_cond_load_relaxed() or
+smp_cond_load_acquire()?
+
+I don't believe this is necessary.
+
+Mark.
