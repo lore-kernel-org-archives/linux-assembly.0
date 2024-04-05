@@ -1,383 +1,650 @@
-Received: from smtp-fw-52004.amazon.com (smtp-fw-52004.amazon.com [52.119.213.154])
+Received: from mx0a-00069f02.pphosted.com (mx0a-00069f02.pphosted.com [205.220.165.32])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 268D817333B;
-	Fri,  5 Apr 2024 20:05:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=52.119.213.154
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712347552; cv=none; b=qmTiBoQOgiYwMXh8OGH9ObSiktV4zLMgYvsrTV4fqTC/JXRfghPz9l8E7MPduwT0XpjpAkSEq4FndZ/YJwghCLNaCbqUy0c6P2VG2SslaTq/Kom7tK3nilUqQWc+D9Jy1edYM1Tw1t8QyZYekx6vri6DJtuAYIa4Nh7noQ2rtdM=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712347552; c=relaxed/simple;
-	bh=euQkJ98ZCMkpzQJfRErU+YVkLCjzZGATCjhrKap70dM=;
-	h=Subject:From:To:CC:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=kw+UERjVJWJJlfJW1y/NbAnvV+/HyElNAtTW6qUxGFvaRlt2oWbhxEwKpUnNbWDJCJ/F99mnnbjEWDjWhAoIFR4KOuHh29T0xMsyAELgGyAquOvA/dV2VugIB+YlfLL6Ibm4oM25Auu9XbWFV/AXP9sK2Ty3D/bNPvuLtS2/vWw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.com; spf=pass smtp.mailfrom=amazon.com; dkim=pass (1024-bit key) header.d=amazon.com header.i=@amazon.com header.b=eBHnQhB2; arc=none smtp.client-ip=52.119.213.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=amazon.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6312F15EFDA;
+	Fri,  5 Apr 2024 20:21:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=205.220.165.32
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1712348516; cv=fail; b=QFe2n40knjabODEScLbSgze1FFit850xx5n4kwzIKnZKX0nvxMMLED8L7fNfTrCYJYzlP29y9dRKniEoU9tFx2+DpkchnAMXxFIA/jNtsAlNdUe0aIKgjCcyGwrU7ovAq45F62TWDk6epOHZyN6GEWpB/geMZf2inneI0PCPiew=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1712348516; c=relaxed/simple;
+	bh=Kg+IwcdZxCqpHgZCM794pRVIyQonhkkxBq+lOwXlwkM=;
+	h=References:From:To:Cc:Subject:In-reply-to:Date:Message-ID:
+	 Content-Type:MIME-Version; b=HDnPfP2ebCCqjgu1zrzGZZwJ2ZMANCKRNtKVgqRM4t/n9Xr4S+oZi+EWmUCkF4+KjzDlbHX94lfVQQGGqLkOs2a6+490ewVI41MUCbPNyOiPNdiZzC9iOOi9zvBnZ4HPdJnbP+ARNnk0jfVVKyHDUGpeuhjJfUSC+eR3x4tuppA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=oracle.com; spf=pass smtp.mailfrom=oracle.com; dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b=P/wMAvMp; dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b=CD79Sj+I; arc=fail smtp.client-ip=205.220.165.32
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=oracle.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oracle.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amazon.com header.i=@amazon.com header.b="eBHnQhB2"
+	dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b="P/wMAvMp";
+	dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b="CD79Sj+I"
+Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
+	by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 435Jg96t003200;
+	Fri, 5 Apr 2024 20:21:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=references : from :
+ to : cc : subject : in-reply-to : date : message-id : content-type :
+ mime-version; s=corp-2023-11-20;
+ bh=jghBupqZJ1T6b3taAccZ3hSHTlwlNhnMi4+y+ua+EiE=;
+ b=P/wMAvMp+X6wKpkFlhzW+UuTKtM4lgnjRkffq+CiSbv9MXLUUIZEEYo6+Y3hYibkBr8v
+ EW8fvFkfQlQUF6fSdkFatfym4LSjHgv8xDLfjsGUD6QDVRdZfnCZJfk0oxx6Rouu/8Ci
+ /00nYyWMmyM71IcvVcxkFfOQ81X6JqjPcp0EhD2tHOvG2rBJ5Jw0xATcOQt7WE9WFXVR
+ Vrn2MP4QjvSg/uoa4Y+I4q15kykQRlTlnBSfMcGg1UzfvDmjz5CB0jbIoiYEtd2RBmrd
+ sW1JVNO3ooYmEecm1ofQ/25zEzZEpHGlNvBO0To+IhuYs/WcUeUa4WbYTp0FhxBfBEh1 kA== 
+Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
+	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3x9evyvauu-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Fri, 05 Apr 2024 20:21:43 +0000
+Received: from pps.filterd (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+	by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.17.1.19/8.17.1.19) with ESMTP id 435Jj5pr024284;
+	Fri, 5 Apr 2024 20:21:43 GMT
+Received: from nam11-dm6-obe.outbound.protection.outlook.com (mail-dm6nam11lp2169.outbound.protection.outlook.com [104.47.57.169])
+	by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id 3x9empmak0-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Fri, 05 Apr 2024 20:21:43 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=fF26S74G3/f9w//txSuURF/1sd81FdpHd8y0HzPPKAMnxttBxIbyLuoDcJ9Vl5aieZlxwsurqHJuOscaSTkPP6Jyo36tovdEeU8h3i6ePNMXb8RGF7rKTf88islzdoZex3nXKzKpLfETkKspyPmX6n4Y5n2fW0XIwSuY9xwoJFW8fo65CHFMQitY2SEOOQcb/Sy9IRPFvGUOYdQtmYgSQAOfd0P5Eagcu2q03nYrFAREmUeCE3rnZFpyZRypSSToL75523c7sDDtJoekmZOxyvVaqVs0IxKLFRoq9ISKwMKIFEMH8KhYsEYh0GLrQeNaSD4FYccoaS6MSlH3fJU7Gg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=jghBupqZJ1T6b3taAccZ3hSHTlwlNhnMi4+y+ua+EiE=;
+ b=jigVNlALS/8yoIXtuYUpoGnQZu4jHdVjOCBsOG/wBhX+qAbr/DeziuxwpW/4N43uiveCg6f5b0Nr8aLD8Y4F++dA7mZLGyGTBJ1S2lCjEgSo3W8yVxUyW8GkJOVDII/HKgejhLVxhM9lwuu7I4m7sjjNUAJo9a2qHGeTmokvuMFeUjtHAmgmdlzJNhobbYj8saXC5f1InG7ZIApTl4Lw9vhiT33yVkcoUEKtxs3ZuH9CqGhWqpU4r8rtcYEzldVCfIVgYB4nDENJkrsdjp3nKai+E1JeAMMmWX6ZhrdEWg1MKye/rCSap/dU4QyI8gJHrgDB5dAhWnKVGk84ooICUw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
-  t=1712347551; x=1743883551;
-  h=from:to:cc:date:message-id:references:in-reply-to:
-   content-id:content-transfer-encoding:mime-version:subject;
-  bh=euQkJ98ZCMkpzQJfRErU+YVkLCjzZGATCjhrKap70dM=;
-  b=eBHnQhB2PWq01ovS+15zznLLIuNvDOBpICnoPYHABJkMbadrsKSQxAbo
-   XDp2Bykw2cv137g5Je2cGrXzdWcCbomvBBkC2Ded4XDZ2b3zUcZbKdpR0
-   ii+si0QXiggqVRJ6vXzwpdxC337KImeSz9GSuRsQ8j7ZwY5e7NgkVkEd6
-   c=;
-X-IronPort-AV: E=Sophos;i="6.07,182,1708387200"; 
-   d="scan'208";a="196816027"
-Subject: Re: [PATCH 3/3] arm64: cpuidle: Add arm_poll_idle
-Thread-Topic: [PATCH 3/3] arm64: cpuidle: Add arm_poll_idle
-Received: from iad12-co-svc-p1-lb1-vlan2.amazon.com (HELO smtpout.prod.us-west-2.prod.farcaster.email.amazon.dev) ([10.43.8.2])
-  by smtp-border-fw-52004.iad7.amazon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Apr 2024 20:05:48 +0000
-Received: from EX19MTAUWC001.ant.amazon.com [10.0.38.20:27925]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.59.87:2525] with esmtp (Farcaster)
- id 30190c67-a54a-4195-9bc2-b1a5f548f3b5; Fri, 5 Apr 2024 20:05:47 +0000 (UTC)
-X-Farcaster-Flow-ID: 30190c67-a54a-4195-9bc2-b1a5f548f3b5
-Received: from EX19D002UWA003.ant.amazon.com (10.13.138.235) by
- EX19MTAUWC001.ant.amazon.com (10.250.64.174) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1258.28; Fri, 5 Apr 2024 20:05:46 +0000
-Received: from EX19D001UWA003.ant.amazon.com (10.13.138.211) by
- EX19D002UWA003.ant.amazon.com (10.13.138.235) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.28;
- Fri, 5 Apr 2024 20:05:45 +0000
-Received: from EX19D001UWA003.ant.amazon.com ([fe80::256a:26de:3ee6:48a2]) by
- EX19D001UWA003.ant.amazon.com ([fe80::256a:26de:3ee6:48a2%7]) with mapi id
- 15.02.1258.028; Fri, 5 Apr 2024 20:05:45 +0000
-From: "Okanovic, Haris" <harisokn@amazon.com>
-To: "mark.rutland@arm.com" <mark.rutland@arm.com>
-CC: "Silver, Brian" <silverbr@amazon.com>, "peterz@infradead.org"
-	<peterz@infradead.org>, "linux-pm@vger.kernel.org"
-	<linux-pm@vger.kernel.org>, "Saidi, Ali" <alisaidi@amazon.com>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"linux-assembly@vger.kernel.org" <linux-assembly@vger.kernel.org>, "Blake,
- Geoff" <blakgeof@amazon.com>
-Thread-Index: AQHahJ/D8+a2/m+FEk+Q2bqBNHXo/LFVO5iAgATkcYA=
-Date: Fri, 5 Apr 2024 20:05:45 +0000
-Message-ID: <f54fb1b17f29a20da7238b38a7df206d68de78d1.camel@amazon.com>
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=jghBupqZJ1T6b3taAccZ3hSHTlwlNhnMi4+y+ua+EiE=;
+ b=CD79Sj+IvClni2Kpqb05kv19mI7XMbbQekPevtld+J4SZn5G13OQ08MSiKMD5EgU/BEobyI4EodYdc+cGdvzrWE8ILsAu7J5JpjhLxVgcfDNnm+UysJSAZXWLYEypSeGHthuaOEnkaS1gKZc9tLjOv8vjNNKum6/lfue63gJs2M=
+Received: from CO6PR10MB5409.namprd10.prod.outlook.com (2603:10b6:5:357::14)
+ by DM6PR10MB4153.namprd10.prod.outlook.com (2603:10b6:5:21d::9) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7409.46; Fri, 5 Apr
+ 2024 20:21:40 +0000
+Received: from CO6PR10MB5409.namprd10.prod.outlook.com
+ ([fe80::4104:529:ba06:fcb8]) by CO6PR10MB5409.namprd10.prod.outlook.com
+ ([fe80::4104:529:ba06:fcb8%7]) with mapi id 15.20.7409.042; Fri, 5 Apr 2024
+ 20:21:40 +0000
 References: <20240402014706.3969151-1-harisokn@amazon.com>
-	 <20240402014706.3969151-3-harisokn@amazon.com>
-	 <Zgw--fHBH9kEQsi0@FVFF77S0Q05N>
-In-Reply-To: <Zgw--fHBH9kEQsi0@FVFF77S0Q05N>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <F78BC761F414874498386B44CCE2DAE7@amazon.com>
-Content-Transfer-Encoding: base64
+ <20240402014706.3969151-3-harisokn@amazon.com>
+ <Zgw--fHBH9kEQsi0@FVFF77S0Q05N> <87a5mb5p8p.fsf@oracle.com>
+ <be986f715a9351fdecebd76c76626d6333b5a9f3.camel@amazon.com>
+User-agent: mu4e 1.4.10; emacs 27.2
+From: Ankur Arora <ankur.a.arora@oracle.com>
+To: "Okanovic, Haris" <harisokn@amazon.com>
+Cc: "ankur.a.arora@oracle.com" <ankur.a.arora@oracle.com>,
+        "linux-assembly@vger.kernel.org" <linux-assembly@vger.kernel.org>,
+        "peterz@infradead.org" <peterz@infradead.org>,
+        "mark.rutland@arm.com"
+ <mark.rutland@arm.com>,
+        "linux-kernel@vger.kernel.org"
+ <linux-kernel@vger.kernel.org>,
+        "Blake, Geoff" <blakgeof@amazon.com>,
+        "Silver, Brian" <silverbr@amazon.com>,
+        "linux-pm@vger.kernel.org"
+ <linux-pm@vger.kernel.org>,
+        "Saidi, Ali" <alisaidi@amazon.com>
+Subject: Re: [PATCH 3/3] arm64: cpuidle: Add arm_poll_idle
+In-reply-to: <be986f715a9351fdecebd76c76626d6333b5a9f3.camel@amazon.com>
+Date: Fri, 05 Apr 2024 13:22:27 -0700
+Message-ID: <87cyr3y2yk.fsf@oracle.com>
+Content-Type: text/plain
+X-ClientProxiedBy: MW4PR04CA0216.namprd04.prod.outlook.com
+ (2603:10b6:303:87::11) To CO6PR10MB5409.namprd10.prod.outlook.com
+ (2603:10b6:5:357::14)
 Precedence: bulk
 X-Mailing-List: linux-assembly@vger.kernel.org
 List-Id: <linux-assembly.vger.kernel.org>
 List-Subscribe: <mailto:linux-assembly+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-assembly+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CO6PR10MB5409:EE_|DM6PR10MB4153:EE_
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: 
+	wmWC2pHCYtYmebVzBf763aDCIaR8moI0f7yiUQvq8RXg0Bxjkt+Y+UHA5r7nBv3iSJXwc5w9iFCJnOd7nq49TLXVKVhsAni0/QeFWVi89uQ6PgJBprbOzuLSaGDcHv8CmaOwjGe4EY+MrCiRjTlEsVIhko67nZJcJijWNo6ZyGWvXnQ2qXlPsOGkvaq47bmcqlF9/RN8UEQhxhZu5lT8GabEBDCVqoxvrxwcNNSxRXBP84TLXoHc/t3GdrfeDvZ3f8O8O+zmaOfyz25lEeO6v9NXvnOnfFAWbD+CUry9lIJgb8u6LRHBeAw6FKEjmA887bZbZitFUIJTgIqejoZ98USJS354UAbzq8UHfvq7kmIPBJ6PekPm7DpyMZ418RfGKw28SgObgNmdsTL8yV4CvztKkTqRLwMjMIsbkzIuv4+2OhhKJ6fpYLan6i5bA4EKQ/hGE8r3QjjngkTIK5OXY56JMIf6/BWymnHb6qL6e3za1f+txwlTd+Z7ti+kumMJp2p/QdzDN5O1NPExxm89TtLaAEDFT8n+hQ9c3l2yBTcT5GM7hLaV41f6bJ7Tn60sPR8GYpqrEzO19Ex+FcgoBOJjBfOeglY29Dta+9br/4ufswUEvQ12fXj9tif98hve
+X-Forefront-Antispam-Report: 
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CO6PR10MB5409.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(376005)(1800799015)(366007);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: 
+	=?us-ascii?Q?bv8SPHBQbajO+uFtEPZozU05UmG+zNtk/X+E/rsNhoL0pMDFxieXpAln1kj1?=
+ =?us-ascii?Q?gJpJErXVtyOlscNmLQ56cauC21Hs2luPEuIZczv0xvQmG0g25kEjccKWsIcg?=
+ =?us-ascii?Q?w3j4eVD96I/W5XODvaPTPIdOwL1SIXGtW+SARXT1QmmTYrskHSszacRwJ8zh?=
+ =?us-ascii?Q?wGokgJ6J1Qeh5Z8mdXfPfxI9Y8gatAL9jQisx/6j04pV4fWUKkrzrFk3Q9fG?=
+ =?us-ascii?Q?SrkeS6XMb6PvBWJaRk50dIxEDX9Ranh23grRVouWMIIwCYxf7Cj9DrF8Lg7W?=
+ =?us-ascii?Q?1am/rP7nHPpEuJTF6EcbpKizAKckWuLXf6p0kdKZuCvIi0gIrsIjmz9DXlvo?=
+ =?us-ascii?Q?mUZUhi0b6yliBBLxXYdaSP05qNlwWPowuEvoF1NLGmE4Y7lWfkgxmFWJjqUQ?=
+ =?us-ascii?Q?8/Ws9yzhRHbBsiLcSuHD6Zls46LAQ9aCS2MGPJP4C8sbPxpFhgRoaqFpfsOx?=
+ =?us-ascii?Q?uqc28NOduORa/2baRxbLGBxSCKrs8Zmz2NpK117oip8zwprQy5I5tckbSMck?=
+ =?us-ascii?Q?eDDHXJT5D/IE8aeNh/DjoZbd4y+wx0MQBZNhBgX0ThOysWbKgsUdcBTE5KW9?=
+ =?us-ascii?Q?DncFbRj8xkW6Gf6gxVuHCIaMLmeF1DyZvX9HhB4C3WaJzd4iSV0RXi0fzjuB?=
+ =?us-ascii?Q?hwplgy4VZrG/eqrhpvT0sc/e50ZpX5BQxyTcvL9D/Qsta6+is8uOZpRqQokn?=
+ =?us-ascii?Q?pItIUeaL2YZuxXXMJZyVFoE9LH/MprOhhINBtKNnkqhjkjHqKeDa+dM5P1LM?=
+ =?us-ascii?Q?eLSzzLBde5B4KF+tLa2TKefwAfYsoeoozbHi/wvNr33erF0tArDmDayxQ8KO?=
+ =?us-ascii?Q?p22oIVqzxXRFAH5BGAb0zMpPPcX7nPvcLH67cf6+bp5OgMZxuRd5geLTwiwl?=
+ =?us-ascii?Q?TjsM/wlonS+SE+a7LqHa8kODphy+rhaZkA2z7sg+XA4luAswOkvLWXHYhY8i?=
+ =?us-ascii?Q?bQ5qGKNuz+ttjZitO3ywwAH1fETKE/E0vCJouPkPsbJJ1WjATdpiD2oZMWkt?=
+ =?us-ascii?Q?Sdrk17/K9Ka7fhMfRF6WT0WRT1ztlRXjrVqawRiZ1zzDG4Tgc1uVn5mdT+yZ?=
+ =?us-ascii?Q?/ryzh/zTp/fs5bd2fbIdR7bcC1vHZfZhn8f9JZGLoWOoRRESLuaB/Z8PmPuX?=
+ =?us-ascii?Q?HPc86XP9zgdhnwWDTM+3aUwhi/wSIHyQqyktP9rP3P3qj3ks1VSYql3aMW74?=
+ =?us-ascii?Q?Igc6p8Puh1VNOKPooVe5UMsmU9UGttdqqyk9euFpfHwL0rweCn9cZtsgdc6l?=
+ =?us-ascii?Q?6h5OPSZXBhhL3rkEhLxWubqIEI//tPjHkkffXeIKgLqvGPJYS7XRd0/M6Usf?=
+ =?us-ascii?Q?M2jVhC+K1OrIh+7CnjFvb/yiVSwEdESGgKTDJYFhHtqpDSmtSWIrnRF6MvUU?=
+ =?us-ascii?Q?lQLtu9SVbLwxy5Bs7SuCqSVsaUMlUsPhXKZkiVcrjKXBVCbFGuj8dYL+g9Vu?=
+ =?us-ascii?Q?ez6ysjd91kkkk3T3UHoAxBmuiGmYraKNU7GvDdzL6/GBXxz1z3MLmpFB3gm4?=
+ =?us-ascii?Q?1JIQxhUL2Yf5rwWHeKLdztoTIodFYcHGrQU0jhznu257w3w6+Z93MaE+jeyX?=
+ =?us-ascii?Q?oXjtEmG63n5yHR8bSXfCklaBVOaRKXeHUSXrFAmai9LbQ80/q7iLurGOCHJV?=
+ =?us-ascii?Q?BA=3D=3D?=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: 
+	IioV72DUuGhPGXYZIjB8LS+xFfFS93i1NuMSIFvDe8f47H4Tn6qWrnpVTHV/vmq3KOLPtF4ABuqIzhY3N96dV1/klVdA/lak/I67zpwxVsfIiPF/TTriR0fqU3b/M1V0SsNo9AXRejPOO4Uzfw1RQ+J4jiRcKOttkXROT4tM3Yks/AwZCLicsRyjeLTrDQmutnuTdoUlCzz9fUeZ/uRer1ER8nVPiIxDNplwktCEC/FtBNYcxaoJcqJbJWh7gJcdx5LtloHBnO39pcMaGRDOcalKX5kfY/QrWO6pNL2Xy68p8Cioyv4MU9Em0vWXdJIXy0UaJzaY200xZJxHG8dFSXEKOLeIBCnohvBIFVdd1jAkEwCWkslhxlG7cLkDdzX8Xpknbw+OqTh66IMUrXF93tLfbZCb5z1UhG1P5mqQsHv36pUOAc2iqxcky9rqDpDYA0+e2NrQjwNXYho5IDlb0KGQqUPjBbjHCGOW2Qp1acVDODz3+detmRJUFJMQH7ZRUWlGgX0Mhlz470ztBlfkpMJwLqgWsNgF6Fqe7e0m2dVLApxDAgDRTN7YDHCHH4Pl4ZBAQ58dTKw8xrpwJ8o/EUG0Tf8Sc3nmdI+X2J9HpA4=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8afd4645-1e78-475f-58cc-08dc55ae00c3
+X-MS-Exchange-CrossTenant-AuthSource: CO6PR10MB5409.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Apr 2024 20:21:40.6727
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: A+XYJtJVe2Qc9R6Qil3DLvQ0CIBcjbtrayOIKLPvli74BfZDfNUQSk684tLj2LXKqzE29nnxI5KdRxWO+m+DzHGWeuk7F/Lr6vXvcE3eZpg=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR10MB4153
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-04-05_23,2024-04-05_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0 spamscore=0 adultscore=0
+ malwarescore=0 phishscore=0 mlxlogscore=999 bulkscore=0 suspectscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2404010000
+ definitions=main-2404050144
+X-Proofpoint-GUID: IqjR2dwu-dX57y2tMZSrWYGNr0l_MKz7
+X-Proofpoint-ORIG-GUID: IqjR2dwu-dX57y2tMZSrWYGNr0l_MKz7
 
-T24gVHVlLCAyMDI0LTA0LTAyIGF0IDE4OjIzICswMTAwLCBNYXJrIFJ1dGxhbmQgd3JvdGU6DQo+
-IENBVVRJT046IFRoaXMgZW1haWwgb3JpZ2luYXRlZCBmcm9tIG91dHNpZGUgb2YgdGhlIG9yZ2Fu
-aXphdGlvbi4gRG8NCj4gbm90IGNsaWNrIGxpbmtzIG9yIG9wZW4gYXR0YWNobWVudHMgdW5sZXNz
-IHlvdSBjYW4gY29uZmlybSB0aGUgc2VuZGVyDQo+IGFuZCBrbm93IHRoZSBjb250ZW50IGlzIHNh
-ZmUuDQo+IA0KPiANCj4gDQo+IE9uIE1vbiwgQXByIDAxLCAyMDI0IGF0IDA4OjQ3OjA2UE0gLTA1
-MDAsIEhhcmlzIE9rYW5vdmljIHdyb3RlOg0KPiA+IEFuIGFybTY0IGNwdWlkbGUgZHJpdmVyIHdp
-dGggdHdvIHN0YXRlczogKDEpIEZpcnN0IHBvbGxzIGZvciBuZXcNCj4gPiBydW5hYmxlDQo+ID4g
-dGFza3MgdXAgdG8gMTAwIHVzIChieSBkZWZhdWx0KSBiZWZvcmUgKDIpIGEgd2ZpIGlkbGUgYW5k
-IGF3b2tlbiBieQ0KPiA+IGludGVycnVwdCAodGhlIGN1cnJlbnQgYXJtNjQgYmVoYXZpb3IpLiBJ
-dCBhbGxvd3MgQ1BVcyB0byByZXR1cm4NCj4gPiBmcm9tDQo+ID4gaWRsZSBtb3JlIHF1aWNrbHkg
-YnkgYXZvaWRpbmcgdGhlIGxvbmdlciBpbnRlcnJ1cHQgd2FrZXVwIHBhdGgsDQo+ID4gd2hpY2gN
-Cj4gPiBtYXkgcmVxdWlyZSBFTDEvRUwyIHRyYW5zaXRpb24gaW4gY2VydGFpbiBWTSBzY2VuYXJp
-b3MuDQo+IA0KPiBQbGVhc2Ugc3RhcnQgb2ZmIHdpdGggYW4gZXhwbGFuYXRpb24gb2YgdGhlIHBy
-b2JsZW0geW91J3JlIHRyeWluZyB0bw0KPiBzb2x2ZQ0KPiAod2hpY2ggSUlVQyBpcyB0byB3YWtl
-IHVwIG1vcmUgcXVpY2tseSBpbiBjZXJ0YWluIGNhc2VzKSwgYmVmb3JlDQo+IGRlc2NyaWJpbmcg
-dGhlDQo+IHNvbHV0aW9uLiBUaGF0IG1ha2VzIGl0ICpzaWduaWZpY2FudGx5KiBlYXNpZXIgZm9y
-IHBlb3BsZSB0byByZXZpZXcNCj4gdGhpcywgc2luY2UNCj4gb25jZSB5b3UgaGF2ZSB0aGUgcHJv
-YmxlbSBzdGF0ZW1lbnQgaW4gbWluZCBpdCdzIG11Y2ggZWFzaWVyIHRvDQo+IHVuZGVyc3RhbmQg
-aG93DQo+IHRoZSBzb2x1dGlvbiBzcGFjZSBmb2xsb3dzIGZyb20gdGhhdC4NCg0KSGkgTWFyaywN
-Cg0KSSdsbCB0cnkgdG8gY2xhcmlmeToNCg0KVGhpcyBjaGFuZ2UgaW1wcm92ZXMgcGVyZm9ybWFu
-Y2Ugb2YgY2VydGFpbiBtdWx0aXRocmVhZGVkIHdvcmtsb2Fkcw0KdGhhdCByYXBpZGx5IGN5Y2xl
-cyB0aHJvdWdoIGJsb2NrZWQvcnVubmluZyBzdGF0ZXMsIGJ5IGF2b2lkaW5nIGENCnJlbGF0aXZl
-bHkgY29zdGx5IElQSSB3YWtldXAgcGF0aC4NCg0KT25lIGV4YW1wbGUgaXMgVGVuc29yZmxvdyBh
-cyBkZW1vbnN0YXRlZCBieSB0aGUgYmVuY2htYXJrIHNoYXJlZA0KZWFybGllci4gSXQgZ2VuZXJh
-dGVzIDI1MGsgcmVzY2hlZHVsZSBJUElzIHBlciBzZWMgb24gQVdTIG03Zy4xNnhsYXJnZQ0KKEdy
-YXZpdG9uMyBTb0MpIGluIExpbnV4IDYuOS4wLXJjMiwgd2hpY2ggZHJvcHMgdG8gMTIway9zZWMg
-d2l0aCB0aGlzDQpjaGFuZ2UgYW5kIGEgfjMlIGdhaW4gaW4gdGhyb3VnaHB1dC4NCg0KU29tZSBK
-YXZhIHdvcmtsb2FkcyBoYXZlIGEgc2ltaWxhciBwYXR0ZXJuLiBGb3IgZXhhbXBsZSwgUmVuaXNz
-YW5jZQ0KUmVhY3RvcnMgYmVuY2htYXJrIChSZWFjdG9ycy5JTyBmcmFtZXdvcmsgYXBwKSBkcm9w
-cyBmcm9tIDM3MGsgdG8gODBrDQpJUElzIGFuZCBzZWVzIGEgfjI1JSBsYXRlbmN5IGRyb3AuDQoN
-ClJlbmlzc2FuY2UgUmVhY3RvcnMgcmVwcm8gc3RlcHMgb24gVWJ1bnR1IDIyLjA0IG9uIEFXUzoN
-CnN1ZG8gYXB0LWdldCBpbnN0YWxsIGphdmEtY29tbW9uDQp3Z2V0DQpodHRwczovL2NvcnJldHRv
-LmF3cy9kb3dubG9hZHMvbGF0ZXN0L2FtYXpvbi1jb3JyZXR0by0xNy1hYXJjaDY0LWxpbnV4LWpk
-ay5kZWINCnN1ZG8gZHBrZyAtaSBhbWF6b24tY29ycmV0dG8tMTctYWFyY2g2NC1saW51eC1qZGsu
-ZGViDQp3Z2V0DQpodHRwczovL2dpdGh1Yi5jb20vcmVuYWlzc2FuY2UtYmVuY2htYXJrcy9yZW5h
-aXNzYW5jZS9yZWxlYXNlcy9kb3dubG9hZC92MC4xNS4wL3JlbmFpc3NhbmNlLWdwbC0wLjE1LjAu
-amFyDQpqYXZhIC1qYXIgcmVuYWlzc2FuY2UtZ3BsLTAuMTUuMC5qYXIgcmVhY3RvcnMg4oCUcmVw
-ZXRpdGlvbnMgMQ0KDQo+IA0KPiA+IFBvbGwgZHVyYXRpb24gaXMgb3B0aW9uYWxseSBjb25maWd1
-cmVkIGF0IGxvYWQgdGltZSB2aWEgdGhlDQo+ID4gcG9sbF9saW1pdA0KPiA+IG1vZHVsZSBwYXJh
-bWV0ZXIuDQo+IA0KPiBXaHkgc2hvdWxkIHRoaXMgYmUgYSBjb25maWd1cmFibGUgcGFyYW1ldGVy
-Pw0KPiANCj4gKG5vdGUsIGF0IHRoaXMgcG9pbnQgeW91IGhhdmVuJ3QgaW50cm9kdWNlZCBhbnkg
-b2YgdGhlIGRhdGEgYmVsb3csIHNvDQo+IHRoZQ0KPiB0cmFkZS1vZmYgaXNuJ3QgY2xlYXIgdG8g
-YW55b25lKS4NCg0KU29tZSBhcHBsaWNhdGlvbnMgY291bGQgaW1wcm92ZSB3aXRoIGhpZ2hlciBw
-b2xsIHBlcmlvZHMuIEZvciBleGFtcGxlLA0KVGVuc29yZmxvdyB0aHJvdWdocHV0IGltcHJvdmVz
-IH4zJSBhdCBhIDEwMHVzKyBwb2xsIGxpbWl0IGFuZCB+MSUgYXQNCjEwdXMgbGltaXQuIEEgY29u
-ZmlndXJhYmxlIGtub2IgYWxsb3dzIHVzZXJzIHRvIGV4cGVyaW1lbnQgbW9yZSBlYXNpbHkuDQoN
-ClRoZXJl4oCZcyBhbHNvIG5vIHBlcmZvcm1hbmNlIHBlbmF0bHkgZm9yIGhhdmluZyB0aGUgb3B0
-aW9uLiBOZXcgdmFsdWVzDQphcmUgcGF0Y2hlZCBkdXJpbmcgbG9hZCBhbmQgYWxsIG90aGVyIGNv
-ZGUgcGF0aHMgcmVtYWluIHRoZSBzYW1lLg0KDQo+IA0KPiA+IFRoZSBkZWZhdWx0IDEwMCB1cyBk
-dXJhdGlvbiB3YXMgZXhwZXJpbWVudGFsbHkgY2hvc2VuLCBieSBtZWFzdXJpbmcNCj4gPiBRUFMN
-Cj4gPiAocXVlcmllcyBwZXIgc2VjKSBvZiB0aGUgTUxQZXJmIGJlcnQgaW5mZXJlbmNlIGJlbmNo
-bWFyaywgd2hpY2gNCj4gPiBzZWVtcw0KPiA+IHBhcnRpY3VsYXJseSBzdXNjZXB0aWJsZSB0byB0
-aGlzIGNoYW5nZTsgc2VlIHByb2NlZHVyZSBiZWxvdy4gMTAwDQo+ID4gdXMgaXMNCj4gPiB0aGUg
-aW5mbGVjdGlvbiBwb2ludCB3aGVyZSBRUFMgc3RvcHBlZCBncm93aW5nIGluIGEgcmFuZ2Ugb2Yg
-dGVzdGVkDQo+ID4gdmFsdWVzLiBBbGwgcmVzdWx0cyBhcmUgZnJvbSBBV1MgbTdnLjE2eGxhcmdl
-IGluc3RhbmNlcyAoR3Jhdml0b24zDQo+ID4gU29DKQ0KPiA+IHdpdGggZGVkaWNhdGVkIHRlbmFu
-Y3kgKGRlZGljYXRlZCBoYXJkd2FyZSkuDQo+ID4gDQo+ID4gPiBiZWZvcmUgfCAxMHVzwqAgfCAy
-NXVzIHwgNTB1cyB8IDEwMHVzIHwgMTI1dXMgfCAxNTB1cyB8IDIwMHVzIHwNCj4gPiA+IDMwMHVz
-IHwNCj4gPiA+IDUuODfCoMKgIHwgNS45McKgIHwgNS45NiB8IDYuMDEgfCA2LjA2wqAgfCA2LjA3
-wqAgfCA2LjA2wqAgfCA2LjA2wqAgfA0KPiA+ID4gNi4wNsKgIHwNCj4gPiANCj4gPiBQZXJmJ3Mg
-c2NoZWR1bGVyIGJlbmNobWFya3MgYWxzbyBpbXByb3ZlIHdpdGggYSByYW5nZSBvZiBwb2xsX2xp
-bWl0DQo+ID4gdmFsdWVzID49IDEwIHVzLiBIaWdoZXIgbGltaXRzIHByb2R1Y2UgbmVhciBpZGVu
-dGljYWwgcmVzdWx0cw0KPiA+IHdpdGhpbiBhDQo+ID4gMyUgbm9pc2UgbWFyZ2luLiBUaGUgZm9s
-bG93aW5nIHRhYmxlcyBhcmUgYHBlcmYgYmVuY2ggc2NoZWRgDQo+ID4gcmVzdWx0cywNCj4gPiBy
-dW4gdGltZXMgaW4gc2Vjb25kcy4NCj4gPiANCj4gPiBgcGVyZiBiZW5jaCBzY2hlZCBtZXNzYWdp
-bmcgLWwgODAwMDBgDQo+ID4gPiBBV1MgaW5zdGFuY2XCoCB8IFNvQ8KgwqDCoMKgwqDCoCB8IEJl
-Zm9yZSB8IEFmdGVywqAgfCAlIENoYW5nZSB8DQo+ID4gPiBjNmcuMTZ4bCAoVk0pIHwgR3Jhdml0
-b24yIHwgMTguOTc0IHwgMTguNDAwIHwgbm9uZcKgwqDCoMKgIHwNCj4gPiA+IGM3Zy4xNnhsIChW
-TSkgfCBHcmF2aXRvbjMgfCAxMy44NTIgfCAxMy44NTkgfCBub25lwqDCoMKgwqAgfA0KPiA+ID4g
-YzZnLm1ldGFswqDCoMKgwqAgfCBHcmF2aXRvbjIgfCAxNy42MjEgfCAxNi43NDQgfCBub25lwqDC
-oMKgwqAgfA0KPiA+ID4gYzdnLm1ldGFswqDCoMKgwqAgfCBHcmF2aXRvbjMgfCAxMy40MzAgfCAx
-My40MDQgfCBub25lwqDCoMKgwqAgfA0KPiA+IA0KPiA+IGBwZXJmIGJlbmNoIHNjaGVkIHBpcGUg
-LWwgMjUwMDAwMGANCj4gPiA+IEFXUyBpbnN0YW5jZcKgIHwgU29DwqDCoMKgwqDCoMKgIHwgQmVm
-b3JlIHwgQWZ0ZXLCoCB8ICUgQ2hhbmdlIHwNCj4gPiA+IGM2Zy4xNnhsIChWTSkgfCBHcmF2aXRv
-bjIgfCAzMC4xNTggfCAxNS4xODEgfCAtNTAlwqDCoMKgwqAgfA0KPiA+ID4gYzdnLjE2eGwgKFZN
-KSB8IEdyYXZpdG9uMyB8IDE4LjI4OSB8IDEyLjA2NyB8IC0zNCXCoMKgwqDCoCB8DQo+ID4gPiBj
-NmcubWV0YWzCoMKgwqDCoCB8IEdyYXZpdG9uMiB8IDE3LjYwOSB8IDE1LjE3MCB8IC0xNCXCoMKg
-wqDCoCB8DQo+ID4gPiBjN2cubWV0YWzCoMKgwqDCoCB8IEdyYXZpdG9uMyB8IDE0LjEwMyB8IDEy
-LjMwNCB8IC0xMyXCoMKgwqDCoCB8DQo+ID4gDQo+ID4gYHBlcmYgYmVuY2ggc2NoZWQgc2VjY29t
-cC1ub3RpZnkgLWwgMjUwMDAwMGANCj4gPiA+IEFXUyBpbnN0YW5jZcKgIHwgU29DwqDCoMKgwqDC
-oMKgIHwgQmVmb3JlIHwgQWZ0ZXLCoCB8ICUgQ2hhbmdlIHwNCj4gPiA+IGM2Zy4xNnhsIChWTSkg
-fCBHcmF2aXRvbjIgfCAyOC43ODQgfCAxMy43NTQgfCAtNTIlwqDCoMKgwqAgfA0KPiA+ID4gYzdn
-LjE2eGwgKFZNKSB8IEdyYXZpdG9uMyB8IDE2Ljk2NCB8IDExLjQzMCB8IC0zMyXCoMKgwqDCoCB8
-DQo+ID4gPiBjNmcubWV0YWzCoMKgwqDCoCB8IEdyYXZpdG9uMiB8IDE1LjcxNyB8IDEzLjUzNiB8
-IC0xNCXCoMKgwqDCoCB8DQo+ID4gPiBjN2cubWV0YWzCoMKgwqDCoCB8IEdyYXZpdG9uMyB8IDEz
-LjMwMSB8IDExLjQ5MSB8IC0xNCXCoMKgwqDCoCB8DQo+IA0KPiBPaywgc28gcGVyZiBudW1iZXJz
-IGZvciBhIGJ1c3kgd29ya2xvYWQgZ28gdXAuDQo+IA0KPiBXaGF0IGhhcHBlbnMgZm9yIGlkbGUg
-c3RhdGUgcmVzaWRlbmN5IG9uIGEgbW9zdGx5IGlkbGUgc3lzdGVtPw0KDQpJdCBkZWNyZWFzZXMg
-YnkgYWJvdXQgMC4wMDUlIG9uIEFXUyBtN2cuMTZ4bGFyZ2UgKEdyYXZpdG9uMyBTb0MpLg0KDQo+
-IA0KPiA+IFN0ZXBzIHRvIHJ1biBNTFBlcmYgYmVydCBpbmZlcmVuY2Ugb24gVWJ1bnR1IDIyLjA0
-Og0KPiA+IMKgc3VkbyBhcHQgaW5zdGFsbCBidWlsZC1lc3NlbnRpYWwgcHl0aG9uMyBweXRob24z
-LXBpcA0KPiA+IMKgcGlwIGluc3RhbGwgInB5YmluZDExW2dsb2JhbF0iIHRlbnNvcmZsb3fCoCB0
-cmFuc2Zvcm1lcnMNCj4gPiDCoGV4cG9ydCBURl9FTkFCTEVfT05FRE5OX09QVFM9MQ0KPiA+IMKg
-ZXhwb3J0IEROTkxfREVGQVVMVF9GUE1BVEhfTU9ERT1CRjE2DQo+ID4gwqBnaXQgY2xvbmUgaHR0
-cHM6Ly9naXRodWIuY29tL21sY29tbW9ucy9pbmZlcmVuY2UuZ2l0wqAtLXJlY3Vyc2l2ZQ0KPiA+
-IMKgY2QgaW5mZXJlbmNlDQo+ID4gwqBnaXQgY2hlY2tvdXQgdjIuMA0KPiA+IMKgY2QgbG9hZGdl
-bg0KPiA+IMKgQ0ZMQUdTPSItc3RkPWMrKzE0IiBweXRob24zIHNldHVwLnB5IGJkaXN0X3doZWVs
-DQo+ID4gwqBwaXAgaW5zdGFsbCBkaXN0Lyoud2hsDQo+ID4gwqBjZCAuLi9sYW5ndWFnZS9iZXJ0
-DQo+ID4gwqBtYWtlIHNldHVwDQo+ID4gwqBweXRob24zIHJ1bi5weSAtLWJhY2tlbmQ9dGYgLS1z
-Y2VuYXJpbz1TaW5nbGVTdHJlYW0NCj4gPiANCj4gPiBTdWdnZXN0ZWQtYnk6IEFsaSBTYWlkaSA8
-YWxpc2FpZGlAYW1hem9uLmNvbT4NCj4gPiBSZXZpZXdlZC1ieTogQWxpIFNhaWRpIDxhbGlzYWlk
-aUBhbWF6b24uY29tPg0KPiA+IFJldmlld2VkLWJ5OiBHZW9mZiBCbGFrZSA8Ymxha2dlb2ZAYW1h
-em9uLmNvbT4NCj4gPiBDYzogQnJpYW4gU2lsdmVyIDxzaWx2ZXJickBhbWF6b24uY29tPg0KPiA+
-IFNpZ25lZC1vZmYtYnk6IEhhcmlzIE9rYW5vdmljIDxoYXJpc29rbkBhbWF6b24uY29tPg0KPiA+
-IC0tLQ0KPiA+IMKgZHJpdmVycy9jcHVpZGxlL0tjb25maWcuYXJtwqDCoMKgwqDCoMKgwqDCoMKg
-wqAgfMKgIDEzICsrDQo+ID4gwqBkcml2ZXJzL2NwdWlkbGUvTWFrZWZpbGXCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoCB8wqDCoCAxICsNCj4gPiDCoGRyaXZlcnMvY3B1aWRsZS9jcHVpZGxlLWFy
-bS1wb2xsaW5nLmMgfCAxNzENCj4gPiArKysrKysrKysrKysrKysrKysrKysrKysrKw0KPiA+IMKg
-MyBmaWxlcyBjaGFuZ2VkLCAxODUgaW5zZXJ0aW9ucygrKQ0KPiA+IMKgY3JlYXRlIG1vZGUgMTAw
-NjQ0IGRyaXZlcnMvY3B1aWRsZS9jcHVpZGxlLWFybS1wb2xsaW5nLmMNCj4gPiANCj4gPiBkaWZm
-IC0tZ2l0IGEvZHJpdmVycy9jcHVpZGxlL0tjb25maWcuYXJtDQo+ID4gYi9kcml2ZXJzL2NwdWlk
-bGUvS2NvbmZpZy5hcm0NCj4gPiBpbmRleCBhMWVlNDc1ZDE4MGQuLjQ4NDY2NmRkYTM4ZCAxMDA2
-NDQNCj4gPiAtLS0gYS9kcml2ZXJzL2NwdWlkbGUvS2NvbmZpZy5hcm0NCj4gPiArKysgYi9kcml2
-ZXJzL2NwdWlkbGUvS2NvbmZpZy5hcm0NCj4gPiBAQCAtMTQsNiArMTQsMTkgQEAgY29uZmlnIEFS
-TV9DUFVJRExFDQo+ID4gwqDCoMKgwqDCoMKgwqAgaW5pdGlhbGl6ZWQgYnkgY2FsbGluZyB0aGUg
-Q1BVIG9wZXJhdGlvbnMgaW5pdCBpZGxlIGhvb2sNCj4gPiDCoMKgwqDCoMKgwqDCoCBwcm92aWRl
-ZCBieSBhcmNoaXRlY3R1cmUgY29kZS4NCj4gPiANCj4gPiArY29uZmlnIEFSTV9QT0xMX0NQVUlE
-TEUNCj4gPiArwqDCoMKgwqAgYm9vbCAiQVJNNjQgQ1BVIGlkbGUgRHJpdmVyIHdpdGggcG9sbGlu
-ZyINCj4gPiArwqDCoMKgwqAgZGVwZW5kcyBvbiBBUk02NA0KPiA+ICvCoMKgwqDCoCBkZXBlbmRz
-IG9uIEFSTV9BUkNIX1RJTUVSX0VWVFNUUkVBTQ0KPiA+ICvCoMKgwqDCoCBzZWxlY3QgQ1BVX0lE
-TEVfTVVMVElQTEVfRFJJVkVSUw0KPiA+ICvCoMKgwqDCoCBoZWxwDQo+ID4gK8KgwqDCoMKgwqDC
-oCBTZWxlY3QgdGhpcyB0byBlbmFibGUgYSBwb2xsaW5nIGNwdWlkbGUgZHJpdmVyIGZvciBBUk02
-NDoNCj4gPiArwqDCoMKgwqDCoMKgIFRoZSBmaXJzdCBzdGF0ZSBwb2xscyBUSUZfTkVFRF9SRVND
-SEVEIGZvciBiZXN0IGxhdGVuY3kgb24NCj4gPiBzaG9ydA0KPiA+ICvCoMKgwqDCoMKgwqAgc2xl
-ZXAgaW50ZXJ2YWxzLiBUaGUgc2Vjb25kIHN0YXRlIGZhbGxzIGJhY2sgdG8NCj4gPiBhcmNoX2Nw
-dV9pZGxlKCkgdG8NCj4gPiArwqDCoMKgwqDCoMKgIHdhaXQgZm9yIGludGVycnVwdC4gVGhpcyBp
-cyBjYW4gYmUgaGVscGZ1bCBpbiB3b3JrbG9hZHMNCj4gPiB0aGF0DQo+ID4gK8KgwqDCoMKgwqDC
-oCBmcmVxdWVudGx5IGJsb2NrL3dha2UgYXQgc2hvcnQgaW50ZXJ2YWxzIG9yIFZNcyB3aGVyZQ0K
-PiA+IHdha2V1cCBJUElzDQo+ID4gK8KgwqDCoMKgwqDCoCBhcmUgbW9yZSBleHBlbnNpdmUuDQo+
-IA0KPiBXaHkgaXMgdGhpcyBhIHNlcGFyYXRlIGRyaXZlciByYXRoZXIgdGhhbiBhbiBvcHRpb25h
-bCBmZWF0dXJlIGluIHRoZQ0KPiBleGlzdGluZw0KPiBkcml2ZXI/DQo+IA0KPiBUaGUgZmFjdCB0
-aGF0IHRoaXMgZHVwbGljYXRlcyBhIGJ1bmNoIG9mIGNvZGUgaW5kaWNhdGVzIHRvIG1lIHRoYXQN
-Cj4gdGhpcyBzaG91bGQNCj4gbm90IGJlIGEgc2VwYXJhdGUgZHJpdmVyLg0KDQpJJ2xsIGV4cGxv
-cmUgdXNpbmcgQW5rdXIgQXJvcmHigJlzIGhhbHRwb2xsIGNoYW5nZXMgb24gQVdTIEdyYXZpdG9u
-OyBzZWUNCnJlbGF0ZWQgdGhyZWFkLg0KDQo+IA0KPiA+ICsNCj4gPiDCoGNvbmZpZyBBUk1fUFND
-SV9DUFVJRExFDQo+ID4gwqDCoMKgwqDCoCBib29sICJQU0NJIENQVSBpZGxlIERyaXZlciINCj4g
-PiDCoMKgwqDCoMKgIGRlcGVuZHMgb24gQVJNX1BTQ0lfRlcNCj4gPiBkaWZmIC0tZ2l0IGEvZHJp
-dmVycy9jcHVpZGxlL01ha2VmaWxlIGIvZHJpdmVycy9jcHVpZGxlL01ha2VmaWxlDQo+ID4gaW5k
-ZXggZDEwMzM0MmI3Y2ZjLi4yM2MyMTQyMjc5MmQgMTAwNjQ0DQo+ID4gLS0tIGEvZHJpdmVycy9j
-cHVpZGxlL01ha2VmaWxlDQo+ID4gKysrIGIvZHJpdmVycy9jcHVpZGxlL01ha2VmaWxlDQo+ID4g
-QEAgLTIyLDYgKzIyLDcgQEAgb2JqLSQoQ09ORklHX0FSTV9VODUwMF9DUFVJRExFKcKgwqDCoMKg
-wqDCoMKgwqAgKz0NCj4gPiBjcHVpZGxlLXV4NTAwLm8NCj4gPiDCoG9iai0kKENPTkZJR19BUk1f
-QVQ5MV9DUFVJRExFKcKgwqDCoMKgwqDCoMKgwqDCoCArPSBjcHVpZGxlLWF0OTEubw0KPiA+IMKg
-b2JqLSQoQ09ORklHX0FSTV9FWFlOT1NfQ1BVSURMRSnCoMKgwqDCoMKgwqDCoCArPSBjcHVpZGxl
-LWV4eW5vcy5vDQo+ID4gwqBvYmotJChDT05GSUdfQVJNX0NQVUlETEUpwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoCArPSBjcHVpZGxlLWFybS5vDQo+ID4gK29iai0kKENPTkZJR19BUk1fUE9MTF9DUFVJ
-RExFKcKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgKz0gY3B1aWRsZS1hcm0tDQo+ID4gcG9s
-bGluZy5vDQo+ID4gwqBvYmotJChDT05GSUdfQVJNX1BTQ0lfQ1BVSURMRSnCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgICs9IGNwdWlkbGUtcHNjaS5vDQo+ID4gwqBvYmotJChDT05GSUdfQVJN
-X1BTQ0lfQ1BVSURMRV9ET01BSU4pwqDCoMKgwqDCoMKgwqAgKz0gY3B1aWRsZS1wc2NpLQ0KPiA+
-IGRvbWFpbi5vDQo+ID4gwqBvYmotJChDT05GSUdfQVJNX1RFR1JBX0NQVUlETEUpwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqAgKz0gY3B1aWRsZS10ZWdyYS5vDQo+ID4gZGlmZiAtLWdpdCBhL2Ry
-aXZlcnMvY3B1aWRsZS9jcHVpZGxlLWFybS1wb2xsaW5nLmMNCj4gPiBiL2RyaXZlcnMvY3B1aWRs
-ZS9jcHVpZGxlLWFybS1wb2xsaW5nLmMNCj4gPiBuZXcgZmlsZSBtb2RlIDEwMDY0NA0KPiA+IGlu
-ZGV4IDAwMDAwMDAwMDAwMC4uYmNhMTI4NTY4MTE0DQo+ID4gLS0tIC9kZXYvbnVsbA0KPiA+ICsr
-KyBiL2RyaXZlcnMvY3B1aWRsZS9jcHVpZGxlLWFybS1wb2xsaW5nLmMNCj4gPiBAQCAtMCwwICsx
-LDE3MSBAQA0KPiA+ICsvLyBTUERYLUxpY2Vuc2UtSWRlbnRpZmllcjogR1BMLTIuMA0KPiA+ICsv
-Kg0KPiA+ICsgKiBBUk02NCBDUFUgaWRsZSBkcml2ZXIgdXNpbmcgd2ZlIHBvbGxpbmcNCj4gPiAr
-ICoNCj4gPiArICogQ29weXJpZ2h0IDIwMjQgQW1hem9uLmNvbSwgSW5jLiBvciBpdHMgYWZmaWxp
-YXRlcy4gQWxsIHJpZ2h0cw0KPiA+IHJlc2VydmVkLg0KPiA+ICsgKg0KPiA+ICsgKiBBdXRob3Jz
-Og0KPiA+ICsgKsKgwqAgSGFyaXMgT2thbm92aWMgPGhhcmlzb2tuQGFtYXpvbi5jb20+DQo+ID4g
-KyAqwqDCoCBCcmlhbiBTaWx2ZXIgPHNpbHZlcmJyQGFtYXpvbi5jb20+DQo+ID4gKyAqDQo+ID4g
-KyAqIEJhc2VkIG9uIGNwdWlkbGUtYXJtLmMNCj4gPiArICogQ29weXJpZ2h0IChDKSAyMDE0IEFS
-TSBMdGQuDQo+ID4gKyAqIEF1dGhvcjogTG9yZW56byBQaWVyYWxpc2kgPGxvcmVuem8ucGllcmFs
-aXNpQGFybS5jb20+DQo+ID4gKyAqLw0KPiA+ICsNCj4gPiArI2luY2x1ZGUgPGxpbnV4L2NwdS5o
-Pg0KPiA+ICsjaW5jbHVkZSA8bGludXgvY3B1X2Nvb2xpbmcuaD4NCj4gPiArI2luY2x1ZGUgPGxp
-bnV4L2NwdWlkbGUuaD4NCj4gPiArI2luY2x1ZGUgPGxpbnV4L3NjaGVkL2Nsb2NrLmg+DQo+ID4g
-Kw0KPiA+ICsjaW5jbHVkZSA8YXNtL2NwdWlkbGUuaD4NCj4gPiArI2luY2x1ZGUgPGFzbS9yZWFk
-ZXguaD4NCj4gPiArDQo+ID4gKyNpbmNsdWRlICJkdF9pZGxlX3N0YXRlcy5oIg0KPiA+ICsNCj4g
-PiArLyogTWF4IGR1cmF0aW9uIG9mIHRoZSB3ZmUoKSBwb2xsIGxvb3AgaW4gdXMsIGJlZm9yZSB0
-cmFuc2l0aW9uaW5nDQo+ID4gdG8NCj4gPiArICogYXJjaF9jcHVfaWRsZSgpL3dmaSgpIHNsZWVw
-Lg0KPiA+ICsgKi8NCj4gDQo+IC8qDQo+IMKgKiBDb21tZW50cyBzaG91bGQgaGF2ZSB0aGUgbGVh
-ZGluZyAnLyonIG9uIGEgc2VwYXJhdGUgbGluZS4NCj4gwqAqIFNlZQ0KPiBodHRwczovL3d3dy5r
-ZXJuZWwub3JnL2RvYy9odG1sL3Y2LjgvcHJvY2Vzcy9jb2Rpbmctc3R5bGUuaHRtbCNjb21tZW50
-aW5nDQo+IMKgKi8NCj4gDQo+ID4gKyNkZWZpbmUgREVGQVVMVF9QT0xMX0xJTUlUX1VTIDEwMA0K
-PiA+ICtzdGF0aWMgdW5zaWduZWQgaW50IHBvbGxfbGltaXQgX19yZWFkX21vc3RseSA9DQo+ID4g
-REVGQVVMVF9QT0xMX0xJTUlUX1VTOw0KPiA+ICsNCj4gPiArLyoNCj4gPiArICogYXJtX2lkbGVf
-d2ZlX3BvbGwgLSBQb2xscyBzdGF0ZSBpbiB3ZmUgbG9vcCB1bnRpbCByZXNjaGVkdWxlIGlzDQo+
-ID4gKyAqIG5lZWRlZCBvciB0aW1lb3V0DQo+ID4gKyAqLw0KPiA+ICtzdGF0aWMgaW50IF9fY3B1
-aWRsZSBhcm1faWRsZV93ZmVfcG9sbChzdHJ1Y3QgY3B1aWRsZV9kZXZpY2UgKmRldiwNCj4gPiAr
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAg
-c3RydWN0IGNwdWlkbGVfZHJpdmVyICpkcnYsIGludCBpZHgpDQo+ID4gK3sNCj4gPiArwqDCoMKg
-wqAgdTY0IHRpbWVfc3RhcnQsIHRpbWVfbGltaXQ7DQo+ID4gKw0KPiA+ICvCoMKgwqDCoCB0aW1l
-X3N0YXJ0ID0gbG9jYWxfY2xvY2soKTsNCj4gPiArwqDCoMKgwqAgZGV2LT5wb2xsX3RpbWVfbGlt
-aXQgPSBmYWxzZTsNCj4gPiArDQo+ID4gK8KgwqDCoMKgIGxvY2FsX2lycV9lbmFibGUoKTsNCj4g
-DQo+IFdoeSBlbmFibGUgSVJRcyBoZXJlPyBXZSBkb24ndCBkbyB0aGF0IGluIHRoZSByZWd1bGFy
-IGNwdWlkbGUtYXJtDQo+IGRyaXZlciwgbm9yDQo+IHRoZSBjcHVpZGxlLXBzY2kgZHJpdmVyLCBh
-bmQgdGhlcmUncyBubyBleHBsYW5hdGlvbiBoZXJlIG9yIGluIHRoZQ0KPiBjb21taXQgbWVzc2Fn
-ZS4NCj4gDQo+IEhvdyBkb2VzIHRoaXMgaW50ZXJhY3Qgd2l0aCBSQ1U/IElzIHRoYXQgc3RpbGwg
-d2F0Y2hpbmcgb3IgYXJlIHdlIGluDQo+IGFuDQo+IGV4dGVuZGVkIHF1aWVzY2VudCBzdGF0ZT8g
-Rm9yIFBTQ0kgaWRsZSBzdGF0ZXMgd2UgZW50ZXIgYW4gRVFTLCBhbmQNCj4gaXQgc2VlbXMNCj4g
-bGlrZSB3ZSBwcm9iYWJseSBzaG91bGQgaGVyZS4uLg0KDQpJJ2xsIGNpcmNsZSBiYWNrIHRvIHlv
-dXIgY29kZSBjb21tZW50cyAoaGVyZSBhbmQgZWxzZXdoZXJlKSBpZiB3ZQ0KcHJvY2VlZGUgd2l0
-aCB0aGlzIHBhdGNoIGluc3RlYWQgb2YgQW5rdXIncy4NCg0KPiANCj4gPiArDQo+ID4gK8KgwqDC
-oMKgIGlmIChjdXJyZW50X3NldF9wb2xsaW5nX2FuZF90ZXN0KCkpDQo+ID4gK8KgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoCBnb3RvIGVuZDsNCj4gPiArDQo+ID4gK8KgwqDCoMKgIHRpbWVfbGltaXQg
-PSBjcHVpZGxlX3BvbGxfdGltZShkcnYsIGRldik7DQo+ID4gKw0KPiA+ICvCoMKgwqDCoCBkbyB7
-DQo+ID4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCAvLyBleGNsdXNpdmUgcmVhZCBhcm1zIHRo
-ZSBtb25pdG9yIGZvciB3ZmUNCj4gPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGlmIChfX1JF
-QURfT05DRV9FWChjdXJyZW50X3RocmVhZF9pbmZvKCktPmZsYWdzKSAmDQo+ID4gX1RJRl9ORUVE
-X1JFU0NIRUQpDQo+ID4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAg
-Z290byBlbmQ7DQo+ID4gKw0KPiA+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgLy8gbWF5IGV4
-aXQgcHJlbWF0dXJlbHksIHNlZSBBUk1fQVJDSF9USU1FUl9FVlRTVFJFQU0NCj4gPiArwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgIHdmZSgpOw0KPiA+ICvCoMKgwqDCoCB9IHdoaWxlIChsb2NhbF9j
-bG9jaygpIC0gdGltZV9zdGFydCA8IHRpbWVfbGltaXQpOw0KPiANCj4gLi4uIGFuZCBpZiB0aGUg
-RVZUU1RSRUFNIGlzIGRpc2FibGVkLCB3ZSdsbCBzaXQgaW4gV0ZFIGZvcmV2ZXIgcmF0aGVyDQo+
-IHRoYW4NCj4gZW50ZXJpbmcgYSBkZWVwZXIgaWRsZSBzdGF0ZSwgd2hpY2ggZG9lc24ndCBzZWVt
-IGRlc2lyYWJsZS4NCg0KSSB0b29rIGEgZGVwZG5lbmN5IG9uIEFSTV9BUkNIX1RJTUVSX0VWVFNU
-UkVBTSBpbiBLY29uZmlnLmFybSB0byBlbnN1cmUNCmV2ZW50IHN0cmVhbSBpcyBlbmFibGVkLg0K
-DQo+IA0KPiBJdCdzIHdvcnRoIG5vdGluZyB0aGF0IG5vdyB0aGF0IHdlIGhhdmUgV0ZFVCwgd2Un
-bGwgcHJvYmFibHkgd2FudCB0bw0KPiBkaXNhYmxlDQo+IHRoZSBFVlRTVFJFQU0gYnkgZGVmYXVs
-dCBhdCBzb21lIHBvaW50LCBhdCBsZWFzdCBpbiBzb21lDQo+IGNvbmZpZ3VyYXRpb25zLCBzaW5j
-ZQ0KPiB0aGF0J2xsIGJlIGFibGUgdG8gc2l0IGluIGEgV0ZFIHN0YXRlIGZvciBsb25nZXIgd2hp
-bGUgYWxzbyByZWxpYWJseQ0KPiB3YWtpbmcgdXANCj4gd2hlbiByZXF1aXJlZC4NCj4gDQo+IEkg
-c3VzcGVjdCB3ZSB3YW50IHNvbWV0aGluZyBsaWtlIGFuIHNtcF9sb2FkX2FjcXVpcmVfdGltZW91
-dCgpIGhlcmUNCj4gdG8gZG8gdGhlDQo+IHdhaXQgaW4gYXJjaCBjb2RlIChhbGxvd2luZyB1cyB0
-byB1c2UgV0ZFVCksIGFuZCBlbmFibGluZyB0aGlzIHN0YXRlDQo+IHdpbGwNCj4gZGVwZW5kIG9u
-IGVpdGhlciBoYXZpbmcgV0ZFVCBvciBFVlRTVFJFQU0uDQo+IA0KPiA+ICsNCj4gPiArwqDCoMKg
-wqAgZGV2LT5wb2xsX3RpbWVfbGltaXQgPSB0cnVlOw0KPiA+ICsNCj4gPiArZW5kOg0KPiA+ICvC
-oMKgwqDCoCBjdXJyZW50X2Nscl9wb2xsaW5nKCk7DQo+ID4gK8KgwqDCoMKgIHJldHVybiBpZHg7
-DQo+ID4gK30NCj4gPiArDQo+ID4gKy8qDQo+ID4gKyAqIGFybV9pZGxlX3dmaSAtIFBsYWNlcyBj
-cHUgaW4gbG93ZXIgcG93ZXIgc3RhdGUgdW50aWwgaW50ZXJydXB0LA0KPiA+ICsgKiBhIGZhbGxi
-YWNrIHRvIHBvbGxpbmcNCj4gPiArICovDQo+ID4gK3N0YXRpYyBpbnQgX19jcHVpZGxlIGFybV9p
-ZGxlX3dmaShzdHJ1Y3QgY3B1aWRsZV9kZXZpY2UgKmRldiwNCj4gPiArwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgc3RydWN0IGNwdWlkbGVf
-ZHJpdmVyICpkcnYsIGludCBpZHgpDQo+ID4gK3sNCj4gPiArwqDCoMKgwqAgaWYgKGN1cnJlbnRf
-Y2xyX3BvbGxpbmdfYW5kX3Rlc3QoKSkgew0KPiA+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAg
-bG9jYWxfaXJxX2VuYWJsZSgpOw0KPiA+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgcmV0dXJu
-IGlkeDsNCj4gPiArwqDCoMKgwqAgfQ0KPiANCj4gU2FtZSBhcyBhYm92ZSwgd2h5IGVuYWJsZSBJ
-UlFzIGhlcmU/DQo+IA0KPiA+ICvCoMKgwqDCoCBhcmNoX2NwdV9pZGxlKCk7DQo+ID4gK8KgwqDC
-oMKgIHJldHVybiBpZHg7DQo+IA0KPiAuLi4gYW5kIGlmIHdlIG5lZWQgdG8gZW5hYmxlIElSUXMg
-aW4gdGhlIG90aGVyIGNhc2VzIGFib3ZlLCB3aHkgZG8gd2UNCj4gKm5vdCoNCj4gbmVlZCB0byBl
-bmFibGUgdGhlbSBoZXJlPw0KPiANCj4gPiArfQ0KPiA+ICsNCj4gPiArc3RhdGljIHN0cnVjdCBj
-cHVpZGxlX2RyaXZlciBhcm1fcG9sbF9pZGxlX2RyaXZlciBfX2luaXRkYXRhID0gew0KPiA+ICvC
-oMKgwqDCoCAubmFtZSA9ICJhcm1fcG9sbF9pZGxlIiwNCj4gPiArwqDCoMKgwqAgLm93bmVyID0g
-VEhJU19NT0RVTEUsDQo+ID4gK8KgwqDCoMKgIC5zdGF0ZXMgPSB7DQo+ID4gK8KgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoCB7DQo+ID4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqAgLmVudGVywqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCA9IGFybV9pZGxl
-X3dmZV9wb2xsLA0KPiA+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-IC5leGl0X2xhdGVuY3nCoMKgwqDCoMKgwqDCoMKgwqDCoCA9IDAsDQo+ID4gK8KgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgLnRhcmdldF9yZXNpZGVuY3nCoMKgwqDCoMKg
-wqAgPSAwLA0KPiA+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIC5l
-eGl0X2xhdGVuY3lfbnPCoMKgwqDCoMKgwqDCoCA9IDAsDQo+ID4gK8KgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgLnBvd2VyX3VzYWdlwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oCA9IFVJTlRfTUFYLA0KPiA+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgIC5mbGFnc8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgPQ0KPiA+IENQVUlE
-TEVfRkxBR19QT0xMSU5HLA0KPiA+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgIC5uYW1lwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgID0gIldGRSIs
-DQo+ID4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgLmRlc2PCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgPSAiQVJNIFdGRSIsDQo+ID4gK8KgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoCB9LA0KPiA+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgew0K
-PiA+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIC5lbnRlcsKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgPSBhcm1faWRsZV93ZmksDQo+ID4gK8KgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgLmV4aXRfbGF0ZW5jecKgwqDCoMKg
-wqDCoMKgwqDCoMKgID0NCj4gPiBERUZBVUxUX1BPTExfTElNSVRfVVMsDQo+ID4gK8KgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgLnRhcmdldF9yZXNpZGVuY3nCoMKgwqDC
-oMKgwqAgPQ0KPiA+IERFRkFVTFRfUE9MTF9MSU1JVF9VUywNCj4gPiArwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCAucG93ZXJfdXNhZ2XCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgID0gVUlOVF9NQVgsDQo+ID4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqAgLm5hbWXCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgPSAiV0ZJIiwN
-Cj4gPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCAuZGVzY8KgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCA9ICJBUk0gV0ZJIiwNCj4gPiArwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgIH0sDQo+ID4gK8KgwqDCoMKgIH0sDQo+ID4gK8KgwqDCoMKgIC5z
-dGF0ZV9jb3VudCA9IDIsDQo+ID4gK307DQo+IA0KPiBIb3cgZG9lcyB0aGlzIGludGVyYWN0IHdp
-dGggdGhlIGV4aXN0aW5nIGRyaXZlcj8NCj4gDQo+IEhvdyBkb2VzIERFRkFVTFRfUE9MTF9MSU1J
-VF9VUyBjb21wYXJlIHdpdGggUFNDSSBpZGxlIHN0YXRlcz8NCj4gDQo+ID4gKw0KPiA+ICsvKg0K
-PiA+ICsgKiBhcm1fcG9sbF9pbml0X2NwdSAtIEluaXRpYWxpemVzIGFybSBjcHVpZGxlIHBvbGxp
-bmcgZHJpdmVyIGZvcg0KPiA+IG9uZSBjcHUNCj4gPiArICovDQo+ID4gK3N0YXRpYyBpbnQgX19p
-bml0IGFybV9wb2xsX2luaXRfY3B1KGludCBjcHUpDQo+ID4gK3sNCj4gPiArwqDCoMKgwqAgaW50
-IHJldDsNCj4gPiArwqDCoMKgwqAgc3RydWN0IGNwdWlkbGVfZHJpdmVyICpkcnY7DQo+ID4gKw0K
-PiA+ICvCoMKgwqDCoCBkcnYgPSBrbWVtZHVwKCZhcm1fcG9sbF9pZGxlX2RyaXZlciwgc2l6ZW9m
-KCpkcnYpLA0KPiA+IEdGUF9LRVJORUwpOw0KPiA+ICvCoMKgwqDCoCBpZiAoIWRydikNCj4gPiAr
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHJldHVybiAtRU5PTUVNOw0KPiA+ICsNCj4gPiArwqDC
-oMKgwqAgZHJ2LT5jcHVtYXNrID0gKHN0cnVjdCBjcHVtYXNrICopY3B1bWFza19vZihjcHUpOw0K
-PiA+ICvCoMKgwqDCoCBkcnYtPnN0YXRlc1sxXS5leGl0X2xhdGVuY3kgPSBwb2xsX2xpbWl0Ow0K
-PiA+ICvCoMKgwqDCoCBkcnYtPnN0YXRlc1sxXS50YXJnZXRfcmVzaWRlbmN5ID0gcG9sbF9saW1p
-dDsNCj4gPiArDQo+ID4gK8KgwqDCoMKgIHJldCA9IGNwdWlkbGVfcmVnaXN0ZXIoZHJ2LCBOVUxM
-KTsNCj4gPiArwqDCoMKgwqAgaWYgKHJldCkgew0KPiA+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqAgcHJfZXJyKCJmYWlsZWQgdG8gcmVnaXN0ZXIgZHJpdmVyOiAlZCwgY3B1ICVkXG4iLA0KPiA+
-IHJldCwgY3B1KTsNCj4gPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGdvdG8gb3V0X2tmcmVl
-X2RydjsNCj4gPiArwqDCoMKgwqAgfQ0KPiA+ICsNCj4gPiArwqDCoMKgwqAgcHJfaW5mbygicmVn
-aXN0ZXJlZCBkcml2ZXIgY3B1ICVkXG4iLCBjcHUpOw0KPiANCj4gVGhpcyBkb2VzIG5vdCBuZWVk
-IHRvIGJlIHByaW50ZWQgZm9yIGVhY2ggQ1BVLg0KPiANCj4gTWFyay4NCj4gDQo+ID4gKw0KPiA+
-ICvCoMKgwqDCoCBjcHVpZGxlX2Nvb2xpbmdfcmVnaXN0ZXIoZHJ2KTsNCj4gPiArDQo+ID4gK8Kg
-wqDCoMKgIHJldHVybiAwOw0KPiA+ICsNCj4gPiArb3V0X2tmcmVlX2RydjoNCj4gPiArwqDCoMKg
-wqAga2ZyZWUoZHJ2KTsNCj4gPiArwqDCoMKgwqAgcmV0dXJuIHJldDsNCj4gPiArfQ0KPiA+ICsN
-Cj4gPiArLyoNCj4gPiArICogYXJtX3BvbGxfaW5pdCAtIEluaXRpYWxpemVzIGFybSBjcHVpZGxl
-IHBvbGxpbmcgZHJpdmVyDQo+ID4gKyAqLw0KPiA+ICtzdGF0aWMgaW50IF9faW5pdCBhcm1fcG9s
-bF9pbml0KHZvaWQpDQo+ID4gK3sNCj4gPiArwqDCoMKgwqAgaW50IGNwdSwgcmV0Ow0KPiA+ICvC
-oMKgwqDCoCBzdHJ1Y3QgY3B1aWRsZV9kcml2ZXIgKmRydjsNCj4gPiArwqDCoMKgwqAgc3RydWN0
-IGNwdWlkbGVfZGV2aWNlICpkZXY7DQo+ID4gKw0KPiA+ICvCoMKgwqDCoCBmb3JfZWFjaF9wb3Nz
-aWJsZV9jcHUoY3B1KSB7DQo+ID4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCByZXQgPSBhcm1f
-cG9sbF9pbml0X2NwdShjcHUpOw0KPiA+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgaWYgKHJl
-dCkNCj4gPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBnb3RvIG91
-dF9mYWlsOw0KPiA+ICvCoMKgwqDCoCB9DQo+ID4gKw0KPiA+ICvCoMKgwqDCoCByZXR1cm4gMDsN
-Cj4gPiArDQo+ID4gK291dF9mYWlsOg0KPiA+ICvCoMKgwqDCoCBwcl9pbmZvKCJkZS1yZWdpc3Rl
-ciBhbGwiKTsNCj4gPiArwqDCoMKgwqAgd2hpbGUgKC0tY3B1ID49IDApIHsNCj4gPiArwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgIGRldiA9IHBlcl9jcHUoY3B1aWRsZV9kZXZpY2VzLCBjcHUpOw0K
-PiA+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgZHJ2ID0gY3B1aWRsZV9nZXRfY3B1X2RyaXZl
-cihkZXYpOw0KPiA+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgY3B1aWRsZV91bnJlZ2lzdGVy
-KGRydik7DQo+ID4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBrZnJlZShkcnYpOw0KPiA+ICvC
-oMKgwqDCoCB9DQo+ID4gKw0KPiA+ICvCoMKgwqDCoCByZXR1cm4gcmV0Ow0KPiA+ICt9DQo+ID4g
-Kw0KPiA+ICttb2R1bGVfcGFyYW0ocG9sbF9saW1pdCwgdWludCwgMDQ0NCk7DQo+ID4gK2Rldmlj
-ZV9pbml0Y2FsbChhcm1fcG9sbF9pbml0KTsNCj4gPiAtLQ0KPiA+IDIuMzQuMQ0KPiA+IA0KPiA+
-IA0KDQpUaGFua3MsDQpIYXJpcyBPa2Fub3ZpYw0KDQo=
+
+Okanovic, Haris <harisokn@amazon.com> writes:
+
+> On Tue, 2024-04-02 at 16:17 -0700, Ankur Arora wrote:
+>> CAUTION: This email originated from outside of the organization. Do
+>> not click links or open attachments unless you can confirm the sender
+>> and know the content is safe.
+>>
+>>
+>>
+>> Mark Rutland <mark.rutland@arm.com> writes:
+>>
+>> > On Mon, Apr 01, 2024 at 08:47:06PM -0500, Haris Okanovic wrote:
+>> > > An arm64 cpuidle driver with two states: (1) First polls for new
+>> > > runable
+>> > > tasks up to 100 us (by default) before (2) a wfi idle and awoken
+>> > > by
+>> > > interrupt (the current arm64 behavior). It allows CPUs to return
+>> > > from
+>> > > idle more quickly by avoiding the longer interrupt wakeup path,
+>> > > which
+>> > > may require EL1/EL2 transition in certain VM scenarios.
+>> >
+>> > Please start off with an explanation of the problem you're trying
+>> > to solve
+>> > (which IIUC is to wake up more quickly in certain cases), before
+>> > describing the
+>> > solution. That makes it *significantly* easier for people to review
+>> > this, since
+>> > once you have the problem statement in mind it's much easier to
+>> > understand how
+>> > the solution space follows from that.
+>> >
+>> > > Poll duration is optionally configured at load time via the
+>> > > poll_limit
+>> > > module parameter.
+>> >
+>> > Why should this be a configurable parameter?
+>> >
+>> > (note, at this point you haven't introduced any of the data below,
+>> > so the
+>> > trade-off isn't clear to anyone).
+>> >
+>> > > The default 100 us duration was experimentally chosen, by
+>> > > measuring QPS
+>> > > (queries per sec) of the MLPerf bert inference benchmark, which
+>> > > seems
+>> > > particularly susceptible to this change; see procedure below. 100
+>> > > us is
+>> > > the inflection point where QPS stopped growing in a range of
+>> > > tested
+>> > > values. All results are from AWS m7g.16xlarge instances
+>> > > (Graviton3 SoC)
+>> > > with dedicated tenancy (dedicated hardware).
+>> > >
+>> > > > before | 10us  | 25us | 50us | 100us | 125us | 150us | 200us |
+>> > > > 300us |
+>> > > > 5.87   | 5.91  | 5.96 | 6.01 | 6.06  | 6.07  | 6.06  | 6.06  |
+>> > > > 6.06  |
+>> > >
+>> > > Perf's scheduler benchmarks also improve with a range of
+>> > > poll_limit
+>> > > values >= 10 us. Higher limits produce near identical results
+>> > > within a
+>> > > 3% noise margin. The following tables are `perf bench sched`
+>> > > results,
+>> > > run times in seconds.
+>> > >
+>> > > `perf bench sched messaging -l 80000`
+>> > > > AWS instance  | SoC       | Before | After  | % Change |
+>> > > > c6g.16xl (VM) | Graviton2 | 18.974 | 18.400 | none     |
+>> > > > c7g.16xl (VM) | Graviton3 | 13.852 | 13.859 | none     |
+>> > > > c6g.metal     | Graviton2 | 17.621 | 16.744 | none     |
+>> > > > c7g.metal     | Graviton3 | 13.430 | 13.404 | none     |
+>> > >
+>> > > `perf bench sched pipe -l 2500000`
+>> > > > AWS instance  | SoC       | Before | After  | % Change |
+>> > > > c6g.16xl (VM) | Graviton2 | 30.158 | 15.181 | -50%     |
+>> > > > c7g.16xl (VM) | Graviton3 | 18.289 | 12.067 | -34%     |
+>> > > > c6g.metal     | Graviton2 | 17.609 | 15.170 | -14%     |
+>> > > > c7g.metal     | Graviton3 | 14.103 | 12.304 | -13%     |
+>> > >
+>> > > `perf bench sched seccomp-notify -l 2500000`
+>> > > > AWS instance  | SoC       | Before | After  | % Change |
+>> > > > c6g.16xl (VM) | Graviton2 | 28.784 | 13.754 | -52%     |
+>> > > > c7g.16xl (VM) | Graviton3 | 16.964 | 11.430 | -33%     |
+>> > > > c6g.metal     | Graviton2 | 15.717 | 13.536 | -14%     |
+>> > > > c7g.metal     | Graviton3 | 13.301 | 11.491 | -14%     |
+>> >
+>> > Ok, so perf numbers for a busy workload go up.
+>> >
+>> > What happens for idle state residency on a mostly idle system?
+>> >
+>> > > Steps to run MLPerf bert inference on Ubuntu 22.04:
+>> > >  sudo apt install build-essential python3 python3-pip
+>> > >  pip install "pybind11[global]" tensorflow  transformers
+>> > >  export TF_ENABLE_ONEDNN_OPTS=1
+>> > >  export DNNL_DEFAULT_FPMATH_MODE=BF16
+>> > >  git clone https://github.com/mlcommons/inference.git --recursive
+>> > >  cd inference
+>> > >  git checkout v2.0
+>> > >  cd loadgen
+>> > >  CFLAGS="-std=c++14" python3 setup.py bdist_wheel
+>> > >  pip install dist/*.whl
+>> > >  cd ../language/bert
+>> > >  make setup
+>> > >  python3 run.py --backend=tf --scenario=SingleStream
+>> > >
+>> > > Suggested-by: Ali Saidi <alisaidi@amazon.com>
+>> > > Reviewed-by: Ali Saidi <alisaidi@amazon.com>
+>> > > Reviewed-by: Geoff Blake <blakgeof@amazon.com>
+>> > > Cc: Brian Silver <silverbr@amazon.com>
+>> > > Signed-off-by: Haris Okanovic <harisokn@amazon.com>
+>> > > ---
+>> > >  drivers/cpuidle/Kconfig.arm           |  13 ++
+>> > >  drivers/cpuidle/Makefile              |   1 +
+>> > >  drivers/cpuidle/cpuidle-arm-polling.c | 171
+>> > > ++++++++++++++++++++++++++
+>> > >  3 files changed, 185 insertions(+)
+>> > >  create mode 100644 drivers/cpuidle/cpuidle-arm-polling.c
+>> > >
+>> > > diff --git a/drivers/cpuidle/Kconfig.arm
+>> > > b/drivers/cpuidle/Kconfig.arm
+>> > > index a1ee475d180d..484666dda38d 100644
+>> > > --- a/drivers/cpuidle/Kconfig.arm
+>> > > +++ b/drivers/cpuidle/Kconfig.arm
+>> > > @@ -14,6 +14,19 @@ config ARM_CPUIDLE
+>> > >        initialized by calling the CPU operations init idle hook
+>> > >        provided by architecture code.
+>> > >
+>> > > +config ARM_POLL_CPUIDLE
+>> > > +    bool "ARM64 CPU idle Driver with polling"
+>> > > +    depends on ARM64
+>> > > +    depends on ARM_ARCH_TIMER_EVTSTREAM
+>> > > +    select CPU_IDLE_MULTIPLE_DRIVERS
+>> > > +    help
+>> > > +      Select this to enable a polling cpuidle driver for ARM64:
+>> > > +      The first state polls TIF_NEED_RESCHED for best latency on
+>> > > short
+>> > > +      sleep intervals. The second state falls back to
+>> > > arch_cpu_idle() to
+>> > > +      wait for interrupt. This is can be helpful in workloads
+>> > > that
+>> > > +      frequently block/wake at short intervals or VMs where
+>> > > wakeup IPIs
+>> > > +      are more expensive.
+>> >
+>> > Why is this a separate driver rather than an optional feature in
+>> > the existing
+>> > driver?
+>> >
+>> > The fact that this duplicates a bunch of code indicates to me that
+>> > this should
+>> > not be a separate driver.
+>>
+>> Also, the cpuidle-haltpoll driver is meant to do something quite
+>> similar.
+>> That driver polls adaptively based on the haltpoll governor's tuning
+>> of
+>> the polling period.
+>>
+>> However, cpuidle-haltpoll is currently x86 only. Mihai (also from
+>> Oracle)
+>> posted patches [1] adding support for ARM64.
+>>
+>> Haris, could you take a look at it and see if it does what you are
+>> looking for? The polling path in the linked version also uses
+>> smp_cond_load_relaxed() so even the mechanisms for both of these
+>> are fairly similar.
+>
+> Hi Ankur,
+>
+> I agree, except for that small bug in exit condition, your haltpoll
+> changes fundamentally do the same thing:
+
+Yup. Will address that bug and a few other things in the next version.
+
+>> @ int __cpuidle poll_idle(...
+>> -            if (!(ret & _TIF_NEED_RESCHED))
+>> +            if (ret & _TIF_NEED_RESCHE
+>
+> I'll follow up with another patch for AWS Graviton when your team is
+> finished.
+>
+> Do you have a rough ETA of when your changes will land in master?
+
+That I guess would be determined by the maintainers, but I should be
+able to send it out the coming week.
+
+Thanks
+Ankur
+
+>>
+>> (I'll be sending out the next version shortly. Happy to Cc you if you
+>> would like to try that out.)
+>
+> Yes, please do!
+>
+> Thanks,
+> Haris Okanovic
+>
+>>
+>> Thanks
+>> Ankur
+>>
+>> [1]
+>> https://lore.kernel.org/lkml/1707982910-27680-1-git-send-email-mihai.carabas@oracle.com/
+>>
+>> >
+>> > > +
+>> > >  config ARM_PSCI_CPUIDLE
+>> > >      bool "PSCI CPU idle Driver"
+>> > >      depends on ARM_PSCI_FW
+>> > > diff --git a/drivers/cpuidle/Makefile b/drivers/cpuidle/Makefile
+>> > > index d103342b7cfc..23c21422792d 100644
+>> > > --- a/drivers/cpuidle/Makefile
+>> > > +++ b/drivers/cpuidle/Makefile
+>> > > @@ -22,6 +22,7 @@ obj-$(CONFIG_ARM_U8500_CPUIDLE)         +=
+>> > > cpuidle-ux500.o
+>> > >  obj-$(CONFIG_ARM_AT91_CPUIDLE)          += cpuidle-at91.o
+>> > >  obj-$(CONFIG_ARM_EXYNOS_CPUIDLE)        += cpuidle-exynos.o
+>> > >  obj-$(CONFIG_ARM_CPUIDLE)           += cpuidle-arm.o
+>> > > +obj-$(CONFIG_ARM_POLL_CPUIDLE)              += cpuidle-arm-
+>> > > polling.o
+>> > >  obj-$(CONFIG_ARM_PSCI_CPUIDLE)              += cpuidle-psci.o
+>> > >  obj-$(CONFIG_ARM_PSCI_CPUIDLE_DOMAIN)       += cpuidle-psci-
+>> > > domain.o
+>> > >  obj-$(CONFIG_ARM_TEGRA_CPUIDLE)             += cpuidle-tegra.o
+>> > > diff --git a/drivers/cpuidle/cpuidle-arm-polling.c
+>> > > b/drivers/cpuidle/cpuidle-arm-polling.c
+>> > > new file mode 100644
+>> > > index 000000000000..bca128568114
+>> > > --- /dev/null
+>> > > +++ b/drivers/cpuidle/cpuidle-arm-polling.c
+>> > > @@ -0,0 +1,171 @@
+>> > > +// SPDX-License-Identifier: GPL-2.0
+>> > > +/*
+>> > > + * ARM64 CPU idle driver using wfe polling
+>> > > + *
+>> > > + * Copyright 2024 Amazon.com, Inc. or its affiliates. All rights
+>> > > reserved.
+>> > > + *
+>> > > + * Authors:
+>> > > + *   Haris Okanovic <harisokn@amazon.com>
+>> > > + *   Brian Silver <silverbr@amazon.com>
+>> > > + *
+>> > > + * Based on cpuidle-arm.c
+>> > > + * Copyright (C) 2014 ARM Ltd.
+>> > > + * Author: Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
+>> > > + */
+>> > > +
+>> > > +#include <linux/cpu.h>
+>> > > +#include <linux/cpu_cooling.h>
+>> > > +#include <linux/cpuidle.h>
+>> > > +#include <linux/sched/clock.h>
+>> > > +
+>> > > +#include <asm/cpuidle.h>
+>> > > +#include <asm/readex.h>
+>> > > +
+>> > > +#include "dt_idle_states.h"
+>> > > +
+>> > > +/* Max duration of the wfe() poll loop in us, before
+>> > > transitioning to
+>> > > + * arch_cpu_idle()/wfi() sleep.
+>> > > + */
+>> >
+>> > /*
+>> >  * Comments should have the leading '/*' on a separate line.
+>> >  * See
+>> > https://www.kernel.org/doc/html/v6.8/process/coding-style.html#commenting
+>> >  */
+>> >
+>> > > +#define DEFAULT_POLL_LIMIT_US 100
+>> > > +static unsigned int poll_limit __read_mostly =
+>> > > DEFAULT_POLL_LIMIT_US;
+>> > > +
+>> > > +/*
+>> > > + * arm_idle_wfe_poll - Polls state in wfe loop until reschedule
+>> > > is
+>> > > + * needed or timeout
+>> > > + */
+>> > > +static int __cpuidle arm_idle_wfe_poll(struct cpuidle_device
+>> > > *dev,
+>> > > +                            struct cpuidle_driver *drv, int idx)
+>> > > +{
+>> > > +    u64 time_start, time_limit;
+>> > > +
+>> > > +    time_start = local_clock();
+>> > > +    dev->poll_time_limit = false;
+>> > > +
+>> > > +    local_irq_enable();
+>> >
+>> > Why enable IRQs here? We don't do that in the regular cpuidle-arm
+>> > driver, nor
+>> > the cpuidle-psci driver, and there's no explanation here or in the
+>> > commit message.
+>> >
+>> > How does this interact with RCU? Is that still watching or are we
+>> > in an
+>> > extended quiescent state? For PSCI idle states we enter an EQS, and
+>> > it seems
+>> > like we probably should here...
+>> >
+>> > > +
+>> > > +    if (current_set_polling_and_test())
+>> > > +            goto end;
+>> > > +
+>> > > +    time_limit = cpuidle_poll_time(drv, dev);
+>> > > +
+>> > > +    do {
+>> > > +            // exclusive read arms the monitor for wfe
+>> > > +            if (__READ_ONCE_EX(current_thread_info()->flags) &
+>> > > _TIF_NEED_RESCHED)
+>> > > +                    goto end;
+>> > > +
+>> > > +            // may exit prematurely, see
+>> > > ARM_ARCH_TIMER_EVTSTREAM
+>> > > +            wfe();
+>> > > +    } while (local_clock() - time_start < time_limit);
+>> >
+>> > .. and if the EVTSTREAM is disabled, we'll sit in WFE forever
+>> > rather than
+>> > entering a deeper idle state, which doesn't seem desirable.
+>> >
+>> > It's worth noting that now that we have WFET, we'll probably want
+>> > to disable
+>> > the EVTSTREAM by default at some point, at least in some
+>> > configurations, since
+>> > that'll be able to sit in a WFE state for longer while also
+>> > reliably waking up
+>> > when required.
+>> >
+>> > I suspect we want something like an smp_load_acquire_timeout() here
+>> > to do the
+>> > wait in arch code (allowing us to use WFET), and enabling this
+>> > state will
+>> > depend on either having WFET or EVTSTREAM.
+>> >
+>> > > +
+>> > > +    dev->poll_time_limit = true;
+>> > > +
+>> > > +end:
+>> > > +    current_clr_polling();
+>> > > +    return idx;
+>> > > +}
+>> > > +
+>> > > +/*
+>> > > + * arm_idle_wfi - Places cpu in lower power state until
+>> > > interrupt,
+>> > > + * a fallback to polling
+>> > > + */
+>> > > +static int __cpuidle arm_idle_wfi(struct cpuidle_device *dev,
+>> > > +                            struct cpuidle_driver *drv, int idx)
+>> > > +{
+>> > > +    if (current_clr_polling_and_test()) {
+>> > > +            local_irq_enable();
+>> > > +            return idx;
+>> > > +    }
+>> >
+>> > Same as above, why enable IRQs here?
+>> >
+>> > > +    arch_cpu_idle();
+>> > > +    return idx;
+>> >
+>> > .. and if we need to enable IRQs in the other cases above, why do
+>> > we *not*
+>> > need to enable them here?
+>> >
+>> > > +}
+>> > > +
+>> > > +static struct cpuidle_driver arm_poll_idle_driver __initdata = {
+>> > > +    .name = "arm_poll_idle",
+>> > > +    .owner = THIS_MODULE,
+>> > > +    .states = {
+>> > > +            {
+>> > > +                    .enter                  = arm_idle_wfe_poll,
+>> > > +                    .exit_latency           = 0,
+>> > > +                    .target_residency       = 0,
+>> > > +                    .exit_latency_ns        = 0,
+>> > > +                    .power_usage            = UINT_MAX,
+>> > > +                    .flags                  =
+>> > > CPUIDLE_FLAG_POLLING,
+>> > > +                    .name                   = "WFE",
+>> > > +                    .desc                   = "ARM WFE",
+>> > > +            },
+>> > > +            {
+>> > > +                    .enter                  = arm_idle_wfi,
+>> > > +                    .exit_latency           =
+>> > > DEFAULT_POLL_LIMIT_US,
+>> > > +                    .target_residency       =
+>> > > DEFAULT_POLL_LIMIT_US,
+>> > > +                    .power_usage            = UINT_MAX,
+>> > > +                    .name                   = "WFI",
+>> > > +                    .desc                   = "ARM WFI",
+>> > > +            },
+>> > > +    },
+>> > > +    .state_count = 2,
+>> > > +};
+>> >
+>> > How does this interact with the existing driver?
+>> >
+>> > How does DEFAULT_POLL_LIMIT_US compare with PSCI idle states?
+>> >
+>> > > +
+>> > > +/*
+>> > > + * arm_poll_init_cpu - Initializes arm cpuidle polling driver
+>> > > for one cpu
+>> > > + */
+>> > > +static int __init arm_poll_init_cpu(int cpu)
+>> > > +{
+>> > > +    int ret;
+>> > > +    struct cpuidle_driver *drv;
+>> > > +
+>> > > +    drv = kmemdup(&arm_poll_idle_driver, sizeof(*drv),
+>> > > GFP_KERNEL);
+>> > > +    if (!drv)
+>> > > +            return -ENOMEM;
+>> > > +
+>> > > +    drv->cpumask = (struct cpumask *)cpumask_of(cpu);
+>> > > +    drv->states[1].exit_latency = poll_limit;
+>> > > +    drv->states[1].target_residency = poll_limit;
+>> > > +
+>> > > +    ret = cpuidle_register(drv, NULL);
+>> > > +    if (ret) {
+>> > > +            pr_err("failed to register driver: %d, cpu %d\n",
+>> > > ret, cpu);
+>> > > +            goto out_kfree_drv;
+>> > > +    }
+>> > > +
+>> > > +    pr_info("registered driver cpu %d\n", cpu);
+>> >
+>> > This does not need to be printed for each CPU.
+>> >
+>> > Mark.
+>> >
+>> > > +
+>> > > +    cpuidle_cooling_register(drv);
+>> > > +
+>> > > +    return 0;
+>> > > +
+>> > > +out_kfree_drv:
+>> > > +    kfree(drv);
+>> > > +    return ret;
+>> > > +}
+>> > > +
+>> > > +/*
+>> > > + * arm_poll_init - Initializes arm cpuidle polling driver
+>> > > + */
+>> > > +static int __init arm_poll_init(void)
+>> > > +{
+>> > > +    int cpu, ret;
+>> > > +    struct cpuidle_driver *drv;
+>> > > +    struct cpuidle_device *dev;
+>> > > +
+>> > > +    for_each_possible_cpu(cpu) {
+>> > > +            ret = arm_poll_init_cpu(cpu);
+>> > > +            if (ret)
+>> > > +                    goto out_fail;
+>> > > +    }
+>> > > +
+>> > > +    return 0;
+>> > > +
+>> > > +out_fail:
+>> > > +    pr_info("de-register all");
+>> > > +    while (--cpu >= 0) {
+>> > > +            dev = per_cpu(cpuidle_devices, cpu);
+>> > > +            drv = cpuidle_get_cpu_driver(dev);
+>> > > +            cpuidle_unregister(drv);
+>> > > +            kfree(drv);
+>> > > +    }
+>> > > +
+>> > > +    return ret;
+>> > > +}
+>> > > +
+>> > > +module_param(poll_limit, uint, 0444);
+>> > > +device_initcall(arm_poll_init);
+>> > > --
+>> > > 2.34.1
+>> > >
+>> > >
+>>
+>>
+>> --
+>> ankur
+
+
+--
+ankur
